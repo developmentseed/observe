@@ -34,7 +34,7 @@ Read about the changes to this project in [CHANGELOG.md](CHANGELOG.md). The form
 
 ## Contact
 
-- **issues** – Please open issues in the [issues queue](https://github.com/developmentseed/observe-mobile/issues)
+Observe is being built by @geohacker, @batpad, @mojodna, @sethvincet, and @ricardomestre at Development Seed. Report issues or ask questions via the [issue tracker](https://github.com/developmentseed/observe/issues)
 
 ## License
 
