@@ -1,7 +1,7 @@
 version: 2
 jobs:
   node:
-    working_directory: ~/observe-mobile
+    working_directory: ~/observe
     docker:
       - image: circleci/node:8
     steps:
@@ -35,7 +35,7 @@ jobs:
             JEST_JUNIT_OUTPUT: test-results/jest/junit.xml
 
       - persist_to_workspace:
-          root: ~/observe-mobile
+          root: ~/observe
           paths:
             - node_modules
 
@@ -46,15 +46,15 @@ jobs:
           path: test-results
 
   android:
-    working_directory: ~/observe-mobile/android
+    working_directory: ~/observe/android
     docker:
       - image: circleci/android:api-28-node8-alpha
     steps:
       - checkout:
-          path: ~/observe-mobile
+          path: ~/observe
 
       - attach_workspace:
-          at: ~/observe-mobile
+          at: ~/observe
 
       - restore_cache:
           key: bundle-v1-{{ checksum "Gemfile.lock" }}-{{ arch }}
@@ -83,7 +83,7 @@ jobs:
   ios:
     macos:
       xcode: "9.0"
-    working_directory: ~/observe-mobile
+    working_directory: ~/observe
 
     # use a --login shell so our "set Ruby version" command gets picked up for later steps
     shell: /bin/bash --login -o pipefail
