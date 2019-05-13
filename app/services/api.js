@@ -53,7 +53,11 @@ export async function saveDataForTile (tile) {
 
   // once we are sure the file is fully downloaded, we move it to its final location
   // so that readers never get a half-written file.
-  await RNFetchBlob.fs.unlink(path)
+  try {
+    await RNFetchBlob.fs.unlink(path)
+  } catch (err) {
+    console.warn('File unlink failed', err)
+  }
   await RNFetchBlob.fs.mv(tmpPath, path)
   return stat.size
 }
