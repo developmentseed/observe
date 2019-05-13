@@ -1,0 +1,11 @@
+{
+    "icon": "maki-dam",
+    "geometry": [
+        "vertex",
+        "line"
+    ],
+    "tags": {
+        "waterway": "weir"
+    },
+    "name": "Weir"
+}

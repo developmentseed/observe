@@ -1,0 +1,25 @@
+{
+    "icon": "maki-lighthouse",
+    "fields": [
+        "name",
+        "operator",
+        "building_area",
+        "height"
+    ],
+    "moreFields": [
+        "address",
+        "website",
+        "phone",
+        "email",
+        "fax",
+        "seamark/type"
+    ],
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "tags": {
+        "man_made": "lighthouse"
+    },
+    "name": "Lighthouse"
+}

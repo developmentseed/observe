@@ -1,0 +1,22 @@
+{
+    "icon": "temaki-clock",
+    "fields": [
+        "name",
+        "support",
+        "display",
+        "visibility",
+        "date",
+        "faces"
+    ],
+    "moreFields": [
+        "lit"
+    ],
+    "geometry": [
+        "point",
+        "vertex"
+    ],
+    "tags": {
+        "amenity": "clock"
+    },
+    "name": "Clock"
+}

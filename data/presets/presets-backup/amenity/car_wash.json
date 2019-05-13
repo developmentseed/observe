@@ -1,0 +1,24 @@
+{
+    "icon": "temaki-car_wash",
+    "fields": [
+        "address",
+        "building_area",
+        "opening_hours",
+        "payment_multi"
+    ],
+    "moreFields": [
+        "website",
+        "phone",
+        "email",
+        "fax",
+        "wheelchair"
+    ],
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "tags": {
+        "amenity": "car_wash"
+    },
+    "name": "Car Wash"
+}

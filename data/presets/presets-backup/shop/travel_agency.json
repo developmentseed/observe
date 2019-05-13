@@ -1,0 +1,11 @@
+{
+    "icon": "maki-suitcase",
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "tags": {
+        "shop": "travel_agency"
+    },
+    "name": "Travel Agency"
+}

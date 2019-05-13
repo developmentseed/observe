@@ -1,0 +1,18 @@
+{
+    "fields": [
+        "design",
+        "ref",
+        "material"
+    ],
+    "geometry": [
+        "point",
+        "vertex"
+    ],
+    "terms": [
+        "power"
+    ],
+    "tags": {
+        "power": "tower"
+    },
+    "name": "High-Voltage Tower"
+}

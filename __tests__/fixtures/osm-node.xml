@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osm version="0.6" generator="CGImap 0.7.0 (10516 errol.openstreetmap.org)" copyright="OpenStreetMap and contributors" attribution="http://www.openstreetmap.org/copyright" license="http://opendatacommons.org/licenses/odbl/1-0/">
+ <node id="4317433537" visible="true" version="1" changeset="146178" timestamp="2019-04-03T11:55:38Z" user="geohacker" uid="4297" lat="28.6316796" lon="77.2195932">
+  <tag k="building" v="house"/>
+ </node>
+</osm>

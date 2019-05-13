@@ -1,0 +1,18 @@
+{
+    "icon": "maki-ferry",
+    "geometry": [
+        "line"
+    ],
+    "fields": [
+        "name",
+        "operator",
+        "duration",
+        "access",
+        "to",
+        "from"
+    ],
+    "tags": {
+        "route": "ferry"
+    },
+    "name": "Ferry Route"
+}

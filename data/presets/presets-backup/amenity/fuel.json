@@ -1,0 +1,38 @@
+{
+    "icon": "maki-fuel",
+    "fields": [
+        "name",
+        "brand",
+        "operator",
+        "address",
+        "fuel_multi"
+    ],
+    "moreFields": [
+        "opening_hours",
+        "payment_multi",
+        "building",
+        "website",
+        "phone",
+        "email",
+        "fax",
+        "wheelchair"
+    ],
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "terms": [
+        "petrol",
+        "fuel",
+        "gasoline",
+        "propane",
+        "diesel",
+        "lng",
+        "cng",
+        "biodiesel"
+    ],
+    "tags": {
+        "amenity": "fuel"
+    },
+    "name": "Gas Station"
+}

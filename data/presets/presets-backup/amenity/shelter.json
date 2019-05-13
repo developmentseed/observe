@@ -1,0 +1,28 @@
+{
+    "icon": "maki-shelter",
+    "fields": [
+        "name",
+        "shelter_type",
+        "building_area",
+        "bench",
+        "bin"
+    ],
+    "moreFields": [
+        "lit",
+        "wheelchair"
+    ],
+    "geometry": [
+        "point",
+        "vertex",
+        "area"
+    ],
+    "terms": [
+        "lean-to",
+        "gazebo",
+        "picnic"
+    ],
+    "tags": {
+        "amenity": "shelter"
+    },
+    "name": "Shelter"
+}

@@ -1,0 +1,23 @@
+{
+    "icon": "maki-grocery",
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "tags": {
+        "shop": "chemist"
+    },
+    "terms": [
+        "apothecary",
+        "beauty",
+        "drug store",
+        "drugstore",
+        "gift",
+        "hair",
+        "med*",
+        "pharmacy",
+        "prescription",
+        "tooth"
+    ],
+    "name": "Drugstore"
+}

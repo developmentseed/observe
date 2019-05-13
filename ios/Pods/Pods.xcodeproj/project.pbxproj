@@ -1,0 +1,1005 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		03CF335CEEBD1214EDB3609B080C2952 /* DCTOAuth1Account.m in Sources */ = {isa = PBXBuildFile; fileRef = CBB29DFAB943FF25456A5BC96A6BC658 /* DCTOAuth1Account.m */; };
+		0A925A19D2FF1058EEFE731E8A6C73B4 /* DCTBasicAuthCredential.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF332B4BF61DB666FA7DF8F4361A5B /* DCTBasicAuthCredential.m */; };
+		0B6BB83CA84782A671D4BF2C37BF62EF /* DCTAuthURLOpenerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F108C97400CFE0229148F13A7E527D5 /* DCTAuthURLOpenerOperation.m */; };
+		0CF1D21DFC73A7D18F8A7084B18C74A4 /* DCTAuthRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 4244C7CD61839A810F288F3563AC580B /* DCTAuthRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1003B806D25A2AA96C37CB6E611E9A31 /* DCTAuthResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 7034E1A5DF5EE8D89DDB8134269F1E1B /* DCTAuthResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1191AE8EE99F9F36C560385744AD770A /* DCTAuth.h in Headers */ = {isa = PBXBuildFile; fileRef = BCC7DB2CC99281C2958E60456233B2C3 /* DCTAuth.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		148B24E370EDDC14C6E47E7A5EC2BBBC /* NSString+DCTAuth.h in Headers */ = {isa = PBXBuildFile; fileRef = E63CFEDAAE8A48F0BA803F8E2048210C /* NSString+DCTAuth.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		14991AC6F8A07A1B765A797003BF2563 /* DCTOAuth1Signature.h in Headers */ = {isa = PBXBuildFile; fileRef = A668EFDDE5E3062D42FBA5A397691EC6 /* DCTOAuth1Signature.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		15A0ADE4E4668A38895E7F47233DFBFF /* DCTAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = E69325748BE91C903EE186C90B5B1A59 /* DCTAuth.m */; };
+		19992F515108FE1C3ED038F894F4EDCA /* DCTAuthContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A89AE5EFC24B832C10E497845DCFAF5 /* DCTAuthContent.m */; };
+		1F565E70EF554579E13D7BF40B4332BD /* DCTOAuth1Keys.m in Sources */ = {isa = PBXBuildFile; fileRef = 720DF5BB6F76F722CD9728642F906654 /* DCTOAuth1Keys.m */; };
+		1FC638898C5B6573CA9F172535B688C9 /* DCTOAuth1Credential.m in Sources */ = {isa = PBXBuildFile; fileRef = F72853E8B99F198D4523D9044AD84521 /* DCTOAuth1Credential.m */; };
+		29CB250EA8F46F16C92564625431AA70 /* DCTAuthRequestMethod.h in Headers */ = {isa = PBXBuildFile; fileRef = E6CD9A470633B9FB76D13456E9138509 /* DCTAuthRequestMethod.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2F62854B85FDDEA91978399886A78BBA /* DCTAuthContent.h in Headers */ = {isa = PBXBuildFile; fileRef = FC736A40183E3525D6C82CF39F90EB79 /* DCTAuthContent.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		3458F3477C14741B98048CE330E06777 /* DCTAuthURLOpener.h in Headers */ = {isa = PBXBuildFile; fileRef = 5592C7E37B7E5A593A3C6F5885BC6973 /* DCTAuthURLOpener.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		38C7FDB67F6FDA84EF1F4C5D7DDB85F4 /* DCTAbstractAuthAccountProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = DB73DD0EC041C990927B2A534AC5A724 /* DCTAbstractAuthAccountProperties.m */; };
+		3A6E5DCF6ACE0BB6C43B9EFA15B6091B /* DCTAuthAccount.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F3502ECF04B849F09DCD2BA8349C96E /* DCTAuthAccount.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3C7E83506CF3EF8542D7D21350B850CE /* DCTOAuth2Credential.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AA7DFCE7E6FB3952211FB86BD68801B /* DCTOAuth2Credential.m */; };
+		3E026FCD9B3709D990729EDC3B64DB26 /* DCTAuthKeychainAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C09F781FCC2D85D9899683889A1F452 /* DCTAuthKeychainAccess.m */; };
+		45DFD0B73DC138097BE83F4AAA231109 /* DCTOAuth2Keys.m in Sources */ = {isa = PBXBuildFile; fileRef = A88A5D25DF3EE7B40B55DD716833819B /* DCTOAuth2Keys.m */; };
+		4828F6ACE25FC0F97A8C475D91E6CFE5 /* DCTBasicAuthAccount.h in Headers */ = {isa = PBXBuildFile; fileRef = 7B1E94B3D234FB4139894D5B8D8132EC /* DCTBasicAuthAccount.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		494882D93479DC6B359CCA9FEC9C4DF6 /* DCTOAuth1Credential.h in Headers */ = {isa = PBXBuildFile; fileRef = 64972D4F4CD0BB3839021EEA8F84F2C7 /* DCTOAuth1Credential.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		4AB74A8C2253992769BECB2F96D04106 /* DCTOAuth2RequestType.m in Sources */ = {isa = PBXBuildFile; fileRef = AF75B51AE67EA0AFE8C102FBD0C9B1D9 /* DCTOAuth2RequestType.m */; };
+		4B18E8B88B249354440B1EB625793906 /* DCTAuthPlatform.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECC42CAC47290262A126598007A47D7 /* DCTAuthPlatform.m */; };
+		4E5831976AEEB56C5607FD3628316A08 /* NSKeyedUnarchiver+DCTAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 963D698BBD0B83146A8B3FD7B5B595AF /* NSKeyedUnarchiver+DCTAuth.m */; };
+		5BA12C9F9B79E6A561C647E5AAA6F45F /* NSKeyedUnarchiver+DCTAuth.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CB295EC84ECF9B72686798F7B10A4A1 /* NSKeyedUnarchiver+DCTAuth.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		5C0FE64853181A498E269D488C9B8B35 /* DCTOAuth1Account.h in Headers */ = {isa = PBXBuildFile; fileRef = 374EC290E199FCEE2E3650E0A70233E0 /* DCTOAuth1Account.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		630EE17F1A159366EFF6682EBAA5E5B5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB4607EFCA7C5F75397649E792E2AFCB /* Foundation.framework */; };
+		6B58B57C80FE94FB74E7D97221DFA88A /* DCTAuthAccountStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 47CFEA8B1879A3AB6A31017E48B0B842 /* DCTAuthAccountStore.m */; };
+		6FA66CC7BB7E2C33437CA096EC026E2E /* DCTOAuth2.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A912503EFC6272AF081BDA46B5A4C0 /* DCTOAuth2.m */; };
+		7955DC060421746706CC757084875C2F /* DCTAuthMultipartData.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D237CBE561BB31130A0AF03C4472BED /* DCTAuthMultipartData.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		79BFAC51E4DD8A9BFB9BA94C1DABCF80 /* DCTAuthURLOpenerOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = C0ED6E7984E0CC1144FFB13320922AE7 /* DCTAuthURLOpenerOperation.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		7C1438AF42B21B3A80E9BE4687770A70 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB4607EFCA7C5F75397649E792E2AFCB /* Foundation.framework */; };
+		7CAA729F3C7FB3FA4183C308A8570BB8 /* DCTAuthKeychainAccess.h in Headers */ = {isa = PBXBuildFile; fileRef = FAF178392C4D035A619C1E4176C07456 /* DCTAuthKeychainAccess.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		87C532339C424378092EFCB351611D77 /* DCTAuthAccountStoreQueryDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = CABAD75B0E6E83F310AAB72999583AAD /* DCTAuthAccountStoreQueryDelegate.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		94D7D065BDB7080DA7F894398882770A /* DCTOAuth2Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B60142A6B64A26A33D14A0C863E6C11 /* DCTOAuth2Account.m */; };
+		959B22D07D29D85016A16A43275DDC56 /* DCTAuthURLRequestPerformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 97743F3592583107729273F1A7202E5A /* DCTAuthURLRequestPerformer.m */; };
+		9B5150E1451A20EFAED0AB46C30591F7 /* DCTOAuth2Account.h in Headers */ = {isa = PBXBuildFile; fileRef = CBEABA0708887BD048CA7523E9929962 /* DCTOAuth2Account.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		9C9D7A7A06D0CF7D3D0A4F46E3114791 /* DCTAuthResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = DCFEC3886468443718509B4F77B39125 /* DCTAuthResponse.m */; };
+		9D20D7DC8CB23A6D0BEFFB044D86FDD0 /* DCTOAuth1SignatureType.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F83911A2FDCC630EAFF4C2C395CBCD2 /* DCTOAuth1SignatureType.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		A366296FBA21C4702B0AED10143A4A86 /* DCTBasicAuthAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = FA114A88C43B96C66B32265A6E35CD91 /* DCTBasicAuthAccount.m */; };
+		A5B65D31E98B5B9BDC222CEE325F88C2 /* DCTAuthAccountStore+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D89FAE0528747CFE095F733B6A0E4E /* DCTAuthAccountStore+Private.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		A64170EF458E5D63639C7BD678E8C92C /* DCTAbstractAuthAccountProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A222090FAE8AF969727E210EBE7658 /* DCTAbstractAuthAccountProperties.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		A6EC7DAD95F988F4E2B64B1C61E35550 /* NSString+DCTAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 577B4ED69CC2986968851D868072F197 /* NSString+DCTAuth.m */; };
+		A81C5701C7036D7DCD5845CB84E1DAC3 /* DCTAuthAccountStore.h in Headers */ = {isa = PBXBuildFile; fileRef = E6231EC1E22453D48F3F34415979CF0B /* DCTAuthAccountStore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA9C3576758FD4985FE8863B4DF84274 /* DCTOAuth2.h in Headers */ = {isa = PBXBuildFile; fileRef = 377DB887300A89024C0B4E6E04933E02 /* DCTOAuth2.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		B2A0F2117EB49AA8B0804F08CC9354DD /* DCTAuthRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3BC3A8E6123550BFE14249FA70D40F /* DCTAuthRequest.m */; };
+		B8C25E0C0A166FC5DDEE5F517557B6F0 /* DCTAuthAccountCredential.h in Headers */ = {isa = PBXBuildFile; fileRef = 1070A6B7257A0155315280C2F4B02B49 /* DCTAuthAccountCredential.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BB05CC2FBDA817CABDE7C2D40841ACD5 /* DCTAuthPlatform.h in Headers */ = {isa = PBXBuildFile; fileRef = BC35B8A7D7FF915EED008DE3581AC2FB /* DCTAuthPlatform.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BC6AE31B51D5845463A50D343E0F0985 /* DCTOAuth1Keys.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B40159539DA750CAFC3FB5D99B95152 /* DCTOAuth1Keys.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		BE4CBF892C6B805E21D2520F6C2918F0 /* DCTAuthRequestMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBA5EFEFA39D94D70BF0EB36A0F261E /* DCTAuthRequestMethod.m */; };
+		C3E353C1A19872DD6D4A853B78846AD1 /* DCTAuthAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 164C54350810DF9963EB829A09489DAB /* DCTAuthAccount.m */; };
+		C9BF0ED96FCC507732E3872BA6A7E14A /* DCTAuthURLOpener.m in Sources */ = {isa = PBXBuildFile; fileRef = DF92C3F22A99334C7A6D9361D034D5D4 /* DCTAuthURLOpener.m */; };
+		CB3800A8D6CC16C835BC5A77C817C165 /* Pods-ObserveTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A4221EB39649AE2DD60474B0C51EB8E /* Pods-ObserveTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CB62F210156F0E41D6FA47F091637339 /* DCTOAuth1Signature.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0ABD13326F7A9FE331ECE137829B47 /* DCTOAuth1Signature.m */; };
+		CE80D78D622A0710172FD95C17CA8BA9 /* DCTOAuth2Keys.h in Headers */ = {isa = PBXBuildFile; fileRef = 8D0EC36F03F314E8AAA7EDB69FB72C78 /* DCTOAuth2Keys.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		CF120B1786B9CA51A457CE933EB4F4CF /* DCTAuthAccountStoreQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = AD8CE698174F42B7E15B4BE1EB1AAA8A /* DCTAuthAccountStoreQuery.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		D166BC11715CB0908D40643C8D2F968C /* DCTAuth-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E5F6FCA17B5CC1D5DB50DD89B3762FA6 /* DCTAuth-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D1723138E8E4B7DAB4870FB02762BD6B /* DCTBasicAuthCredential.h in Headers */ = {isa = PBXBuildFile; fileRef = 66FEB95029B7D4D5FE631DCA15670CA7 /* DCTBasicAuthCredential.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		D4ADBA39878C1EB70A71DE01C7C85A24 /* DCTOAuth2Credential.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B8BCEAC57BA0EAEBCADAA6EBAB0D6E6 /* DCTOAuth2Credential.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		D899C4BD91A51B6C9B0C52245F545A07 /* DCTAuthAccountSubclass.h in Headers */ = {isa = PBXBuildFile; fileRef = FE66F2CB6A03A31463C1CE7ECC9F3ACA /* DCTAuthAccountSubclass.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DB427555773F75DB51F9440C57AE7071 /* Pods-Observe-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 097B382B9C7475B31DA1AF045B9D964B /* Pods-Observe-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DC13B65F230FFA4E5472EF9AA60500B0 /* DCTAuthContentType.h in Headers */ = {isa = PBXBuildFile; fileRef = 386E1AF3341005A1736E55F5C45006BC /* DCTAuthContentType.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		DC15A579B1687C43B9B51AC81726E25D /* DCTOAuth1ParameterTransmission.h in Headers */ = {isa = PBXBuildFile; fileRef = F07D74F7CA94F5E855BEFC4BE0E58385 /* DCTOAuth1ParameterTransmission.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		DC6881553D0D42EF23F35067328AFE59 /* DCTAuthAccountStoreQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = BEE25842B970611EE58CA25D2D7A7324 /* DCTAuthAccountStoreQuery.m */; };
+		DE987F669021D1E271CC59A2BBC24C54 /* Pods-Observe-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = F48480CDEDDF59D509086E57A0861E54 /* Pods-Observe-dummy.m */; };
+		DFFCADE9CDC3B24BAD8045510D7BA8EC /* Pods-ObserveTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E522B25A9285351403EB64D36866172A /* Pods-ObserveTests-dummy.m */; };
+		EAFE7D5B4BA8982D3C79E6D52FE3E0FA /* DCTAuthURLRequestPerformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9375BEB831B38D5BB4EE5E8999A2273F /* DCTAuthURLRequestPerformer.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		ED55FD2946639B529954A5F4FC6AF679 /* DCTAuthAccount+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = BB1ECF8A12B16EE6BE52E3D6B41AFBF7 /* DCTAuthAccount+Private.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		F02088D5BA8BC161FA13073CEFE8D4BD /* DCTAuth-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 81B31E0826181CEF54E0C4BF1A2A89DA /* DCTAuth-dummy.m */; };
+		F562667D80F1DB5B1447E0D35E964F0E /* DCTOAuth2RequestType.h in Headers */ = {isa = PBXBuildFile; fileRef = 99ED7D38A39291F05F935C647AB2AE68 /* DCTOAuth2RequestType.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		F5757398989AAA57BC083013E47DA088 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB4607EFCA7C5F75397649E792E2AFCB /* Foundation.framework */; };
+		F9144BB80AD035119E1D8887BCC47AD7 /* DCTAuthMultipartData.m in Sources */ = {isa = PBXBuildFile; fileRef = A57D45F1B74EF8B4EC9EBA620F0377AF /* DCTAuthMultipartData.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1B0025DD278C888746FFC4CA01184F0A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 84B23F27937C3903E6840EC7302881C5;
+			remoteInfo = DCTAuth;
+		};
+		4875E14283AFD9C91FBD1F5E40982152 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D053799873D21312F32B5B1E0D95644F;
+			remoteInfo = "Pods-Observe";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		097B382B9C7475B31DA1AF045B9D964B /* Pods-Observe-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Observe-umbrella.h"; sourceTree = "<group>"; };
+		0A4221EB39649AE2DD60474B0C51EB8E /* Pods-ObserveTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ObserveTests-umbrella.h"; sourceTree = "<group>"; };
+		0AA7DFCE7E6FB3952211FB86BD68801B /* DCTOAuth2Credential.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTOAuth2Credential.m; path = DCTAuth/DCTOAuth2Credential.m; sourceTree = "<group>"; };
+		0F83911A2FDCC630EAFF4C2C395CBCD2 /* DCTOAuth1SignatureType.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTOAuth1SignatureType.h; path = DCTAuth/DCTOAuth1SignatureType.h; sourceTree = "<group>"; };
+		1070A6B7257A0155315280C2F4B02B49 /* DCTAuthAccountCredential.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthAccountCredential.h; path = DCTAuth/DCTAuthAccountCredential.h; sourceTree = "<group>"; };
+		13A222090FAE8AF969727E210EBE7658 /* DCTAbstractAuthAccountProperties.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAbstractAuthAccountProperties.h; path = DCTAuth/DCTAbstractAuthAccountProperties.h; sourceTree = "<group>"; };
+		164C54350810DF9963EB829A09489DAB /* DCTAuthAccount.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTAuthAccount.m; path = DCTAuth/DCTAuthAccount.m; sourceTree = "<group>"; };
+		1932D1B3AD6C30D902A022E479D36F1D /* Pods_Observe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Observe.framework; path = "Pods-Observe.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		25BEBB8FC52B2F6854878D7C092D991D /* Pods-ObserveTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ObserveTests-Info.plist"; sourceTree = "<group>"; };
+		261F27FFD0A9F270B908B6751454FA39 /* Pods-Observe-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Observe-acknowledgements.plist"; sourceTree = "<group>"; };
+		2B60142A6B64A26A33D14A0C863E6C11 /* DCTOAuth2Account.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTOAuth2Account.m; path = DCTAuth/DCTOAuth2Account.m; sourceTree = "<group>"; };
+		2B8BCEAC57BA0EAEBCADAA6EBAB0D6E6 /* DCTOAuth2Credential.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTOAuth2Credential.h; path = DCTAuth/DCTOAuth2Credential.h; sourceTree = "<group>"; };
+		2CB295EC84ECF9B72686798F7B10A4A1 /* NSKeyedUnarchiver+DCTAuth.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSKeyedUnarchiver+DCTAuth.h"; path = "DCTAuth/NSKeyedUnarchiver+DCTAuth.h"; sourceTree = "<group>"; };
+		34C49FBA123BA487E35210AAC5B01B26 /* Pods-ObserveTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-ObserveTests.modulemap"; sourceTree = "<group>"; };
+		374EC290E199FCEE2E3650E0A70233E0 /* DCTOAuth1Account.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTOAuth1Account.h; path = DCTAuth/DCTOAuth1Account.h; sourceTree = "<group>"; };
+		377DB887300A89024C0B4E6E04933E02 /* DCTOAuth2.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTOAuth2.h; path = DCTAuth/DCTOAuth2.h; sourceTree = "<group>"; };
+		386E1AF3341005A1736E55F5C45006BC /* DCTAuthContentType.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthContentType.h; path = DCTAuth/DCTAuthContentType.h; sourceTree = "<group>"; };
+		387CABC671B224BDAD4AB5DBB15E7788 /* DCTAuth-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "DCTAuth-Info.plist"; sourceTree = "<group>"; };
+		3A89AE5EFC24B832C10E497845DCFAF5 /* DCTAuthContent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTAuthContent.m; path = DCTAuth/DCTAuthContent.m; sourceTree = "<group>"; };
+		3D237CBE561BB31130A0AF03C4472BED /* DCTAuthMultipartData.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthMultipartData.h; path = DCTAuth/DCTAuthMultipartData.h; sourceTree = "<group>"; };
+		3F3502ECF04B849F09DCD2BA8349C96E /* DCTAuthAccount.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthAccount.h; path = DCTAuth/DCTAuthAccount.h; sourceTree = "<group>"; };
+		4244C7CD61839A810F288F3563AC580B /* DCTAuthRequest.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthRequest.h; path = DCTAuth/DCTAuthRequest.h; sourceTree = "<group>"; };
+		440C7688674D8DBC75F88B6F03F37F54 /* Pods_ObserveTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_ObserveTests.framework; path = "Pods-ObserveTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		47CFEA8B1879A3AB6A31017E48B0B842 /* DCTAuthAccountStore.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTAuthAccountStore.m; path = DCTAuth/DCTAuthAccountStore.m; sourceTree = "<group>"; };
+		4B0ABD13326F7A9FE331ECE137829B47 /* DCTOAuth1Signature.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTOAuth1Signature.m; path = DCTAuth/DCTOAuth1Signature.m; sourceTree = "<group>"; };
+		4F108C97400CFE0229148F13A7E527D5 /* DCTAuthURLOpenerOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTAuthURLOpenerOperation.m; path = DCTAuth/DCTAuthURLOpenerOperation.m; sourceTree = "<group>"; };
+		508E6C61FD7130AD0DF1226DD9D35D7E /* DCTAuth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = DCTAuth.framework; path = DCTAuth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5592C7E37B7E5A593A3C6F5885BC6973 /* DCTAuthURLOpener.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthURLOpener.h; path = DCTAuth/DCTAuthURLOpener.h; sourceTree = "<group>"; };
+		577B4ED69CC2986968851D868072F197 /* NSString+DCTAuth.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSString+DCTAuth.m"; path = "DCTAuth/NSString+DCTAuth.m"; sourceTree = "<group>"; };
+		5B40159539DA750CAFC3FB5D99B95152 /* DCTOAuth1Keys.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTOAuth1Keys.h; path = DCTAuth/DCTOAuth1Keys.h; sourceTree = "<group>"; };
+		5C09F781FCC2D85D9899683889A1F452 /* DCTAuthKeychainAccess.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTAuthKeychainAccess.m; path = DCTAuth/DCTAuthKeychainAccess.m; sourceTree = "<group>"; };
+		64972D4F4CD0BB3839021EEA8F84F2C7 /* DCTOAuth1Credential.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTOAuth1Credential.h; path = DCTAuth/DCTOAuth1Credential.h; sourceTree = "<group>"; };
+		653642B7FA65AD259A5BD84F33CCC0F9 /* Pods-Observe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Observe.release.xcconfig"; sourceTree = "<group>"; };
+		66FEB95029B7D4D5FE631DCA15670CA7 /* DCTBasicAuthCredential.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTBasicAuthCredential.h; path = DCTAuth/DCTBasicAuthCredential.h; sourceTree = "<group>"; };
+		6ABD2DA93A0B4B49AC9FA55B8573ACB3 /* Pods-Observe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Observe.debug.xcconfig"; sourceTree = "<group>"; };
+		7034E1A5DF5EE8D89DDB8134269F1E1B /* DCTAuthResponse.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthResponse.h; path = DCTAuth/DCTAuthResponse.h; sourceTree = "<group>"; };
+		720DF5BB6F76F722CD9728642F906654 /* DCTOAuth1Keys.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTOAuth1Keys.m; path = DCTAuth/DCTOAuth1Keys.m; sourceTree = "<group>"; };
+		7380742A12487AA971FAB72D82BC8ED1 /* DCTAuth-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "DCTAuth-prefix.pch"; sourceTree = "<group>"; };
+		761E0763978940A873BDCC6090A21A43 /* DCTAuth.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = DCTAuth.xcconfig; sourceTree = "<group>"; };
+		79370F4E81EC4EF538662FA421753B32 /* DCTAuth.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = DCTAuth.modulemap; sourceTree = "<group>"; };
+		7B1E94B3D234FB4139894D5B8D8132EC /* DCTBasicAuthAccount.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTBasicAuthAccount.h; path = DCTAuth/DCTBasicAuthAccount.h; sourceTree = "<group>"; };
+		81B31E0826181CEF54E0C4BF1A2A89DA /* DCTAuth-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "DCTAuth-dummy.m"; sourceTree = "<group>"; };
+		85D91E50492A908D19FBBC1D2D5DADE9 /* Pods-ObserveTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ObserveTests.release.xcconfig"; sourceTree = "<group>"; };
+		8D0EC36F03F314E8AAA7EDB69FB72C78 /* DCTOAuth2Keys.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTOAuth2Keys.h; path = DCTAuth/DCTOAuth2Keys.h; sourceTree = "<group>"; };
+		8DE29915E21D54EDDA11F85DE8201B34 /* Pods-Observe.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Observe.modulemap"; sourceTree = "<group>"; };
+		8ECC42CAC47290262A126598007A47D7 /* DCTAuthPlatform.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTAuthPlatform.m; path = DCTAuth/DCTAuthPlatform.m; sourceTree = "<group>"; };
+		9375BEB831B38D5BB4EE5E8999A2273F /* DCTAuthURLRequestPerformer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthURLRequestPerformer.h; path = DCTAuth/DCTAuthURLRequestPerformer.h; sourceTree = "<group>"; };
+		963D698BBD0B83146A8B3FD7B5B595AF /* NSKeyedUnarchiver+DCTAuth.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSKeyedUnarchiver+DCTAuth.m"; path = "DCTAuth/NSKeyedUnarchiver+DCTAuth.m"; sourceTree = "<group>"; };
+		97743F3592583107729273F1A7202E5A /* DCTAuthURLRequestPerformer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTAuthURLRequestPerformer.m; path = DCTAuth/DCTAuthURLRequestPerformer.m; sourceTree = "<group>"; };
+		99ED7D38A39291F05F935C647AB2AE68 /* DCTOAuth2RequestType.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTOAuth2RequestType.h; path = DCTAuth/DCTOAuth2RequestType.h; sourceTree = "<group>"; };
+		9A3BC3A8E6123550BFE14249FA70D40F /* DCTAuthRequest.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTAuthRequest.m; path = DCTAuth/DCTAuthRequest.m; sourceTree = "<group>"; };
+		9AEF332B4BF61DB666FA7DF8F4361A5B /* DCTBasicAuthCredential.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTBasicAuthCredential.m; path = DCTAuth/DCTBasicAuthCredential.m; sourceTree = "<group>"; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		A57D45F1B74EF8B4EC9EBA620F0377AF /* DCTAuthMultipartData.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTAuthMultipartData.m; path = DCTAuth/DCTAuthMultipartData.m; sourceTree = "<group>"; };
+		A668EFDDE5E3062D42FBA5A397691EC6 /* DCTOAuth1Signature.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTOAuth1Signature.h; path = DCTAuth/DCTOAuth1Signature.h; sourceTree = "<group>"; };
+		A88A5D25DF3EE7B40B55DD716833819B /* DCTOAuth2Keys.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTOAuth2Keys.m; path = DCTAuth/DCTOAuth2Keys.m; sourceTree = "<group>"; };
+		AD8CE698174F42B7E15B4BE1EB1AAA8A /* DCTAuthAccountStoreQuery.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthAccountStoreQuery.h; path = DCTAuth/DCTAuthAccountStoreQuery.h; sourceTree = "<group>"; };
+		AF75B51AE67EA0AFE8C102FBD0C9B1D9 /* DCTOAuth2RequestType.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTOAuth2RequestType.m; path = DCTAuth/DCTOAuth2RequestType.m; sourceTree = "<group>"; };
+		B6A912503EFC6272AF081BDA46B5A4C0 /* DCTOAuth2.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTOAuth2.m; path = DCTAuth/DCTOAuth2.m; sourceTree = "<group>"; };
+		B6FBDCF093B6A728FBA216F731454B38 /* Pods-Observe-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Observe-acknowledgements.markdown"; sourceTree = "<group>"; };
+		BB1ECF8A12B16EE6BE52E3D6B41AFBF7 /* DCTAuthAccount+Private.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "DCTAuthAccount+Private.h"; path = "DCTAuth/DCTAuthAccount+Private.h"; sourceTree = "<group>"; };
+		BC35B8A7D7FF915EED008DE3581AC2FB /* DCTAuthPlatform.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthPlatform.h; path = DCTAuth/DCTAuthPlatform.h; sourceTree = "<group>"; };
+		BCC7DB2CC99281C2958E60456233B2C3 /* DCTAuth.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuth.h; path = DCTAuth/DCTAuth.h; sourceTree = "<group>"; };
+		BE9E1AED7198B17A1D8AEF536D2FCADE /* Pods-Observe-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Observe-frameworks.sh"; sourceTree = "<group>"; };
+		BEE25842B970611EE58CA25D2D7A7324 /* DCTAuthAccountStoreQuery.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTAuthAccountStoreQuery.m; path = DCTAuth/DCTAuthAccountStoreQuery.m; sourceTree = "<group>"; };
+		C0ED6E7984E0CC1144FFB13320922AE7 /* DCTAuthURLOpenerOperation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthURLOpenerOperation.h; path = DCTAuth/DCTAuthURLOpenerOperation.h; sourceTree = "<group>"; };
+		C7D89FAE0528747CFE095F733B6A0E4E /* DCTAuthAccountStore+Private.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "DCTAuthAccountStore+Private.h"; path = "DCTAuth/DCTAuthAccountStore+Private.h"; sourceTree = "<group>"; };
+		CABAD75B0E6E83F310AAB72999583AAD /* DCTAuthAccountStoreQueryDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthAccountStoreQueryDelegate.h; path = DCTAuth/DCTAuthAccountStoreQueryDelegate.h; sourceTree = "<group>"; };
+		CB4607EFCA7C5F75397649E792E2AFCB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		CBB29DFAB943FF25456A5BC96A6BC658 /* DCTOAuth1Account.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTOAuth1Account.m; path = DCTAuth/DCTOAuth1Account.m; sourceTree = "<group>"; };
+		CBEABA0708887BD048CA7523E9929962 /* DCTOAuth2Account.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTOAuth2Account.h; path = DCTAuth/DCTOAuth2Account.h; sourceTree = "<group>"; };
+		D225EAAD64118368A226E59D61F7E11B /* Pods-ObserveTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ObserveTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		DB73DD0EC041C990927B2A534AC5A724 /* DCTAbstractAuthAccountProperties.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTAbstractAuthAccountProperties.m; path = DCTAuth/DCTAbstractAuthAccountProperties.m; sourceTree = "<group>"; };
+		DCFEC3886468443718509B4F77B39125 /* DCTAuthResponse.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTAuthResponse.m; path = DCTAuth/DCTAuthResponse.m; sourceTree = "<group>"; };
+		DEFF66FC7FE271BCDECE518C7962A74E /* Pods-ObserveTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ObserveTests.debug.xcconfig"; sourceTree = "<group>"; };
+		DF92C3F22A99334C7A6D9361D034D5D4 /* DCTAuthURLOpener.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTAuthURLOpener.m; path = DCTAuth/DCTAuthURLOpener.m; sourceTree = "<group>"; };
+		E522B25A9285351403EB64D36866172A /* Pods-ObserveTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ObserveTests-dummy.m"; sourceTree = "<group>"; };
+		E5F6FCA17B5CC1D5DB50DD89B3762FA6 /* DCTAuth-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "DCTAuth-umbrella.h"; sourceTree = "<group>"; };
+		E6231EC1E22453D48F3F34415979CF0B /* DCTAuthAccountStore.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthAccountStore.h; path = DCTAuth/DCTAuthAccountStore.h; sourceTree = "<group>"; };
+		E63CFEDAAE8A48F0BA803F8E2048210C /* NSString+DCTAuth.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSString+DCTAuth.h"; path = "DCTAuth/NSString+DCTAuth.h"; sourceTree = "<group>"; };
+		E69325748BE91C903EE186C90B5B1A59 /* DCTAuth.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTAuth.m; path = DCTAuth/DCTAuth.m; sourceTree = "<group>"; };
+		E6CD9A470633B9FB76D13456E9138509 /* DCTAuthRequestMethod.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthRequestMethod.h; path = DCTAuth/DCTAuthRequestMethod.h; sourceTree = "<group>"; };
+		F07D74F7CA94F5E855BEFC4BE0E58385 /* DCTOAuth1ParameterTransmission.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTOAuth1ParameterTransmission.h; path = DCTAuth/DCTOAuth1ParameterTransmission.h; sourceTree = "<group>"; };
+		F48480CDEDDF59D509086E57A0861E54 /* Pods-Observe-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Observe-dummy.m"; sourceTree = "<group>"; };
+		F5F3A6A7AB00CE230127C40EC98503B9 /* Pods-ObserveTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ObserveTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		F72853E8B99F198D4523D9044AD84521 /* DCTOAuth1Credential.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTOAuth1Credential.m; path = DCTAuth/DCTOAuth1Credential.m; sourceTree = "<group>"; };
+		FA114A88C43B96C66B32265A6E35CD91 /* DCTBasicAuthAccount.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTBasicAuthAccount.m; path = DCTAuth/DCTBasicAuthAccount.m; sourceTree = "<group>"; };
+		FA2780DE37C9D314F8C188944EA21F26 /* Pods-Observe-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Observe-Info.plist"; sourceTree = "<group>"; };
+		FAF178392C4D035A619C1E4176C07456 /* DCTAuthKeychainAccess.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthKeychainAccess.h; path = DCTAuth/DCTAuthKeychainAccess.h; sourceTree = "<group>"; };
+		FC736A40183E3525D6C82CF39F90EB79 /* DCTAuthContent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthContent.h; path = DCTAuth/DCTAuthContent.h; sourceTree = "<group>"; };
+		FDBA5EFEFA39D94D70BF0EB36A0F261E /* DCTAuthRequestMethod.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTAuthRequestMethod.m; path = DCTAuth/DCTAuthRequestMethod.m; sourceTree = "<group>"; };
+		FE66F2CB6A03A31463C1CE7ECC9F3ACA /* DCTAuthAccountSubclass.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthAccountSubclass.h; path = DCTAuth/DCTAuthAccountSubclass.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1603456F949F7D37890329411B96990E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5757398989AAA57BC083013E47DA088 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3BE70B1AEA19B3EEC233B2E0D1699137 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				630EE17F1A159366EFF6682EBAA5E5B5 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		77AB28A769DEB9B1771C91A93442ED3B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7C1438AF42B21B3A80E9BE4687770A70 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		20D5C6862D1F50EC10073BE10DC17E2D /* Pods-ObserveTests */ = {
+			isa = PBXGroup;
+			children = (
+				34C49FBA123BA487E35210AAC5B01B26 /* Pods-ObserveTests.modulemap */,
+				D225EAAD64118368A226E59D61F7E11B /* Pods-ObserveTests-acknowledgements.markdown */,
+				F5F3A6A7AB00CE230127C40EC98503B9 /* Pods-ObserveTests-acknowledgements.plist */,
+				E522B25A9285351403EB64D36866172A /* Pods-ObserveTests-dummy.m */,
+				25BEBB8FC52B2F6854878D7C092D991D /* Pods-ObserveTests-Info.plist */,
+				0A4221EB39649AE2DD60474B0C51EB8E /* Pods-ObserveTests-umbrella.h */,
+				DEFF66FC7FE271BCDECE518C7962A74E /* Pods-ObserveTests.debug.xcconfig */,
+				85D91E50492A908D19FBBC1D2D5DADE9 /* Pods-ObserveTests.release.xcconfig */,
+			);
+			name = "Pods-ObserveTests";
+			path = "Target Support Files/Pods-ObserveTests";
+			sourceTree = "<group>";
+		};
+		2281B2D9EAE5BC7FA04B9534FD890578 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				79370F4E81EC4EF538662FA421753B32 /* DCTAuth.modulemap */,
+				761E0763978940A873BDCC6090A21A43 /* DCTAuth.xcconfig */,
+				81B31E0826181CEF54E0C4BF1A2A89DA /* DCTAuth-dummy.m */,
+				387CABC671B224BDAD4AB5DBB15E7788 /* DCTAuth-Info.plist */,
+				7380742A12487AA971FAB72D82BC8ED1 /* DCTAuth-prefix.pch */,
+				E5F6FCA17B5CC1D5DB50DD89B3762FA6 /* DCTAuth-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/DCTAuth";
+			sourceTree = "<group>";
+		};
+		23B8F7B442314BCB6B78F562F65AE02F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B69356F8150A045724F4625143568C37 /* DCTAuth */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		955EDC8D362EB7DC81513EAF5FB35AF4 /* Pods-Observe */ = {
+			isa = PBXGroup;
+			children = (
+				8DE29915E21D54EDDA11F85DE8201B34 /* Pods-Observe.modulemap */,
+				B6FBDCF093B6A728FBA216F731454B38 /* Pods-Observe-acknowledgements.markdown */,
+				261F27FFD0A9F270B908B6751454FA39 /* Pods-Observe-acknowledgements.plist */,
+				F48480CDEDDF59D509086E57A0861E54 /* Pods-Observe-dummy.m */,
+				BE9E1AED7198B17A1D8AEF536D2FCADE /* Pods-Observe-frameworks.sh */,
+				FA2780DE37C9D314F8C188944EA21F26 /* Pods-Observe-Info.plist */,
+				097B382B9C7475B31DA1AF045B9D964B /* Pods-Observe-umbrella.h */,
+				6ABD2DA93A0B4B49AC9FA55B8573ACB3 /* Pods-Observe.debug.xcconfig */,
+				653642B7FA65AD259A5BD84F33CCC0F9 /* Pods-Observe.release.xcconfig */,
+			);
+			name = "Pods-Observe";
+			path = "Target Support Files/Pods-Observe";
+			sourceTree = "<group>";
+		};
+		9B055D0CFEA43187E72B03DED11F5662 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				CB4607EFCA7C5F75397649E792E2AFCB /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		A06FB97B78C6012F7E05869A5959C90D /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				955EDC8D362EB7DC81513EAF5FB35AF4 /* Pods-Observe */,
+				20D5C6862D1F50EC10073BE10DC17E2D /* Pods-ObserveTests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		A863F94247B0134E0426DB12249C45DA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				508E6C61FD7130AD0DF1226DD9D35D7E /* DCTAuth.framework */,
+				1932D1B3AD6C30D902A022E479D36F1D /* Pods_Observe.framework */,
+				440C7688674D8DBC75F88B6F03F37F54 /* Pods_ObserveTests.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B69356F8150A045724F4625143568C37 /* DCTAuth */ = {
+			isa = PBXGroup;
+			children = (
+				13A222090FAE8AF969727E210EBE7658 /* DCTAbstractAuthAccountProperties.h */,
+				DB73DD0EC041C990927B2A534AC5A724 /* DCTAbstractAuthAccountProperties.m */,
+				BCC7DB2CC99281C2958E60456233B2C3 /* DCTAuth.h */,
+				E69325748BE91C903EE186C90B5B1A59 /* DCTAuth.m */,
+				3F3502ECF04B849F09DCD2BA8349C96E /* DCTAuthAccount.h */,
+				164C54350810DF9963EB829A09489DAB /* DCTAuthAccount.m */,
+				BB1ECF8A12B16EE6BE52E3D6B41AFBF7 /* DCTAuthAccount+Private.h */,
+				1070A6B7257A0155315280C2F4B02B49 /* DCTAuthAccountCredential.h */,
+				E6231EC1E22453D48F3F34415979CF0B /* DCTAuthAccountStore.h */,
+				47CFEA8B1879A3AB6A31017E48B0B842 /* DCTAuthAccountStore.m */,
+				C7D89FAE0528747CFE095F733B6A0E4E /* DCTAuthAccountStore+Private.h */,
+				AD8CE698174F42B7E15B4BE1EB1AAA8A /* DCTAuthAccountStoreQuery.h */,
+				BEE25842B970611EE58CA25D2D7A7324 /* DCTAuthAccountStoreQuery.m */,
+				CABAD75B0E6E83F310AAB72999583AAD /* DCTAuthAccountStoreQueryDelegate.h */,
+				FE66F2CB6A03A31463C1CE7ECC9F3ACA /* DCTAuthAccountSubclass.h */,
+				FC736A40183E3525D6C82CF39F90EB79 /* DCTAuthContent.h */,
+				3A89AE5EFC24B832C10E497845DCFAF5 /* DCTAuthContent.m */,
+				386E1AF3341005A1736E55F5C45006BC /* DCTAuthContentType.h */,
+				FAF178392C4D035A619C1E4176C07456 /* DCTAuthKeychainAccess.h */,
+				5C09F781FCC2D85D9899683889A1F452 /* DCTAuthKeychainAccess.m */,
+				3D237CBE561BB31130A0AF03C4472BED /* DCTAuthMultipartData.h */,
+				A57D45F1B74EF8B4EC9EBA620F0377AF /* DCTAuthMultipartData.m */,
+				BC35B8A7D7FF915EED008DE3581AC2FB /* DCTAuthPlatform.h */,
+				8ECC42CAC47290262A126598007A47D7 /* DCTAuthPlatform.m */,
+				4244C7CD61839A810F288F3563AC580B /* DCTAuthRequest.h */,
+				9A3BC3A8E6123550BFE14249FA70D40F /* DCTAuthRequest.m */,
+				E6CD9A470633B9FB76D13456E9138509 /* DCTAuthRequestMethod.h */,
+				FDBA5EFEFA39D94D70BF0EB36A0F261E /* DCTAuthRequestMethod.m */,
+				7034E1A5DF5EE8D89DDB8134269F1E1B /* DCTAuthResponse.h */,
+				DCFEC3886468443718509B4F77B39125 /* DCTAuthResponse.m */,
+				5592C7E37B7E5A593A3C6F5885BC6973 /* DCTAuthURLOpener.h */,
+				DF92C3F22A99334C7A6D9361D034D5D4 /* DCTAuthURLOpener.m */,
+				C0ED6E7984E0CC1144FFB13320922AE7 /* DCTAuthURLOpenerOperation.h */,
+				4F108C97400CFE0229148F13A7E527D5 /* DCTAuthURLOpenerOperation.m */,
+				9375BEB831B38D5BB4EE5E8999A2273F /* DCTAuthURLRequestPerformer.h */,
+				97743F3592583107729273F1A7202E5A /* DCTAuthURLRequestPerformer.m */,
+				7B1E94B3D234FB4139894D5B8D8132EC /* DCTBasicAuthAccount.h */,
+				FA114A88C43B96C66B32265A6E35CD91 /* DCTBasicAuthAccount.m */,
+				66FEB95029B7D4D5FE631DCA15670CA7 /* DCTBasicAuthCredential.h */,
+				9AEF332B4BF61DB666FA7DF8F4361A5B /* DCTBasicAuthCredential.m */,
+				374EC290E199FCEE2E3650E0A70233E0 /* DCTOAuth1Account.h */,
+				CBB29DFAB943FF25456A5BC96A6BC658 /* DCTOAuth1Account.m */,
+				64972D4F4CD0BB3839021EEA8F84F2C7 /* DCTOAuth1Credential.h */,
+				F72853E8B99F198D4523D9044AD84521 /* DCTOAuth1Credential.m */,
+				5B40159539DA750CAFC3FB5D99B95152 /* DCTOAuth1Keys.h */,
+				720DF5BB6F76F722CD9728642F906654 /* DCTOAuth1Keys.m */,
+				F07D74F7CA94F5E855BEFC4BE0E58385 /* DCTOAuth1ParameterTransmission.h */,
+				A668EFDDE5E3062D42FBA5A397691EC6 /* DCTOAuth1Signature.h */,
+				4B0ABD13326F7A9FE331ECE137829B47 /* DCTOAuth1Signature.m */,
+				0F83911A2FDCC630EAFF4C2C395CBCD2 /* DCTOAuth1SignatureType.h */,
+				377DB887300A89024C0B4E6E04933E02 /* DCTOAuth2.h */,
+				B6A912503EFC6272AF081BDA46B5A4C0 /* DCTOAuth2.m */,
+				CBEABA0708887BD048CA7523E9929962 /* DCTOAuth2Account.h */,
+				2B60142A6B64A26A33D14A0C863E6C11 /* DCTOAuth2Account.m */,
+				2B8BCEAC57BA0EAEBCADAA6EBAB0D6E6 /* DCTOAuth2Credential.h */,
+				0AA7DFCE7E6FB3952211FB86BD68801B /* DCTOAuth2Credential.m */,
+				8D0EC36F03F314E8AAA7EDB69FB72C78 /* DCTOAuth2Keys.h */,
+				A88A5D25DF3EE7B40B55DD716833819B /* DCTOAuth2Keys.m */,
+				99ED7D38A39291F05F935C647AB2AE68 /* DCTOAuth2RequestType.h */,
+				AF75B51AE67EA0AFE8C102FBD0C9B1D9 /* DCTOAuth2RequestType.m */,
+				2CB295EC84ECF9B72686798F7B10A4A1 /* NSKeyedUnarchiver+DCTAuth.h */,
+				963D698BBD0B83146A8B3FD7B5B595AF /* NSKeyedUnarchiver+DCTAuth.m */,
+				E63CFEDAAE8A48F0BA803F8E2048210C /* NSString+DCTAuth.h */,
+				577B4ED69CC2986968851D868072F197 /* NSString+DCTAuth.m */,
+				2281B2D9EAE5BC7FA04B9534FD890578 /* Support Files */,
+			);
+			name = DCTAuth;
+			path = DCTAuth;
+			sourceTree = "<group>";
+		};
+		CF1408CF629C7361332E53B88F7BD30C = {
+			isa = PBXGroup;
+			children = (
+				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
+				D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */,
+				23B8F7B442314BCB6B78F562F65AE02F /* Pods */,
+				A863F94247B0134E0426DB12249C45DA /* Products */,
+				A06FB97B78C6012F7E05869A5959C90D /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9B055D0CFEA43187E72B03DED11F5662 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		A445D53A2E85B2F851055E1602235F09 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A64170EF458E5D63639C7BD678E8C92C /* DCTAbstractAuthAccountProperties.h in Headers */,
+				D166BC11715CB0908D40643C8D2F968C /* DCTAuth-umbrella.h in Headers */,
+				1191AE8EE99F9F36C560385744AD770A /* DCTAuth.h in Headers */,
+				ED55FD2946639B529954A5F4FC6AF679 /* DCTAuthAccount+Private.h in Headers */,
+				3A6E5DCF6ACE0BB6C43B9EFA15B6091B /* DCTAuthAccount.h in Headers */,
+				B8C25E0C0A166FC5DDEE5F517557B6F0 /* DCTAuthAccountCredential.h in Headers */,
+				A5B65D31E98B5B9BDC222CEE325F88C2 /* DCTAuthAccountStore+Private.h in Headers */,
+				A81C5701C7036D7DCD5845CB84E1DAC3 /* DCTAuthAccountStore.h in Headers */,
+				CF120B1786B9CA51A457CE933EB4F4CF /* DCTAuthAccountStoreQuery.h in Headers */,
+				87C532339C424378092EFCB351611D77 /* DCTAuthAccountStoreQueryDelegate.h in Headers */,
+				D899C4BD91A51B6C9B0C52245F545A07 /* DCTAuthAccountSubclass.h in Headers */,
+				2F62854B85FDDEA91978399886A78BBA /* DCTAuthContent.h in Headers */,
+				DC13B65F230FFA4E5472EF9AA60500B0 /* DCTAuthContentType.h in Headers */,
+				7CAA729F3C7FB3FA4183C308A8570BB8 /* DCTAuthKeychainAccess.h in Headers */,
+				7955DC060421746706CC757084875C2F /* DCTAuthMultipartData.h in Headers */,
+				BB05CC2FBDA817CABDE7C2D40841ACD5 /* DCTAuthPlatform.h in Headers */,
+				0CF1D21DFC73A7D18F8A7084B18C74A4 /* DCTAuthRequest.h in Headers */,
+				29CB250EA8F46F16C92564625431AA70 /* DCTAuthRequestMethod.h in Headers */,
+				1003B806D25A2AA96C37CB6E611E9A31 /* DCTAuthResponse.h in Headers */,
+				3458F3477C14741B98048CE330E06777 /* DCTAuthURLOpener.h in Headers */,
+				79BFAC51E4DD8A9BFB9BA94C1DABCF80 /* DCTAuthURLOpenerOperation.h in Headers */,
+				EAFE7D5B4BA8982D3C79E6D52FE3E0FA /* DCTAuthURLRequestPerformer.h in Headers */,
+				4828F6ACE25FC0F97A8C475D91E6CFE5 /* DCTBasicAuthAccount.h in Headers */,
+				D1723138E8E4B7DAB4870FB02762BD6B /* DCTBasicAuthCredential.h in Headers */,
+				5C0FE64853181A498E269D488C9B8B35 /* DCTOAuth1Account.h in Headers */,
+				494882D93479DC6B359CCA9FEC9C4DF6 /* DCTOAuth1Credential.h in Headers */,
+				BC6AE31B51D5845463A50D343E0F0985 /* DCTOAuth1Keys.h in Headers */,
+				DC15A579B1687C43B9B51AC81726E25D /* DCTOAuth1ParameterTransmission.h in Headers */,
+				14991AC6F8A07A1B765A797003BF2563 /* DCTOAuth1Signature.h in Headers */,
+				9D20D7DC8CB23A6D0BEFFB044D86FDD0 /* DCTOAuth1SignatureType.h in Headers */,
+				AA9C3576758FD4985FE8863B4DF84274 /* DCTOAuth2.h in Headers */,
+				9B5150E1451A20EFAED0AB46C30591F7 /* DCTOAuth2Account.h in Headers */,
+				D4ADBA39878C1EB70A71DE01C7C85A24 /* DCTOAuth2Credential.h in Headers */,
+				CE80D78D622A0710172FD95C17CA8BA9 /* DCTOAuth2Keys.h in Headers */,
+				F562667D80F1DB5B1447E0D35E964F0E /* DCTOAuth2RequestType.h in Headers */,
+				5BA12C9F9B79E6A561C647E5AAA6F45F /* NSKeyedUnarchiver+DCTAuth.h in Headers */,
+				148B24E370EDDC14C6E47E7A5EC2BBBC /* NSString+DCTAuth.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AF2A7BA0CD0551F69ECECC6AB2B6D484 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB3800A8D6CC16C835BC5A77C817C165 /* Pods-ObserveTests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DB0BF3B764B3F0F63ED4B76D94A09458 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB427555773F75DB51F9440C57AE7071 /* Pods-Observe-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		7F52C44EE322B9FAF3D2B1CFDA31075E /* Pods-ObserveTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 64704ADF2AC6B78785993B1EDBD8BFE2 /* Build configuration list for PBXNativeTarget "Pods-ObserveTests" */;
+			buildPhases = (
+				AF2A7BA0CD0551F69ECECC6AB2B6D484 /* Headers */,
+				9D68AFAC88DEE416B2B59D46FD2DA833 /* Sources */,
+				3BE70B1AEA19B3EEC233B2E0D1699137 /* Frameworks */,
+				F3E3A5870152066C2CE59B461C16F868 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4CBD39CA9A8064D6F19F9AC771D6293A /* PBXTargetDependency */,
+			);
+			name = "Pods-ObserveTests";
+			productName = "Pods-ObserveTests";
+			productReference = 440C7688674D8DBC75F88B6F03F37F54 /* Pods_ObserveTests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		84B23F27937C3903E6840EC7302881C5 /* DCTAuth */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0079E0F3C0ACE3B53324E617F6677A94 /* Build configuration list for PBXNativeTarget "DCTAuth" */;
+			buildPhases = (
+				A445D53A2E85B2F851055E1602235F09 /* Headers */,
+				BD35745CD735C59213689F37E98456DC /* Sources */,
+				1603456F949F7D37890329411B96990E /* Frameworks */,
+				8A23929553C5E714AD32F56F35650D96 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DCTAuth;
+			productName = DCTAuth;
+			productReference = 508E6C61FD7130AD0DF1226DD9D35D7E /* DCTAuth.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		D053799873D21312F32B5B1E0D95644F /* Pods-Observe */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7EA7A68316DF0B24B81549F77A755111 /* Build configuration list for PBXNativeTarget "Pods-Observe" */;
+			buildPhases = (
+				DB0BF3B764B3F0F63ED4B76D94A09458 /* Headers */,
+				4BCFEA286779775085D56C2997CE7A11 /* Sources */,
+				77AB28A769DEB9B1771C91A93442ED3B /* Frameworks */,
+				CB37ACA9910B9E83DD032AE54C115534 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F9DC1710B419C7574BDFC8DE603A088D /* PBXTargetDependency */,
+			);
+			name = "Pods-Observe";
+			productName = "Pods-Observe";
+			productReference = 1932D1B3AD6C30D902A022E479D36F1D /* Pods_Observe.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0930;
+				LastUpgradeCheck = 0930;
+			};
+			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
+			productRefGroup = A863F94247B0134E0426DB12249C45DA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				84B23F27937C3903E6840EC7302881C5 /* DCTAuth */,
+				D053799873D21312F32B5B1E0D95644F /* Pods-Observe */,
+				7F52C44EE322B9FAF3D2B1CFDA31075E /* Pods-ObserveTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8A23929553C5E714AD32F56F35650D96 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB37ACA9910B9E83DD032AE54C115534 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F3E3A5870152066C2CE59B461C16F868 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4BCFEA286779775085D56C2997CE7A11 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DE987F669021D1E271CC59A2BBC24C54 /* Pods-Observe-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9D68AFAC88DEE416B2B59D46FD2DA833 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DFFCADE9CDC3B24BAD8045510D7BA8EC /* Pods-ObserveTests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD35745CD735C59213689F37E98456DC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				38C7FDB67F6FDA84EF1F4C5D7DDB85F4 /* DCTAbstractAuthAccountProperties.m in Sources */,
+				F02088D5BA8BC161FA13073CEFE8D4BD /* DCTAuth-dummy.m in Sources */,
+				15A0ADE4E4668A38895E7F47233DFBFF /* DCTAuth.m in Sources */,
+				C3E353C1A19872DD6D4A853B78846AD1 /* DCTAuthAccount.m in Sources */,
+				6B58B57C80FE94FB74E7D97221DFA88A /* DCTAuthAccountStore.m in Sources */,
+				DC6881553D0D42EF23F35067328AFE59 /* DCTAuthAccountStoreQuery.m in Sources */,
+				19992F515108FE1C3ED038F894F4EDCA /* DCTAuthContent.m in Sources */,
+				3E026FCD9B3709D990729EDC3B64DB26 /* DCTAuthKeychainAccess.m in Sources */,
+				F9144BB80AD035119E1D8887BCC47AD7 /* DCTAuthMultipartData.m in Sources */,
+				4B18E8B88B249354440B1EB625793906 /* DCTAuthPlatform.m in Sources */,
+				B2A0F2117EB49AA8B0804F08CC9354DD /* DCTAuthRequest.m in Sources */,
+				BE4CBF892C6B805E21D2520F6C2918F0 /* DCTAuthRequestMethod.m in Sources */,
+				9C9D7A7A06D0CF7D3D0A4F46E3114791 /* DCTAuthResponse.m in Sources */,
+				C9BF0ED96FCC507732E3872BA6A7E14A /* DCTAuthURLOpener.m in Sources */,
+				0B6BB83CA84782A671D4BF2C37BF62EF /* DCTAuthURLOpenerOperation.m in Sources */,
+				959B22D07D29D85016A16A43275DDC56 /* DCTAuthURLRequestPerformer.m in Sources */,
+				A366296FBA21C4702B0AED10143A4A86 /* DCTBasicAuthAccount.m in Sources */,
+				0A925A19D2FF1058EEFE731E8A6C73B4 /* DCTBasicAuthCredential.m in Sources */,
+				03CF335CEEBD1214EDB3609B080C2952 /* DCTOAuth1Account.m in Sources */,
+				1FC638898C5B6573CA9F172535B688C9 /* DCTOAuth1Credential.m in Sources */,
+				1F565E70EF554579E13D7BF40B4332BD /* DCTOAuth1Keys.m in Sources */,
+				CB62F210156F0E41D6FA47F091637339 /* DCTOAuth1Signature.m in Sources */,
+				6FA66CC7BB7E2C33437CA096EC026E2E /* DCTOAuth2.m in Sources */,
+				94D7D065BDB7080DA7F894398882770A /* DCTOAuth2Account.m in Sources */,
+				3C7E83506CF3EF8542D7D21350B850CE /* DCTOAuth2Credential.m in Sources */,
+				45DFD0B73DC138097BE83F4AAA231109 /* DCTOAuth2Keys.m in Sources */,
+				4AB74A8C2253992769BECB2F96D04106 /* DCTOAuth2RequestType.m in Sources */,
+				4E5831976AEEB56C5607FD3628316A08 /* NSKeyedUnarchiver+DCTAuth.m in Sources */,
+				A6EC7DAD95F988F4E2B64B1C61E35550 /* NSString+DCTAuth.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4CBD39CA9A8064D6F19F9AC771D6293A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Pods-Observe";
+			target = D053799873D21312F32B5B1E0D95644F /* Pods-Observe */;
+			targetProxy = 4875E14283AFD9C91FBD1F5E40982152 /* PBXContainerItemProxy */;
+		};
+		F9DC1710B419C7574BDFC8DE603A088D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = DCTAuth;
+			target = 84B23F27937C3903E6840EC7302881C5 /* DCTAuth */;
+			targetProxy = 1B0025DD278C888746FFC4CA01184F0A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		05DF210AC65EBB0E593AAF976B2C2177 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 4.2;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Release;
+		};
+		0E48C703DE9409B5225FB53983AFDA74 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 85D91E50492A908D19FBBC1D2D5DADE9 /* Pods-ObserveTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-ObserveTests/Pods-ObserveTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-ObserveTests/Pods-ObserveTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		421ECB1396280A8D83853C3DDBED1700 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		67443F9F5A7D2F79BBE84518B20F73BA /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 761E0763978940A873BDCC6090A21A43 /* DCTAuth.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/DCTAuth/DCTAuth-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/DCTAuth/DCTAuth-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/DCTAuth/DCTAuth.modulemap";
+				PRODUCT_MODULE_NAME = DCTAuth;
+				PRODUCT_NAME = DCTAuth;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		6ED4C06908AA2C2D35464AE5837D5C74 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 761E0763978940A873BDCC6090A21A43 /* DCTAuth.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/DCTAuth/DCTAuth-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/DCTAuth/DCTAuth-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/DCTAuth/DCTAuth.modulemap";
+				PRODUCT_MODULE_NAME = DCTAuth;
+				PRODUCT_NAME = DCTAuth;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		77E07439A6E8EB08BA2A7E7EE57AED02 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 653642B7FA65AD259A5BD84F33CCC0F9 /* Pods-Observe.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Observe/Pods-Observe-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Observe/Pods-Observe.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		B746F34510A45314BADBBD1231340D42 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6ABD2DA93A0B4B49AC9FA55B8573ACB3 /* Pods-Observe.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Observe/Pods-Observe-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Observe/Pods-Observe.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		BD02F43A7331E65F2D440858996AE2F7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DEFF66FC7FE271BCDECE518C7962A74E /* Pods-ObserveTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-ObserveTests/Pods-ObserveTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-ObserveTests/Pods-ObserveTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0079E0F3C0ACE3B53324E617F6677A94 /* Build configuration list for PBXNativeTarget "DCTAuth" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6ED4C06908AA2C2D35464AE5837D5C74 /* Debug */,
+				67443F9F5A7D2F79BBE84518B20F73BA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				421ECB1396280A8D83853C3DDBED1700 /* Debug */,
+				05DF210AC65EBB0E593AAF976B2C2177 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		64704ADF2AC6B78785993B1EDBD8BFE2 /* Build configuration list for PBXNativeTarget "Pods-ObserveTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BD02F43A7331E65F2D440858996AE2F7 /* Debug */,
+				0E48C703DE9409B5225FB53983AFDA74 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7EA7A68316DF0B24B81549F77A755111 /* Build configuration list for PBXNativeTarget "Pods-Observe" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B746F34510A45314BADBBD1231340D42 /* Debug */,
+				77E07439A6E8EB08BA2A7E7EE57AED02 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+}

@@ -1,0 +1,18 @@
+{
+    "icon": "maki-emergency-phone",
+    "fields": [
+        "ref",
+        "operator",
+        "covered",
+        "indoor",
+        "booth"
+    ],
+    "geometry": [
+        "point",
+        "vertex"
+    ],
+    "tags": {
+        "emergency": "phone"
+    },
+    "name": "Emergency Phone"
+}

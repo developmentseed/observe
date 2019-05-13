@@ -1,0 +1,43 @@
+{
+    "icon": "maki-dentist",
+    "fields": [
+        "name",
+        "operator",
+        "healthcare/speciality",
+        "address",
+        "building_area",
+        "opening_hours"
+    ],
+    "moreFields": [
+        "payment_multi",
+        "website",
+        "phone",
+        "email",
+        "fax",
+        "wheelchair"
+    ],
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "terms": [
+        "tooth",
+        "teeth"
+    ],
+    "tags": {
+        "amenity": "dentist"
+    },
+    "addTags": {
+        "amenity": "dentist",
+        "healthcare": "dentist"
+    },
+    "removeTags": {
+        "amenity": "dentist",
+        "healthcare": "dentist"
+    },
+    "reference": {
+        "key": "amenity",
+        "value": "dentist"
+    },
+    "name": "Dentist"
+}

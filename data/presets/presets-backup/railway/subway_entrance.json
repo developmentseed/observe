@@ -1,0 +1,18 @@
+{
+    "icon": "maki-entrance",
+    "geometry": [
+        "point",
+        "vertex"
+    ],
+    "fields": [
+        "name"
+    ],
+    "tags": {
+        "railway": "subway_entrance"
+    },
+    "terms": [
+        "metro",
+        "transit"
+    ],
+    "name": "Subway Entrance"
+}

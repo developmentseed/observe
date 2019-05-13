@@ -1,0 +1,34 @@
+{
+    "icon": "maki-aerialway",
+    "fields": [
+        "{public_transport/station}",
+        "aerialway/access",
+        "aerialway/summer/access"
+    ],
+    "moreFields": [
+        "{public_transport/station}"
+    ],
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "tags": {
+        "public_transport": "station",
+        "aerialway": "yes"
+    },
+    "reference": {
+        "key": "aerialway",
+        "value": "station"
+    },
+    "terms": [
+        "aerialway",
+        "cable car",
+        "public transit",
+        "public transportation",
+        "station",
+        "terminal",
+        "transit",
+        "transportation"
+    ],
+    "name": "Aerialway Station"
+}

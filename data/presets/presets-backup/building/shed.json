@@ -1,0 +1,11 @@
+{
+    "icon": "maki-home",
+    "geometry": [
+        "area"
+    ],
+    "tags": {
+        "building": "shed"
+    },
+    "matchScore": 0.5,
+    "name": "Shed"
+}

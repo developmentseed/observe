@@ -1,0 +1,13 @@
+{
+    "fields": [
+        "name"
+    ],
+    "geometry": [
+        "area"
+    ],
+    "tags": {
+        "area": "yes"
+    },
+    "name": "Area",
+    "matchScore": 0.1
+}

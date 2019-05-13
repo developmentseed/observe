@@ -1,0 +1,18 @@
+{
+    "icon": "maki-picnic-site",
+    "fields": [
+        "material",
+        "lit",
+        "bench"
+    ],
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "leisure": "picnic_table"
+    },
+    "terms": [
+        "bench"
+    ],
+    "name": "Picnic Table"
+}

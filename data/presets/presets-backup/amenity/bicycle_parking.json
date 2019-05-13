@@ -1,0 +1,27 @@
+{
+    "icon": "maki-bicycle",
+    "fields": [
+        "bicycle_parking",
+        "capacity",
+        "operator",
+        "covered",
+        "access_simple",
+        "fee"
+    ],
+    "moreFields": [
+        "payment_multi",
+        "covered"
+    ],
+    "geometry": [
+        "point",
+        "vertex",
+        "area"
+    ],
+    "terms": [
+        "bike"
+    ],
+    "tags": {
+        "amenity": "bicycle_parking"
+    },
+    "name": "Bicycle Parking"
+}

@@ -1,0 +1,15 @@
+{
+    "icon": "maki-building",
+    "fields": [
+        "{building}",
+        "smoking"
+    ],
+    "geometry": [
+        "area"
+    ],
+    "tags": {
+        "building": "civic"
+    },
+    "matchScore": 0.5,
+    "name": "Civic Building"
+}

@@ -1,0 +1,24 @@
+{
+    "icon": "temaki-post_box",
+    "fields": [
+        "operator",
+        "collection_times",
+        "drive_through",
+        "ref"
+    ],
+    "moreFields": [
+        "wheelchair"
+    ],
+    "geometry": [
+        "point",
+        "vertex"
+    ],
+    "tags": {
+        "amenity": "post_box"
+    },
+    "terms": [
+        "letter",
+        "post"
+    ],
+    "name": "Mailbox"
+}

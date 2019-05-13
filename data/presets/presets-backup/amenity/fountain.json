@@ -1,0 +1,16 @@
+{
+    "icon": "temaki-fountain",
+    "fields": [
+        "name",
+        "operator",
+        "lit"
+    ],
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "tags": {
+        "amenity": "fountain"
+    },
+    "name": "Fountain"
+}

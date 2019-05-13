@@ -1,0 +1,11 @@
+{
+    "fields": [
+        "name"
+    ],
+    "geometry": [
+        "line"
+    ],
+    "tags": {},
+    "name": "Line",
+    "matchScore": 0.1
+}

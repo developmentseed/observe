@@ -1,0 +1,38 @@
+{
+    "icon": "maki-toilet",
+    "fields": [
+        "toilets/disposal",
+        "building_area",
+        "access_simple",
+        "gender",
+        "diaper",
+        "wheelchair"
+    ],
+    "moreFields": [
+        "fee",
+        "opening_hours",
+        "operator",
+        "payment_multi"
+    ],
+    "geometry": [
+        "point",
+        "vertex",
+        "area"
+    ],
+    "terms": [
+        "bathroom",
+        "restroom",
+        "outhouse",
+        "privy",
+        "head",
+        "lavatory",
+        "latrine",
+        "water closet",
+        "WC",
+        "W.C."
+    ],
+    "tags": {
+        "amenity": "toilets"
+    },
+    "name": "Toilets"
+}

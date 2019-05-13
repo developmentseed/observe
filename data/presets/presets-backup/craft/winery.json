@@ -1,0 +1,11 @@
+{
+    "icon": "maki-alcohol-shop",
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "tags": {
+        "craft": "winery"
+    },
+    "name": "Winery"
+}

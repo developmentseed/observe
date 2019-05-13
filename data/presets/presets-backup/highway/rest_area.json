@@ -1,0 +1,28 @@
+{
+    "icon": "maki-car",
+    "fields": [
+        "name",
+        "operator",
+        "opening_hours"
+    ],
+    "moreFields": [
+        "address",
+        "website",
+        "phone",
+        "email",
+        "fax",
+        "wheelchair"
+    ],
+    "geometry": [
+        "point",
+        "vertex",
+        "area"
+    ],
+    "tags": {
+        "highway": "rest_area"
+    },
+    "terms": [
+        "rest stop"
+    ],
+    "name": "Rest Area"
+}

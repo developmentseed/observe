@@ -1,0 +1,16 @@
+{
+    "icon": "maki-marker-stroked",
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "tags": {
+        "craft": "jeweler"
+    },
+    "reference": {
+        "key": "shop",
+        "value": "jewelry"
+    },
+    "name": "Jeweler",
+    "searchable": false
+}

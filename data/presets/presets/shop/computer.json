@@ -1,0 +1,18 @@
+{
+    "icon": "maki-shop",
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "tags": {
+        "shop": "computer"
+    },
+    "terms": [
+        "desktop",
+        "laptop",
+        "hardware",
+        "operating system",
+        "software"
+    ],
+    "name": "Computer Store"
+}

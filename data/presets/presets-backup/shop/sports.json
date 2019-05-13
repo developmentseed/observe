@@ -1,0 +1,14 @@
+{
+    "icon": "maki-shop",
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "tags": {
+        "shop": "sports"
+    },
+    "terms": [
+        "athletics"
+    ],
+    "name": "Sporting Goods Store"
+}

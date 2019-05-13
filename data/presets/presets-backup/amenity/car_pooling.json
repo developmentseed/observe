@@ -1,0 +1,26 @@
+{
+    "icon": "maki-car",
+    "fields": [
+        "name",
+        "operator",
+        "capacity",
+        "address",
+        "opening_hours",
+        "lit"
+    ],
+    "moreFields": [
+        "website",
+        "phone",
+        "email",
+        "fax",
+        "wheelchair"
+    ],
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "tags": {
+        "amenity": "car_pooling"
+    },
+    "name": "Car Pooling"
+}

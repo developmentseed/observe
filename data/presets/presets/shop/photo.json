@@ -1,0 +1,15 @@
+{
+    "icon": "maki-attraction",
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "terms": [
+        "camera",
+        "film"
+    ],
+    "tags": {
+        "shop": "photo"
+    },
+    "name": "Photography Store"
+}

@@ -1,0 +1,18 @@
+{
+    "icon": "maki-information",
+    "fields": [
+        "information",
+        "operator",
+        "address",
+        "building_area"
+    ],
+    "geometry": [
+        "point",
+        "vertex",
+        "area"
+    ],
+    "tags": {
+        "tourism": "information"
+    },
+    "name": "Information"
+}

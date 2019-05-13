@@ -1,0 +1,29 @@
+{
+    "icon": "maki-school",
+    "fields": [
+        "name",
+        "operator",
+        "address"
+    ],
+    "moreFields": [
+        "opening_hours",
+        "payment_multi",
+        "website",
+        "phone",
+        "email",
+        "fax",
+        "wheelchair"
+    ],
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "terms": [
+        "kindergarden",
+        "pre-school"
+    ],
+    "tags": {
+        "amenity": "kindergarten"
+    },
+    "name": "Preschool/Kindergarten Grounds"
+}

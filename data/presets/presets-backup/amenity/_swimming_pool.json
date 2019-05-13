@@ -1,0 +1,17 @@
+{
+    "icon": "maki-swimming",
+    "geometry": [
+        "point",
+        "vertex",
+        "area"
+    ],
+    "tags": {
+        "amenity": "swimming_pool"
+    },
+    "reference": {
+        "key": "leisure",
+        "value": "swimming_pool"
+    },
+    "name": "Swimming Pool",
+    "searchable": false
+}

@@ -1,0 +1,12 @@
+{
+    "icon": "iD-category-water",
+    "geometry": "line",
+    "name": "Water Features",
+    "members": [
+        "waterway/river",
+        "waterway/stream",
+        "waterway/canal",
+        "waterway/ditch",
+        "waterway/drain"
+    ]
+}

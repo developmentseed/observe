@@ -1,0 +1,6 @@
+{
+  "presets": {
+    "building": {"icon": "maki-home", "fields": ["name", "building", "levels", "height", "address"], "moreFields": ["architect", "building/material", "layer", "roof/colour", "smoking", "wheelchair"], "geometry": ["point", "area"], "tags": {"building": "*"}, "matchScore": 0.6, "terms": [], "name": "Building"},
+    "point": {"fields": ["name"], "geometry": ["point"], "tags": {}, "name": "Point", "matchScore": 0.1}
+  }
+}
