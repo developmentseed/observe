@@ -34,7 +34,7 @@ Read about the changes to this project in [CHANGELOG.md](CHANGELOG.md). The form
 
 ## Contact
 
-Observe is being built by @geohacker, @batpad, @mojodna, @sethvincet, and @ricardomestre at Development Seed. Report issues or ask questions via the [issue tracker](https://github.com/developmentseed/observe/issues)
+Observe is being built by @geohacker, @batpad, @mojodna, @sethvincent, and @ricardomestre at Development Seed. Report issues or ask questions via the [issue tracker](https://github.com/developmentseed/observe/issues)
 
 ## License
 
