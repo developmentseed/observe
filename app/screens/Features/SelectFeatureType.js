@@ -164,6 +164,11 @@ class SelectFeatureType extends React.Component {
               contentWidth={win.width - 32}
               inputStyle={{ paddingBottom: 8 }}
               keyboardShouldPersist={false}
+              placeholder='Search for presets'
+              searchIconCollapsedMargin={55}
+              searchIconExpandedMargin={10}
+              placeholderCollapsedMargin={45}
+              placeholderExpandedMargin={20}
             />
           </SearchWrapper>
           {this.renderPresets()}
