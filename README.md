@@ -36,6 +36,10 @@ It's important that this project contributes to a friendly, safe, and welcoming 
 
 Read about the changes to this project in [CHANGELOG.md](CHANGELOG.md). The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## History
+
+Observe is a project that was conceptualized a few years ago in collaboration with [Digital Democracy](https://www.digital-democracy.org/) and [GFDRR](https://www.gfdrr.org/en). Back then react-native wasn't in a good place for building something production ready. A lot of what you see in Observe currently, would not have been possible without their support.
+
 ## Contact
 
 Observe is being built by @geohacker, @batpad, @mojodna, @sethvincent, and @ricardomestre at Development Seed. Report issues or ask questions via the [issue tracker](https://github.com/developmentseed/observe/issues)
