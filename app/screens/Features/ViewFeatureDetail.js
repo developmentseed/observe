@@ -9,10 +9,8 @@ import PageWrapper from '../../components/PageWrapper'
 
 import getFeatureFields from '../../utils/get-feature-fields'
 import { metaKeys } from '../../utils/uninterestingKeys'
-import nextTick from '../../utils/next-tick'
 import _partition from 'lodash.partition'
 import orderPresets from '../../utils/order-presets'
-import SaveEditDialog from '../../components/SaveEditDialog'
 import { deleteFeature, uploadEdits } from '../../actions/edit'
 
 const FieldsList = styled.SectionList`
@@ -93,8 +91,17 @@ class ViewFeatureDetail extends React.Component {
     )
   }
 
-  render () {
+  saveDelete () {
     const { navigation, deleteFeature, uploadEdits } = this.props
+    const { state: { params: { feature } } } = navigation
+    Keyboard.dismiss()
+
+    deleteFeature(feature)
+    navigation.navigate('Explore')
+  }
+
+  render () {
+    const { navigation } = this.props
     const { state: { params: { feature } } } = navigation
 
     const title = feature.properties.name || feature.id
@@ -106,21 +113,6 @@ class ViewFeatureDetail extends React.Component {
     const metaSection = { 'title': 'Metadata', 'data': meta }
     const presetSection = { 'title': 'Attributes', 'data': orderPresets(presets) }
 
-    const cancelEditDialog = () => {
-      this.setState({ dialogVisible: false })
-    }
-
-    const saveEditDialog = async comment => {
-      cancelEditDialog()
-      Keyboard.dismiss()
-
-      await nextTick()
-
-      deleteFeature(feature, comment)
-      uploadEdits([feature.id])
-      navigation.navigate('Explore', { message: 'Your edit is being processed.', mode: 'explore' })
-    }
-
     const headerActions = [
       {
         name: 'pencil',
@@ -131,7 +123,7 @@ class ViewFeatureDetail extends React.Component {
       {
         name: 'trash-bin',
         onPress: () => {
-          this.setState({ dialogVisible: true })
+          this.saveDelete()
         }
       }
     ]
@@ -142,7 +134,6 @@ class ViewFeatureDetail extends React.Component {
         <PageWrapper>
           {this.renderFields([presetSection, metaSection])}
         </PageWrapper>
-        <SaveEditDialog visible={this.state.dialogVisible} cancel={cancelEditDialog} save={saveEditDialog} action='delete' />
       </Container>
     )
   }

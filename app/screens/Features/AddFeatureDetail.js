@@ -125,28 +125,37 @@ class EditFeatureDetail extends React.Component {
     })
   }
 
-  cancelEditDialog = () => {
-    this.setState({ dialogVisible: false })
-  }
+  // cancelEditDialog = () => {
+  //   this.setState({ dialogVisible: false })
+  // }
 
-  saveEditDialog = async (comment) => {
-    const { navigation, addFeature, uploadEdits } = this.props
+  // saveEditDialog = async (comment) => {
+  //   const { navigation, addFeature, uploadEdits } = this.props
+  //   const { state: { params: { feature } } } = navigation
+
+  //   this.cancelEditDialog()
+  //   Keyboard.dismiss()
+
+  //   // if we don't do this, the save dialog never clears itself
+  //   await nextTick()
+
+  //   feature.properties = this.getFeatureProperties()
+
+  //   // call addFeature action with feature
+  //   addFeature(feature, comment)
+
+  //   // call action to attempt to upload the edit
+  //   uploadEdits([feature.id])
+  //   navigation.navigate('Explore', { message: 'Your edit is being processed.', mode: 'explore' })
+  // }
+
+  saveFeature = () => {
+    const { navigation, addFeature } = this.props
     const { state: { params: { feature } } } = navigation
-
-    this.cancelEditDialog()
     Keyboard.dismiss()
-
-    // if we don't do this, the save dialog never clears itself
-    await nextTick()
-
     feature.properties = this.getFeatureProperties()
-
-    // call addFeature action with feature
-    addFeature(feature, comment)
-
-    // call action to attempt to upload the edit
-    uploadEdits([feature.id])
-    navigation.navigate('Explore', { message: 'Your edit is being processed.', mode: 'explore' })
+    addFeature(feature)
+    navigation.navigate('Explore', { mode: 'explore' })
   }
 
   isFeatureEmpty () {
@@ -382,7 +391,7 @@ class EditFeatureDetail extends React.Component {
       headerActions.push({
         name: 'tick',
         onPress: () => {
-          this.setState({ dialogVisible: true })
+          this.saveFeature()
         }
       })
     }

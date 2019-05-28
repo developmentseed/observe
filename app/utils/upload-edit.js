@@ -8,6 +8,7 @@ import {
 } from '../services/api'
 
 import { version } from '../../package.json'
+
 /**
  * Takes a single edit object and creates a changeset for it and uploads it to the OSM API
  * @param {Object} edit - edit object with `id`, `oldFeature`, `newFeature`, `type`

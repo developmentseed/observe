@@ -1,9 +1,18 @@
 import * as types from './actionTypes'
-import uploadEdit from '../utils/upload-edit'
+// import uploadEdit from '../utils/upload-edit'
 import { featureToTiles } from '../utils/bbox'
 import { setNotification } from './notification'
 import { fetchDataForTile, setSelectedFeatures } from './map'
 import { getAllRetriable } from '../utils/edit-utils'
+import {
+  createChangeset,
+  uploadOsmChange,
+  closeChangeset,
+  getMemberNodes
+} from '../services/api'
+import { version } from '../../package.json'
+import getChangesetXML from '../utils/get-changeset-xml'
+import editToOSMChange from '../utils//edit-to-osm-change'
 
 /**
  * Retries all retriable edits in the current state
@@ -18,28 +27,62 @@ export function retryAllEdits () {
 
 /**
  * @param {Array<String>} editIds - Array of edit ids (feature ids) to be uploaded
+ * @param {String} changesetComment - changeset comment for edits
  */
-export function uploadEdits (editIds) {
+export function uploadEdits (editIds, changesetComment = 'Edited on Observe') {
+  console.log('calling uploadEdits')
   const fn = async (dispatch, getState) => {
+    console.log('really calling uploadEdits')
     const { isAuthorized } = getState().authorization
 
     if (!isAuthorized) {
+      console.log('is authorized', isAuthorized)
       return
     }
 
+    let changesetId
     const modifiedTiles = new Set()
 
+    // create changeset
+    const changesetTags = {
+      created_by: `Observe-${version}`,
+      comment: changesetComment
+    }
+    const changesetXML = getChangesetXML(changesetTags)
+
+    try {
+      changesetId = createChangeset(changesetXML)
+    } catch (e) {
+      dispatch({ level: 'error', message: 'Failed to create changeset.' })
+    }
+
+    console.log('changeset id', changesetId)
+    // upload each edit to that changeset
     for (let editId of editIds) {
+      console.log('uploading edit', editId)
       const allEdits = getState().edit.edits
       const edit = allEdits.find(e => e.id === editId)
 
       // if the edit no longer exists or is already uploading, do nothing for it
       if (!edit || edit.status === 'uploading') {
+        console.log('skipping edit!')
         continue
       }
+      console.log('starting edit upload')
       dispatch(startEditUpload(edit))
+      let [featureType, featureId] = edit.id.split('/')
+      let memberNodes = null
+      if (edit.type === 'delete' && featureType === 'way') {
+        try {
+          memberNodes = await getMemberNodes(featureId, edit.oldFeature.properties.version)
+        } catch (e) {
+          dispatch(editUploadFailed(edit, e))
+        }
+      }
+      const osmChangeXML = editToOSMChange(edit, changesetId, memberNodes)
+      console.log('osm change xml', osmChangeXML)
       try {
-        const changesetId = await uploadEdit(edit)
+        await uploadOsmChange(osmChangeXML, changesetId)
         dispatch(editUploaded(edit, changesetId))
         const feature = edit.type === 'delete' ? edit.oldFeature : edit.newFeature
 
@@ -52,6 +95,13 @@ export function uploadEdits (editIds) {
       }
     }
 
+    try {
+      console.log('closing changeset', changesetId)
+      closeChangeset(changesetId)
+    } catch (e) {
+      dispatch(failedClosingChangeset(changesetId))
+    }
+
     // refresh data
     await Promise.all(
       Array.from(modifiedTiles).map(tile =>
@@ -61,7 +111,7 @@ export function uploadEdits (editIds) {
   }
 
   // skip when offline
-  fn.interceptInOffline = true
+  // fn.interceptInOffline = true
 
   return fn
 }
@@ -104,37 +154,34 @@ export function editUploaded (edit, changesetId) {
   }
 }
 
-export function addFeature (feature, comment = '') {
+export function addFeature (feature) {
   return {
     type: types.ADD_FEATURE,
     feature,
     id: feature.id,
-    comment,
     timestamp: Number(new Date())
   }
 }
 
-export function deleteFeature (feature, comment = '') {
+export function deleteFeature (feature) {
   return async dispatch => {
     dispatch({
       type: types.DELETE_FEATURE,
       feature,
       id: feature.id,
-      comment,
       timestamp: Number(new Date())
     })
     dispatch(setSelectedFeatures([]))
   }
 }
 
-export function editFeature (oldFeature, newFeature, comment = '') {
+export function editFeature (oldFeature, newFeature) {
   return async dispatch => {
     dispatch({
       type: types.EDIT_FEATURE,
       oldFeature,
       newFeature,
       id: newFeature.id,
-      comment,
       timestamp: Number(new Date())
     })
     dispatch(setSelectedFeatures([]))

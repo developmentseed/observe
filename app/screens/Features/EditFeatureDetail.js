@@ -16,7 +16,6 @@ import FeatureDetailHeader from '../../components/FeatureDetailHeader'
 import { getFieldInput, ReadOnlyField } from '../../components/Input'
 import objToArray from '../../utils/object-to-array'
 import { metaKeys, nonpropKeys } from '../../utils/uninterestingKeys'
-import nextTick from '../../utils/next-tick'
 import SaveEditDialog from '../../components/SaveEditDialog'
 import getFields from '../../utils/get-fields'
 import { getParentPreset } from '../../utils/get-parent-preset'
@@ -177,23 +176,32 @@ class EditFeatureDetail extends React.Component {
     this.setState({ dialogVisible: false })
   }
 
-  saveEditDialog = async (comment) => {
-    const { navigation, editFeature, uploadEdits } = this.props
+  // saveEditDialog = async (comment) => {
+  //   const { navigation, editFeature, uploadEdits } = this.props
+  //   const { state: { params: { feature } } } = navigation
+
+  //   this.cancelEditDialog()
+  //   const changesetComment = comment
+  //   Keyboard.dismiss()
+
+  //   // if we don't do this, the save dialog never clears itself
+  //   await nextTick()
+
+  //   const newFeature = this.getNewFeature()
+
+  //   editFeature(feature, newFeature, changesetComment)
+  //   uploadEdits([feature.id])
+
+  //   navigation.navigate('Explore', { message: 'Your edit is being processed.', mode: 'explore' })
+  // }
+
+  saveFeature () {
+    const { navigation, editFeature } = this.props
     const { state: { params: { feature } } } = navigation
-
-    this.cancelEditDialog()
-    const changesetComment = comment
     Keyboard.dismiss()
-
-    // if we don't do this, the save dialog never clears itself
-    await nextTick()
-
     const newFeature = this.getNewFeature()
-
-    editFeature(feature, newFeature, changesetComment)
-    uploadEdits([feature.id])
-
-    navigation.navigate('Explore', { message: 'Your edit is being processed.', mode: 'explore' })
+    editFeature(feature, newFeature)
+    navigation.navigate('Explore', { mode: 'explore' })
   }
 
   getNewFeature () {
@@ -438,7 +446,7 @@ class EditFeatureDetail extends React.Component {
       headerActions.push({
         name: 'tick',
         onPress: () => {
-          this.setState({ dialogVisible: true })
+          this.saveFeature()
         }
       })
     }
