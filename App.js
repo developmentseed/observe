@@ -22,7 +22,6 @@ import SelectFeatureType from './app/screens/Features/SelectFeatureType'
 import AuthorizationManager from './app/components/AuthorizationManager'
 import Drawer from './app/components/Drawer'
 import Notification from './app/components/Notification'
-import UploadManager from './app/components/UploadManager'
 import { preAuth } from './app/services/auth'
 import { ReduxNetworkProvider } from 'react-native-offline'
 import Icon from './app/components/Collecticons'
@@ -138,7 +137,6 @@ export default class App extends Component {
             <AppContainer persistenceKey={persistenceKey} />
             <Notification />
             <AuthorizationManager />
-            <UploadManager />
           </ReduxNetworkProvider>
         </PersistGate>
       </Provider>
