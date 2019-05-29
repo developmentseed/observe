@@ -6,6 +6,7 @@ import Container from '../../components/Container'
 import SaveEditDialog from '../../components/SaveEditDialog'
 import UserContributionsList from '../../components/UserContributionsList'
 import { uploadEdits, clearUploadedEdits, retryAllEdits } from '../../actions/edit'
+import { setNotification } from '../../actions/notification'
 import { getAllRetriable } from '../../utils/edit-utils'
 
 class UserContributionsListScreen extends React.Component {
@@ -29,6 +30,25 @@ class UserContributionsListScreen extends React.Component {
     this.setState({ dialogVisible: false })
   }
 
+  uploadAll = () => {
+    const { isConnected, isAuthorized, setNotification } = this.props
+    if (!isConnected) {
+      setNotification({
+        level: 'error',
+        message: 'You need to be online to upload edits'
+      })
+      return
+    }
+    if (!isAuthorized) {
+      setNotification({
+        level: 'error',
+        message: 'You need to be signed in to upload edits'
+      })
+      return
+    }
+    this.setState({ dialogVisible: true })
+  }
+
   saveEdits = async (comment) => {
     const { edits } = this.props
     const retryableEdits = getAllRetriable(edits).map(edit => edit.id)
@@ -44,7 +64,7 @@ class UserContributionsListScreen extends React.Component {
       {
         name: 'upload-2',
         onPress: () => {
-          this.setState({ dialogVisible: true })
+          this.uploadAll()
         }
       },
       {
@@ -71,13 +91,16 @@ class UserContributionsListScreen extends React.Component {
 
 const mapStateToProps = state => ({
   edits: state.edit.edits,
-  uploadedEdits: state.edit.uploadedEdits
+  uploadedEdits: state.edit.uploadedEdits,
+  isAuthorized: state.authorization.isAuthorized,
+  isConnected: state.network.isConnected
 })
 
 const mapDispatchToProps = {
   uploadEdits,
   clearUploadedEdits,
-  retryAllEdits
+  retryAllEdits,
+  setNotification
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserContributionsListScreen)
