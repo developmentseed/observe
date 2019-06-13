@@ -15,7 +15,7 @@
     "version": "./version-ios.sh"
   },
   "dependencies": {
-    "@mapbox/react-native-mapbox-gl": "github:developmentseed/react-native-mapbox-gl",
+    "@mapbox/react-native-mapbox-gl": "developmentseed/react-native-mapbox-gl",
     "@mapbox/tile-cover": "^3.0.2",
     "@mapbox/tilebelt": "^1.0.1",
     "@turf/area": "^6.0.1",
@@ -50,8 +50,8 @@
     "p-retry": "^4.0.0",
     "p-timeout": "^3.0.0",
     "pretty-bytes": "^5.1.0",
-    "react": "16.6.3",
-    "react-native": "0.58.3",
+    "react": "16.8.6",
+    "react-native": "0.58.6",
     "react-native-config": "^0.11.7",
     "react-native-cookies": "github:developmentseed/react-native-cookies",
     "react-native-datepicker": "^1.7.2",

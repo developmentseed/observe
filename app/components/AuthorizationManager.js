@@ -6,18 +6,14 @@ import { isAuthorized as checkAuthorization } from '../services/auth'
 
 class AuthorizationManager extends PureComponent {
   async componentDidMount () {
-    const { setAuthorized } = this.props
-
-    setAuthorized(await checkAuthorization())
+    this.props.setAuthorized(await checkAuthorization())
   }
 
   async componentDidUpdate ({ isAuthorized: wasAuthorized }) {
-    const { setAuthorized } = this.props
-
     const isAuthorized = await checkAuthorization()
 
     if (wasAuthorized !== isAuthorized) {
-      setAuthorized(isAuthorized)
+      this.props.setAuthorized(isAuthorized)
     }
   }
 
