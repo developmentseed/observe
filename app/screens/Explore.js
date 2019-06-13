@@ -102,8 +102,6 @@ class Explore extends React.Component {
   }
 
   onDidFinishRenderingMapFully = async () => {
-    const { updateVisibleBounds } = this.props
-
     this.setState({
       isMapLoaded: true,
       clickableLayers: ['editedPois', 'pois', 'editedPolygons', 'buildings', 'roads', 'roadsLower', 'railwayLine', 'waterLine', 'leisure'],
@@ -113,7 +111,7 @@ class Explore extends React.Component {
     const visibleBounds = await this.mapRef.getVisibleBounds()
     const zoomLevel = await this.mapRef.getZoom()
 
-    updateVisibleBounds(visibleBounds, zoomLevel)
+    this.props.updateVisibleBounds(visibleBounds, zoomLevel)
   }
 
   onWillFocus = payload => {
@@ -149,10 +147,8 @@ class Explore extends React.Component {
   }
 
   onRegionIsChanging = async evt => {
-    const { updateVisibleBounds } = this.props
-
     // update the redux state with the bbox
-    updateVisibleBounds(await this.mapRef.getVisibleBounds(), await this.mapRef.getZoom())
+    this.props.updateVisibleBounds(await this.mapRef.getVisibleBounds(), await this.mapRef.getZoom())
   }
 
   _fetchData (visibleBounds, zoomLevel) {
@@ -165,10 +161,8 @@ class Explore extends React.Component {
   }
 
   onRegionDidChange = evt => {
-    const { updateVisibleBounds } = this.props
     const { properties: { visibleBounds, zoomLevel } } = evt
-
-    updateVisibleBounds(visibleBounds, zoomLevel)
+    this.props.updateVisibleBounds(visibleBounds, zoomLevel)
   }
 
   onPress = e => {
@@ -195,10 +189,9 @@ class Explore extends React.Component {
   }
 
   async loadFeaturesAtPoint (rect) {
-    const { setSelectedFeatures } = this.props
     try {
       const { features } = await this.mapRef.queryRenderedFeaturesInRect(rect, null, this.state.clickableLayers)
-      setSelectedFeatures(features)
+      this.props.setSelectedFeatures(features)
     } catch (err) {
       console.log('failed getting features', err)
     }
