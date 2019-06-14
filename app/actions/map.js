@@ -261,7 +261,11 @@ export function fetchDataForTile (
         const filename = `${dirname}/${tile}.osm.xml`
 
         // remove from the filesystem
-        await RNFetchBlob.fs.unlink(filename)
+        try {
+          await RNFetchBlob.fs.unlink(filename)
+        } catch (err) {
+          console.warn('File unlink failed', err)
+        }
 
         const files = await RNFetchBlob.fs.ls(dirname)
 
