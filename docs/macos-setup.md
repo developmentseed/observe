@@ -17,7 +17,14 @@ Install `watchman` using [homebrew](https://brew.sh/).
 brew install watchman
 ```
 
-Install react-native-cli
+### Install gettext
+
+```
+brew install gettext
+brew link --force gettext
+```
+
+### Install react-native-cli
 
 ```
 yarn global add react-native-cli
