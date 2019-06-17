@@ -1,7 +1,8 @@
-import { ActivityIndicator, Dimensions, Platform } from 'react-native'
+import { ActivityIndicator, Dimensions } from 'react-native'
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components/native'
+import getPlatformStyles from '../utils/get-platform-styles'
 
 import Icon from './Collecticons'
 
@@ -10,6 +11,21 @@ import { unsetNotification } from '../actions/notification'
 import { colors } from '../style/variables'
 
 const win = Dimensions.get('window')
+
+const headerStyles = getPlatformStyles({
+  ios: {
+    height: 80,
+    paddingTop: 10
+  },
+  iphoneX: {
+    height: 100,
+    paddingTop: 30
+  },
+  android: {
+    height: 64,
+    paddingTop: 0
+  }
+})
 
 const TitleText = styled.Text`
   font-size: 20;
@@ -20,10 +36,11 @@ const TitleText = styled.Text`
 `
 
 const HeaderWrapper = styled.View`
-  height: ${Platform.OS === 'ios' ? 80 : 64};
+  height: ${headerStyles.height};
   background-color: ${colors.primary};
   width: ${win.width};
   border-top-color: #e66533;
+  padding-top: ${headerStyles.paddingTop};
   display: flex;
 `
 

@@ -1168,9 +1168,8 @@
   dependencies:
     wgs84 "0.0.0"
 
-"@mapbox/react-native-mapbox-gl@developmentseed/react-native-mapbox-gl", "@mapbox/react-native-mapbox-gl@github:developmentseed/react-native-mapbox-gl":
+"@mapbox/react-native-mapbox-gl@developmentseed/react-native-mapbox-gl":
   version "6.1.4"
-  uid "6a826ec5da9e82f1ecea3cf74d9866e915d4eb8f"
   resolved "https://codeload.github.com/developmentseed/react-native-mapbox-gl/tar.gz/6a826ec5da9e82f1ecea3cf74d9866e915d4eb8f"
   dependencies:
     "@turf/helpers" "4.6.0"
@@ -7419,6 +7418,11 @@ react-native-gesture-handler@^1.0.15:
     hoist-non-react-statics "^2.3.1"
     invariant "^2.2.2"
     prop-types "^15.5.10"
+
+react-native-iphone-x-helper@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.1.tgz#645e2ffbbb49e80844bb4cbbe34a126fda1e6772"
+  integrity sha512-/VbpIEp8tSNNHIvstuA3Swx610whci1Zpc9mqNkqn14DkMbw+ORviln2u0XyHG1kPvvwTNGZY6QpeFwxYaSdbQ==
 
 react-native-keychain@^3.1.1:
   version "3.1.3"
