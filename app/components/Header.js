@@ -12,11 +12,11 @@ import { colors } from '../style/variables'
 const win = Dimensions.get('window')
 
 const TitleText = styled.Text`
-  font-size: 16;
+  font-size: 20;
   color: white;
-  font-weight: 700;
+  font-weight: 500;
+  letter-spacing: 0.15;
   margin-left: 16;
-  margin-top: 4;
 `
 
 const HeaderWrapper = styled.View`
@@ -24,22 +24,19 @@ const HeaderWrapper = styled.View`
   background-color: ${colors.primary};
   width: ${win.width};
   border-top-color: #e66533;
+  display: flex;
 `
 
 const HeaderRow = styled.View`
   flex: 1;
   flex-direction: row;
-  align-self: stretch;
-  align-items: stretch;
-  margin-top: ${Platform.OS === 'ios' ? 48 : 16}
+  align-items: center;
   padding-left: 16;
 `
 
 const HeaderIcon = styled.TouchableOpacity`
   padding-left: 8;
   padding-right: 8;
-  padding-top: 8;
-  padding-bottom: 8;
 `
 
 const HeaderActions = styled.View`
@@ -88,7 +85,7 @@ class Header extends React.Component {
   renderMenu () {
     return (
       <HeaderIcon onPress={() => this.onMenuPress()}>
-        <Icon name='hamburguer-menu' size={16} color='white' />
+        <Icon name='hamburguer-menu' size={18} color='white' />
       </HeaderIcon>
     )
   }
