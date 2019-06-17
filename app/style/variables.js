@@ -1,6 +1,7 @@
 export const colors = {
   primary: '#6579FC',
-  muted: '#c3c8cb'
+  muted: '#c3c8cb',
+  secondary: '#CE1042'
 }
 
 export const notificationColors = {
