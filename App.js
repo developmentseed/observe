@@ -87,7 +87,11 @@ const AppNavigator = createDrawerNavigator({
   contentOptions: {
     activeTintColor: colors.primary,
     activeBackgroundColor: 'rgb(237, 239, 254)',
+    activeFontWeight: '600',
     labelStyle: {
+      fontSize: 16,
+      fontWeight: '400',
+      letterSpacing: 0.5,
       marginLeft: 0,
       marginTop: 12,
       marginBottom: 12
@@ -103,7 +107,7 @@ const AppNavigator = createDrawerNavigator({
     },
     iconContainerStyle: {
       opacity: 1,
-      marginRight: 12,
+      marginRight: 20,
       paddingRight: 0,
       marginLeft: 12,
       paddingLeft: 0

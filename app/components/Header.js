@@ -1,7 +1,8 @@
-import { ActivityIndicator, Dimensions, Platform } from 'react-native'
+import { ActivityIndicator, Dimensions } from 'react-native'
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components/native'
+import getPlatformStyles from '../utils/get-platform-styles'
 
 import Icon from './Collecticons'
 
@@ -11,35 +12,48 @@ import { colors } from '../style/variables'
 
 const win = Dimensions.get('window')
 
+const headerStyles = getPlatformStyles({
+  ios: {
+    height: 80,
+    paddingTop: 10
+  },
+  iphoneX: {
+    height: 100,
+    paddingTop: 30
+  },
+  android: {
+    height: 64,
+    paddingTop: 0
+  }
+})
+
 const TitleText = styled.Text`
-  font-size: 16;
+  font-size: 20;
   color: white;
-  font-weight: 700;
+  font-weight: 500;
+  letter-spacing: 0.15;
   margin-left: 16;
-  margin-top: 4;
 `
 
 const HeaderWrapper = styled.View`
-  height: ${Platform.OS === 'ios' ? 80 : 64};
+  height: ${headerStyles.height};
   background-color: ${colors.primary};
   width: ${win.width};
   border-top-color: #e66533;
+  padding-top: ${headerStyles.paddingTop};
+  display: flex;
 `
 
 const HeaderRow = styled.View`
   flex: 1;
   flex-direction: row;
-  align-self: stretch;
-  align-items: stretch;
-  margin-top: ${Platform.OS === 'ios' ? 48 : 16}
+  align-items: center;
   padding-left: 16;
 `
 
 const HeaderIcon = styled.TouchableOpacity`
   padding-left: 8;
   padding-right: 8;
-  padding-top: 8;
-  padding-bottom: 8;
 `
 
 const HeaderActions = styled.View`
@@ -88,7 +102,7 @@ class Header extends React.Component {
   renderMenu () {
     return (
       <HeaderIcon onPress={() => this.onMenuPress()}>
-        <Icon name='hamburguer-menu' size={16} color='white' />
+        <Icon name='hamburguer-menu' size={18} color='white' />
       </HeaderIcon>
     )
   }

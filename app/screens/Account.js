@@ -10,7 +10,11 @@ import PageWrapper from '../components/PageWrapper'
 import LoadingOverlay from '../components/LoadingOverlay'
 import { colors } from '../style/variables'
 
-const Text = styled.Text``
+const Text = styled.Text`
+  font-size: 16;
+  letter-spacing: 0.5;
+`
+
 const ImageView = styled.View`
   justify-content: center;
   align-items: center;
@@ -47,7 +51,11 @@ const FieldValue = styled.Text`
   padding-top: 2;
 `
 
-const LoginButton = styled.Button``
+const LoginButton = styled.Button`
+  padding-left: 2;
+  padding-right: 2;
+  letter-spacing: 1;
+`
 
 const DetailsList = styled.FlatList`
   padding-top: 10;
@@ -154,7 +162,7 @@ class Account extends React.Component {
             <Text>It seems that you're not logged in.</Text>
             <Text style={{ marginBottom: 8 }}>Do you have an account?</Text>
             <LoginButton
-              title='Login'
+              title='Log in'
               onPress={this.props.initiateAuthorization}
               color={colors.primary}
             />

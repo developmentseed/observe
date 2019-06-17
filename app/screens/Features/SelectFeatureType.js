@@ -16,15 +16,17 @@ const win = Dimensions.get('window')
 
 const Text = styled.Text`
   font-size: 16;
+  letter-spacing: 0.5;
 `
 
 const PresetWrapper = styled.TouchableOpacity`
   border-bottom-width: 0.5;
   border-bottom-color: #efefef;
-  padding-top: 8;
-  padding-bottom: 8;
+  padding-top: 12;
+  padding-bottom: 12;
   flex: 1;
   flex-direction: row;
+  align-items: center;
 `
 
 const PresetList = styled.ScrollView`
@@ -33,17 +35,17 @@ const PresetList = styled.ScrollView`
 
 const IconCircle = styled.View`
   border-radius: ${Math.round(win.width + win.height) / 2};
-  width: 24;
-  height: 24;
+  width: 36;
+  height: 36;
   background-color: ${colors.primary};
-  margin-right: 8;
+  margin-right: 16;
   justify-content: center;
   align-items: center;
 `
 
 const Icon = styled.Image`
-  width: 16;
-  height: 16;
+  width: 20;
+  height: 20;
   align-self: center;
 `
 
@@ -159,10 +161,11 @@ class SelectFeatureType extends React.Component {
             <Search
               onSearch={(text) => this.onSearch(text)}
               onChangeText={(text) => this.onSearch(text)}
+              fontSize={16}
               backgroundColor='#ffffff'
               titleCancelColor='#333333'
               contentWidth={win.width - 32}
-              inputStyle={{ paddingBottom: 8 }}
+              inputStyle={{ paddingBottom: 6 }}
               keyboardShouldPersist={false}
               placeholder='Search for presets'
               searchIconCollapsedMargin={55}
