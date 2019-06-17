@@ -19,7 +19,8 @@ const Logo = styled.Image`
 `
 
 const LogoName = styled.Text`
-  font-weight: bold;
+  font-weight: 900;
+  letter-spacing: 0.15;
   font-size: 24;
   color: white;
 `
