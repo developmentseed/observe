@@ -21,8 +21,13 @@ import { getFeature } from '../../services/api'
 import Config from 'react-native-config'
 import getTaginfo from '../../utils/get-taginfo'
 import Icon from '../../components/Collecticons'
+import { colors } from '../../style/variables'
 
-const Text = styled.Text``
+const Text = styled.Text`
+  font-size: 16;
+  letter-spacing: 0.5;
+  color: ${colors.base}
+`
 const ChangesetText = styled.Text`
   font-weight: 500;
   font-size: 18;

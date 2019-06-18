@@ -15,9 +15,12 @@ import _partition from 'lodash.partition'
 import orderPresets from '../../utils/order-presets'
 import SaveEditDialog from '../../components/SaveEditDialog'
 import { deleteFeature, uploadEdits } from '../../actions/edit'
+import { colors } from '../../style/variables'
 
 const FieldsList = styled.SectionList`
-
+  font-size: 16;
+  letter-spacing: 0.5;
+  color: ${colors.base};
 `
 
 const Field = styled.View`
@@ -30,12 +33,15 @@ const Field = styled.View`
 const FieldKey = styled.Text`
   font-weight: 500;
   font-size: 12;
+  color: ${colors.base};
 `
 
 const FieldValue = styled.Text`
   font-weight: 300;
   font-size: 16;
+  letter-spacing: 0.5;
   padding-top: 2;
+  color: ${colors.base};
 `
 
 const SectionHeaderField = styled.View`
@@ -43,13 +49,13 @@ const SectionHeaderField = styled.View`
   padding-bottom: 8;
   align-content: stretch;
 `
-
+// TODO: Text transform is not rendering correctly in React Native 0.58 - upgrade to 0.59 to use text-transform property
 const SectionHeader = styled.Text`
   font-weight: 400;
-  font-size 20;
   padding-top: 5;
   padding-bottom: 5;
-  text-transform: uppercase;
+  color: ${colors.primary};
+  /* text-transform: uppercase; */
 `
 
 class ViewFeatureDetail extends React.Component {

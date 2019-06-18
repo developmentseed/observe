@@ -11,7 +11,7 @@ import { colors } from '../style/variables'
 
 const ItemContainer = styled.TouchableOpacity`
   border-bottom-width: 1;
-  border-bottom-color: #ccc;
+  border-bottom-color: ${colors.baseMuted};
   flex: 1;
   flex-direction: row;
   align-items: center;
@@ -32,11 +32,13 @@ const TextContainer = styled.View`
 
 const TitleText = styled.Text`
   font-size: 16;
+  letter-spacing: 0.5;
+  color: ${colors.base};
 `
 
 const SubtitleText = styled.Text`
   font-size: 12;
-  color: #aaa;
+  color: ${colors.baseMuted};
 `
 
 const StatusContainer = styled.View`

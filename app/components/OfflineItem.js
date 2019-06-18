@@ -29,11 +29,13 @@ const TextContainer = styled.View`
 
 const TitleText = styled.Text`
   font-size: 16;
+  letter-spacing: 0.5;
+  color: ${colors.base};
 `
 
 const SubtitleText = styled.Text`
   font-size: 12;
-  color: #aaa;
+  color: ${colors.baseMuted};
 `
 
 const StatusContainer = styled.View`

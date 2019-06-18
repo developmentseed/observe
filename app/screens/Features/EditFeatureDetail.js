@@ -20,13 +20,18 @@ import nextTick from '../../utils/next-tick'
 import SaveEditDialog from '../../components/SaveEditDialog'
 import getFields from '../../utils/get-fields'
 import { getParentPreset } from '../../utils/get-parent-preset'
+import { colors } from '../../style/variables'
 import _uniq from 'lodash.uniq'
 import _pick from 'lodash.pick'
 import _omitBy from 'lodash.omitby'
 import _omit from 'lodash.omit'
 import _isEqual from 'lodash.isequal'
 
-const FieldsList = styled.FlatList``
+const FieldsList = styled.FlatList`
+  font-size: 16;
+  letter-spacing: 0.5;
+  color: ${colors.base};
+`
 
 class EditFeatureDetail extends React.Component {
   static navigationOptions = ({ navigation }) => {
