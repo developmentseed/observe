@@ -10,6 +10,7 @@ import Picker from 'react-native-picker-select'
 import Container from '../../components/Container'
 import Header from '../../components/Header'
 import PageWrapper from '../../components/PageWrapper'
+import FeatureDetailHeader from '../../components/FeatureDetailHeader'
 
 import { addFeature, uploadEdits } from '../../actions/edit'
 import getFields from '../../utils/get-fields'
@@ -375,6 +376,8 @@ class EditFeatureDetail extends React.Component {
   render () {
     const { properties } = this.state
     const { navigation } = this.props
+    const { state: { params: { feature } } } = navigation
+    const { preset } = this.state
     if (!properties) return null
     let headerActions = []
 
@@ -395,11 +398,16 @@ class EditFeatureDetail extends React.Component {
           navigation={navigation}
           actions={headerActions}
         />
-        <TagEditor properties={this.createTagEditorProperties()} onUpdate={this.onTagEditorUpdate} />
+        <FeatureDetailHeader
+          preset={preset}
+          feature={feature}
+          navigation={navigation}
+        />
         <PageWrapper>
-          {this.renderAddField()}
           {this.renderFields()}
+          {this.renderAddField()}
         </PageWrapper>
+        <TagEditor properties={this.createTagEditorProperties()} onUpdate={this.onTagEditorUpdate} />
         <SaveEditDialog visible={this.state.dialogVisible} cancel={this.cancelEditDialog} save={this.saveEditDialog} />
       </Container>
     )

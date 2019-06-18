@@ -6,6 +6,7 @@ import { View, Keyboard } from 'react-native'
 import Container from '../../components/Container'
 import Header from '../../components/Header'
 import PageWrapper from '../../components/PageWrapper'
+import FeatureDetailHeader from '../../components/FeatureDetailHeader'
 
 import getFeatureFields from '../../utils/get-feature-fields'
 import { metaKeys } from '../../utils/uninterestingKeys'
@@ -96,6 +97,7 @@ class ViewFeatureDetail extends React.Component {
   render () {
     const { navigation, deleteFeature, uploadEdits } = this.props
     const { state: { params: { feature } } } = navigation
+    const { preset } = this.state
 
     const title = feature.properties.name || feature.id
     const fields = getFeatureFields(feature)
@@ -139,6 +141,11 @@ class ViewFeatureDetail extends React.Component {
     return (
       <Container>
         <Header back title={title} navigation={navigation} actions={headerActions} />
+        <FeatureDetailHeader
+          preset={preset}
+          feature={feature}
+          navigation={navigation}
+        />
         <PageWrapper>
           {this.renderFields([presetSection, metaSection])}
         </PageWrapper>
