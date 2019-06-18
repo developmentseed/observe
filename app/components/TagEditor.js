@@ -201,7 +201,7 @@ export default class TagEditor extends React.Component {
           value={value}
         />
         <TagDeleteWrapper onPress={() => this.removeTag(index)}>
-          <Icon name='trash-bin' size={16} color='black' />
+          <Icon name='trash-bin' size={16} color={colors.muted} />
         </TagDeleteWrapper>
       </Tag>
     )

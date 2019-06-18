@@ -104,7 +104,7 @@ export class CheckField extends Field {
             />
           </InputWrapper>
           <FieldDeleteWrapper onPress={() => this.removeField(key)}>
-            <Icon name='trash-bin' size={16} color='black' />
+            <Icon name='trash-bin' size={16} color={colors.muted} />
           </FieldDeleteWrapper>
         </FieldWrapper>
       </View>
@@ -183,7 +183,7 @@ export class PickerField extends Field {
             </Picker>
           </InputWrapper>
           <FieldDeleteWrapper onPress={() => this.removeField(key)}>
-            <Icon name='trash-bin' size={16} color='black' />
+            <Icon name='trash-bin' size={16} color={colors.muted} />
           </FieldDeleteWrapper>
         </FieldWrapper>
       </View>
@@ -236,7 +236,7 @@ export class NumberField extends Field {
             />
           </InputWrapper>
           <FieldDeleteWrapper onPress={() => this.removeField(key)}>
-            <Icon name='trash-bin' size={16} color='black' />
+            <Icon name='trash-bin' size={16} color={colors.muted} />
           </FieldDeleteWrapper>
         </FieldWrapper>
       </View>
@@ -272,7 +272,7 @@ export class TextField extends Field {
             />
           </InputWrapper>
           <FieldDeleteWrapper onPress={() => this.removeField(key)}>
-            <Icon name='trash-bin' size={16} color='black' />
+            <Icon name='trash-bin' size={16} color={colors.muted} />
           </FieldDeleteWrapper>
         </FieldWrapper>
       </View>
@@ -324,7 +324,7 @@ export class DateField extends Field {
             />
           </InputWrapper>
           <FieldDeleteWrapper onPress={() => this.removeField(key)}>
-            <Icon name='trash-bin' size={16} color='black' />
+            <Icon name='trash-bin' size={16} color={colors.muted} />
           </FieldDeleteWrapper>
         </FieldWrapper>
       </View>
