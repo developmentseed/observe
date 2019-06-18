@@ -24,3 +24,9 @@ export const notificationColors = {
     color: 'black'
   }
 }
+
+export const StyledText = styled.Text`
+  font-size: 16;
+  letter-spacing: 0.5;
+  color: ${colors.base}
+`
