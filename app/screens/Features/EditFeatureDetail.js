@@ -456,11 +456,11 @@ class EditFeatureDetail extends React.Component {
           feature={feature}
           navigation={navigation}
         />
-        <TagEditor ref={(ref) => (this._tageditor = ref)} properties={this.createTagEditorProperties()} onUpdate={this.onTagEditorUpdate} />
         <PageWrapper>
-          {this.renderAddField()}
           {this.renderFields()}
+          {this.renderAddField()}
         </PageWrapper>
+        <TagEditor ref={(ref) => (this._tageditor = ref)} properties={this.createTagEditorProperties()} onUpdate={this.onTagEditorUpdate} />
         <SaveEditDialog visible={this.state.dialogVisible} cancel={this.cancelEditDialog} save={this.saveEditDialog} />
       </Container>
     )
