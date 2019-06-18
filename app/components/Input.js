@@ -11,7 +11,7 @@ const FieldWrapper = styled.View`
   border-width: 1;
   border-color: ${colors.baseMuted};
   border-radius: 4;
-  margin-top: 12;
+  margin-top: 16;
   flex: 1;
   flex-direction: row;
 `
@@ -27,7 +27,7 @@ const LabelWrapper = styled.View`
 `
 
 const Label = styled.Text`
-  color: ${colors.base};
+  color: ${colors.baseMuted};
   letter-spacing: 0.4;
 `
 
@@ -96,12 +96,14 @@ export class CheckField extends Field {
             <Label style={{ color }}>{key}</Label>
           </LabelWrapper>
 
-          <InputWrapper style={{ alignSelf: 'flex-start', paddingTop: 12 }}>
+          <InputWrapper style={{ alignSelf: 'center' }}>
             <Switch
               onValueChange={(value) => this.onValueChange(value)}
               onFocus={() => this.onFocus()}
               onBlur={() => this.onBlur()}
               value={value}
+              trackColor={{ false: colors.baseMuted, true: colors.primary }}
+              thumbColor={colors.primary}
             />
           </InputWrapper>
           <FieldDeleteWrapper onPress={() => this.removeField(key)}>
