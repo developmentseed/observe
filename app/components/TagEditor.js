@@ -30,7 +30,8 @@ const TagListWrapper = styled.View`
 const Text = styled.Text`
   font-size: 16;
   letter-spacing: 0.5;
-  color: ${colors.baseAlpha}
+  color: ${colors.baseAlpha};
+  padding-left: 4;
 `
 
 const TagList = styled.FlatList`
@@ -95,6 +96,7 @@ const TagDeleteWrapper = styled.TouchableHighlight`
 const AddTagWrapper = styled.TouchableOpacity`
   margin-top: 4;
   flex-direction: row;
+  align-items: center;
 `
 
 export default class TagEditor extends React.Component {
