@@ -18,7 +18,8 @@ import {
 } from '../../actions/map'
 import { getOfflineResourceStatus } from '../../selectors'
 
-const Text = styled.Text``
+const Text = styled.Text`
+`
 const Bold = styled.Text`
   font-weight: bold;
 `
@@ -55,11 +56,11 @@ class ViewOfflineAreaDetail extends React.Component {
   }
 
   componentDidUpdate (prevProps) {
-    const { navigation, offlineResourceStatus } = this.props
+    const { navigation } = this.props
     const key = navigation.getParam('key')
 
     if (prevProps.navigation.getParam('key') !== key) {
-      const { aoi } = offlineResourceStatus[key]
+      const { aoi } = this.props.offlineResourceStatus[key]
 
       this.takeSnapshot(aoi)
     }
@@ -88,7 +89,7 @@ class ViewOfflineAreaDetail extends React.Component {
   }
 
   deleteOfflineResource = () => {
-    const { deleteOfflineResource, navigation } = this.props
+    const { navigation } = this.props
 
     // dismiss the modal
     this.hideDeleteModal()
@@ -97,7 +98,7 @@ class ViewOfflineAreaDetail extends React.Component {
     navigation.goBack()
 
     // delete the specified offline resource
-    deleteOfflineResource(navigation.getParam('key'))
+    this.props.deleteOfflineResource(navigation.getParam('key'))
   }
 
   hideDeleteModal = () =>
@@ -113,8 +114,7 @@ class ViewOfflineAreaDetail extends React.Component {
   refreshOfflineResource = () => {
     const {
       navigation,
-      offlineResourceStatus,
-      refreshOfflineResource
+      offlineResourceStatus
     } = this.props
     const key = navigation.getParam('key')
     const offlineResource = offlineResourceStatus[key]
@@ -123,16 +123,16 @@ class ViewOfflineAreaDetail extends React.Component {
       return
     }
 
-    refreshOfflineResource(key)
+    this.props.refreshOfflineResource(key)
   }
 
   setName = newName => {
-    const { navigation, renameOfflineResource } = this.props
+    const { navigation } = this.props
     const id = navigation.getParam('key')
 
     this.hideEditModal()
 
-    renameOfflineResource(id, newName)
+    this.props.renameOfflineResource(id, newName)
   }
 
   showDeleteModal = () =>

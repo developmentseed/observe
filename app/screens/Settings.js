@@ -28,7 +28,8 @@ const SettingsHeader = styled.Text`
   margin-top: 16;
   margin-bottom: 16;
 `
-const Text = styled.Text``
+const Text = styled.Text`
+`
 
 class Settings extends React.Component {
   static navigationOptions = ({ navigation }) => {

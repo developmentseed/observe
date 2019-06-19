@@ -10,6 +10,8 @@ import Picker from 'react-native-picker-select'
 import Container from '../../components/Container'
 import Header from '../../components/Header'
 import PageWrapper from '../../components/PageWrapper'
+import FeatureDetailHeader from '../../components/FeatureDetailHeader'
+import Icon from '../../components/Collecticons'
 
 import { addFeature, uploadEdits } from '../../actions/edit'
 import getFields from '../../utils/get-fields'
@@ -21,8 +23,10 @@ import SaveEditDialog from '../../components/SaveEditDialog'
 import TagEditor from '../../components/TagEditor'
 
 import { getParentPreset } from '../../utils/get-parent-preset'
+import { colors } from '../../style/variables'
 
-const FieldsList = styled.FlatList``
+const FieldsList = styled.FlatList`
+`
 
 class EditFeatureDetail extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -130,7 +134,7 @@ class EditFeatureDetail extends React.Component {
   }
 
   saveEditDialog = async (comment) => {
-    const { navigation, addFeature, uploadEdits } = this.props
+    const { navigation } = this.props
     const { state: { params: { feature } } } = navigation
 
     this.cancelEditDialog()
@@ -142,10 +146,10 @@ class EditFeatureDetail extends React.Component {
     feature.properties = this.getFeatureProperties()
 
     // call addFeature action with feature
-    addFeature(feature, comment)
+    this.props.addFeature(feature, comment)
 
     // call action to attempt to upload the edit
-    uploadEdits([feature.id])
+    this.props.uploadEdits([feature.id])
     navigation.navigate('Explore', { message: 'Your edit is being processed.', mode: 'explore' })
   }
 
@@ -237,8 +241,9 @@ class EditFeatureDetail extends React.Component {
         onValueChange={(val, i) => {
           if (val) {
             const field = fields.find((f) => {
-              return f && f.key === val
+              return f && f.key && f.key === val
             })
+            if (!field) return
             value = { label: field.key, value: field.key }
             this.setState({ addFieldValue: value })
             if (Platform.OS === 'android') {
@@ -247,11 +252,36 @@ class EditFeatureDetail extends React.Component {
           }
         }}
         onDonePress={() => {
-          if (Platform.OS === 'ios') {
+          if (Platform.OS === 'ios' && this.state.addFieldValue) {
             const field = fields.find((f) => {
               return f && f.key === this.state.addFieldValue.value
             })
             this.addField(field)
+          }
+        }}
+        Icon={() => {
+          return <Icon name='chevron-down' color='gray' />
+        }}
+        useNativeAndroidPickerStyle={false}
+        style={{
+          inputIOS: {
+            paddingVertical: 12,
+            paddingHorizontal: 10,
+            color: colors.base,
+            paddingRight: 30,
+            marginTop: 10
+          },
+          inputAndroid: {
+            paddingTop: 10,
+            paddingBottom: 5,
+            paddingHorizontal: 10,
+            color: colors.base,
+            paddingRight: 30,
+            marginTop: 10
+          },
+          iconContainer: {
+            top: 25,
+            right: 15
           }
         }}
       />
@@ -375,6 +405,8 @@ class EditFeatureDetail extends React.Component {
   render () {
     const { properties } = this.state
     const { navigation } = this.props
+    const { state: { params: { feature } } } = navigation
+    const { preset } = this.state
     if (!properties) return null
     let headerActions = []
 
@@ -395,11 +427,16 @@ class EditFeatureDetail extends React.Component {
           navigation={navigation}
           actions={headerActions}
         />
-        <TagEditor properties={this.createTagEditorProperties()} onUpdate={this.onTagEditorUpdate} />
+        <FeatureDetailHeader
+          preset={preset}
+          feature={feature}
+          navigation={navigation}
+        />
         <PageWrapper>
-          {this.renderAddField()}
           {this.renderFields()}
+          {this.renderAddField()}
         </PageWrapper>
+        <TagEditor properties={this.createTagEditorProperties()} onUpdate={this.onTagEditorUpdate} />
         <SaveEditDialog visible={this.state.dialogVisible} cancel={this.cancelEditDialog} save={this.saveEditDialog} />
       </Container>
     )

@@ -8,13 +8,13 @@ class UploadManager extends PureComponent {
     isAuthorized: wasAuthorized,
     isConnected: wasConnected
   }) {
-    const { isConnected, retryAllEdits, isAuthorized } = this.props
+    const { isConnected, isAuthorized } = this.props
 
     if (
       (!wasConnected && isConnected && isAuthorized) ||
       (!wasAuthorized && isAuthorized && isConnected)
     ) {
-      retryAllEdits()
+      this.props.retryAllEdits()
     }
   }
 

@@ -14,7 +14,7 @@ import { getPlaceName } from '../../utils/get-place-name'
 
 class OfflineAreaList extends React.Component {
   createOfflineResource = async () => {
-    const { fetchOfflineResources, navigation, setNotification, visibleBounds } = this.props
+    const { navigation, visibleBounds } = this.props
 
     if (visibleBounds == null) {
       // no bounds were selected
@@ -31,7 +31,7 @@ class OfflineAreaList extends React.Component {
     const areaSqKm = area(bboxPolygon(aoi)) / (1000 ** 2)
 
     if (areaSqKm > 400) {
-      setNotification({
+      this.props.setNotification({
         level: 'error',
         message: `${areaSqKm.toLocaleString()} km² is too large to download.`
       })
@@ -42,7 +42,7 @@ class OfflineAreaList extends React.Component {
     navigation.navigate('OfflineAreaList')
 
     const name = (await getPlaceName(aoi)) || 'Unnamed Area'
-    fetchOfflineResources(name, aoi)
+    this.props.fetchOfflineResources(name, aoi)
   }
 
   defineOfflineResource = () => {
@@ -69,10 +69,8 @@ class OfflineAreaList extends React.Component {
   }
 
   deleteOfflineResource = key => {
-    const { deleteOfflineResource } = this.props
-
     // delete the specified offline resource
-    deleteOfflineResource(key)
+    this.props.deleteOfflineResource(key)
   }
 
   select = key => {

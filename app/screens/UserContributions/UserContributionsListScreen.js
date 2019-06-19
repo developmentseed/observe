@@ -21,16 +21,16 @@ class UserContributionsListScreen extends React.Component {
   }
 
   render () {
-    const { clearUploadedEdits, navigation, edits, retryAllEdits, uploadedEdits } = this.props
+    const { navigation, edits, uploadedEdits } = this.props
     const allEdits = edits.concat(uploadedEdits).sort((a, b) => b.timestamp > a.timestamp ? 1 : -1)
     const headerActions = [
       {
         name: 'upload-2',
-        onPress: retryAllEdits
+        onPress: this.props.retryAllEdits
       },
       {
         name: 'trash-bin',
-        onPress: clearUploadedEdits
+        onPress: this.props.clearUploadedEdits
       }
     ]
     return (

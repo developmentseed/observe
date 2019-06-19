@@ -9,9 +9,9 @@ import Picker from 'react-native-picker-select'
 
 const FieldWrapper = styled.View`
   border-width: 1;
-  border-color: ${colors.muted};
+  border-color: ${colors.baseMuted};
   border-radius: 4;
-  margin-top: 12;
+  margin-top: 16;
   flex: 1;
   flex-direction: row;
 `
@@ -27,7 +27,8 @@ const LabelWrapper = styled.View`
 `
 
 const Label = styled.Text`
-  color: ${colors.muted}
+  color: ${colors.baseMuted};
+  letter-spacing: 0.4;
 `
 
 const InputWrapper = styled.View`
@@ -40,7 +41,7 @@ const InputWrapper = styled.View`
 const FieldDeleteWrapper = styled.TouchableHighlight`
   flex: 0.1;
   border-width: 0;
-  border-color: ${colors.muted};
+  border-color: ${colors.baseMuted};
   border-left-width: 1;
   align-items: center;
   justify-content: center;
@@ -48,7 +49,7 @@ const FieldDeleteWrapper = styled.TouchableHighlight`
 `
 
 class Field extends Component {
-  state = { color: colors.muted }
+  state = { color: colors.baseMuted }
 
   onFocus () {
     this.setState({
@@ -58,7 +59,7 @@ class Field extends Component {
 
   onBlur () {
     this.setState({
-      color: colors.muted
+      color: colors.baseMuted
     })
   }
 
@@ -95,16 +96,18 @@ export class CheckField extends Field {
             <Label style={{ color }}>{key}</Label>
           </LabelWrapper>
 
-          <InputWrapper style={{ alignSelf: 'flex-start', paddingTop: 12 }}>
+          <InputWrapper style={{ alignSelf: 'center' }}>
             <Switch
               onValueChange={(value) => this.onValueChange(value)}
               onFocus={() => this.onFocus()}
               onBlur={() => this.onBlur()}
               value={value}
+              trackColor={{ false: colors.baseMuted, true: colors.primary }}
+              thumbColor={colors.primary}
             />
           </InputWrapper>
           <FieldDeleteWrapper onPress={() => this.removeField(key)}>
-            <Icon name='trash-bin' size={16} color='black' />
+            <Icon name='trash-bin' size={16} color={colors.baseMuted} />
           </FieldDeleteWrapper>
         </FieldWrapper>
       </View>
@@ -183,7 +186,7 @@ export class PickerField extends Field {
             </Picker>
           </InputWrapper>
           <FieldDeleteWrapper onPress={() => this.removeField(key)}>
-            <Icon name='trash-bin' size={16} color='black' />
+            <Icon name='trash-bin' size={16} color={colors.baseMuted} />
           </FieldDeleteWrapper>
         </FieldWrapper>
       </View>
@@ -229,14 +232,13 @@ export class NumberField extends Field {
               onBlur={() => this.onBlur()}
               keyboardType='numeric'
               placeholder={placeholder}
-              placeholderTextColor={color.muted}
-              style={{ flex: 1 }}
+              placeholderTextColor={color.baseMuted}
               underlineColorAndroid='transparent'
               value={value}
             />
           </InputWrapper>
           <FieldDeleteWrapper onPress={() => this.removeField(key)}>
-            <Icon name='trash-bin' size={16} color='black' />
+            <Icon name='trash-bin' size={16} color={colors.baseMuted} />
           </FieldDeleteWrapper>
         </FieldWrapper>
       </View>
@@ -254,7 +256,7 @@ export class TextField extends Field {
       <View ref={x => (this._root = x)} style={{ flex: 1 }}>
         <FieldWrapper style={{ borderColor: color }}>
           <LabelWrapper>
-            <Label style={{ color }}>{key}</Label>
+            <Label style={{ color, letterSpacing: 0.4 }}>{key}</Label>
           </LabelWrapper>
 
           <InputWrapper>
@@ -264,15 +266,14 @@ export class TextField extends Field {
               onChangeText={(value) => this.onValueChange(value)}
               onFocus={() => this.onFocus()}
               onBlur={() => this.onBlur()}
-              style={{ flex: 1 }}
               placeholder={placeholder}
-              placeholderTextColor={color.muted}
+              placeholderTextColor={color.baseMuted}
               underlineColorAndroid='transparent'
               value={value}
             />
           </InputWrapper>
           <FieldDeleteWrapper onPress={() => this.removeField(key)}>
-            <Icon name='trash-bin' size={16} color='black' />
+            <Icon name='trash-bin' size={16} color={colors.baseMuted} />
           </FieldDeleteWrapper>
         </FieldWrapper>
       </View>
@@ -303,7 +304,7 @@ export class DateField extends Field {
               date={value}
               mode='date'
               placeholder='select date'
-              placeholderTextColor={color.muted}
+              placeholderTextColor={color.baseMuted}
               format='YYYY-MM-DD'
               confirmBtnText='Confirm'
               cancelBtnText='Cancel'
@@ -324,7 +325,7 @@ export class DateField extends Field {
             />
           </InputWrapper>
           <FieldDeleteWrapper onPress={() => this.removeField(key)}>
-            <Icon name='trash-bin' size={16} color='black' />
+            <Icon name='trash-bin' size={16} color={colors.baseMuted} />
           </FieldDeleteWrapper>
         </FieldWrapper>
       </View>
@@ -378,9 +379,9 @@ export class ReadOnlyField extends Component {
 
     return (
       <View pointerEvents='none'>
-        <FieldWrapper style={{ borderColor: colors.muted }}>
+        <FieldWrapper style={{ borderColor: colors.baseMuted }}>
           <LabelWrapper>
-            <Label style={{ color: colors.muted }}>{key}</Label>
+            <Label style={{ color: colors.baseMuted }}>{key}</Label>
           </LabelWrapper>
 
           <InputWrapper>

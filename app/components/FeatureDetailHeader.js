@@ -16,8 +16,7 @@ const Header = styled.View`
 `
 
 const PresetName = styled.Text`
-  font-size: 16;
-  font-weight: 700;
+  font-weight: 500;
   margin-top: 4;
 `
 
@@ -32,12 +31,14 @@ const IconWrapper = styled.TouchableOpacity`
 const Button = styled.TouchableHighlight``
 
 const Coordinates = styled.Text`
-  color: ${colors.muted}
+  color: ${colors.baseMuted};
+  font-size: 14;
   padding-right: 4;
 `
 
 const Edit = styled.Text`
-  color: ${colors.primary}
+  color: ${colors.primary};
+  font-size: 14;
 `
 
 export default class FeatureDetailHeader extends React.Component {
