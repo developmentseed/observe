@@ -112,7 +112,8 @@ class ViewOfflineAreaDetail extends React.Component {
 
   refreshOfflineResource = () => {
     const {
-      navigation, offlineResourceStatus
+      navigation,
+      offlineResourceStatus
     } = this.props
     const key = navigation.getParam('key')
     const offlineResource = offlineResourceStatus[key]
