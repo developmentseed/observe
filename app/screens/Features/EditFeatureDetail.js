@@ -26,6 +26,7 @@ import nextTick from '../../utils/next-tick'
 import SaveEditDialog from '../../components/SaveEditDialog'
 import getFields from '../../utils/get-fields'
 import { getParentPreset } from '../../utils/get-parent-preset'
+import getPresetByTags from '../../utils/get-preset-by-tags'
 import { colors } from '../../style/variables'
 
 const FieldsList = styled.FlatList`
@@ -59,23 +60,6 @@ class EditFeatureDetail extends React.Component {
 
   shouldComponentUpdate (nextProps) {
     return nextProps.navigation.isFocused()
-  }
-
-  getPresetByFields (fields) {
-    const { presets } = this.props
-    const matches = []
-    fields.reduce((matches, field) => {
-      const name = `${field.key}/${field.value}`
-      const preset = presets[name] || presets[field.key]
-      if (preset) {
-        matches.push(preset)
-      }
-      return matches
-    }, matches)
-
-    if (matches && matches.length) {
-      return matches[0]
-    }
   }
 
   willFocus () {
@@ -146,7 +130,7 @@ class EditFeatureDetail extends React.Component {
       feature.properties = _pick(feature.properties, metaKeys)
     } else {
       fields = getFeatureFields(feature)
-      preset = this.getPresetByFields(fields)
+      preset = getPresetByTags(feature.properties)
     }
 
     fields.forEach((field) => {

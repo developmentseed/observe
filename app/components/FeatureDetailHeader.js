@@ -1,9 +1,11 @@
 import React from 'react'
 import { View } from 'react-native'
 import styled from 'styled-components/native'
-import ConfirmDialog from '../components/ConfirmDialog'
+import ConfirmDialog from './ConfirmDialog'
+import ObserveIcon from './ObserveIcon'
 import { colors } from '../style/variables'
 import getDefaultPreset from '../utils/get-default-preset'
+import getPresetByTags from '../utils/get-preset-by-tags'
 
 const Header = styled.View`
   padding-top: 16;
@@ -19,19 +21,12 @@ const PresetName = styled.Text`
   margin-top: 4;
 `
 
-const IconCircle = styled.TouchableOpacity`
-  border-radius: ${48 / 2};
+const IconWrapper = styled.TouchableOpacity`
   width: 48;
   height: 48;
-  background-color: ${colors.primary};
   margin-right: 8;
   justify-content: center;
   align-items: center;
-`
-
-const PresetIcon = styled.Image`
-  width: 32;
-  height: 32;
 `
 
 const Button = styled.TouchableHighlight``
@@ -58,7 +53,7 @@ export default class FeatureDetailHeader extends React.Component {
     if (!feature) return null
 
     if (!preset) {
-      preset = getDefaultPreset(feature.geometry.type)
+      preset = getPresetByTags(feature.properties) || getDefaultPreset(feature.geometry.type)
     }
 
     const geometryType = feature.geometry.type
@@ -72,18 +67,25 @@ export default class FeatureDetailHeader extends React.Component {
       cancelDialog()
       navigation.navigate('SelectFeatureType', { feature })
     }
+
+    const icon = (preset.icon || feature.properties.icon || 'maki_marker').replace(/-/g, '_')
+
     return (
       <>
         <Header>
           {
             (
-              <IconCircle onPress={() => {
+              <IconWrapper onPress={() => {
                 if (preset) {
                   this.setState({ dialogVisible: true })
                 }
               }}>
-                <PresetIcon source={{ uri: feature.properties.icon }} />
-              </IconCircle>
+                <ObserveIcon
+                  name={icon}
+                  size={36}
+                  color={colors.primary}
+                />
+              </IconWrapper>
             )
           }
           <View>

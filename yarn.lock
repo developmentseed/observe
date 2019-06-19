@@ -6602,6 +6602,12 @@ object.pick@^1.3.0:
   dependencies:
     isobject "^3.0.1"
 
+observe-icon-font@developmentseed/observe-icon-font:
+  version "0.0.0"
+  resolved "https://codeload.github.com/developmentseed/observe-icon-font/tar.gz/43de1fb839c1476a509252bb0beb8902c2416bef"
+  dependencies:
+    react-native-vector-icons "^6.5.0"
+
 on-finished@~2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/on-finished/-/on-finished-2.3.0.tgz#20f1336481b083cd75337992a16971aa2d906947"
@@ -7491,7 +7497,7 @@ react-native-tab-view@^1.2.0, react-native-tab-view@^1.4.1:
   dependencies:
     prop-types "^15.6.1"
 
-react-native-vector-icons@^6.4.1:
+react-native-vector-icons@^6.4.1, react-native-vector-icons@^6.5.0:
   version "6.5.0"
   resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-6.5.0.tgz#bf925f62a47fed2f02a26392eed385058b7f137e"
   integrity sha512-24Y5hkNTbpwK4OQFQQhJ20vBFWltGOcunJPztjO7E/4QpF3YmpbZIWjjf07wHOAlpeqCz3gEWr5iDI0Y2zLNnA==

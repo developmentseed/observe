@@ -8,6 +8,7 @@ import objToArray from '../../utils/object-to-array'
 import Header from '../../components/Header'
 import Container from '../../components/Container'
 import PageWrapper from '../../components/PageWrapper'
+import ObserveIcon from '../../components/ObserveIcon'
 
 import { colors } from '../../style/variables'
 import { presets as starterPresets } from '../../presets/starter-presets.json'
@@ -31,20 +32,12 @@ const PresetList = styled.ScrollView`
   flex: 1;
 `
 
-const IconCircle = styled.View`
-  border-radius: ${Math.round(win.width + win.height) / 2};
+const IconWrapper = styled.View`
   width: 36;
   height: 36;
-  background-color: ${colors.primary};
   margin-right: 16;
   justify-content: center;
   align-items: center;
-`
-
-const Icon = styled.Image`
-  width: 20;
-  height: 20;
-  align-self: center;
 `
 
 const SearchWrapper = styled.View`
@@ -93,11 +86,17 @@ class SelectFeatureType extends React.Component {
 
     return (
       <PresetWrapper key={`preset-${i}-${preset.key}`} onPress={onPress}>
-        <IconCircle>
+        <IconWrapper>
           {
-            preset.icon && (<Icon source={{ uri: preset.icon.replace('-', '_') }} />)
+            preset.icon && (
+              <ObserveIcon
+                name={preset.icon.replace(/-/g, '_')}
+                size={20}
+                color={colors.primary}
+              />
+            )
           }
-        </IconCircle>
+        </IconWrapper>
         <Text>{preset.name}</Text>
       </PresetWrapper>
     )
