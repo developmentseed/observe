@@ -136,7 +136,7 @@ class EditFeatureDetail extends React.Component {
   }
 
   saveEditDialog = async (comment) => {
-    const { navigation, addFeature, uploadEdits } = this.props
+    const { navigation } = this.props
     const { state: { params: { feature } } } = navigation
 
     this.cancelEditDialog()
@@ -148,10 +148,10 @@ class EditFeatureDetail extends React.Component {
     feature.properties = this.getFeatureProperties()
 
     // call addFeature action with feature
-    addFeature(feature, comment)
+    this.props.addFeature(feature, comment)
 
     // call action to attempt to upload the edit
-    uploadEdits([feature.id])
+    this.props.uploadEdits([feature.id])
     navigation.navigate('Explore', { message: 'Your edit is being processed.', mode: 'explore' })
   }
 
