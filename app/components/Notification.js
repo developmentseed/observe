@@ -48,7 +48,7 @@ const CloseIcon = styled(Icon)`
 
 class Notification extends React.Component {
   render () {
-    const { notification, unsetNotification } = this.props
+    const { notification } = this.props
 
     if (notification == null) {
       return null
@@ -60,7 +60,7 @@ class Notification extends React.Component {
 
     return (
       <Container style={{ backgroundColor }}>
-        <DismissNotification onPress={unsetNotification}>
+        <DismissNotification onPress={this.props.unsetNotification}>
           <TextWrapper>
             <Text style={{ color }}>{message}</Text>
             <CloseIcon name='xmark' size={16} color={color} />

@@ -103,7 +103,6 @@ class UserContributionsItemScreen extends React.Component {
   }
 
   updateConflict = () => {
-    const { modifyEditToCreate, modifyEditVersion } = this.props
     const edit = this.getEdit()
     const { conflictLoading, conflictError, conflictFeature } = this.state
     if (conflictLoading || conflictError) {
@@ -117,10 +116,10 @@ class UserContributionsItemScreen extends React.Component {
       if (edit.type === 'delete') {
         return this.discardEdit()
       }
-      modifyEditToCreate(edit.id)
+      this.props.modifyEditToCreate(edit.id)
     } else {
       // upstream feature not deleted - over-ride edits by incrementing current edit version number
-      modifyEditVersion(edit.id, conflictFeature.properties.version)
+      this.props.modifyEditVersion(edit.id, conflictFeature.properties.version)
     }
     this.props.uploadEdits([edit.id])
     this.props.navigation.navigate('UserContributions')
@@ -140,9 +139,9 @@ class UserContributionsItemScreen extends React.Component {
 
   forceRetryUpload = () => {
     const edit = this.getEdit()
-    const { setEditStatus, uploadEdits, navigation } = this.props
-    setEditStatus(edit.id, 'pending')
-    uploadEdits([edit.id])
+    const { navigation } = this.props
+    this.props.setEditStatus(edit.id, 'pending')
+    this.props.uploadEdits([edit.id])
     navigation.navigate('UserContributions')
   }
 

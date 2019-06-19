@@ -94,7 +94,7 @@ class ViewFeatureDetail extends React.Component {
   }
 
   render () {
-    const { navigation, deleteFeature, uploadEdits } = this.props
+    const { navigation } = this.props
     const { state: { params: { feature } } } = navigation
 
     const title = feature.properties.name || feature.id
@@ -116,8 +116,8 @@ class ViewFeatureDetail extends React.Component {
 
       await nextTick()
 
-      deleteFeature(feature, comment)
-      uploadEdits([feature.id])
+      this.props.deleteFeature(feature, comment)
+      this.props.uploadEdits([feature.id])
       navigation.navigate('Explore', { message: 'Your edit is being processed.', mode: 'explore' })
     }
 
