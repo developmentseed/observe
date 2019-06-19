@@ -56,11 +56,11 @@ class ViewOfflineAreaDetail extends React.Component {
   }
 
   componentDidUpdate (prevProps) {
-    const { navigation, offlineResourceStatus } = this.props
+    const { navigation } = this.props
     const key = navigation.getParam('key')
 
     if (prevProps.navigation.getParam('key') !== key) {
-      const { aoi } = offlineResourceStatus[key]
+      const { aoi } = this.props.offlineResourceStatus[key]
 
       this.takeSnapshot(aoi)
     }
