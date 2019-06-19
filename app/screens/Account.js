@@ -11,8 +11,6 @@ import LoadingOverlay from '../components/LoadingOverlay'
 import { colors } from '../style/variables'
 
 const Text = styled.Text`
-  font-size: 16;
-  letter-spacing: 0.5;
 `
 
 const ImageView = styled.View`

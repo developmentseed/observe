@@ -15,8 +15,6 @@ import { presets as starterPresets } from '../../presets/starter-presets.json'
 const win = Dimensions.get('window')
 
 const Text = styled.Text`
-  font-size: 16;
-  letter-spacing: 0.5;
 `
 
 const PresetWrapper = styled.TouchableOpacity`
@@ -161,11 +159,10 @@ class SelectFeatureType extends React.Component {
             <Search
               onSearch={(text) => this.onSearch(text)}
               onChangeText={(text) => this.onSearch(text)}
-              fontSize={16}
               backgroundColor='#ffffff'
               titleCancelColor='#333333'
               contentWidth={win.width - 32}
-              inputStyle={{ paddingBottom: 6 }}
+              inputStyle={{ paddingBottom: 6, fontSize: 16, paddingLeft: 2 }}
               keyboardShouldPersist={false}
               placeholder='Search for presets'
               searchIconCollapsedMargin={55}

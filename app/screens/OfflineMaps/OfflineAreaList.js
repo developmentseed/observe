@@ -69,10 +69,8 @@ class OfflineAreaList extends React.Component {
   }
 
   deleteOfflineResource = key => {
-    const { deleteOfflineResource } = this.props
-
     // delete the specified offline resource
-    deleteOfflineResource(key)
+    this.props.deleteOfflineResource(key)
   }
 
   select = key => {
