@@ -1,9 +1,21 @@
-import { Text } from 'react-native'
 import React from 'react'
 import styled from 'styled-components/native'
 
 import Icon from './Collecticons'
 import { colors } from '../style/variables'
+import getPlatformStyles from '../utils/get-platform-styles'
+
+const styles = getPlatformStyles({
+  ios: {
+    editorPaddingBottom: 0
+  },
+  iphoneX: {
+    editorPaddingBottom: 48
+  },
+  android: {
+    editorPaddingBottom: 0
+  }
+})
 
 const EditorWrapper = styled.View`
   background-color: #fafafa;
@@ -11,10 +23,12 @@ const EditorWrapper = styled.View`
   border-top-color: ${colors.muted};
   border-bottom-width: 0.5;
   border-bottom-color: ${colors.muted};
+  padding-bottom: ${styles.editorPaddingBottom};
 `
 
 const ToggleButton = styled.TouchableOpacity`
   flex-direction: row;
+  align-items: center;
   padding-top: 16;
   padding-right: 16;
   padding-bottom: 16;
@@ -27,7 +41,14 @@ const TagListWrapper = styled.View`
   margin-right: 16;
 `
 
-const TagList = styled.FlatList``
+const Text = styled.Text`
+  color: ${colors.baseAlpha};
+  padding-left: 4;
+`
+
+const TagList = styled.FlatList`
+  color: ${colors.baseAlpha};
+`
 
 const Tag = styled.View`
   flex: 1;
@@ -40,7 +61,7 @@ const TagKeyInput = styled.TextInput`
   flex: 0.45;
   padding-left: 12;
   border-width: 1;
-  border-color: ${colors.muted};
+  border-color: ${colors.baseMuted};
   border-top-left-radius: 4;
   border-top-right-radius: 0;
   border-bottom-left-radius: 4;
@@ -53,7 +74,7 @@ const TagValueInput = styled.TextInput`
   flex: 0.45;
   padding-left: 12;
   border-width: 1;
-  border-color: ${colors.muted};
+  border-color: ${colors.baseMuted};
   border-left-width: 0;
   border-radius: 0;
   border-bottom-right-radius: 4;
@@ -65,7 +86,7 @@ const TagValueInput = styled.TextInput`
 const TagDeleteWrapper = styled.TouchableHighlight`
   flex: 0.1;
   border-width: 1;
-  border-color: ${colors.muted};
+  border-color: ${colors.baseMuted};
   border-left-width: 0;
   border-top-right-radius: 4;
   border-top-start-radius: 0;
@@ -79,6 +100,7 @@ const TagDeleteWrapper = styled.TouchableHighlight`
 const AddTagWrapper = styled.TouchableOpacity`
   margin-top: 4;
   flex-direction: row;
+  align-items: center;
 `
 
 export default class TagEditor extends React.Component {
@@ -129,12 +151,12 @@ export default class TagEditor extends React.Component {
 
     if (open) {
       return (
-        <Icon name='chevron-down' size={16} color='black' />
+        <Icon name='chevron-down' size={16} color={colors.baseAlpha} />
       )
     }
 
     return (
-      <Icon name='chevron-right' size={16} color='black' />
+      <Icon name='chevron-right' size={16} color={colors.baseAlpha} />
     )
   }
 
@@ -159,7 +181,7 @@ export default class TagEditor extends React.Component {
       <AddTagWrapper onPress={() => {
         this.addTag()
       }}>
-        <Icon name='plus' size={16} color='black' />
+        <Icon name='plus' size={16} color={colors.baseAlpha} />
         <Text>Add tag</Text>
       </AddTagWrapper>
     )
@@ -189,19 +211,19 @@ export default class TagEditor extends React.Component {
         <TagKeyInput
           autoCapitalize='none'
           onChangeText={(val) => this.onUpdateKey(key, val)}
-          placeholderTextColor={colors.muted}
+          placeholderTextColor={colors.baseMuted}
           placeholder='key'
           value={key}
         />
         <TagValueInput
           autoCapitalize='none'
           onChangeText={(val) => this.onUpdateValue(value, val, key)}
-          placeholderTextColor={colors.muted}
+          placeholderTextColor={colors.baseMuted}
           placeholder='value'
           value={value}
         />
         <TagDeleteWrapper onPress={() => this.removeTag(index)}>
-          <Icon name='trash-bin' size={16} color='black' />
+          <Icon name='trash-bin' size={16} color={colors.baseMuted} />
         </TagDeleteWrapper>
       </Tag>
     )

@@ -3,7 +3,8 @@ import styled from 'styled-components/native'
 
 import UserContributionsItem from './UserContributionsItem'
 
-const StyledFlatList = styled.FlatList``
+const StyledFlatList = styled.FlatList`
+`
 
 export default class UserContributionsList extends React.Component {
   render () {

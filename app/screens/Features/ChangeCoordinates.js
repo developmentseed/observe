@@ -5,7 +5,8 @@ import styled from 'styled-components/native'
 import Header from '../../components/Header'
 import Container from '../../components/Container'
 
-const Text = styled.Text``
+const Text = styled.Text`
+`
 
 class ChangeCoordinates extends React.Component {
   static navigationOptions = ({ navigation }) => {

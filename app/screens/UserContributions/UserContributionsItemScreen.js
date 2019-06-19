@@ -35,7 +35,6 @@ const FeatureInfoText = styled.Text`
 `
 
 const UploadStatusText = styled.Text`
-  font-size: 16;
 `
 
 const ErrorText = styled.Text`

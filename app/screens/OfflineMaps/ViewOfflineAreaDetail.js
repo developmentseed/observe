@@ -18,7 +18,8 @@ import {
 } from '../../actions/map'
 import { getOfflineResourceStatus } from '../../selectors'
 
-const Text = styled.Text``
+const Text = styled.Text`
+`
 const Bold = styled.Text`
   font-weight: bold;
 `
