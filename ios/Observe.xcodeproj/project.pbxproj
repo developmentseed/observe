@@ -25,6 +25,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		260BDD6C22B9E9670032CA17 /* ObserveIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 260BDD3A22B9E9670032CA17 /* ObserveIcons.ttf */; };
 		264528A6223AB43A0027F56B /* Collecticons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 264528A5223AB43A0027F56B /* Collecticons.ttf */; };
 		26F1AB5D22B1CD0B003540FB /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 26F1AB5C22B1CD0B003540FB /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		26F1AB5E22B1CD6E003540FB /* libRCTMGL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 266358FD2208E369008C2B62 /* libRCTMGL.a */; };
@@ -459,6 +460,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Observe/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Observe/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		260BDD3A22B9E9670032CA17 /* ObserveIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = ObserveIcons.ttf; path = "../node_modules/observe-icon-font/font/fonts/ObserveIcons.ttf"; sourceTree = "<group>"; };
 		2620ACB62214EBF000ED09FD /* Observe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Observe.entitlements; path = Observe/Observe.entitlements; sourceTree = "<group>"; };
 		264528A5223AB43A0027F56B /* Collecticons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Collecticons.ttf; path = Observe/Collecticons.ttf; sourceTree = "<group>"; };
 		266358F82208E369008C2B62 /* RCTMGL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTMGL.xcodeproj; path = "../node_modules/@mapbox/react-native-mapbox-gl/ios/RCTMGL.xcodeproj"; sourceTree = "<group>"; };
@@ -845,6 +847,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				260BDD3A22B9E9670032CA17 /* ObserveIcons.ttf */,
 				26F1AB5C22B1CD0B003540FB /* Mapbox.framework */,
 				264528A5223AB43A0027F56B /* Collecticons.ttf */,
 				8A9F59F52289529C002CDA8F /* Monospace.ttf */,
@@ -1463,6 +1466,7 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				5D88CF462231B4D30047A8D4 /* osm.json in Resources */,
+				260BDD6C22B9E9670032CA17 /* ObserveIcons.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
