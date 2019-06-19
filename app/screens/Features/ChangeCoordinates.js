@@ -4,12 +4,8 @@ import styled from 'styled-components/native'
 
 import Header from '../../components/Header'
 import Container from '../../components/Container'
-import { colors } from '../../style/variables'
 
 const Text = styled.Text`
-  font-size: 16;
-  letter-spacing: 0.5;
-  color: ${colors.base}
 `
 
 class ChangeCoordinates extends React.Component {

@@ -15,9 +15,6 @@ import { presets as starterPresets } from '../../presets/starter-presets.json'
 const win = Dimensions.get('window')
 
 const Text = styled.Text`
-  font-size: 16;
-  letter-spacing: 0.5;
-  color: ${colors.base};
 `
 
 const PresetWrapper = styled.TouchableOpacity`

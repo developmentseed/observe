@@ -18,9 +18,6 @@ import { deleteFeature, uploadEdits } from '../../actions/edit'
 import { colors } from '../../style/variables'
 
 const FieldsList = styled.SectionList`
-  font-size: 16;
-  letter-spacing: 0.5;
-  color: ${colors.base};
 `
 
 const Field = styled.View`
@@ -33,15 +30,11 @@ const Field = styled.View`
 const FieldKey = styled.Text`
   font-weight: 500;
   font-size: 12;
-  color: ${colors.base};
 `
 
 const FieldValue = styled.Text`
   font-weight: 300;
-  font-size: 16;
-  letter-spacing: 0.5;
   padding-top: 2;
-  color: ${colors.base};
 `
 
 const SectionHeaderField = styled.View`
