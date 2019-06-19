@@ -5,6 +5,7 @@ import ConfirmDialog from './ConfirmDialog'
 import ObserveIcon from './ObserveIcon'
 import { colors } from '../style/variables'
 import getDefaultPreset from '../utils/get-default-preset'
+import getPresetByTags from '../utils/get-preset-by-tags'
 
 const Header = styled.View`
   padding-top: 16;
@@ -52,7 +53,7 @@ export default class FeatureDetailHeader extends React.Component {
     if (!feature) return null
 
     if (!preset) {
-      preset = getDefaultPreset(feature.geometry.type)
+      preset = getPresetByTags(feature.properties) || getDefaultPreset(feature.geometry.type)
     }
 
     const geometryType = feature.geometry.type
@@ -66,6 +67,9 @@ export default class FeatureDetailHeader extends React.Component {
       cancelDialog()
       navigation.navigate('SelectFeatureType', { feature })
     }
+
+    const icon = (preset.icon || feature.properties.icon || 'maki_marker').replace(/-/g, '_')
+
     return (
       <>
         <Header>
@@ -77,7 +81,7 @@ export default class FeatureDetailHeader extends React.Component {
                 }
               }}>
                 <ObserveIcon
-                  name={feature.properties.icon}
+                  name={icon}
                   size={36}
                   color={colors.primary}
                 />
