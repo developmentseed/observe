@@ -10,10 +10,7 @@ const TextContainer = styled.View`
   justify-content: center;
 `
 
-const Text = styled.Text`
-  font-size: 16;
-  letter-spacing: 0.5;
-`
+const Text = styled.Text``
 
 const StyledFlatList = styled.FlatList``
 
@@ -22,7 +19,6 @@ export default class UserContributionsList extends React.Component {
     const { data, onSelectItem } = this.props
 
     if (data && !data.length) {
-      console.log('IM HERE')
       return (
         <Container>
           <TextContainer>
