@@ -15,6 +15,13 @@ export function getParentPreset (preset) {
   if (endIndex < 0) return null
 
   const parentId = preset.key.substring(0, endIndex)
-  const parentPreset = presets[parentId] ? { ...presets[parentId], fields: [...presets[parentId].fields] } : undefined
+
+  if (!presets[parentId]) return
+
+  const parentPreset = { ...presets[parentId] }
+
+  if (presets[parentId].fields && Array.isArray(presets[parentId].fields)) {
+    parentPreset.fields = [...presets[parentId].fields]
+  }
   return parentPreset
 }
