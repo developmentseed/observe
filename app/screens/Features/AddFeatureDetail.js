@@ -20,14 +20,10 @@ import { metaKeys } from '../../utils/uninterestingKeys'
 import nextTick from '../../utils/next-tick'
 import SaveEditDialog from '../../components/SaveEditDialog'
 import TagEditor from '../../components/TagEditor'
-import { colors } from '../../style/variables'
 
 import { getParentPreset } from '../../utils/get-parent-preset'
 
 const FieldsList = styled.FlatList`
-  font-size: 16;
-  letter-spacing: 0.5;
-  color: ${colors.base};
 `
 
 class EditFeatureDetail extends React.Component {

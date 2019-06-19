@@ -28,16 +28,12 @@ const TagListWrapper = styled.View`
 `
 
 const Text = styled.Text`
-  font-size: 16;
-  letter-spacing: 0.5;
   color: ${colors.baseAlpha};
   padding-left: 4;
 `
 
 const TagList = styled.FlatList`
-  font-size: 16;
   color: ${colors.baseAlpha};
-  letter-spacing: 0.5;
 `
 
 const Tag = styled.View`
@@ -49,9 +45,6 @@ const Tag = styled.View`
 
 const TagKeyInput = styled.TextInput`
   flex: 0.45;
-  font-size: 16;
-  color: ${colors.base};
-  letter-spacing: 0.5;
   padding-left: 12;
   border-width: 1;
   border-color: ${colors.baseMuted};
@@ -65,9 +58,6 @@ const TagKeyInput = styled.TextInput`
 
 const TagValueInput = styled.TextInput`
   flex: 0.45;
-  font-size: 16;
-  color: ${colors.base};
-  letter-spacing: 0.5;
   padding-left: 12;
   border-width: 1;
   border-color: ${colors.baseMuted};

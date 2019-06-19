@@ -233,7 +233,6 @@ export class NumberField extends Field {
               keyboardType='numeric'
               placeholder={placeholder}
               placeholderTextColor={color.baseMuted}
-              style={{ flex: 1, color: colors.base, fontSize: 16, letterSpacing: 0.5 }}
               underlineColorAndroid='transparent'
               value={value}
             />
@@ -267,7 +266,6 @@ export class TextField extends Field {
               onChangeText={(value) => this.onValueChange(value)}
               onFocus={() => this.onFocus()}
               onBlur={() => this.onBlur()}
-              style={{ flex: 1, color: colors.base, fontSize: 16, letterSpacing: 0.5 }}
               placeholder={placeholder}
               placeholderTextColor={color.baseMuted}
               underlineColorAndroid='transparent'
@@ -383,7 +381,7 @@ export class ReadOnlyField extends Component {
       <View pointerEvents='none'>
         <FieldWrapper style={{ borderColor: colors.baseMuted }}>
           <LabelWrapper>
-            <Label style={{ color: colors.base }}>{key}</Label>
+            <Label style={{ color: colors.baseMuted }}>{key}</Label>
           </LabelWrapper>
 
           <InputWrapper>

@@ -17,12 +17,8 @@ import {
   renameOfflineResource
 } from '../../actions/map'
 import { getOfflineResourceStatus } from '../../selectors'
-import { colors } from '../../style/variables'
 
 const Text = styled.Text`
-  font-size: 16;
-  letter-spacing: 0.5;
-  color: ${colors.base}
 `
 const Bold = styled.Text`
   font-weight: bold;

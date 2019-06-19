@@ -29,9 +29,6 @@ const SettingsHeader = styled.Text`
   margin-bottom: 16;
 `
 const Text = styled.Text`
-  font-size: 16;
-  letter-spacing: 0.5;
-  color: ${colors.base}
 `
 
 class Settings extends React.Component {
