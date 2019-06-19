@@ -154,9 +154,7 @@ class Explore extends React.Component {
   _fetchData (visibleBounds, zoomLevel) {
     // fetch new data only if zoom is greater than 16
     if (zoomLevel >= 16) {
-      const { fetchData } = this.props
-
-      fetchData(visibleBounds)
+      this.props.fetchData(visibleBounds)
     }
   }
 
@@ -239,11 +237,11 @@ class Explore extends React.Component {
   }
 
   onBackButtonPress = () => {
-    const { mode, mapBackPress } = this.props
+    const { mode } = this.props
     if (mode === 'explore') { // let default back handling happen when in Explore mode
       return false
     }
-    mapBackPress()
+    this.props.mapBackPress()
     return true
   }
 
@@ -291,7 +289,7 @@ class Explore extends React.Component {
 
   render () {
     const { userTrackingMode } = this.state
-    const { navigation, geojson, selectedFeatures, editsGeojson, setMapMode, mode } = this.props
+    const { navigation, geojson, selectedFeatures, editsGeojson, mode } = this.props
     let selectedFeatureIds = null
 
     if (selectedFeatures) {
@@ -381,7 +379,7 @@ class Explore extends React.Component {
               })
 
               // reset map mode
-              setMapMode('explore')
+              this.props.setMapMode('explore')
             }
           }}
         />
