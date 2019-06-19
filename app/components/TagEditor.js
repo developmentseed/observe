@@ -3,6 +3,19 @@ import styled from 'styled-components/native'
 
 import Icon from './Collecticons'
 import { colors } from '../style/variables'
+import getPlatformStyles from '../utils/get-platform-styles'
+
+const styles = getPlatformStyles({
+  ios: {
+    editorPaddingBottom: 0
+  },
+  iphoneX: {
+    editorPaddingBottom: 48
+  },
+  android: {
+    editorPaddingBottom: 0
+  }
+})
 
 const EditorWrapper = styled.View`
   background-color: #fafafa;
@@ -10,6 +23,7 @@ const EditorWrapper = styled.View`
   border-top-color: ${colors.muted};
   border-bottom-width: 0.5;
   border-bottom-color: ${colors.muted};
+  padding-bottom: ${styles.editorPaddingBottom};
 `
 
 const ToggleButton = styled.TouchableOpacity`

@@ -3,11 +3,17 @@ import { Platform, Keyboard } from 'react-native'
 import { connect } from 'react-redux'
 import styled from 'styled-components/native'
 import Picker from 'react-native-picker-select'
+import _uniq from 'lodash.uniq'
+import _pick from 'lodash.pick'
+import _omitBy from 'lodash.omitby'
+import _omit from 'lodash.omit'
+import _isEqual from 'lodash.isequal'
 
 import Container from '../../components/Container'
 import Header from '../../components/Header'
 import PageWrapper from '../../components/PageWrapper'
 import TagEditor from '../../components/TagEditor'
+import Icon from '../../components/Collecticons'
 
 import { editFeature, uploadEdits } from '../../actions/edit'
 
@@ -20,11 +26,7 @@ import nextTick from '../../utils/next-tick'
 import SaveEditDialog from '../../components/SaveEditDialog'
 import getFields from '../../utils/get-fields'
 import { getParentPreset } from '../../utils/get-parent-preset'
-import _uniq from 'lodash.uniq'
-import _pick from 'lodash.pick'
-import _omitBy from 'lodash.omitby'
-import _omit from 'lodash.omit'
-import _isEqual from 'lodash.isequal'
+import { colors } from '../../style/variables'
 
 const FieldsList = styled.FlatList`
 `
@@ -297,7 +299,7 @@ class EditFeatureDetail extends React.Component {
         onValueChange={(value, i) => {
           if (i !== 0) {
             const field = fields.find((f) => {
-              return f.key && f.key === value
+              return f && f.key && f.key === value
             })
             if (!field) return
             this.setState({ addFieldValue: field })
@@ -310,6 +312,31 @@ class EditFeatureDetail extends React.Component {
           if (Platform.OS === 'ios' && this.state.addFieldValue) {
             this.addField(this.state.addFieldValue)
             this.setState({ addFieldValue: null })
+          }
+        }}
+        Icon={() => {
+          return <Icon name='chevron-down' color='gray' />
+        }}
+        useNativeAndroidPickerStyle={false}
+        style={{
+          inputIOS: {
+            paddingVertical: 12,
+            paddingHorizontal: 10,
+            color: colors.base,
+            paddingRight: 30,
+            marginTop: 10
+          },
+          inputAndroid: {
+            paddingTop: 10,
+            paddingBottom: 5,
+            paddingHorizontal: 10,
+            color: colors.base,
+            paddingRight: 30,
+            marginTop: 10
+          },
+          iconContainer: {
+            top: 25,
+            right: 15
           }
         }}
       />
