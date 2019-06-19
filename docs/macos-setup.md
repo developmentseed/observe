@@ -33,7 +33,7 @@ yarn global add react-native-cli
 ### Clone the repo
 
 ```
-git clone https://github.com/developmentseed/observe-mobile.git
+git clone https://github.com/developmentseed/observe.git
 ```
 
 ### Change directory into the repo
