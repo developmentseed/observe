@@ -92,7 +92,7 @@ class SelectFeatureType extends React.Component {
           {
             preset.icon && (
               <ObserveIcon
-                name={preset.icon.replace('-', '_')}
+                name={preset.icon.replace(/-/g, '_')}
                 size={20}
                 color={colors.primary}
               />
