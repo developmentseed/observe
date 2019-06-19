@@ -202,9 +202,9 @@ class EditFeatureDetail extends React.Component {
       ...feature,
       geometry: {
         ...feature.geometry,
-        coordinates: {
+        coordinates: [
           ...feature.geometry.coordinates
-        }
+        ]
       },
       properties: {
         ...feature.properties
