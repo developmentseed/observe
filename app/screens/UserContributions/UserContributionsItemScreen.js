@@ -22,6 +22,7 @@ import Config from 'react-native-config'
 import getTaginfo from '../../utils/get-taginfo'
 import Icon from '../../components/Collecticons'
 
+const Text = styled.Text``
 const ChangesetText = styled.Text`
   font-weight: 500;
   font-size: 18;
