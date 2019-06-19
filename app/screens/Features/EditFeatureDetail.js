@@ -301,8 +301,9 @@ class EditFeatureDetail extends React.Component {
         onValueChange={(value, i) => {
           if (i !== 0) {
             const field = fields.find((f) => {
-              return f.key === value
+              return f.key && f.key === value
             })
+            if (!field) return
             this.setState({ addFieldValue: field })
             if (Platform.OS === 'android') {
               this.addField(field)
