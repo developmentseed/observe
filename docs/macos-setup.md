@@ -39,7 +39,7 @@ git clone https://github.com/developmentseed/observe.git
 ### Change directory into the repo
 
 ```
-cd observe-mobile
+cd observe
 ```
 
 ### Install dependencies
