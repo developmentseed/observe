@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## Unreleased
 
+- ...
+
+## [v0.1.8] - 2019-06-29
+
 ### Changed
 - Update packages with high-level security updates needed ([pull request](https://github.com/developmentseed/observe/pull/38))
 - Update react-native and @mapbox/react-native-mapbox-gl  ([pull request](https://github.com/developmentseed/observe/pull/47))
@@ -26,5 +30,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Added
 - First public release
 
-[Unreleased]: https://github.com/developmentseed/observe/compare/v0.1.7...HEAD
+[Unreleased]: https://github.com/developmentseed/observe/compare/v0.1.8...HEAD
+[v0.1.8]: https://github.com/developmentseed/observe/compare/v0.1.7...v0.1.8
 [v0.1.7]: https://github.com/developmentseed/observe/compare/b7522e25f369fa9051e1b02cde40135ffacc755b...v0.1.7
