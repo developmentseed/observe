@@ -26,8 +26,8 @@ const Bold = styled.Text`
 
 let osmStyleURL = Config.MAPBOX_STYLE_URL || MapboxGL.StyleURL.Street
 
-// fix asset URLs for Android
-if (!osmStyleURL.includes(':/') && Platform.OS === 'android') {
+// fix asset URLs
+if (!osmStyleURL.includes(':/')) {
   osmStyleURL = `asset://${osmStyleURL}`
 }
 
@@ -68,10 +68,8 @@ class ViewOfflineAreaDetail extends React.Component {
 
   async takeSnapshot (aoi) {
     const { imageHeight: height, width } = this.state
-
     // MapboxGL expects these as [[maxX, maxY], [minX, minY]]
     const bounds = [[aoi[2], aoi[3]], [aoi[0], aoi[1]]]
-
     try {
       const uri = await MapboxGL.snapshotManager.takeSnap({
         bounds,
