@@ -402,7 +402,7 @@ class Explore extends React.Component {
             minZoomLevel={2}
             maxZoomLevel={19}
             ref={(ref) => { this.mapRef = ref }}
-            zoomLevel={18}
+            zoomLevel={12}
             showUserLocation
             onUserLocationUpdate={this.onUserLocationUpdate}
             userTrackingMode={userTrackingMode}
