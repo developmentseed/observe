@@ -3,12 +3,13 @@
 /* global __dirname */
 /* global expect */
 
-import { getDataForBbox, getFeature } from '../../app/services/api'
+import { getDataForBbox, getFeature, createChangeset } from '../../app/services/api'
 import path from 'path'
 import fs from 'fs'
 
 import { addIconUrl } from '../../app/utils/add-icon-url'
 import { filterTags } from '../../app/utils/filter-tags'
+import getChangesetXML from '../../app/utils/get-changeset-xml'
 
 test('fetch data for bbox', async () => {
   const xmlData = fs.readFileSync(path.join(__dirname, '../fixtures/osm-xml-for-bbox.xml'), 'utf-8')
@@ -30,4 +31,15 @@ test('fetch feature from the api', async () => {
   fetch.mockResponseOnce(xmlData)
   const data = await getFeature('node', 4317433537)
   expect(data).toMatchSnapshot()
+})
+
+test('create a changeset', async () => {
+  const changesetTags = {
+    created_by: `Observe-Test`,
+    comment: 'Test Changeset'
+  }
+  const changesetXML = getChangesetXML(changesetTags)
+  fetch.mockResponseOnce('1')
+  let changesetId = await createChangeset(changesetXML)
+  expect(changesetId).toBe('1')
 })
