@@ -1,0 +1,106 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test async edit actions should UPLOAD_EDITS 1`] = `
+Array [
+  Object {
+    "edit": Object {
+      "comment": "Test",
+      "errors": Array [],
+      "id": "node/observe-vfxnxtmo20j",
+      "newFeature": Object {
+        "geometry": Object {
+          "coordinates": Array [
+            -77.02937206507221,
+            38.89497324828185,
+          ],
+          "type": "Point",
+        },
+        "id": "node/observe-vfxnxtmo20j",
+        "properties": Object {
+          "building": "yes",
+          "icon": "maki_marker",
+          "id": "node/observe-vfxnxtmo20j",
+          "name": "Test",
+          "version": 1,
+        },
+        "type": "Feature",
+      },
+      "oldFeature": null,
+      "status": "pending",
+      "timestamp": 1562325975841,
+      "type": "create",
+    },
+    "type": "EDIT_UPLOAD_STARTED",
+  },
+  Object {
+    "changesetId": "1",
+    "edit": Object {
+      "comment": "Test",
+      "errors": Array [],
+      "id": "node/observe-vfxnxtmo20j",
+      "newFeature": Object {
+        "geometry": Object {
+          "coordinates": Array [
+            -77.02937206507221,
+            38.89497324828185,
+          ],
+          "type": "Point",
+        },
+        "id": "node/observe-vfxnxtmo20j",
+        "properties": Object {
+          "building": "yes",
+          "icon": "maki_marker",
+          "id": "node/observe-vfxnxtmo20j",
+          "name": "Test",
+          "version": 1,
+        },
+        "type": "Feature",
+      },
+      "oldFeature": null,
+      "status": "pending",
+      "timestamp": 1562325975841,
+      "type": "create",
+    },
+    "timestamp": 1000,
+    "type": "EDIT_UPLOADED",
+  },
+  Object {
+    "offline": false,
+    "tile": "0320100322313223",
+    "type": "REQUESTED_TILE",
+  },
+  Object {
+    "tile": "0320100322313223",
+    "type": "LOADING_DATA_FOR_TILE",
+  },
+  Object {
+    "offline": false,
+    "tile": "0320100322313223",
+    "type": "LOADED_DATA_FOR_TILE",
+  },
+  Object {
+    "type": "UPDATE_VISIBLE_BOUNDS",
+    "visibleBounds": Array [
+      Array [
+        -77.02886915086447,
+        38.8957164152211,
+      ],
+      Array [
+        -77.02987497924005,
+        38.8942300735456,
+      ],
+    ],
+    "zoom": 18,
+  },
+  Object {
+    "offline": false,
+    "tile": "0320100322313221",
+    "type": "REQUESTED_TILE",
+  },
+  Object {
+    "offline": false,
+    "tile": "0320100322313223",
+    "type": "REQUESTED_TILE",
+  },
+]
+`;

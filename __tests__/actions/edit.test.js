@@ -167,6 +167,8 @@ describe('test async edit actions', () => {
           'UPDATE_VISIBLE_BOUNDS',
           'REQUESTED_TILE',
           'REQUESTED_TILE' ])
+
+        expect(actions).toMatchSnapshot()
       })
   })
 })
