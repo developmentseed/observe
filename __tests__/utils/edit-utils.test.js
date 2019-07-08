@@ -12,33 +12,6 @@ test('get all retryable edits', () => {
   const edits = [
     {
       'type': 'create',
-      'newFeature': {
-        'type': 'Feature',
-        'id': 'node/observe-vfxnxtmo20j',
-        'geometry': {
-          'type': 'Point',
-          'coordinates': [
-            -77.02937206507221,
-            38.89497324828185
-          ]
-        },
-        'properties': {
-          'id': 'node/observe-vfxnxtmo20j',
-          'version': 1,
-          'name': 'Test',
-          'building': 'yes',
-          'icon': 'maki_marker'
-        }
-      },
-      'oldFeature': null,
-      'comment': 'Test',
-      'id': 'node/observe-vfxnxtmo20j',
-      'status': 'success',
-      'errors': [],
-      'timestamp': 1562325975841
-    },
-    {
-      'type': 'create',
       'newFeature': mockFeature1,
       'oldFeature': null,
       'comment': 'Test',

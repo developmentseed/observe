@@ -9,33 +9,6 @@ Array [
     "newFeature": Object {
       "geometry": Object {
         "coordinates": Array [
-          -77.02937206507221,
-          38.89497324828185,
-        ],
-        "type": "Point",
-      },
-      "id": "node/observe-vfxnxtmo20j",
-      "properties": Object {
-        "building": "yes",
-        "icon": "maki_marker",
-        "id": "node/observe-vfxnxtmo20j",
-        "name": "Test",
-        "version": 1,
-      },
-      "type": "Feature",
-    },
-    "oldFeature": null,
-    "status": "success",
-    "timestamp": 1562325975841,
-    "type": "create",
-  },
-  Object {
-    "comment": "Test",
-    "errors": Array [],
-    "id": "node/observe-vfxnxtmo20j",
-    "newFeature": Object {
-      "geometry": Object {
-        "coordinates": Array [
           0,
           0,
         ],
