@@ -104,3 +104,113 @@ Array [
   },
 ]
 `;
+
+exports[`test async edit actions should raise VersionMismatchError 1`] = `
+Array [
+  Object {
+    "edit": Object {
+      "comment": "Test",
+      "errors": Array [],
+      "id": "node/1",
+      "newFeature": Object {
+        "geometry": Object {
+          "coordinates": Array [
+            -77.02937206507221,
+            38.89497324828185,
+          ],
+          "type": "Point",
+        },
+        "id": "node/1",
+        "properties": Object {
+          "building": "yes",
+          "icon": "maki_marker",
+          "id": "node/1",
+          "name": "Test",
+          "version": 1,
+        },
+        "type": "Feature",
+      },
+      "oldFeature": Object {
+        "geometry": Object {
+          "coordinates": Array [
+            -77.02937206507221,
+            38.89497324828185,
+          ],
+          "type": "Point",
+        },
+        "id": "node/1",
+        "properties": Object {
+          "building": "house",
+          "icon": "maki_marker",
+          "id": "node/1",
+          "name": "Test",
+          "version": 1,
+        },
+        "type": "Feature",
+      },
+      "status": "pending",
+      "timestamp": 1562325975841,
+      "type": "modify",
+    },
+    "type": "EDIT_UPLOAD_STARTED",
+  },
+  Object {
+    "level": "error",
+    "message": "Upload failed",
+    "type": "SET_NOTIFICATION",
+  },
+  Object {
+    "edit": Object {
+      "comment": "Test",
+      "errors": Array [],
+      "id": "node/1",
+      "newFeature": Object {
+        "geometry": Object {
+          "coordinates": Array [
+            -77.02937206507221,
+            38.89497324828185,
+          ],
+          "type": "Point",
+        },
+        "id": "node/1",
+        "properties": Object {
+          "building": "yes",
+          "icon": "maki_marker",
+          "id": "node/1",
+          "name": "Test",
+          "version": 1,
+        },
+        "type": "Feature",
+      },
+      "oldFeature": Object {
+        "geometry": Object {
+          "coordinates": Array [
+            -77.02937206507221,
+            38.89497324828185,
+          ],
+          "type": "Point",
+        },
+        "id": "node/1",
+        "properties": Object {
+          "building": "house",
+          "icon": "maki_marker",
+          "id": "node/1",
+          "name": "Test",
+          "version": 1,
+        },
+        "type": "Feature",
+      },
+      "status": "pending",
+      "timestamp": 1562325975841,
+      "type": "modify",
+    },
+    "error": Object {
+      "code": "VersionMismatchError",
+      "extra": "Version mismatch: Provided 1, server had: 2 of Node 1",
+      "message": "This feature has been updated since you edited it",
+      "retryable": false,
+    },
+    "type": "EDIT_UPLOAD_FAILED",
+  },
+]
+`;

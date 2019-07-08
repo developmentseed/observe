@@ -21,6 +21,7 @@ import { getFeature } from '../test-utils'
 import fs from 'fs'
 import path from 'path'
 import state from '../fixtures/state.json'
+import stateConflict from '../fixtures/state-conflict.json'
 
 const middlewares = [thunk]
 const mockStore = configureStore(middlewares)
@@ -168,6 +169,60 @@ describe('test async edit actions', () => {
           'REQUESTED_TILE',
           'REQUESTED_TILE' ])
 
+        expect(actions).toMatchSnapshot()
+      })
+  })
+
+  it('should raise VersionMismatchError', () => {
+    const store = mockStore(stateConflict)
+    const edit = {
+      oldFeature: {
+        'type': 'Feature',
+        'id': 'node/1',
+        'geometry': {
+          'type': 'Point',
+          'coordinates': [
+            -77.02937206507221,
+            38.89497324828185
+          ]
+        },
+        'properties': {
+          'id': 'node/1',
+          'version': 1,
+          'name': 'Test',
+          'building': 'house',
+          'icon': 'maki_marker'
+        }
+      },
+      newFeature: {
+        'type': 'Feature',
+        'id': 'node/1',
+        'geometry': {
+          'type': 'Point',
+          'coordinates': [
+            -77.02937206507221,
+            38.89497324828185
+          ]
+        },
+        'properties': {
+          'id': 'node/1',
+          'version': 1,
+          'name': 'Test',
+          'building': 'yes',
+          'icon': 'maki_marker'
+        }
+      },
+      id: 'node/1'
+    }
+
+    fetch.resetMocks()
+    fetch
+      .once('1') // open changeset
+      .once('Version mismatch: Provided 1, server had: 2 of Node 1', { status: 409 }) // upload osm change
+
+    return store.dispatch(uploadEdits([edit.id]))
+      .then(() => {
+        const actions = store.getActions()
         expect(actions).toMatchSnapshot()
       })
   })
