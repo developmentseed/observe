@@ -217,7 +217,27 @@ jest.mock('rn-fetch-blob', () => ({
     isDir: jest.fn(),
     mkdir: jest.fn(),
     writeFile: jest.fn(),
-    unlink: jest.fn()
+    unlink: jest.fn(),
+    exists: jest.fn(),
+    stat: () => {
+      return {
+        size: 7000
+      }
+    },
+    mv: jest.fn()
+  },
+  config: () => {
+    return {
+      fetch: () => {
+        return {
+          info: () => {
+            return { status: 200 }
+          },
+          text: jest.fn(),
+          path: jest.fn()
+        }
+      }
+    }
   }
 }))
 

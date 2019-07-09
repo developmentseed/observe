@@ -14,9 +14,14 @@ import {
   setAddPointGeometry,
   startEditUpload,
   editUploadFailed,
-  editUploaded
+  editUploaded,
+  uploadEdits
 } from '../../app/actions/edit'
 import { getFeature } from '../test-utils'
+import fs from 'fs'
+import path from 'path'
+import state from '../fixtures/state.json'
+import stateConflict from '../fixtures/state-conflict.json'
 
 const middlewares = [thunk]
 const mockStore = configureStore(middlewares)
@@ -128,5 +133,97 @@ describe('test sync edit actions', () => {
       changesetId,
       timestamp: 1000
     })
+  })
+})
+
+describe('test async edit actions', () => {
+  it('should UPLOAD_EDITS', () => {
+    const store = mockStore(state)
+    const edit = {
+      oldFeature: null,
+      newFeature: { 'type': 'Feature', 'id': 'node/observe-vfxnxtmo20j', 'geometry': { 'type': 'Point', 'coordinates': [-77.02933996149397, 38.89503041477742] }, 'properties': { 'id': 'node/observe-vfxnxtmo20j', 'version': 1, 'name': 'Test', 'building': 'yes', 'icon': 'maki_marker' } },
+      id: 'node/observe-vfxnxtmo20j'
+    }
+    const xmlDiffResponse = fs.readFileSync(path.join(__dirname, '../fixtures/osm-change-upload-response.xml'), 'utf-8')
+    const osmResponseforTileUpdate = fs.readFileSync(path.join(__dirname, '../fixtures/osm-response-for-updated-tile.xml'), 'utf-8')
+
+    fetch
+      .once('1') // open changeset
+      .once(xmlDiffResponse) // upload osm change
+      .once({ status: 200 }) // close changeset
+      .once(osmResponseforTileUpdate)
+
+    return store.dispatch(uploadEdits([edit.id]))
+      .then(() => {
+        const actions = store.getActions()
+        const types = []
+        actions.forEach(action => {
+          types.push(action.type)
+        })
+        expect(types).toStrictEqual([ 'EDIT_UPLOAD_STARTED',
+          'EDIT_UPLOADED',
+          'REQUESTED_TILE',
+          'LOADING_DATA_FOR_TILE',
+          'LOADED_DATA_FOR_TILE',
+          'UPDATE_VISIBLE_BOUNDS',
+          'REQUESTED_TILE',
+          'REQUESTED_TILE' ])
+
+        expect(actions).toMatchSnapshot()
+      })
+  })
+
+  it('should raise VersionMismatchError', () => {
+    const store = mockStore(stateConflict)
+    const edit = {
+      oldFeature: {
+        'type': 'Feature',
+        'id': 'node/1',
+        'geometry': {
+          'type': 'Point',
+          'coordinates': [
+            -77.02937206507221,
+            38.89497324828185
+          ]
+        },
+        'properties': {
+          'id': 'node/1',
+          'version': 1,
+          'name': 'Test',
+          'building': 'house',
+          'icon': 'maki_marker'
+        }
+      },
+      newFeature: {
+        'type': 'Feature',
+        'id': 'node/1',
+        'geometry': {
+          'type': 'Point',
+          'coordinates': [
+            -77.02937206507221,
+            38.89497324828185
+          ]
+        },
+        'properties': {
+          'id': 'node/1',
+          'version': 1,
+          'name': 'Test',
+          'building': 'yes',
+          'icon': 'maki_marker'
+        }
+      },
+      id: 'node/1'
+    }
+
+    fetch.resetMocks()
+    fetch
+      .once('1') // open changeset
+      .once('Version mismatch: Provided 1, server had: 2 of Node 1', { status: 409 }) // upload osm change
+
+    return store.dispatch(uploadEdits([edit.id]))
+      .then(() => {
+        const actions = store.getActions()
+        expect(actions).toMatchSnapshot()
+      })
   })
 })
