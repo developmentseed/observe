@@ -1,0 +1,143 @@
+{
+  "documentation": "https://opencagedata.com/api",
+  "licenses": [
+    {
+      "name": "see attribution guide",
+      "url": "https://opencagedata.com/credits"
+    }
+  ],
+  "rate": {
+    "limit": 2500,
+    "remaining": 2494,
+    "reset": 1562803200
+  },
+  "results": [
+    {
+      "annotations": {
+        "DMS": {
+          "lat": "38° 53' 37.37580'' N",
+          "lng": "77° 1' 44.16960'' W"
+        },
+        "FIPS": {
+          "county": "11001",
+          "state": "11"
+        },
+        "MGRS": "18SUJ2404006938",
+        "Maidenhead": "FM18lv64ml",
+        "Mercator": {
+          "x": -8574821.929,
+          "y": 4679626.107
+        },
+        "OSM": {
+          "edit_url": "https://www.openstreetmap.org/edit?relation=1029361#map=16/38.89372/-77.02894",
+          "url": "https://www.openstreetmap.org/?mlat=38.89372&mlon=-77.02894#map=16/38.89372/-77.02894"
+        },
+        "UN_M49": {
+          "regions": {
+            "AMERICAS": "019",
+            "NORTHERN_AMERICA": "021",
+            "US": "840",
+            "WORLD": "001"
+          },
+          "statistical_groupings": [
+            "MEDC"
+          ]
+        },
+        "callingcode": 1,
+        "currency": {
+          "alternate_symbols": [
+            "US$"
+          ],
+          "decimal_mark": ".",
+          "disambiguate_symbol": "US$",
+          "html_entity": "$",
+          "iso_code": "USD",
+          "iso_numeric": "840",
+          "name": "United States Dollar",
+          "smallest_denomination": 1,
+          "subunit": "Cent",
+          "subunit_to_unit": 100,
+          "symbol": "$",
+          "symbol_first": 1,
+          "thousands_separator": ","
+        },
+        "flag": "🇺🇸",
+        "geohash": "dqcjr0mhrdn65k4e2nx8",
+        "qibla": 56.57,
+        "roadinfo": {
+          "drive_on": "right",
+          "speed_in": "mph"
+        },
+        "sun": {
+          "rise": {
+            "apparent": 1562752260,
+            "astronomical": 1562745360,
+            "civil": 1562750400,
+            "nautical": 1562748000
+          },
+          "set": {
+            "apparent": 1562718840,
+            "astronomical": 1562725740,
+            "civil": 1562720700,
+            "nautical": 1562723100
+          }
+        },
+        "timezone": {
+          "name": "America/New_York",
+          "now_in_dst": 1,
+          "offset_sec": -14400,
+          "offset_string": "-0400",
+          "short_name": "EDT"
+        },
+        "what3words": {
+          "words": "actors.jump.fans"
+        }
+      },
+      "bounds": {
+        "northeast": {
+          "lat": 38.8950973,
+          "lng": -77.0282585
+        },
+        "southwest": {
+          "lat": 38.8923279,
+          "lng": -77.0316934
+        }
+      },
+      "components": {
+        "ISO_3166-1_alpha-2": "US",
+        "ISO_3166-1_alpha-3": "USA",
+        "_type": "road",
+        "city": "Washington",
+        "continent": "North America",
+        "country": "USA",
+        "country_code": "us",
+        "pedestrian": "Federal Triangle Plaza",
+        "postcode": "20423",
+        "state": "District of Columbia",
+        "state_code": "DC",
+        "suburb": "Penn Quarter",
+        "unknown": "Environmental Protection Agency"
+      },
+      "confidence": 9,
+      "formatted": "Environmental Protection Agency, Federal Triangle Plaza, Washington, DC 20423, USA",
+      "geometry": {
+        "lat": 38.8937155,
+        "lng": -77.028936
+      }
+    }
+  ],
+  "status": {
+    "code": 200,
+    "message": "OK"
+  },
+  "stay_informed": {
+    "blog": "https://blog.opencagedata.com",
+    "twitter": "https://twitter.com/opencagedata"
+  },
+  "thanks": "For using an OpenCage Data API",
+  "timestamp": {
+    "created_http": "Wed, 10 Jul 2019 09:25:37 GMT",
+    "created_unix": 1562750737
+  },
+  "total_results": 1
+}
