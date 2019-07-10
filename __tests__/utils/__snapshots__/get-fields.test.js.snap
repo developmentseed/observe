@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`get fields for all field keys 1`] = `
+Array [
+  Object {
+    "key": "leaf_type",
+    "label": "Leaf Type",
+    "strings": Object {
+      "options": Object {
+        "broadleaved": "Broadleaved",
+        "leafless": "Leafless",
+        "needleleaved": "Needleleaved",
+      },
+    },
+    "type": "combo",
+  },
+  Object {
+    "key": "leaf_cycle",
+    "label": "Leaf Cycle",
+    "strings": Object {
+      "options": Object {
+        "deciduous": "Deciduous",
+        "evergreen": "Evergreen",
+        "semi_deciduous": "Semi-Deciduous",
+        "semi_evergreen": "Semi-Evergreen",
+      },
+    },
+    "type": "combo",
+  },
+  Object {
+    "key": "denotation",
+    "label": "Denotation",
+    "options": Array [
+      "agricultural",
+      "avenue",
+      "urban",
+      "part_of_fence",
+      "park",
+      "street",
+      "natural_monument",
+      "alley",
+      "landmark",
+      "cluster",
+      "talus",
+      "waterway",
+      "border_farm",
+      "parque",
+      "arbres_sur_trottoir",
+      "catholic",
+      "garden",
+      "natural-monument",
+      "Avenue",
+      "Mauer",
+      "shade",
+      "alleyhttps://www.klassik-stiftung.de/einrichtungen/schloesser-und-gaerten/schloss-und-park-belvedere/",
+      "religious",
+      "avenuehttps://www.openstreetmap.org/#map=16/55.8302/-4.2562",
+      "roman_catholic",
+    ],
+    "type": "combo",
+  },
+]
+`;
+
+exports[`get fields for all field keys 2`] = `
+Array [
+  Object {
+    "key": "name",
+    "label": "Name",
+    "placeholder": "Common name (if any)",
+    "type": "localized",
+    "universal": true,
+  },
+]
+`;

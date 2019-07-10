@@ -244,3 +244,8 @@ jest.mock('rn-fetch-blob', () => ({
 jest.mock('react-native-geolocation-service', () => ({
   getCurrentPosition: jest.fn()
 }))
+
+jest.mock('react-native-config', () => ({
+  OPENCAGE_KEY: 123,
+  API_URL: 'http://example.com'
+}))
