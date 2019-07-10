@@ -246,5 +246,6 @@ jest.mock('react-native-geolocation-service', () => ({
 }))
 
 jest.mock('react-native-config', () => ({
-  OPENCAGE_KEY: 123
+  OPENCAGE_KEY: 123,
+  API_URL: 'http://example.com'
 }))
