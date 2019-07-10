@@ -3,7 +3,7 @@
 /* global __dirname */
 /* global expect */
 
-import { getDataForBbox, getFeature, createChangeset } from '../../app/services/api'
+import { getDataForBbox, getFeature, createChangeset, getMemberNodes } from '../../app/services/api'
 import path from 'path'
 import fs from 'fs'
 
@@ -42,4 +42,36 @@ test('create a changeset', async () => {
   fetch.mockResponseOnce('1')
   let changesetId = await createChangeset(changesetXML)
   expect(changesetId).toBe('1')
+})
+
+test('fetch all member nodes of a feature', async () => {
+  const wayData = fs.readFileSync(path.join(__dirname, '../fixtures/way-343446026/way-343446026.xml'), 'utf-8')
+  const node1 = fs.readFileSync(path.join(__dirname, '../fixtures/way-343446026/node-3502789251.xml'), 'utf-8')
+  const node2 = fs.readFileSync(path.join(__dirname, '../fixtures/way-343446026/node-3502789252.xml'), 'utf-8')
+  const node3 = fs.readFileSync(path.join(__dirname, '../fixtures/way-343446026/node-3502789253.xml'), 'utf-8')
+  const node4 = fs.readFileSync(path.join(__dirname, '../fixtures/way-343446026/node-3502789254.xml'), 'utf-8')
+
+  fetch.resetMocks()
+  fetch
+    .once(wayData, { status: 200 })
+    .once(node1)
+    .once(node2)
+    .once(node3)
+    .once(node4)
+    .once(node1)
+
+  const memberNodes = await getMemberNodes(343446026, 1)
+  expect(memberNodes).toMatchSnapshot()
+})
+
+test('fetching member nodes of a feature with different version upstream should throw', async () => {
+  const wayData = fs.readFileSync(path.join(__dirname, '../fixtures/way-343446026/way-343446026.xml'), 'utf-8')
+
+  fetch.resetMocks()
+  fetch
+    .once(wayData, { status: 200 })
+
+  expect(() => {
+    getMemberNodes(343446026, 2).toThrow('The feature has a different version upstream')
+  })
 })
