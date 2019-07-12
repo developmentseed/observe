@@ -3,7 +3,7 @@
 /* global __dirname */
 /* global expect */
 
-import { getDataForBbox, getFeature, createChangeset, getMemberNodes } from '../../app/services/api'
+import { getDataForBbox, getFeature, createChangeset, getMemberNodes, saveDataForTile } from '../../app/services/api'
 import path from 'path'
 import fs from 'fs'
 
@@ -74,4 +74,15 @@ test('fetching member nodes of a feature with different version upstream should 
   expect(() => {
     getMemberNodes(343446026, 2).toThrow('The feature has a different version upstream')
   })
+})
+
+test('save data for tile', async () => {
+  const xmlData = fs.readFileSync(path.join(__dirname, '../fixtures/osm-xml-for-quadkey.xml'), 'utf-8')
+  fetch.resetMocks()
+  fetch.once(xmlData, { status: 200 })
+
+  saveDataForTile('0320100322313221')
+    .then(d => {
+      expect(d).toBe(7000)
+    })
 })
