@@ -1,5 +1,108 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`fetch all member nodes of a feature 1`] = `
+Object {
+  "features": Array [
+    Object {
+      "geometry": Object {
+        "coordinates": Array [
+          77.6435235,
+          12.9615292,
+        ],
+        "type": "Point",
+      },
+      "id": "node/3502789251",
+      "properties": Object {
+        "changeset": "37206649",
+        "id": "node/3502789251",
+        "timestamp": "2016-02-14T16:04:58Z",
+        "uid": "1306",
+        "user": "PlaneMad",
+        "version": "4",
+      },
+      "type": "Feature",
+    },
+    Object {
+      "geometry": Object {
+        "coordinates": Array [
+          77.6435258,
+          12.9615943,
+        ],
+        "type": "Point",
+      },
+      "id": "node/3502789252",
+      "properties": Object {
+        "changeset": "37206649",
+        "id": "node/3502789252",
+        "timestamp": "2016-02-14T16:04:58Z",
+        "uid": "1306",
+        "user": "PlaneMad",
+        "version": "4",
+      },
+      "type": "Feature",
+    },
+    Object {
+      "geometry": Object {
+        "coordinates": Array [
+          77.6436283,
+          12.9615909,
+        ],
+        "type": "Point",
+      },
+      "id": "node/3502789253",
+      "properties": Object {
+        "changeset": "37206649",
+        "id": "node/3502789253",
+        "timestamp": "2016-02-14T16:04:58Z",
+        "uid": "1306",
+        "user": "PlaneMad",
+        "version": "4",
+      },
+      "type": "Feature",
+    },
+    Object {
+      "geometry": Object {
+        "coordinates": Array [
+          77.643626,
+          12.9615258,
+        ],
+        "type": "Point",
+      },
+      "id": "node/3502789254",
+      "properties": Object {
+        "changeset": "37206649",
+        "id": "node/3502789254",
+        "timestamp": "2016-02-14T16:04:58Z",
+        "uid": "1306",
+        "user": "PlaneMad",
+        "version": "4",
+      },
+      "type": "Feature",
+    },
+    Object {
+      "geometry": Object {
+        "coordinates": Array [
+          77.6435235,
+          12.9615292,
+        ],
+        "type": "Point",
+      },
+      "id": "node/3502789251",
+      "properties": Object {
+        "changeset": "37206649",
+        "id": "node/3502789251",
+        "timestamp": "2016-02-14T16:04:58Z",
+        "uid": "1306",
+        "user": "PlaneMad",
+        "version": "4",
+      },
+      "type": "Feature",
+    },
+  ],
+  "type": "FeatureCollection",
+}
+`;
+
 exports[`fetch data for bbox 1`] = `
 Object {
   "features": Array [
