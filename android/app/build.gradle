@@ -105,6 +105,11 @@ if (rootProject.file("keystore.properties").exists()) {
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     defaultConfig {
         applicationId "com.developmentseed.observe"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -119,7 +124,7 @@ android {
             reset()
             enable enableSeparateBuildPerCPUArchitecture
             universalApk false  // If true, also generate a universal APK
-            include "armeabi-v7a", "x86", "arm64-v8a"
+            include "armeabi-v7a", "x86", "arm64-v8a", "x86-64"
         }
     }
     if (keystoreProperties != null) {
@@ -146,7 +151,7 @@ android {
         variant.outputs.each { output ->
             // For each separate APK per architecture, set a unique version code as described here:
             // http://tools.android.com/tech-docs/new-build-system/user-guide/apk-splits
-            def versionCodes = ["armeabi-v7a":1, "x86":2, "arm64-v8a": 3]
+            def versionCodes = ["armeabi-v7a":1, "x86":2, "arm64-v8a": 3, "x86-64": 4]
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
@@ -157,6 +162,7 @@ android {
 }
 
 dependencies {
+    implementation project(':@react-native-mapbox-gl_maps')
     implementation project(':react-native-geolocation-service')
     implementation project(':react-native-vector-icons')
     implementation project(':react-native-cookies')
@@ -168,14 +174,6 @@ dependencies {
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.6.0'
-
-    // workaround for app closing on launch
-    // https://github.com/mapbox/react-native-mapbox-gl/issues/1139#issuecomment-379647942
-    implementation (project(':mapbox-react-native-mapbox-gl')) {
-        implementation ('com.squareup.okhttp3:okhttp:3.6.0') {
-            force = true
-        }
-    }
 
     compileOnly('com.mapbox.mapboxsdk:mapbox-android-sdk:5.5.3@aar')
 }

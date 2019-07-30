@@ -3,6 +3,7 @@ package com.developmentseed.observe;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.mapbox.rctmgl.RCTMGLPackage;
 import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -14,7 +15,6 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
-import com.mapbox.rctmgl.RCTMGLPackage;
 import com.oblador.keychain.KeychainPackage;
 import com.psykar.cookiemanager.CookieManagerPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
@@ -34,9 +34,9 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
+                    new RCTMGLPackage(),
                     new CookieManagerPackage(),
                     new KeychainPackage(),
-                    new RCTMGLPackage(),
                     new ReactNativeConfigPackage(),
                     new RNFetchBlobPackage(),
                     new RNGestureHandlerPackage(),

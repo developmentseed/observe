@@ -1,4 +1,6 @@
 rootProject.name = 'Observe'
+include ':@react-native-mapbox-gl_maps'
+project(':@react-native-mapbox-gl_maps').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-mapbox-gl/maps/android/rctmgl')
 include ':react-native-geolocation-service'
 project(':react-native-geolocation-service').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-geolocation-service/android')
 include ':app'
@@ -20,6 +22,3 @@ project(':react-native-gesture-handler').projectDir = new File(rootProject.proje
 
 include ':rn-fetch-blob'
 project(':rn-fetch-blob').projectDir = new File(rootProject.projectDir, '../node_modules/rn-fetch-blob/android')
-
-include ':mapbox-react-native-mapbox-gl'
-project(':mapbox-react-native-mapbox-gl').projectDir = new File(rootProject.projectDir, '../node_modules/@mapbox/react-native-mapbox-gl/android/rctmgl')
