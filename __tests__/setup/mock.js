@@ -182,6 +182,11 @@ jest.mock('NativeModules', function () {
     },
     PlatformConstants: {
       forceTouchAvailable: false
+    },
+    MGLLocationModule: {
+      getLastKnownLocation: jest.fn(),
+      start: jest.fn(),
+      pause: jest.fn()
     }
   }
 })
