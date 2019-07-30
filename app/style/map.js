@@ -1,5 +1,5 @@
 /* eslint-disable no-dupe-keys */
-import MapboxGL from '@mapbox/react-native-mapbox-gl'
+import MapboxGL from '@react-native-mapbox-gl/maps'
 
 const thinLineWidth = MapboxGL.StyleSheet.camera(
   {

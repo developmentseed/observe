@@ -1,5 +1,5 @@
 import Config from 'react-native-config'
-import MapboxGL from '@mapbox/react-native-mapbox-gl'
+import MapboxGL from '@react-native-mapbox-gl/maps'
 import prettyBytes from 'pretty-bytes'
 import React from 'react'
 import { Dimensions, Platform, Image, View } from 'react-native'

@@ -1,6 +1,6 @@
 import Config from 'react-native-config'
 import DOMParser from 'xmldom'
-import MapboxGL from '@mapbox/react-native-mapbox-gl'
+import MapboxGL from '@react-native-mapbox-gl/maps'
 import PQueue from 'p-queue'
 import RNFetchBlob from 'rn-fetch-blob'
 import forge from 'node-forge'

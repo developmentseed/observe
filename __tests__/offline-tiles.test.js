@@ -1,5 +1,5 @@
 /* global test, expect */
-import MapboxGL from '@mapbox/react-native-mapbox-gl'
+import MapboxGL from '@react-native-mapbox-gl/maps'
 import 'react-native'
 
 import { createPack } from '../app/services/offline-tiles'
