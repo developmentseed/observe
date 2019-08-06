@@ -176,10 +176,8 @@ class Explore extends React.Component {
     try {
       const userLocation = await getUserLocation()
       if (userLocation.hasOwnProperty('coords')) {
-        this.mapRef.setCamera({
-          centerCoordinate: [userLocation.coords.longitude, userLocation.coords.latitude],
-          zoom: 18
-        })
+        this.camera.moveTo([userLocation.coords.longitude, userLocation.coords.latitude])
+        this.camera.zoomTo(18)
       }
     } catch (error) {
       console.log('error fetching user location', error)
@@ -252,7 +250,7 @@ class Explore extends React.Component {
 
     return (
       <ZoomToEdit onPress={() => {
-        this.mapRef.zoomTo(16.5)
+        this.camera.zoomTo(16.5)
       }} />
     )
   }
@@ -399,16 +397,20 @@ class Explore extends React.Component {
             onRegionDidChange={this.onRegionDidChange}
             regionDidChangeDebounceTime={10}
             onPress={this.onPress}
-            minZoomLevel={2}
-            maxZoomLevel={19}
             ref={(ref) => { this.mapRef = ref }}
-            zoomLevel={12}
             showUserLocation
-            onUserLocationUpdate={this.onUserLocationUpdate}
-            userTrackingMode={userTrackingMode}
             styleURL={styleURL}
           >
-            <MapboxGL.ShapeSource id='geojsonSource' shape={geojson} images={icons}>
+            <MapboxGL.Camera
+              zoomLevel={12}
+              minZoomLevel={2}
+              maxZoomLevel={19}
+              followUserLocation
+              followUserMode={userTrackingMode}
+              ref={(ref) => { this.camera = ref }}
+            ></MapboxGL.Camera>
+            <MapboxGL.Images assets={icons} />
+            <MapboxGL.ShapeSource id='geojsonSource' shape={geojson} >
               <MapboxGL.LineLayer id='roadsHighlight' filter={['==', '$type', 'LineString']} style={style.lineHighlight} minZoomLevel={16} />
               <MapboxGL.LineLayer id='roads' filter={['==', '$type', 'LineString']} style={style.highways} minZoomLevel={16} />
               <MapboxGL.LineLayer id='roadsLower' filter={['all', ['in', 'highway', 'foot', 'footway', 'hiking', 'living_street', 'cycleway', 'steps'], ['==', '$type', 'LineString']]} style={style.highwaysLower} minZoomLevel={16} />
