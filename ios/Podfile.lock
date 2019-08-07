@@ -1,12 +1,119 @@
 PODS:
+  - boost-for-react-native (1.63.0)
   - DCTAuth (3.0)
+  - DoubleConversion (1.1.6)
+  - Folly (2018.10.22.00):
+    - boost-for-react-native
+    - DoubleConversion
+    - glog
+  - glog (0.3.5)
+  - React (0.59.1):
+    - React/Core (= 0.59.1)
+  - react-native-mapbox-gl (7.0.0-rc3):
+    - React
+  - React/Core (0.59.1):
+    - yoga (= 0.59.1.React)
+  - React/CxxBridge (0.59.1):
+    - Folly (= 2018.10.22.00)
+    - React/Core
+    - React/cxxreact
+    - React/jsiexecutor
+  - React/cxxreact (0.59.1):
+    - boost-for-react-native (= 1.63.0)
+    - DoubleConversion
+    - Folly (= 2018.10.22.00)
+    - glog
+    - React/jsinspector
+  - React/DevSupport (0.59.1):
+    - React/Core
+    - React/RCTWebSocket
+  - React/fishhook (0.59.1)
+  - React/jsi (0.59.1):
+    - DoubleConversion
+    - Folly (= 2018.10.22.00)
+    - glog
+  - React/jsiexecutor (0.59.1):
+    - DoubleConversion
+    - Folly (= 2018.10.22.00)
+    - glog
+    - React/cxxreact
+    - React/jsi
+  - React/jsinspector (0.59.1)
+  - React/RCTActionSheet (0.59.1):
+    - React/Core
+  - React/RCTAnimation (0.59.1):
+    - React/Core
+  - React/RCTBlob (0.59.1):
+    - React/Core
+  - React/RCTCameraRoll (0.59.1):
+    - React/Core
+    - React/RCTImage
+  - React/RCTGeolocation (0.59.1):
+    - React/Core
+  - React/RCTImage (0.59.1):
+    - React/Core
+    - React/RCTNetwork
+  - React/RCTLinkingIOS (0.59.1):
+    - React/Core
+  - React/RCTNetwork (0.59.1):
+    - React/Core
+  - React/RCTPushNotification (0.59.1):
+    - React/Core
+  - React/RCTSettings (0.59.1):
+    - React/Core
+  - React/RCTText (0.59.1):
+    - React/Core
+  - React/RCTVibration (0.59.1):
+    - React/Core
+  - React/RCTWebSocket (0.59.1):
+    - React/Core
+    - React/fishhook
+    - React/RCTBlob
+  - yoga (0.59.1.React)
 
 DEPENDENCIES:
   - DCTAuth (from `https://github.com/danielctull/DCTAuth.git`)
+  - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
+  - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
+  - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - "react-native-mapbox-gl (from `../node_modules/@react-native-mapbox-gl/maps`)"
+  - React/Core (from `../node_modules/react-native`)
+  - React/CxxBridge (from `../node_modules/react-native`)
+  - React/DevSupport (from `../node_modules/react-native`)
+  - React/RCTActionSheet (from `../node_modules/react-native`)
+  - React/RCTAnimation (from `../node_modules/react-native`)
+  - React/RCTBlob (from `../node_modules/react-native`)
+  - React/RCTCameraRoll (from `../node_modules/react-native`)
+  - React/RCTGeolocation (from `../node_modules/react-native`)
+  - React/RCTImage (from `../node_modules/react-native`)
+  - React/RCTLinkingIOS (from `../node_modules/react-native`)
+  - React/RCTNetwork (from `../node_modules/react-native`)
+  - React/RCTPushNotification (from `../node_modules/react-native`)
+  - React/RCTSettings (from `../node_modules/react-native`)
+  - React/RCTText (from `../node_modules/react-native`)
+  - React/RCTVibration (from `../node_modules/react-native`)
+  - React/RCTWebSocket (from `../node_modules/react-native`)
+  - yoga (from `../node_modules/react-native/ReactCommon/yoga/Yoga.podspec`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - boost-for-react-native
 
 EXTERNAL SOURCES:
   DCTAuth:
     :git: https://github.com/danielctull/DCTAuth.git
+  DoubleConversion:
+    :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
+  Folly:
+    :podspec: "../node_modules/react-native/third-party-podspecs/Folly.podspec"
+  glog:
+    :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
+  React:
+    :path: "../node_modules/react-native"
+  react-native-mapbox-gl:
+    :path: "../node_modules/@react-native-mapbox-gl/maps"
+  yoga:
+    :path: "../node_modules/react-native/ReactCommon/yoga/Yoga.podspec"
 
 CHECKOUT OPTIONS:
   DCTAuth:
@@ -14,8 +121,15 @@ CHECKOUT OPTIONS:
     :git: https://github.com/danielctull/DCTAuth.git
 
 SPEC CHECKSUMS:
+  boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DCTAuth: 8add154decd00335d62917828896bba790ce47fd
+  DoubleConversion: bb338842f62ab1d708ceb63ec3d999f0f3d98ecd
+  Folly: de497beb10f102453a1afa9edbf8cf8a251890de
+  glog: aefd1eb5dda2ab95ba0938556f34b98e2da3a60d
+  React: 34a405ead72252839fdc4afc1f972a7ed984af84
+  react-native-mapbox-gl: 26cabddce8bf6f39164c7be4dceb781e6fab0fdc
+  yoga: 8fb47f180b19b0dadb285a09e4c74c8a41721d3a
 
-PODFILE CHECKSUM: 049887dbf8d8152264daed7ce1127d47228487cc
+PODFILE CHECKSUM: 7042c3927c2b5fd122478b63ac38c3b84b2b708b
 
 COCOAPODS: 1.6.0

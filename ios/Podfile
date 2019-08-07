@@ -1,5 +1,6 @@
 # Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+platform :ios, '9.0'
+# Flexbox Layout Manager Used By React Native
 
 target 'Observe' do
   # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
@@ -8,6 +9,36 @@ target 'Observe' do
   # Pods for Observe
 
   #pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+  pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga/Yoga.podspec'
+
+  # React Native
+  pod 'React', path: '../node_modules/react-native', subspecs: [
+    # Comment out any unneeded subspecs to reduce bundle size.
+    'Core',
+    'CxxBridge',
+    'DevSupport',
+    'RCTActionSheet',
+    'RCTAnimation',
+    'RCTBlob',
+    'RCTCameraRoll',
+    'RCTGeolocation',
+    'RCTImage',
+    'RCTNetwork',
+    'RCTPushNotification',
+    'RCTSettings',
+    'RCTText',
+    'RCTVibration',
+    'RCTWebSocket',
+    'RCTLinkingIOS'
+  ]
+  
+  # Mapbox
+  pod 'react-native-mapbox-gl', :path => '../node_modules/@react-native-mapbox-gl/maps'
+  
+  # Third party
+  pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
+  pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
+  pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
 
   target 'ObserveTests' do
     inherit! :search_paths
@@ -17,7 +48,7 @@ target 'Observe' do
 end
 
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '8.0'
+# platform :ios, '8.0'
 use_frameworks!
 
 pod 'DCTAuth', :git => 'https://github.com/danielctull/DCTAuth.git'

@@ -154,9 +154,23 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/DCTAuth/DCTAuth.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/DoubleConversion/DoubleConversion.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Folly/folly.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React/React.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/glog/glog.framework"
+  install_framework "${PODS_ROOT}/../../node_modules/@react-native-mapbox-gl/maps/ios/Mapbox.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/react-native-mapbox-gl/react_native_mapbox_gl.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/yoga/yoga.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/DCTAuth/DCTAuth.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/DoubleConversion/DoubleConversion.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Folly/folly.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React/React.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/glog/glog.framework"
+  install_framework "${PODS_ROOT}/../../node_modules/@react-native-mapbox-gl/maps/ios/Mapbox.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/react-native-mapbox-gl/react_native_mapbox_gl.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/yoga/yoga.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait
