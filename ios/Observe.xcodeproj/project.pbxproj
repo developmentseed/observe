@@ -62,6 +62,7 @@
 		8A612A182244C17D0091590F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		8A9F59F62289529D002CDA8F /* Monospace.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8A9F59F52289529C002CDA8F /* Monospace.ttf */; };
 		8A9F59F72289529D002CDA8F /* Monospace.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8A9F59F52289529C002CDA8F /* Monospace.ttf */; };
+		8AB9387022FB3ED80059894D /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
 		8AE40A6022FB0F9200AD178E /* DoubleConversion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AE40A2822FB0F8600AD178E /* DoubleConversion.framework */; };
 		8AE40A6122FB0F9900AD178E /* glog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AE40A2C22FB0F8600AD178E /* glog.framework */; };
 		8AE40A6222FB0F9C00AD178E /* folly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AE40A2A22FB0F8600AD178E /* folly.framework */; };
@@ -566,6 +567,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8AB9387022FB3ED80059894D /* JavaScriptCore.framework in Frameworks */,
 				140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */,
 				A0CF91AECC28B6B2B446BB47 /* Pods_ObserveTests.framework in Frameworks */,
 			);
@@ -1710,8 +1712,6 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Observe/Pods-Observe-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/DCTAuth/DCTAuth.framework",
@@ -1724,8 +1724,6 @@
 				"${BUILT_PRODUCTS_DIR}/yoga/yoga.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DCTAuth.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DoubleConversion.framework",

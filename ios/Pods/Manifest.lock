@@ -7,69 +7,69 @@ PODS:
     - DoubleConversion
     - glog
   - glog (0.3.5)
-  - React (0.59.1):
-    - React/Core (= 0.59.1)
+  - React (0.59.0):
+    - React/Core (= 0.59.0)
   - react-native-mapbox-gl (7.0.0-rc3):
     - React
-  - React/Core (0.59.1):
-    - yoga (= 0.59.1.React)
-  - React/CxxBridge (0.59.1):
+  - React/Core (0.59.0):
+    - yoga (= 0.59.0.React)
+  - React/CxxBridge (0.59.0):
     - Folly (= 2018.10.22.00)
     - React/Core
     - React/cxxreact
     - React/jsiexecutor
-  - React/cxxreact (0.59.1):
+  - React/cxxreact (0.59.0):
     - boost-for-react-native (= 1.63.0)
     - DoubleConversion
     - Folly (= 2018.10.22.00)
     - glog
     - React/jsinspector
-  - React/DevSupport (0.59.1):
+  - React/DevSupport (0.59.0):
     - React/Core
     - React/RCTWebSocket
-  - React/fishhook (0.59.1)
-  - React/jsi (0.59.1):
+  - React/fishhook (0.59.0)
+  - React/jsi (0.59.0):
     - DoubleConversion
     - Folly (= 2018.10.22.00)
     - glog
-  - React/jsiexecutor (0.59.1):
+  - React/jsiexecutor (0.59.0):
     - DoubleConversion
     - Folly (= 2018.10.22.00)
     - glog
     - React/cxxreact
     - React/jsi
-  - React/jsinspector (0.59.1)
-  - React/RCTActionSheet (0.59.1):
+  - React/jsinspector (0.59.0)
+  - React/RCTActionSheet (0.59.0):
     - React/Core
-  - React/RCTAnimation (0.59.1):
+  - React/RCTAnimation (0.59.0):
     - React/Core
-  - React/RCTBlob (0.59.1):
+  - React/RCTBlob (0.59.0):
     - React/Core
-  - React/RCTCameraRoll (0.59.1):
+  - React/RCTCameraRoll (0.59.0):
     - React/Core
     - React/RCTImage
-  - React/RCTGeolocation (0.59.1):
+  - React/RCTGeolocation (0.59.0):
     - React/Core
-  - React/RCTImage (0.59.1):
+  - React/RCTImage (0.59.0):
     - React/Core
     - React/RCTNetwork
-  - React/RCTLinkingIOS (0.59.1):
+  - React/RCTLinkingIOS (0.59.0):
     - React/Core
-  - React/RCTNetwork (0.59.1):
+  - React/RCTNetwork (0.59.0):
     - React/Core
-  - React/RCTPushNotification (0.59.1):
+  - React/RCTPushNotification (0.59.0):
     - React/Core
-  - React/RCTSettings (0.59.1):
+  - React/RCTSettings (0.59.0):
     - React/Core
-  - React/RCTText (0.59.1):
+  - React/RCTText (0.59.0):
     - React/Core
-  - React/RCTVibration (0.59.1):
+  - React/RCTVibration (0.59.0):
     - React/Core
-  - React/RCTWebSocket (0.59.1):
+  - React/RCTWebSocket (0.59.0):
     - React/Core
     - React/fishhook
     - React/RCTBlob
-  - yoga (0.59.1.React)
+  - yoga (0.59.0.React)
 
 DEPENDENCIES:
   - DCTAuth (from `https://github.com/danielctull/DCTAuth.git`)
@@ -126,10 +126,10 @@ SPEC CHECKSUMS:
   DoubleConversion: bb338842f62ab1d708ceb63ec3d999f0f3d98ecd
   Folly: de497beb10f102453a1afa9edbf8cf8a251890de
   glog: aefd1eb5dda2ab95ba0938556f34b98e2da3a60d
-  React: 34a405ead72252839fdc4afc1f972a7ed984af84
+  React: 0d6c719d9549bea0bd5676f8170b0e5c56e2c3c7
   react-native-mapbox-gl: 26cabddce8bf6f39164c7be4dceb781e6fab0fdc
-  yoga: 8fb47f180b19b0dadb285a09e4c74c8a41721d3a
+  yoga: 26673abd38bbdf0c33e134ad9e690c5fbf16e8fc
 
 PODFILE CHECKSUM: 7042c3927c2b5fd122478b63ac38c3b84b2b708b
 
-COCOAPODS: 1.6.0
+COCOAPODS: 1.7.5
