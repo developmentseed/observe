@@ -173,6 +173,7 @@ class Explore extends React.Component {
   }
 
   async locateUser () {
+    console.log('locateUser', this.camera)
     try {
       const userLocation = await getUserLocation()
       if (userLocation.hasOwnProperty('coords')) {
@@ -206,6 +207,7 @@ class Explore extends React.Component {
   }
 
   onAddButtonPress = () => {
+    console.log('onAddButtonPress', 'hello', this.camera)
     this.props.startAddPoint()
   }
 
@@ -408,7 +410,8 @@ class Explore extends React.Component {
               followUserLocation
               followUserMode={userTrackingMode}
               ref={(ref) => { this.camera = ref }}
-            ></MapboxGL.Camera>
+            />
+            <MapboxGL.UserLocation />
             <MapboxGL.Images assets={icons} />
             <MapboxGL.ShapeSource id='geojsonSource' shape={geojson} >
               <MapboxGL.LineLayer id='roadsHighlight' filter={['==', '$type', 'LineString']} style={style.lineHighlight} minZoomLevel={16} />
