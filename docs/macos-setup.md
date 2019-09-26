@@ -2,16 +2,13 @@
 
 ## Initial set up
 
-### Install yarn (if not already installed)
+Prerequisites:
 
-```
-brew upgrade
-brew install yarn
-```
+- [Homebrew](https://brew.sh)
+- [nvm](https://github.com/nvm-sh/nvm#installation-and-update)
+- [yarn](https://yarnpkg.com/en/docs/install)
 
 ### Install watchman
-
-Install `watchman` using [homebrew](https://brew.sh/).
 
 ```
 brew install watchman
@@ -22,6 +19,12 @@ brew install watchman
 ```
 brew install gettext
 brew link --force gettext
+```
+
+### Activate target Node.js version
+
+```
+nvm i
 ```
 
 ### Install react-native-cli
