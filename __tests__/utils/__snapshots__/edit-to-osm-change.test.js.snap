@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`test function to convert edit JSON to osm-change XML for a single feature should create a modify action 1`] = `"<osmChange><modify><node id=\\"1\\" changeset=\\"123\\" version=\\"2\\" lon=\\"-2\\" lat=\\"2\\"><tag k=\\"building\\" v=\\"no\\"/></node></modify></osmChange>"`;
-
-exports[`test function to convert edit JSON to osm-change XML for a single feature should create a simple create action 1`] = `"<osmChange><create><node id=\\"-1\\" changeset=\\"123\\" version=\\"1\\" lon=\\"-1\\" lat=\\"1\\"><tag k=\\"building\\" v=\\"yes\\"/></node></create></osmChange>"`;
-
-exports[`test function to convert edit JSON to osm-change XML for a single feature should generate XML for delete actions correctly 1`] = `"<osmChange><delete if-unused=\\"true\\"><node id=\\"1\\" changeset=\\"123\\" version=\\"2\\" lon=\\"-1\\" lat=\\"1\\"><tag k=\\"building\\" v=\\"yes\\"/></node></delete></osmChange>"`;
-
-exports[`test function to convert edit JSON to osm-change XML for a single feature should modify a way with tags correctly 1`] = `"<osmChange><modify><way id=\\"1\\" changeset=\\"123\\" version=\\"3\\"><tag k=\\"highway\\" v=\\"tertiary\\"/><tag k=\\"name\\" v=\\"bar\\"/><nd ref=\\"1\\"/><nd ref=\\"4\\"/><nd ref=\\"7\\"/></way></modify></osmChange>"`;
