@@ -1,0 +1,17 @@
+{
+    "icon": "maki-building",
+    "geometry": [
+        "area"
+    ],
+    "terms": [
+        "academy",
+        "elementary school",
+        "middle school",
+        "high school"
+    ],
+    "tags": {
+        "building": "school"
+    },
+    "matchScore": 0.5,
+    "name": "School Building"
+}

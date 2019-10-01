@@ -1,0 +1,14 @@
+{
+    "icon": "maki-building",
+    "geometry": [
+        "area"
+    ],
+    "terms": [
+        "university"
+    ],
+    "tags": {
+        "building": "college"
+    },
+    "matchScore": 0.5,
+    "name": "College Building"
+}

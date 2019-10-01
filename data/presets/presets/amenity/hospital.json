@@ -1,0 +1,53 @@
+{
+    "icon": "maki-hospital",
+    "fields": [
+        "name",
+        "operator",
+        "healthcare/speciality",
+        "address",
+        "emergency"
+    ],
+    "moreFields": [
+        "internet_access",
+        "internet_access/fee",
+        "internet_access/ssid",
+        "website",
+        "phone",
+        "email",
+        "fax",
+        "wheelchair"
+    ],
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "terms": [
+        "clinic",
+        "doctor",
+        "emergency room",
+        "health",
+        "infirmary",
+        "institution",
+        "sanatorium",
+        "sanitarium",
+        "sick",
+        "surgery",
+        "ward"
+    ],
+    "tags": {
+        "amenity": "hospital"
+    },
+    "addTags": {
+        "amenity": "hospital",
+        "healthcare": "hospital"
+    },
+    "removeTags": {
+        "amenity": "hospital",
+        "healthcare": "hospital"
+    },
+    "reference": {
+        "key": "amenity",
+        "value": "hospital"
+    },
+    "name": "Hospital Grounds"
+}

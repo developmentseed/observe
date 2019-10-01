@@ -1,0 +1,19 @@
+{
+    "icon": "fas-archway",
+    "fields": [
+        "bridge/support"
+    ],
+    "moreFields": [
+        "material",
+        "seamark/type"
+    ],
+    "geometry": [
+        "point",
+        "vertex",
+        "area"
+    ],
+    "tags": {
+        "bridge:support": "*"
+    },
+    "name": "Bridge Support"
+}

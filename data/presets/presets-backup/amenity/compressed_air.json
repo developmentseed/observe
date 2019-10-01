@@ -1,0 +1,17 @@
+{
+    "icon": "maki-car",
+    "fields": [
+        "operator",
+        "fee",
+        "payment_multi",
+        "lit"
+    ],
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "tags": {
+        "amenity": "compressed_air"
+    },
+    "name": "Compressed Air"
+}

@@ -1,0 +1,17 @@
+{
+    "icon": "maki-music",
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "terms": [
+        "tape casettes",
+        "CDs",
+        "compact discs",
+        "vinyl records"
+    ],
+    "tags": {
+        "shop": "music"
+    },
+    "name": "Music Store"
+}

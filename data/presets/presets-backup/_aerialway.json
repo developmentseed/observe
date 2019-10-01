@@ -1,0 +1,15 @@
+{
+    "fields": [
+        "aerialway"
+    ],
+    "geometry": [
+        "point",
+        "vertex",
+        "line"
+    ],
+    "tags": {
+        "aerialway": "*"
+    },
+    "searchable": false,
+    "name": "Aerialway"
+}

@@ -1,0 +1,30 @@
+{
+    "icon": "maki-golf",
+    "fields": [
+        "name",
+        "operator",
+        "address",
+        "opening_hours"
+    ],
+    "moreFields": [
+        "fee",
+        "payment_multi",
+        "website",
+        "phone",
+        "email",
+        "fax"
+    ],
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "terms": [
+        "crazy golf",
+        "mini golf",
+        "putt-putt"
+    ],
+    "tags": {
+        "leisure": "miniature_golf"
+    },
+    "name": "Miniature Golf"
+}

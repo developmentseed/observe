@@ -1,0 +1,29 @@
+{
+    "icon": "maki-karaoke",
+    "fields": [
+        "name",
+        "studio",
+        "address",
+        "building_area"
+    ],
+    "moreFields": [
+        "website",
+        "phone",
+        "email",
+        "fax",
+        "wheelchair"
+    ],
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "terms": [
+        "recording",
+        "radio",
+        "television"
+    ],
+    "tags": {
+        "amenity": "studio"
+    },
+    "name": "Studio"
+}

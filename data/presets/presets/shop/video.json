@@ -1,0 +1,16 @@
+{
+    "icon": "temaki-movie_rental",
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "terms": [
+        "DVD",
+        "VHS",
+        "video casette"
+    ],
+    "tags": {
+        "shop": "video"
+    },
+    "name": "Video Store"
+}

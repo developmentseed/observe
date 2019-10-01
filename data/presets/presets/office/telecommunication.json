@@ -1,0 +1,17 @@
+{
+    "icon": "maki-telephone",
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "tags": {
+        "office": "telecommunication"
+    },
+    "terms": [
+        "communication",
+        "internet",
+        "phone",
+        "voice"
+    ],
+    "name": "Telecom Office"
+}

@@ -1,0 +1,31 @@
+{
+    "icon": "temaki-pedestrian",
+    "fields": [
+        "name",
+        "surface",
+        "lit",
+        "width",
+        "oneway",
+        "structure",
+        "access"
+    ],
+    "moreFields": [
+        "covered",
+        "smoothness"
+    ],
+    "geometry": [
+        "line"
+    ],
+    "tags": {
+        "highway": "pedestrian"
+    },
+    "terms": [
+        "center",
+        "centre",
+        "plaza",
+        "quad",
+        "square",
+        "walkway"
+    ],
+    "name": "Pedestrian Street"
+}

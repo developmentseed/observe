@@ -1,0 +1,25 @@
+{
+    "icon": "maki-library",
+    "fields": [
+        "name",
+        "operator",
+        "capacity",
+        "website",
+        "lit"
+    ],
+    "moreFields": [
+        "wheelchair"
+    ],
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "terms": [
+        "library",
+        "bookcrossing"
+    ],
+    "tags": {
+        "amenity": "public_bookcase"
+    },
+    "name": "Public Bookcase"
+}

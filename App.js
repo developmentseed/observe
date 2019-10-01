@@ -1,114 +1,151 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
+import React, { Component } from 'react'
+import { AppState } from 'react-native'
+import Config from 'react-native-config'
+import { Provider } from 'react-redux'
 
-import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+import { createStackNavigator, createDrawerNavigator, createAppContainer } from 'react-navigation'
+import { PersistGate } from 'redux-persist/integration/react'
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import { store, persistor } from './app/utils/store'
+import Explore from './app/screens/Explore'
+import Account from './app/screens/Account'
+import Settings from './app/screens/Settings'
+import OfflineAreaList from './app/screens/OfflineMaps/OfflineAreaList'
+import ViewOfflineAreaDetail from './app/screens/OfflineMaps/ViewOfflineAreaDetail'
+import UserContributionsListScreen from './app/screens/UserContributions/UserContributionsListScreen'
+import UserContributionsItemScreen from './app/screens/UserContributions/UserContributionsItemScreen'
+import ViewFeatureDetail from './app/screens/Features/ViewFeatureDetail'
+import AddFeatureDetail from './app/screens/Features/AddFeatureDetail'
+import EditFeatureDetail from './app/screens/Features/EditFeatureDetail'
+import SelectFeatureType from './app/screens/Features/SelectFeatureType'
 
-const App: () => React$Node = () => {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
-  );
-};
+import AuthorizationManager from './app/components/AuthorizationManager'
+import Drawer from './app/components/Drawer'
+import Notification from './app/components/Notification'
+import UploadManager from './app/components/UploadManager'
+import { preAuth } from './app/services/auth'
+import { ReduxNetworkProvider } from 'react-native-offline'
+import Icon from './app/components/Collecticons'
+import { colors } from './app/style/variables'
 
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-});
+const OfflineMapsNavigator = createStackNavigator({
+  OfflineAreaList: { screen: OfflineAreaList },
+  ViewOfflineAreaDetail: { screen: ViewOfflineAreaDetail }
+}, {
+  initialRouteName: 'OfflineAreaList',
+  headerMode: 'none',
+  navigationOptions: {
+    title: 'Offline Maps',
+    drawerIcon: () => (
+      <Icon
+        name='map'
+        style={{ fontSize: 16, color: colors.primary }}
+      />
+    )
+  }
+})
 
-export default App;
+const UserContributionsNavigator = createStackNavigator({
+  UserContributions: { screen: UserContributionsListScreen },
+  UserContributionsDetail: { screen: UserContributionsItemScreen }
+}, {
+  initialRouteName: 'UserContributions',
+  headerMode: 'none',
+  navigationOptions: {
+    title: 'Your Contributions',
+    drawerIcon: () => (
+      <Icon
+        name='marker'
+        style={{ fontSize: 16, color: colors.primary }}
+      />
+    )
+  }
+})
+
+// This is convenient when iterating on screens, as the active screen will
+// reload when code changes. However, it breaks some uses of react-navigation
+// params, so it's disabled by default
+// const persistenceKey = __DEV__ ? 'NavigationStateDEV' : null
+const persistenceKey = null
+console.disableYellowBox = true
+
+const AppNavigator = createDrawerNavigator({
+  Explore: { screen: Explore },
+  UserContributions: {
+    screen: UserContributionsNavigator
+  },
+  OfflineMaps: { screen: OfflineMapsNavigator },
+  Account: { screen: Account },
+  Settings: { screen: Settings },
+  ViewFeatureDetail: { screen: ViewFeatureDetail },
+  AddFeatureDetail: { screen: AddFeatureDetail },
+  EditFeatureDetail: { screen: EditFeatureDetail },
+  SelectFeatureType: { screen: SelectFeatureType }
+}, {
+  initialRouteName: 'Explore',
+  contentComponent: Drawer,
+  contentOptions: {
+    activeTintColor: colors.primary,
+    activeBackgroundColor: 'rgb(237, 239, 254)',
+    activeFontWeight: '600',
+    labelStyle: {
+      fontSize: 16,
+      fontWeight: '400',
+      letterSpacing: 0.5,
+      marginLeft: 0,
+      marginTop: 12,
+      marginBottom: 12
+    },
+    itemsContainerStyle: {
+      padding: 8,
+      paddingTop: 16
+    },
+    itemStyle: {
+      borderRadius: 4,
+      borderColor: 'white',
+      borderWidth: 1
+    },
+    iconContainerStyle: {
+      opacity: 1,
+      marginRight: 20,
+      paddingRight: 0,
+      marginLeft: 12,
+      paddingLeft: 0
+    }
+  }
+})
+
+const AppContainer = createAppContainer(AppNavigator)
+
+// FIXME: we should pass a <Loading /> component to loading= on the PersistGate to show while app state is being loaded
+// from persistent store
+export default class App extends Component {
+  _handleAppStateChange (nextState) {
+    if (nextState === 'active') {
+      preAuth()
+    }
+  }
+
+  componentWillMount () {
+    AppState.addEventListener('change', this._handleAppStateChange)
+  }
+
+  componentWillUnmount () {
+    AppState.removeEventListener('change', this._handleAppStateChange)
+  }
+
+  render () {
+    return (
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <ReduxNetworkProvider pingServerUrl={Config.API_URL}>
+            <AppContainer persistenceKey={persistenceKey} />
+            <Notification />
+            <AuthorizationManager />
+            <UploadManager />
+          </ReduxNetworkProvider>
+        </PersistGate>
+      </Provider>
+    )
+  }
+}

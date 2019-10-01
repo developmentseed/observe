@@ -1,0 +1,19 @@
+{
+    "icon": "temaki-diamond",
+    "fields": [
+        "surface",
+        "direction_vertex"
+    ],
+    "geometry": [
+        "vertex",
+        "area"
+    ],
+    "terms": [
+        "speed",
+        "slow"
+    ],
+    "tags": {
+        "traffic_calming": "choker"
+    },
+    "name": "Traffic Choker"
+}

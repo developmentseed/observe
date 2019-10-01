@@ -1,0 +1,25 @@
+{
+    "icon": "maki-park-alt1",
+    "fields": [
+        "name",
+        "operator",
+        "trees"
+    ],
+    "moreFields": [
+        "address",
+        "website",
+        "phone",
+        "email",
+        "fax"
+    ],
+    "geometry": [
+        "area"
+    ],
+    "tags": {
+        "landuse": "orchard"
+    },
+    "terms": [
+        "fruit"
+    ],
+    "name": "Orchard"
+}

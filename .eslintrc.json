@@ -1,0 +1,7 @@
+{
+  "extends": ["devseed-standard"],
+  "parser": "babel-eslint",
+  "globals": {
+    "__DEV__": "readonly"
+  }
+}

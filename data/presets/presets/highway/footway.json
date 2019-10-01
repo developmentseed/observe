@@ -1,0 +1,32 @@
+{
+    "icon": "temaki-pedestrian",
+    "fields": [
+        "name",
+        "surface",
+        "width",
+        "structure",
+        "access",
+        "incline"
+    ],
+    "moreFields": [
+        "wheelchair",
+        "lit",
+        "smoothness",
+        "covered",
+        "dog"
+    ],
+    "geometry": [
+        "line"
+    ],
+    "terms": [
+        "hike",
+        "hiking",
+        "trackway",
+        "trail",
+        "walk"
+    ],
+    "tags": {
+        "highway": "footway"
+    },
+    "name": "Foot Path"
+}

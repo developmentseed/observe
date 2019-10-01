@@ -1,0 +1,34 @@
+{
+    "icon": "maki-waste-basket",
+    "fields": [
+        "name",
+        "operator",
+        "address",
+        "opening_hours",
+        "fee",
+        "payment_multi"
+    ],
+    "moreFields": [
+        "website",
+        "phone",
+        "email",
+        "fax",
+        "wheelchair"
+    ],
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "terms": [
+        "dump",
+        "garbage",
+        "recycling",
+        "rubbish",
+        "scrap",
+        "trash"
+    ],
+    "tags": {
+        "amenity": "waste_transfer_station"
+    },
+    "name": "Waste Transfer Station"
+}

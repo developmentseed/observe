@@ -1,0 +1,33 @@
+{
+    "icon": "maki-aquarium",
+    "fields": [
+        "name",
+        "operator",
+        "address",
+        "building_area",
+        "opening_hours"
+    ],
+    "moreFields": [
+        "fee",
+        "payment_multi",
+        "smoking",
+        "website",
+        "phone",
+        "email",
+        "fax",
+        "wheelchair"
+    ],
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "terms": [
+        "fish",
+        "sea",
+        "water"
+    ],
+    "tags": {
+        "tourism": "aquarium"
+    },
+    "name": "Aquarium"
+}

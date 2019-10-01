@@ -1,0 +1,27 @@
+{
+    "icon": "maki-golf",
+    "fields": [
+        "name",
+        "operator",
+        "address",
+        "opening_hours"
+    ],
+    "moreFields": [
+        "payment_multi",
+        "website",
+        "phone",
+        "email",
+        "fax"
+    ],
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "terms": [
+        "links"
+    ],
+    "tags": {
+        "leisure": "golf_course"
+    },
+    "name": "Golf Course"
+}

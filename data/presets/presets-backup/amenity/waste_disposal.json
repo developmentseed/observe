@@ -1,0 +1,22 @@
+{
+    "icon": "maki-waste-basket",
+    "fields": [
+        "operator",
+        "collection_times"
+    ],
+    "geometry": [
+        "point",
+        "vertex",
+        "area"
+    ],
+    "tags": {
+        "amenity": "waste_disposal"
+    },
+    "terms": [
+        "garbage",
+        "rubbish",
+        "litter",
+        "trash"
+    ],
+    "name": "Garbage Dumpster"
+}

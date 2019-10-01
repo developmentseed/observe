@@ -1,0 +1,39 @@
+{
+    "icon": "iD-other-line",
+    "fields": [
+        "name",
+        "surface",
+        "width",
+        "structure",
+        "access",
+        "incline"
+    ],
+    "moreFields": [
+        "wheelchair",
+        "lit",
+        "smoothness",
+        "trail_visibility",
+        "sac_scale",
+        "mtb/scale",
+        "mtb/scale/uphill",
+        "mtb/scale/imba",
+        "horse_scale",
+        "covered",
+        "ref",
+        "dog"
+    ],
+    "geometry": [
+        "line"
+    ],
+    "terms": [
+        "hike",
+        "hiking",
+        "trackway",
+        "trail",
+        "walk"
+    ],
+    "tags": {
+        "highway": "path"
+    },
+    "name": "Path"
+}

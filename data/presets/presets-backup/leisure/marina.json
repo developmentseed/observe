@@ -1,0 +1,35 @@
+{
+    "icon": "maki-harbor",
+    "fields": [
+        "name",
+        "operator",
+        "capacity",
+        "fee",
+        "sanitary_dump_station",
+        "power_supply"
+    ],
+    "moreFields" : [
+        "address",
+        "payment_multi",
+        "internet_access",
+        "internet_access/fee",
+        "internet_access/ssid",
+        "seamark/type",
+        "website",
+        "phone",
+        "email",
+        "fax"
+    ],
+    "geometry": [
+        "point",
+        "vertex",
+        "area"
+    ],
+    "terms": [
+        "boat"
+    ],
+    "tags": {
+        "leisure": "marina"
+    },
+    "name": "Marina"
+}

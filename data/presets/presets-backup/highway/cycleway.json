@@ -1,0 +1,30 @@
+{
+    "icon": "maki-bicycle",
+    "fields": [
+        "name",
+        "oneway",
+        "surface",
+        "width",
+        "structure",
+        "access",
+        "incline"
+    ],
+    "moreFields": [
+        "wheelchair",
+        "lit",
+        "smoothness",
+        "maxspeed",
+        "covered",
+        "dog"
+    ],
+    "geometry": [
+        "line"
+    ],
+    "tags": {
+        "highway": "cycleway"
+    },
+    "terms": [
+        "bike"
+    ],
+    "name": "Cycle Path"
+}

@@ -1,0 +1,14 @@
+{
+    "icon": "maki-garden",
+    "geometry": [
+        "area"
+    ],
+    "fields": [
+        "name"
+    ],
+    "tags": {
+        "landuse": "meadow"
+    },
+    "terms": [],
+    "name": "Meadow"
+}

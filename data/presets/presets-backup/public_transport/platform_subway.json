@@ -1,0 +1,45 @@
+{
+    "icon": "temaki-pedestrian",
+    "fields": [
+        "{public_transport/platform}"
+    ],
+    "moreFields": [
+        "{public_transport/platform}"
+    ],
+    "geometry": [
+        "point",
+        "line",
+        "area"
+    ],
+    "tags": {
+        "public_transport": "platform",
+        "subway": "yes"
+    },
+    "addTags": {
+        "public_transport": "platform",
+        "subway": "yes",
+        "railway": "platform"
+    },
+    "removeTags": {
+        "public_transport": "platform",
+        "subway": "yes",
+        "railway": "platform"
+    },
+    "reference": {
+        "key": "railway",
+        "value": "platform"
+    },
+    "terms": [
+        "metro",
+        "platform",
+        "public transit",
+        "public transportation",
+        "rail",
+        "subway",
+        "track",
+        "transit",
+        "transportation",
+        "underground"
+    ],
+    "name": "Subway Stop / Platform"
+}

@@ -1,0 +1,28 @@
+{
+    "icon": "iD-highway-living-street",
+    "fields": [
+        "name",
+        "oneway",
+        "maxspeed",
+        "lanes",
+        "surface",
+        "structure",
+        "access"
+    ],
+    "moreFields": [
+        "cycleway",
+        "maxheight",
+        "covered",
+        "junction_line",
+        "lit",
+        "smoothness",
+        "oneway/bicycle"
+    ],
+    "geometry": [
+        "line"
+    ],
+    "tags": {
+        "highway": "living_street"
+    },
+    "name": "Living Street"
+}

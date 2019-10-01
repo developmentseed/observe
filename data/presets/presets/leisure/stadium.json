@@ -1,0 +1,22 @@
+{
+    "icon": "maki-pitch",
+    "fields": [
+        "name",
+        "sport",
+        "address"
+    ],
+    "moreFields": [
+        "website",
+        "phone",
+        "email",
+        "fax"    
+    ],
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "tags": {
+        "leisure": "stadium"
+    },
+    "name": "Stadium"
+}

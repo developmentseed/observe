@@ -1,0 +1,15 @@
+{
+    "icon": "maki-car",
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "terms": [
+        "automobile",
+        "automotive"
+    ],
+    "tags": {
+        "shop": "car_parts"
+    },
+    "name": "Car Parts Store"
+}

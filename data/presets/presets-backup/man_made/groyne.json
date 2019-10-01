@@ -1,0 +1,13 @@
+{
+    "fields": [
+        "material"
+    ],
+    "geometry": [
+        "line",
+        "area"
+    ],
+    "tags": {
+        "man_made": "groyne"
+    },
+    "name": "Groyne"
+}

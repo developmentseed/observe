@@ -1,0 +1,24 @@
+{
+  "name": "react-native-cookies",
+  "version": "3.2.0",
+  "summary": "Cookie manager for react native",
+  "description": "Cookie Manager for React Native",
+  "homepage": "https://github.com/joeferraro/react-native-cookies",
+  "license": "MIT",
+  "authors": "joeferraro",
+  "source": {
+    "git": "git@github.com:joeferraro/react-native-cookies.git",
+    "tag": "v3.2.0"
+  },
+  "requires_arc": true,
+  "platforms": {
+    "ios": "7.0"
+  },
+  "preserve_paths": "*.framework",
+  "source_files": "RNCookieManagerIOS/*.{h,m}",
+  "dependencies": {
+    "React": [
+
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+    "fields": [
+        "ref",
+        "material"
+    ],
+    "geometry": [
+        "point",
+        "vertex"
+    ],
+    "tags": {
+        "power": "pole"
+    },
+    "name": "Power Pole"
+}

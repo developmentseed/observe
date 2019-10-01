@@ -1,0 +1,14 @@
+{
+    "icon": "temaki-chimney",
+    "fields": [
+        "material"
+    ],
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "tags": {
+        "man_made": "chimney"
+    },
+    "name": "Chimney"
+}

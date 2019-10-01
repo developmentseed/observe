@@ -1,0 +1,17 @@
+{
+    "fields": [
+        "kerb",
+        "tactile_paving"
+    ],
+    "moreFields": [
+        "material"
+    ],
+    "geometry": [
+        "vertex",
+        "line"
+    ],
+    "tags": {
+        "barrier": "kerb"
+    },
+    "name": "Curb"
+}

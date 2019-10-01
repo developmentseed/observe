@@ -1,0 +1,16 @@
+{
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "fields": [
+        "name"
+    ],
+    "moreFields": [
+        "website"
+    ],
+    "tags": {
+        "place": "square"
+    },
+    "name": "Square"
+}
