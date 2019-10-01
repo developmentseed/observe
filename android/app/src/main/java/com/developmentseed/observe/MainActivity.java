@@ -13,9 +13,10 @@ import com.facebook.react.modules.network.ForwardingCookieHandler;
 import com.facebook.react.modules.network.OkHttpClientFactory;
 import com.facebook.react.modules.network.OkHttpClientProvider;
 import com.facebook.react.modules.network.ReactCookieJarContainer;
-import com.mapbox.mapboxsdk.http.HttpRequestUtil;
+import com.facebook.react.bridge.ReactApplicationContext;
+import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.module.http.HttpRequestUtil;
 import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
-
 import java.io.IOException;
 import java.net.CookieHandler;
 

@@ -3,20 +3,18 @@ package com.developmentseed.observe;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
-import com.RNFetchBlob.RNFetchBlobPackage;
+import com.mapbox.rctmgl.RCTMGLPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
-import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
+import com.psykar.cookiemanager.CookieManagerPackage;
+import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
+import com.RNFetchBlob.RNFetchBlobPackage;
 
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
-import com.mapbox.rctmgl.RCTMGLPackage;
-import com.oblador.keychain.KeychainPackage;
-import com.psykar.cookiemanager.CookieManagerPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 
 import java.util.Arrays;
@@ -34,14 +32,19 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
+            new RCTMGLPackage(),
+                    new VectorIconsPackage(),
+                    new RNGestureHandlerPackage(),
                     new CookieManagerPackage(),
-                    new KeychainPackage(),
-                    new RCTMGLPackage(),
+                    new ReactNativeConfigPackage(),
+                    new CookieManagerPackage(),
+                    // new KeychainPackage(),
+                    // new RCTMGLPackage(),
                     new ReactNativeConfigPackage(),
                     new RNFetchBlobPackage(),
                     new RNGestureHandlerPackage(),
-                    new VectorIconsPackage(),
-                    new RNFusedLocationPackage()
+                    new VectorIconsPackage()
+                    // new RNFusedLocationPackage()
             );
         }
 
