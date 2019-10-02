@@ -117,6 +117,13 @@
 			remoteGlobalIDString = 1BD725DA1CF77A8B005DBD79;
 			remoteInfo = RNCookieManagerIOS;
 		};
+		2645E7592345237300E9C45B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 26DAE23C227CAF5C00DFF1AB /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 467EB07BB1D9636C6348DE0824CE8973;
+			remoteInfo = "react-native-geolocation";
+		};
 		266358ED2208E32F008C2B62 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
@@ -933,6 +940,7 @@
 				8A841DA523448FEB00EC5960 /* jsinspector.framework */,
 				8A841DA723448FEB00EC5960 /* react_native_config.framework */,
 				8A841DA923448FEB00EC5960 /* react_native_cookies.framework */,
+				2645E75A2345237300E9C45B /* react_native_geolocation.framework */,
 				8A841DAB23448FEB00EC5960 /* react_native_mapbox_gl.framework */,
 				8A841DAD23448FEB00EC5960 /* RCTActionSheet.framework */,
 				8A841DAF23448FEB00EC5960 /* RCTAnimation.framework */,
@@ -1378,6 +1386,13 @@
 			fileType = archive.ar;
 			path = libRNCookieManagerIOS.a;
 			remoteRef = 264528A3223AB0F80027F56B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2645E75A2345237300E9C45B /* react_native_geolocation.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = react_native_geolocation.framework;
+			remoteRef = 2645E7592345237300E9C45B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		266358EE2208E32F008C2B62 /* libjsi.a */ = {
@@ -1974,7 +1989,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\n";
+			shellScript = "
+";
 		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2298,9 +2314,9 @@
 					"$(SRCROOT)/../node_modules/react-native-cookies/ios/RNCookieManagerIOS",
 				);
 				INFOPLIST_FILE = Observe/Info.plist;
-				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
-				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
-				INFOPLIST_PREPROCESS = YES;
+				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "";
+				INFOPLIST_PREFIX_HEADER = "";
+				INFOPLIST_PREPROCESS = NO;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2336,9 +2352,9 @@
 					"$(SRCROOT)/../node_modules/react-native-cookies/ios/RNCookieManagerIOS",
 				);
 				INFOPLIST_FILE = Observe/Info.plist;
-				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
-				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
-				INFOPLIST_PREPROCESS = YES;
+				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "";
+				INFOPLIST_PREFIX_HEADER = "";
+				INFOPLIST_PREPROCESS = NO;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
