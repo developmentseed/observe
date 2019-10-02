@@ -61,3 +61,8 @@ tmp
 .tmp
 app/assets/osm.json
 app/assets/satellite.json
+
+xcshareddata
+
+# CocoaPods
+/ios/Pods/

@@ -1,1 +1,0 @@
-../../../DCTAuth/DCTAuth/DCTOAuth1SignatureType.h

@@ -120,6 +120,14 @@ PODS:
     - React-jsi (= 0.61.1)
     - React-jsiexecutor (= 0.61.1)
     - Yoga
+  - React-Core/RCTPushNotificationHeaders (0.61.1):
+    - Folly (= 2018.10.22.00)
+    - glog
+    - React-Core/Default
+    - React-cxxreact (= 0.61.1)
+    - React-jsi (= 0.61.1)
+    - React-jsiexecutor (= 0.61.1)
+    - Yoga
   - React-Core/RCTSettingsHeaders (0.61.1):
     - Folly (= 2018.10.22.00)
     - glog
@@ -187,7 +195,9 @@ PODS:
     - React
   - react-native-cookies (3.2.0):
     - React
-  - react-native-mapbox-gl (6.1.4):
+  - react-native-geolocation (1.4.2):
+    - React
+  - react-native-mapbox-gl (7.0.6):
     - React
   - React-RCTActionSheet (0.61.1):
     - React-Core/RCTActionSheetHeaders (= 0.61.1)
@@ -205,6 +215,8 @@ PODS:
     - React-Core/RCTLinkingHeaders (= 0.61.1)
   - React-RCTNetwork (0.61.1):
     - React-Core/RCTNetworkHeaders (= 0.61.1)
+  - React-RCTPushNotification (0.61.1):
+    - React-Core/RCTPushNotificationHeaders (= 0.61.1)
   - React-RCTSettings (0.61.1):
     - React-Core/RCTSettingsHeaders (= 0.61.1)
   - React-RCTText (0.61.1):
@@ -224,9 +236,11 @@ PODS:
     - React-cxxreact (= 0.61.1)
     - React-jsi (= 0.61.1)
     - ReactCommon/jscallinvoker (= 0.61.1)
+  - rn-fetch-blob (0.11.2):
+    - React-Core
   - RNGestureHandler (1.4.1):
     - React
-  - RNKeychain (3.1.3):
+  - RNKeychain (4.0.1):
     - React
   - RNVectorIcons (6.6.0):
     - React
@@ -252,6 +266,7 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-config (from `../node_modules/react-native-config`)
   - react-native-cookies (from `../node_modules/react-native-cookies/ios`)
+  - "react-native-geolocation (from `../node_modules/@react-native-community/geolocation`)"
   - "react-native-mapbox-gl (from `../node_modules/@react-native-mapbox-gl/maps`)"
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -259,18 +274,20 @@ DEPENDENCIES:
   - React-RCTImage (from `../node_modules/react-native/Libraries/Image`)
   - React-RCTLinking (from `../node_modules/react-native/Libraries/LinkingIOS`)
   - React-RCTNetwork (from `../node_modules/react-native/Libraries/Network`)
+  - React-RCTPushNotification (from `../node_modules/react-native/Libraries/PushNotificationIOS`)
   - React-RCTSettings (from `../node_modules/react-native/Libraries/Settings`)
   - React-RCTText (from `../node_modules/react-native/Libraries/Text`)
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - ReactCommon/jscallinvoker (from `../node_modules/react-native/ReactCommon`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - rn-fetch-blob (from `../node_modules/rn-fetch-blob`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
-  trunk:
+  https://github.com/cocoapods/specs.git:
     - boost-for-react-native
 
 EXTERNAL SOURCES:
@@ -308,6 +325,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-config"
   react-native-cookies:
     :path: "../node_modules/react-native-cookies/ios"
+  react-native-geolocation:
+    :path: "../node_modules/@react-native-community/geolocation"
   react-native-mapbox-gl:
     :path: "../node_modules/@react-native-mapbox-gl/maps"
   React-RCTActionSheet:
@@ -322,6 +341,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/Libraries/LinkingIOS"
   React-RCTNetwork:
     :path: "../node_modules/react-native/Libraries/Network"
+  React-RCTPushNotification:
+    :path: "../node_modules/react-native/Libraries/PushNotificationIOS"
   React-RCTSettings:
     :path: "../node_modules/react-native/Libraries/Settings"
   React-RCTText:
@@ -330,6 +351,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/Libraries/Vibration"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  rn-fetch-blob:
+    :path: "../node_modules/rn-fetch-blob"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNKeychain:
@@ -363,22 +386,25 @@ SPEC CHECKSUMS:
   React-jsinspector: 574d597112f9ea3d1b717f6fb62aef764c70dd6f
   react-native-config: 55548054279d92e0e4566ea15a8b9b81028ec342
   react-native-cookies: 854d59c4135c70b92a02ca4930e68e4e2eb58150
-  react-native-mapbox-gl: a01d1781ac71d2a1a85b465436dbe741b28d873a
+  react-native-geolocation: a7b94614afbd5fd8350e0233a2025c8228fc8041
+  react-native-mapbox-gl: 4988be25f86de3daa43bda9325dca9020a7825e0
   React-RCTActionSheet: af4d951113b1e068bb30611f91b984a7a73597ff
   React-RCTAnimation: 4f518d70bb6890b7c3d9d732f84786d6693ca297
   React-RCTBlob: 072a4888c08de0eef6d04eaa727d25e577e6ff26
   React-RCTImage: 78c5cdf1b2de6cd3cd650dd741868fad19a35528
   React-RCTLinking: 486ed1c9a659c7f9fea213868f8930b9a0a79f07
   React-RCTNetwork: e79599f3160b459da03447e32b8bcca1a0f0f797
+  React-RCTPushNotification: 4a9c9b9d2eff654f599b830ca9237be8e502d7d4
   React-RCTSettings: 48b7c5a64ffe0c54c39d59eb7d9036e72305f95a
   React-RCTText: 81b62b4e7f11531a5154e4daa5617670d5a2d5de
   React-RCTVibration: 8be61459e3749d1fb02cf414edd05b3007622882
   ReactCommon: 4fba5be89efdf0b5720e0adb3d8d7edf6e532db0
+  rn-fetch-blob: f525a73a78df9ed5d35e67ea65e79d53c15255bc
   RNGestureHandler: 4cb47a93019c1a201df2644413a0a1569a51c8aa
-  RNKeychain: c658833a9cb2cbcba6423bdd6e16cce59e27da0e
+  RNKeychain: 45dbd50d1ac4bd42c3740f76ffb135abf05746d0
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
   Yoga: d8c572ddec8d05b7dba08e4e5f1924004a177078
 
-PODFILE CHECKSUM: 49113f220d99dc0322a0a1d18f2a76fafa5b1d5c
+PODFILE CHECKSUM: 66202418b7d71d58a72df1f01c328807a8870441
 
-COCOAPODS: 1.8.1
+COCOAPODS: 1.7.5
