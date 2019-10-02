@@ -16,6 +16,7 @@ import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
+import com.oblador.keychain.KeychainPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -32,18 +33,13 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
-            new RCTMGLPackage(),
-                    new VectorIconsPackage(),
-                    new RNGestureHandlerPackage(),
+                    new RCTMGLPackage(),
                     new CookieManagerPackage(),
-                    new ReactNativeConfigPackage(),
-                    new CookieManagerPackage(),
-                    // new KeychainPackage(),
-                    // new RCTMGLPackage(),
                     new ReactNativeConfigPackage(),
                     new RNFetchBlobPackage(),
                     new RNGestureHandlerPackage(),
-                    new VectorIconsPackage()
+                    new VectorIconsPackage(),
+                    new KeychainPackage()
                     // new RNFusedLocationPackage()
             );
         }

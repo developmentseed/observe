@@ -4,9 +4,11 @@ import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
 import android.webkit.WebView;
 
+import com.developmentseed.observe.BuildConfig;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
+import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.modules.network.CookieJarContainer;
 import com.facebook.react.modules.network.ForwardingCookieHandler;
@@ -30,6 +32,7 @@ import okhttp3.Response;
 
 public class MainActivity extends ReactActivity {
     private static final String TAG = "Observe";
+    private static final String accessToken = BuildConfig.MAPBOX_ACCESS_TOKEN;
 
     /**
      * Returns the name of the main component registered from JavaScript.
@@ -63,42 +66,49 @@ public class MainActivity extends ReactActivity {
             WebView.setWebContentsDebuggingEnabled(true);
         }
 
-        ReactContext context = getReactNativeHost().getReactInstanceManager().getCurrentReactContext();
-        CookieHandler cookieHandler = new ForwardingCookieHandler(context);
+        ReactInstanceManager mReactInstanceManager = getReactNativeHost().getReactInstanceManager();
+        ReactApplicationContext context = (ReactApplicationContext) mReactInstanceManager.getCurrentReactContext();
+        mReactInstanceManager.addReactInstanceEventListener(new ReactInstanceManager.ReactInstanceEventListener() {
+            public void onReactContextInitialized(ReactContext validContext) {
+                CookieHandler cookieHandler = new ForwardingCookieHandler(validContext);
 
-        // Builder's cookieJar must be a ReactNativeCookieJarContainer
-        final CookieJarContainer emptyCookieJarContainer = new ReactCookieJarContainer();
-        emptyCookieJarContainer.setCookieJar(CookieJar.NO_COOKIES);
+                // Builder's cookieJar must be a ReactNativeCookieJarContainer
+                final CookieJarContainer emptyCookieJarContainer = new ReactCookieJarContainer();
+                emptyCookieJarContainer.setCookieJar(CookieJar.NO_COOKIES);
 
-        OkHttpClientProvider.setOkHttpClientFactory(new OkHttpClientFactory() {
-            @Override
-            public OkHttpClient createNewNetworkModuleClient() {
-                return new OkHttpClient.Builder()
-                        .addNetworkInterceptor(new Interceptor() {
-                            @Override
-                            public Response intercept(Chain chain) throws IOException {
-                                Request request = chain.request()
-                                        .newBuilder()
-                                        .addHeader("Connection", "close")
+                OkHttpClientProvider.setOkHttpClientFactory(new OkHttpClientFactory() {
+                    @Override
+                    public OkHttpClient createNewNetworkModuleClient() {
+                        return new OkHttpClient.Builder()
+                                .addNetworkInterceptor(new Interceptor() {
+                                    @Override
+                                    public Response intercept(Chain chain) throws IOException {
+                                        Request request = chain.request()
+                                                .newBuilder()
+                                                .addHeader("Connection", "close")
+                                                .build();
+
+                                                return chain.proceed(request);
+                                            }
+                                        })
+                                        // using a ReactCookieJarContainer wrapping cookieJarContainer doesn't
+                                        // actually provide cookies (and one must be required, since the default
+                                        // can't be cast)
+                                        .cookieJar(emptyCookieJarContainer)
                                         .build();
+                    }
+                });
+                
+                Mapbox.getInstance(validContext, accessToken);
+                HttpRequestUtil.setOkHttpClient(
+                        new OkHttpClient.Builder()
+                                .cookieJar(new ReadOnlyJavaNetCookieJar(cookieHandler))
+                                // match MapboxGL's dispatcher options
+                                .dispatcher(getDispatcher())
+                                .build());
 
-                                return chain.proceed(request);
-                            }
-                        })
-                        // using a ReactCookieJarContainer wrapping cookieJarContainer doesn't
-                        // actually provide cookies (and one must be required, since the default
-                        // can't be cast)
-                        .cookieJar(emptyCookieJarContainer)
-                        .build();
             }
         });
-
-        HttpRequestUtil.setOkHttpClient(
-                new OkHttpClient.Builder()
-                        .cookieJar(new ReadOnlyJavaNetCookieJar(cookieHandler))
-                        // match MapboxGL's dispatcher options
-                        .dispatcher(getDispatcher())
-                        .build());
     }
 
     private static Dispatcher getDispatcher() {

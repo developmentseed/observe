@@ -466,9 +466,9 @@
 		260BDD3A22B9E9670032CA17 /* ObserveIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = ObserveIcons.ttf; path = "../node_modules/observe-icon-font/font/fonts/ObserveIcons.ttf"; sourceTree = "<group>"; };
 		2620ACB62214EBF000ED09FD /* Observe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Observe.entitlements; path = Observe/Observe.entitlements; sourceTree = "<group>"; };
 		264528A5223AB43A0027F56B /* Collecticons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Collecticons.ttf; path = Observe/Collecticons.ttf; sourceTree = "<group>"; };
-		266358F82208E369008C2B62 /* RCTMGL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTMGL.xcodeproj; path = "../node_modules/@mapbox/react-native-mapbox-gl/ios/RCTMGL.xcodeproj"; sourceTree = "<group>"; };
+		266358F82208E369008C2B62 /* RCTMGL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTMGL.xcodeproj; path = "../node_modules/@react-native-mapbox-gl/maps/ios/RCTMGL.xcodeproj"; sourceTree = "<group>"; };
 		26DAE23C227CAF5C00DFF1AB /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = Pods/Pods.xcodeproj; sourceTree = "<group>"; };
-		26F1AB5C22B1CD0B003540FB /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mapbox.framework; path = "../node_modules/@mapbox/react-native-mapbox-gl/ios/Mapbox.framework"; sourceTree = "<group>"; };
+		26F1AB5C22B1CD0B003540FB /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mapbox.framework; path = "../node_modules/@react-native-mapbox-gl/maps/ios/Mapbox.framework"; sourceTree = "<group>"; };
 		27E9609866E8413ABCC705D8 /* RNCookieManagerIOS.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNCookieManagerIOS.xcodeproj; path = "../node_modules/react-native-cookies/ios/RNCookieManagerIOS.xcodeproj"; sourceTree = "<group>"; };
 		2CFFFAA40BEA49BB93C1A784 /* libRNCookieManagerIOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNCookieManagerIOS.a; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* Observe-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Observe-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1695,7 +1695,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Observe/Pods-Observe-frameworks.sh",
-				"${PODS_ROOT}/../../node_modules/@mapbox/react-native-mapbox-gl/ios/Mapbox.framework",
+				"${PODS_ROOT}/../../node_modules/@react-native-mapbox-gl/maps/ios/Mapbox.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -1857,7 +1857,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/../node_modules/@mapbox/react-native-mapbox-gl/ios",
+					"$(PROJECT_DIR)/../node_modules/@react-native-mapbox-gl/maps/ios",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1896,7 +1896,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/../node_modules/@mapbox/react-native-mapbox-gl/ios",
+					"$(PROJECT_DIR)/../node_modules/@react-native-mapbox-gl/maps/ios",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

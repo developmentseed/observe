@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components/native'
 import { Platform } from 'react-native'
-import MapboxGL from '@mapbox/react-native-mapbox-gl'
+import MapboxGL from '@react-native-mapbox-gl/maps'
 import { AndroidBackHandler } from 'react-navigation-backhandler'
 import Config from 'react-native-config'
 import { NavigationEvents } from 'react-navigation'
@@ -41,7 +41,7 @@ import ActionButton from '../components/ActionButton'
 import Icon from '../components/Collecticons'
 import { colors } from '../style/variables'
 
-import style from '../style/map'
+// import style from '../style/map'
 import icons from '../assets/icons'
 import { preAuth } from '../services/auth'
 
@@ -61,10 +61,10 @@ const Container = styled.View`
   flex: 1;
 `
 
-const StyledMap = styled(MapboxGL.MapView)`
-  flex: 1;
-  width: 100%;
-`
+// const StyledMap = styled(MapboxGL.MapView)`
+//   flex: 1;
+//   width: 100%;
+// `
 
 class Explore extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -390,7 +390,7 @@ class Explore extends React.Component {
             navigation={navigation}
             title={this.getTitle()}
           />
-          <StyledMap
+          {/*<StyledMap
             // centerCoordinate={[77.5946, 12.9716]} remove this because it was causing a crash on iPhone physical device
             onDidFinishRenderingMapFully={this.onDidFinishRenderingMapFully}
             onWillStartLoadingMap={this.onWillStartLoadingMap}
@@ -427,7 +427,7 @@ class Explore extends React.Component {
               <MapboxGL.CircleLayer id='editedIconHaloSelected' style={style.iconHaloSelected} minZoomLevel={16} filter={['all', ['has', 'icon'], ['==', '$type', 'Point'], selectedFeatureIds ? selectedFeatureIds.nodes : ['==', 'id', '']]} />
               <MapboxGL.SymbolLayer id='editedPois' style={style.icons} filter={['all', ['has', 'icon'], ['==', '$type', 'Point']]} />
             </MapboxGL.ShapeSource>
-          </StyledMap>
+          </StyledMap> */}
           { overlay }
           {/* should hide this entire element when not in loading state */}
           { showLoadingIndicator }

@@ -4347,7 +4347,7 @@
 				7FBE15E34D68D879C7D4993E3527A594 /* Support Files */,
 			);
 			name = "react-native-mapbox-gl";
-			path = "../../node_modules/@mapbox/react-native-mapbox-gl";
+			path = "../../node_modules/@react-native-mapbox-gl/maps";
 			sourceTree = "<group>";
 		};
 		744530BD6993204FB5462803A72B361D /* core */ = {
