@@ -123,6 +123,7 @@ class Explore extends React.Component {
 
   onDidFocus = () => {
     this.forceUpdate()
+    this.locateUser()
   }
 
   onWillStartLoadingMap = () => {
@@ -176,9 +177,9 @@ class Explore extends React.Component {
     try {
       const userLocation = await getUserLocation()
       if (userLocation.hasOwnProperty('coords')) {
-        this.mapRef.setCamera({
+        this.cameraRef.setCamera({
           centerCoordinate: [userLocation.coords.longitude, userLocation.coords.latitude],
-          zoom: 18
+          zoomLevel: 18
         })
       }
     } catch (error) {
@@ -395,13 +396,14 @@ class Explore extends React.Component {
             style={{ flex: 1 }}
             showUserLocation
             userTrackingMode={MapboxGL.UserTrackingModes.Follow}
+            ref={(ref) => { this.mapRef = ref }}
           >
             <MapboxGL.Camera zoomLevel={12}
               defaultSettings={{
                 centerCoordinate: [77.5946, 12.9716],
                 zoomLevel: 12
               }}
-              centerCoordinate={[77.5946, 12.9716]}
+              ref={(ref) => { this.cameraRef = ref }}
             />
           </MapboxGL.MapView>
           {/* <StyledMap
