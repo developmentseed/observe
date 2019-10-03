@@ -17,6 +17,8 @@ import com.facebook.soloader.SoLoader;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.oblador.keychain.KeychainPackage;
+import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
+import com.reactnativecommunity.netinfo.NetInfoPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -39,8 +41,9 @@ public class MainApplication extends Application implements ReactApplication {
                     new RNFetchBlobPackage(),
                     new RNGestureHandlerPackage(),
                     new VectorIconsPackage(),
-                    new KeychainPackage()
-                    // new RNFusedLocationPackage()
+                    new KeychainPackage(),
+                    new NetInfoPackage(),
+                    new RNFusedLocationPackage()
             );
         }
 

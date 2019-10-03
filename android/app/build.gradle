@@ -172,7 +172,8 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.6.0'
     implementation project(':@react-native-mapbox-gl_maps')
     implementation project(':react-native-keychain')
-
+    implementation project(':react-native-community-netinfo')
+    implementation project(':react-native-geolocation-service')
     // workaround for app closing on launch
     // https://github.com/mapbox/react-native-mapbox-gl/issues/1139#issuecomment-379647942
     // implementation (project(':mapbox-react-native-mapbox-gl')) {
