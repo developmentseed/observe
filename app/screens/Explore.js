@@ -405,6 +405,7 @@ class Explore extends React.Component {
               }}
               ref={(ref) => { this.cameraRef = ref }}
             />
+            <MapboxGL.UserLocation />
           </MapboxGL.MapView>
           {/* <StyledMap
             // centerCoordinate={[77.5946, 12.9716]} remove this because it was causing a crash on iPhone physical device
