@@ -417,6 +417,10 @@ class Explore extends React.Component {
             <MapboxGL.ShapeSource id='geojsonSource' shape={geojson}>
               <MapboxGL.LineLayer id='roadsHighlight' filter={['==', ['geometry-type'], 'LineString']} style={style.lineHighlight} minZoomLevel={16} />
               {/* <MapboxGL.LineLayer id='roads' filter={['==', ['geometry-type'], 'LineString']} style={style.highways} minZoomLevel={16} /> */}
+              <MapboxGL.LineLayer id='railwayLine' filter={['all', ['has', 'railway'], ['==', ['geometry-type'], 'LineString']]} style={style.railwayLine} minZoomLevel={16} />
+              <MapboxGL.LineLayer id='waterLine' filter={['all', ['has', 'waterway'], ['==', ['geometry-type'], 'LineString']]} style={style.waterLine} minZoomLevel={16} />
+              <MapboxGL.FillLayer id='buildings' filter={['all', ['has', 'building'], filteredFeatureIds ? filteredFeatureIds.ways : ['match', ['get', 'id'], [''], false, true]]} style={style.buildings} minZoomLevel={16} />
+              <MapboxGL.FillLayer id='leisure' filter={['any', ['match', ['get', 'leisure'], ['pitch', 'track', 'garden'], true, false], ['match', ['get', 'natural'], 'wood', true, false], ['match', ['get', 'landuse'], ['grass', 'forest'], true, false]]} style={style.leisure} minZoomLevel={16} />
 
               <MapboxGL.CircleLayer id='iconHalo' style={style.iconHalo} minZoomLevel={16} filter={['all', ['==', ['geometry-type'], 'Point'], filteredFeatureIds ? filteredFeatureIds.nodes : ['match', ['get', 'id'], [''], false, true]]} />
               <MapboxGL.CircleLayer id='iconHaloSelected' style={style.iconHaloSelected} minZoomLevel={16} filter={['all', ['==', ['geometry-type'], 'Point'], selectedFeatureIds ? selectedFeatureIds.nodes : ['==', ['get', 'id'], ''], filteredFeatureIds ? filteredFeatureIds.nodes : ['match', ['get', 'id'], [''], false, true]]} />
