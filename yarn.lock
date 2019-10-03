@@ -1375,6 +1375,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/geolocation/-/geolocation-1.4.2.tgz#7228c6d37c2f55017af9c49c2b9ad586d9bcb9f8"
   integrity sha512-9x9dHDeUXnh2larA4zTT3y/tXPmRnysh5o9fsNbGcnUKPj1BUCIHnGGPxEIDnwP1DNIMP2DN9DmuMHImtTbX6A==
 
+"@react-native-community/netinfo@^4.1.2", "@react-native-community/netinfo@^4.3.1":
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/@react-native-community/netinfo/-/netinfo-4.3.1.tgz#0601954eae93c1e06647b74600c0b82c65689d22"
+  integrity sha512-djUdmm/RCnKKCNR6w6APDLH1oRhS7EgMHcgghU4cxlgEGJMQ4yVO6jl+99DpI3pY4WElahgU9D8IK1PKTz6rig==
+
 "@react-native-mapbox-gl/maps@^7.0.6":
   version "7.0.6"
   resolved "https://registry.yarnpkg.com/@react-native-mapbox-gl/maps/-/maps-7.0.6.tgz#f96adda0c7ea5a7399c749561151881dd1050dd4"
@@ -7780,11 +7785,12 @@ react-native-modal@^9.0.0:
     prop-types "^15.6.2"
     react-native-animatable "^1.2.4"
 
-react-native-offline@^4.3.1:
-  version "4.3.2"
-  resolved "https://registry.yarnpkg.com/react-native-offline/-/react-native-offline-4.3.2.tgz#6f83dd61cc6e90ee15dd91cf13ccb134446acdf8"
-  integrity sha512-5gB7FInD8PBIjpiLeBdY2UdVU+Z3Xd3D/Yp9kC9evTOyXqPCshrsGHYH0VFE6KL1xB7KqeA/jqpDrUtpsnRB0A==
+react-native-offline@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-offline/-/react-native-offline-5.1.0.tgz#e29061805abfac1d96c4acf145e88c2a0b9f456d"
+  integrity sha512-yUS4lsu3CctsVKA5OO86eGiQDeO9t9u9KRetcvQghlOYzUVDwMO1zXChvNJLosoXMG8Mw4fVz1781m/kkVMxRQ==
   dependencies:
+    "@react-native-community/netinfo" "^4.1.2"
     lodash "^4.17.11"
     react-redux "^6.0.0 || ^7.0.0"
     redux "4.x"

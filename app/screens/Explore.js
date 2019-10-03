@@ -41,7 +41,7 @@ import ActionButton from '../components/ActionButton'
 import Icon from '../components/Collecticons'
 import { colors } from '../style/variables'
 
-// import style from '../style/map'
+import style from '../style/map'
 import icons from '../assets/icons'
 import { preAuth } from '../services/auth'
 
@@ -293,13 +293,13 @@ class Explore extends React.Component {
     const { navigation, geojson, selectedFeatures, editsGeojson, mode } = this.props
     let selectedFeatureIds = null
 
-    if (selectedFeatures) {
+    if (selectedFeatures && selectedFeatures.length) {
       selectedFeatureIds = {
-        'nodes': ['in', 'id'],
-        'ways': ['in', 'id']
+        'nodes': ['match', ['get', 'id'], [], true, false],
+        'ways': ['match', ['get', 'id'], [], true, false]
       }
       selectedFeatures.reduce((selectedFeatureIds, currentFeature) => {
-        this.getFeatureType(currentFeature) === 'node' ? selectedFeatureIds.nodes.push(currentFeature.id) : selectedFeatureIds.ways.push(currentFeature.id)
+        this.getFeatureType(currentFeature) === 'node' ? selectedFeatureIds.nodes[2].push(currentFeature.id) : selectedFeatureIds.ways[2].push(currentFeature.id)
         return selectedFeatureIds
       }, selectedFeatureIds)
     }
@@ -307,12 +307,12 @@ class Explore extends React.Component {
     let filteredFeatureIds = null
     if (editsGeojson.features.length) {
       filteredFeatureIds = {
-        'nodes': ['!in', 'id'],
-        'ways': ['!in', 'id']
+        'nodes': ['match', ['get', 'id'], [], true, false],
+        'ways': ['match', ['get', 'id'], [], true, false]
       }
 
       editsGeojson.features.reduce((filteredFeatureIds, feature) => {
-        this.getFeatureType(feature) === 'node' ? filteredFeatureIds.nodes.push(feature.id) : filteredFeatureIds.ways.push(feature.id)
+        this.getFeatureType(feature) === 'node' ? filteredFeatureIds.nodes[2].push(feature.id) : filteredFeatureIds.ways[2].push(feature.id)
         return filteredFeatureIds
       }, filteredFeatureIds)
     }
@@ -397,6 +397,13 @@ class Explore extends React.Component {
             showUserLocation
             userTrackingMode={MapboxGL.UserTrackingModes.Follow}
             ref={(ref) => { this.mapRef = ref }}
+            onDidFinishRenderingMapFully={this.onDidFinishRenderingMapFully}
+            onWillStartLoadingMap={this.onWillStartLoadingMap}
+            onDidFailLoadingMap={this.onDidFailLoadingMap}
+            onRegionIsChanging={this.onRegionIsChanging}
+            onRegionDidChange={this.onRegionDidChange}
+            regionDidChangeDebounceTime={10}
+            onPress={this.onPress}
           >
             <MapboxGL.Camera zoomLevel={12}
               defaultSettings={{
@@ -406,6 +413,15 @@ class Explore extends React.Component {
               ref={(ref) => { this.cameraRef = ref }}
             />
             <MapboxGL.UserLocation />
+            <MapboxGL.Images images={icons} />
+            <MapboxGL.ShapeSource id='geojsonSource' shape={geojson}>
+              <MapboxGL.LineLayer id='roadsHighlight' filter={['==', ['geometry-type'], 'LineString']} style={style.lineHighlight} minZoomLevel={16} />
+              {/* <MapboxGL.LineLayer id='roads' filter={['==', ['geometry-type'], 'LineString']} style={style.highways} minZoomLevel={16} /> */}
+
+              <MapboxGL.CircleLayer id='iconHalo' style={style.iconHalo} minZoomLevel={16} filter={['all', ['==', ['geometry-type'], 'Point'], filteredFeatureIds ? filteredFeatureIds.nodes : ['match', ['get', 'id'], [''], false, true]]} />
+              <MapboxGL.CircleLayer id='iconHaloSelected' style={style.iconHaloSelected} minZoomLevel={16} filter={['all', ['==', ['geometry-type'], 'Point'], selectedFeatureIds ? selectedFeatureIds.nodes : ['==', ['get', 'id'], ''], filteredFeatureIds ? filteredFeatureIds.nodes : ['match', ['get', 'id'], [''], false, true]]} />
+              <MapboxGL.SymbolLayer id='pois' style={style.icons} filter={['all', ['has', 'icon'], ['==', ['geometry-type'], 'Point'], filteredFeatureIds ? filteredFeatureIds.nodes : ['match', ['get', 'id'], [''], false, true]]} />
+            </MapboxGL.ShapeSource>
           </MapboxGL.MapView>
           {/* <StyledMap
             // centerCoordinate={[77.5946, 12.9716]} remove this because it was causing a crash on iPhone physical device
@@ -436,7 +452,7 @@ class Explore extends React.Component {
               <MapboxGL.LineLayer id='featureSelect' filter={selectedFeatureIds ? selectedFeatureIds.ways : ['==', 'id', '']} style={style.lineSelect} minZoomLevel={16} />
               <MapboxGL.CircleLayer id='iconHalo' style={style.iconHalo} minZoomLevel={16} filter={['all', ['has', 'icon'], ['==', '$type', 'Point'], filteredFeatureIds ? filteredFeatureIds.nodes : ['!in', 'id', '']]} />
               <MapboxGL.CircleLayer id='iconHaloSelected' style={style.iconHaloSelected} minZoomLevel={16} filter={['all', ['has', 'icon'], ['==', '$type', 'Point'], selectedFeatureIds ? selectedFeatureIds.nodes : ['==', 'id', ''], filteredFeatureIds ? filteredFeatureIds.nodes : ['!in', 'id', '']]} />
-              <MapboxGL.SymbolLayer id='pois' style={style.icons} filter={['all', ['has', 'icon'], ['==', '$type', 'Point'], filteredFeatureIds ? filteredFeatureIds.nodes : ['!in', 'id', '']]} />
+              <MapboxGL.SymbolLayer id='pois' style={style.icons} filter={['all', , ['==', '$type', 'Point'], filteredFeatureIds ? filteredFeatureIds.nodes : ['!in', 'id', '']]} />
             </MapboxGL.ShapeSource>
             <MapboxGL.ShapeSource id='editGeojsonSource' shape={editsGeojson}>
               <MapboxGL.FillLayer id='editedPolygons' filter={['==', '$type', 'Polygon']} style={style.editedPolygons} minZoomLevel={16} />

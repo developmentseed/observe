@@ -80,7 +80,7 @@ export async function getDataForBbox (bbox) {
   }
 
   const data = await response.text()
-
+  console.log(data)
   const xmlData = XML_PARSER.parseFromString(data, 'text/xml')
   return osmtogeojson(filterRelations(xmlData), { flatProperties: true, wayRefs: true })
 }

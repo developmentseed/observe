@@ -6,8 +6,7 @@ const thinLineWidth = [
 ]
 
 const standardLineWidth = [
-  'step',
-  ['zoom'],
+  'step', ['zoom'],
   16, 5,
   20, 8
 ]
@@ -43,20 +42,21 @@ const highways = {
   lineColor: [
     'step',
     ['get', 'highway'],
-    'primary', '#F99806',
-    'primary_link', '#F99806',
-    'secondary', '#F3F312',
-    'secondary_link', '#F3F312',
-    'tertiary', '#FFF9B3',
-    'tertiary_link', '#FFF9B3',
-    'motorway', '#58a9ed',
-    'trunk', '#8cd05f',
-    'unclassified', '#dca',
-    'residential', '#fff',
-    'service', '#fff',
-    'road', '#9e9e9e',
-    'track', '#eaeaea',
-    'path', '#988'
+    '#F99806', 'primary',
+    '#F99806', 'primary_link',
+    '#F3F312', 'secondary',
+    '#F3F312', 'secondary_link',
+    '#FFF9B3', 'tertiary',
+    '#FFF9B3', 'tertiary_link',
+    '#58a9ed', 'motorway',
+    '#8cd05f', 'trunk',
+    '#dca', 'unclassified',
+    '#fff', 'residential',
+    '#fff', 'service',
+    '#9e9e9e', 'road',
+    '#eaeaea', 'track',
+    '#988', 'path',
+    '#F99806'
   ]
 }
 
@@ -148,7 +148,7 @@ const iconHaloSelected = {
 }
 
 const icons = {
-  iconImage: '{icon}',
+  iconImage: ['get', 'icon'],
   iconAllowOverlap: false,
   iconIgnorePlacement: false,
   iconSize: 0.8

@@ -199,6 +199,8 @@ PODS:
     - React
   - react-native-mapbox-gl (7.0.6):
     - React
+  - react-native-netinfo (4.3.1):
+    - React
   - React-RCTActionSheet (0.61.1):
     - React-Core/RCTActionSheetHeaders (= 0.61.1)
   - React-RCTAnimation (0.61.1):
@@ -268,6 +270,7 @@ DEPENDENCIES:
   - react-native-cookies (from `../node_modules/react-native-cookies/ios`)
   - "react-native-geolocation (from `../node_modules/@react-native-community/geolocation`)"
   - "react-native-mapbox-gl (from `../node_modules/@react-native-mapbox-gl/maps`)"
+  - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
   - React-RCTBlob (from `../node_modules/react-native/Libraries/Blob`)
@@ -329,6 +332,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/geolocation"
   react-native-mapbox-gl:
     :path: "../node_modules/@react-native-mapbox-gl/maps"
+  react-native-netinfo:
+    :path: "../node_modules/@react-native-community/netinfo"
   React-RCTActionSheet:
     :path: "../node_modules/react-native/Libraries/ActionSheetIOS"
   React-RCTAnimation:
@@ -388,6 +393,7 @@ SPEC CHECKSUMS:
   react-native-cookies: 854d59c4135c70b92a02ca4930e68e4e2eb58150
   react-native-geolocation: a7b94614afbd5fd8350e0233a2025c8228fc8041
   react-native-mapbox-gl: 4988be25f86de3daa43bda9325dca9020a7825e0
+  react-native-netinfo: 397dc351976ee5640fabca2452c23813895be2e5
   React-RCTActionSheet: af4d951113b1e068bb30611f91b984a7a73597ff
   React-RCTAnimation: 4f518d70bb6890b7c3d9d732f84786d6693ca297
   React-RCTBlob: 072a4888c08de0eef6d04eaa727d25e577e6ff26
