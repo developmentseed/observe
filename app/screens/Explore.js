@@ -391,7 +391,7 @@ class Explore extends React.Component {
             title={this.getTitle()}
           />
           <MapboxGL.MapView
-            styleURL={this.state.styleURL}
+            styleURL={styleURL}
             style={{ flex: 1 }}
             showUserLocation
             userTrackingMode={MapboxGL.UserTrackingModes.Follow}
