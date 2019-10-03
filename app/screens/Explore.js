@@ -390,7 +390,21 @@ class Explore extends React.Component {
             navigation={navigation}
             title={this.getTitle()}
           />
-          {/*<StyledMap
+          <MapboxGL.MapView
+            styleURL={this.state.styleURL}
+            style={{ flex: 1 }}
+            showUserLocation
+            userTrackingMode={MapboxGL.UserTrackingModes.Follow}
+          >
+            <MapboxGL.Camera zoomLevel={12}
+              defaultSettings={{
+                centerCoordinate: [77.5946, 12.9716],
+                zoomLevel: 12
+              }}
+              centerCoordinate={[77.5946, 12.9716]}
+            />
+          </MapboxGL.MapView>
+          {/* <StyledMap
             // centerCoordinate={[77.5946, 12.9716]} remove this because it was causing a crash on iPhone physical device
             onDidFinishRenderingMapFully={this.onDidFinishRenderingMapFully}
             onWillStartLoadingMap={this.onWillStartLoadingMap}
