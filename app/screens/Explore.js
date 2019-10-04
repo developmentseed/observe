@@ -418,7 +418,7 @@ class Explore extends React.Component {
           '==',
           ['geometry-type'], 'Point'
         ],
-        selectedFeatureIds ? selectedFeatureIds.nodes : ['==', ['get', 'id'], ''],
+        selectedFeatureIds && selectedFeatureIds.nodes[2].length ? selectedFeatureIds.nodes : ['==', ['get', 'id'], ''],
         filteredFeatureIds ? filteredFeatureIds.nodes : ['match', ['get', 'id'], [''], false, true]
       ],
       pois: [
@@ -428,7 +428,8 @@ class Explore extends React.Component {
         ],
         ['==', ['geometry-type'], 'Point'],
         filteredFeatureIds ? filteredFeatureIds.nodes : ['match', ['get', 'id'], [''], false, true]
-      ]
+      ],
+      featureSelect: selectedFeatureIds && selectedFeatureIds.ways[2].length ? selectedFeatureIds.ways : ['==', ['get', 'id'], '']
     }
 
     return (
@@ -481,13 +482,13 @@ class Explore extends React.Component {
             <MapboxGL.UserLocation />
             <MapboxGL.Images images={icons} />
             <MapboxGL.ShapeSource id='geojsonSource' shape={geojson}>
+              <MapboxGL.LineLayer id='roadsHighlight' filter={filters.allRoads} style={style.lineHighlight} minZoomLevel={16} />
               <MapboxGL.LineLayer id='roads' filter={filters.allRoads} style={style.highways} minZoomLevel={16} />
-              {/* <MapboxGL.LineLayer id='roads' filter={filters.allRoads} style={style.highways} minZoomLevel={16} /> */}
               <MapboxGL.LineLayer id='railwayLine' filter={filters.railwayLine} minZoomLevel={16} />
               <MapboxGL.LineLayer id='waterLine' filter={filters.waterLine} style={style.waterLine} minZoomLevel={16} />
               <MapboxGL.FillLayer id='buildings' filter={filters.buildings} style={style.buildings} minZoomLevel={16} />
               <MapboxGL.FillLayer id='leisure' filter={filters.leisure} style={style.leisure} minZoomLevel={16} />
-
+              <MapboxGL.LineLayer id='featureSelect' filter={filters.featureSelect} style={style.lineSelect} minZoomLevel={16} />
               <MapboxGL.CircleLayer id='iconHalo' style={style.iconHalo} minZoomLevel={16} filter={filters.iconHalo} />
               <MapboxGL.CircleLayer id='iconHaloSelected' style={style.iconHaloSelected} minZoomLevel={16} filter={filters.iconHaloSelected} />
               <MapboxGL.SymbolLayer id='pois' style={style.icons} filter={filters.pois} />
