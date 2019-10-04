@@ -61,10 +61,10 @@ const Container = styled.View`
   flex: 1;
 `
 
-// const StyledMap = styled(MapboxGL.MapView)`
-//   flex: 1;
-//   width: 100%;
-// `
+const StyledMap = styled(MapboxGL.MapView)`
+  flex: 1;
+  width: 100%;
+`
 
 class Explore extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -253,7 +253,7 @@ class Explore extends React.Component {
 
     return (
       <ZoomToEdit onPress={() => {
-        this.mapRef.zoomTo(16.5)
+        this.cameraRef.zoomTo(16.5)
       }} />
     )
   }
@@ -289,7 +289,6 @@ class Explore extends React.Component {
   }
 
   render () {
-    const { userTrackingMode } = this.state
     const { navigation, geojson, selectedFeatures, editsGeojson, mode } = this.props
     let selectedFeatureIds = null
 
@@ -364,6 +363,74 @@ class Explore extends React.Component {
       )
     }
 
+    const filters = {
+      allRoads: [
+        'all',
+        ['==', ['geometry-type'], 'LineString']
+      ],
+      railwayLine: [
+        'all',
+        ['has', 'railway'],
+        ['==', ['geometry-type'], 'LineString']
+      ],
+      waterLine: [
+        'all',
+        ['has', 'waterway'],
+        ['==', ['geometry-type'], 'LineString']
+      ],
+      buildings: [
+        'all',
+        ['has', 'building'],
+        filteredFeatureIds ? filteredFeatureIds.ways : ['match', ['get', 'id'], [''], false, true]
+      ],
+      leisure: [
+        'any',
+        [
+          'match',
+          ['get', 'leisure'],
+          ['pitch', 'track', 'garden'],
+          true, false
+        ],
+        [
+          'match',
+          ['get', 'natural'],
+          'wood',
+          true, false
+        ],
+        [
+          'match',
+          ['get', 'landuse'],
+          ['grass', 'forest'],
+          true, false
+        ]
+      ],
+      iconHalo: [
+        'all',
+        [
+          '==',
+          ['geometry-type'], 'Point'
+        ],
+        filteredFeatureIds ? filteredFeatureIds.nodes : ['match', ['get', 'id'], [''], false, true]
+      ],
+      iconHaloSelected: [
+        'all',
+        [
+          '==',
+          ['geometry-type'], 'Point'
+        ],
+        selectedFeatureIds ? selectedFeatureIds.nodes : ['==', ['get', 'id'], ''],
+        filteredFeatureIds ? filteredFeatureIds.nodes : ['match', ['get', 'id'], [''], false, true]
+      ],
+      pois: [
+        'all',
+        [
+          'has', 'icon'
+        ],
+        ['==', ['geometry-type'], 'Point'],
+        filteredFeatureIds ? filteredFeatureIds.nodes : ['match', ['get', 'id'], [''], false, true]
+      ]
+    }
+
     return (
       <AndroidBackHandler onBackPress={() => this.onBackButtonPress()}>
         <NavigationEvents
@@ -391,9 +458,8 @@ class Explore extends React.Component {
             navigation={navigation}
             title={this.getTitle()}
           />
-          <MapboxGL.MapView
+          <StyledMap
             styleURL={styleURL}
-            style={{ flex: 1 }}
             showUserLocation
             userTrackingMode={MapboxGL.UserTrackingModes.Follow}
             ref={(ref) => { this.mapRef = ref }}
@@ -415,56 +481,18 @@ class Explore extends React.Component {
             <MapboxGL.UserLocation />
             <MapboxGL.Images images={icons} />
             <MapboxGL.ShapeSource id='geojsonSource' shape={geojson}>
-              <MapboxGL.LineLayer id='roadsHighlight' filter={['==', ['geometry-type'], 'LineString']} style={style.lineHighlight} minZoomLevel={16} />
-              {/* <MapboxGL.LineLayer id='roads' filter={['==', ['geometry-type'], 'LineString']} style={style.highways} minZoomLevel={16} /> */}
-              <MapboxGL.LineLayer id='railwayLine' filter={['all', ['has', 'railway'], ['==', ['geometry-type'], 'LineString']]} style={style.railwayLine} minZoomLevel={16} />
-              <MapboxGL.LineLayer id='waterLine' filter={['all', ['has', 'waterway'], ['==', ['geometry-type'], 'LineString']]} style={style.waterLine} minZoomLevel={16} />
-              <MapboxGL.FillLayer id='buildings' filter={['all', ['has', 'building'], filteredFeatureIds ? filteredFeatureIds.ways : ['match', ['get', 'id'], [''], false, true]]} style={style.buildings} minZoomLevel={16} />
-              <MapboxGL.FillLayer id='leisure' filter={['any', ['match', ['get', 'leisure'], ['pitch', 'track', 'garden'], true, false], ['match', ['get', 'natural'], 'wood', true, false], ['match', ['get', 'landuse'], ['grass', 'forest'], true, false]]} style={style.leisure} minZoomLevel={16} />
+              <MapboxGL.LineLayer id='roads' filter={filters.allRoads} style={style.highways} minZoomLevel={16} />
+              {/* <MapboxGL.LineLayer id='roads' filter={filters.allRoads} style={style.highways} minZoomLevel={16} /> */}
+              <MapboxGL.LineLayer id='railwayLine' filter={filters.railwayLine} minZoomLevel={16} />
+              <MapboxGL.LineLayer id='waterLine' filter={filters.waterLine} style={style.waterLine} minZoomLevel={16} />
+              <MapboxGL.FillLayer id='buildings' filter={filters.buildings} style={style.buildings} minZoomLevel={16} />
+              <MapboxGL.FillLayer id='leisure' filter={filters.leisure} style={style.leisure} minZoomLevel={16} />
 
-              <MapboxGL.CircleLayer id='iconHalo' style={style.iconHalo} minZoomLevel={16} filter={['all', ['==', ['geometry-type'], 'Point'], filteredFeatureIds ? filteredFeatureIds.nodes : ['match', ['get', 'id'], [''], false, true]]} />
-              <MapboxGL.CircleLayer id='iconHaloSelected' style={style.iconHaloSelected} minZoomLevel={16} filter={['all', ['==', ['geometry-type'], 'Point'], selectedFeatureIds ? selectedFeatureIds.nodes : ['==', ['get', 'id'], ''], filteredFeatureIds ? filteredFeatureIds.nodes : ['match', ['get', 'id'], [''], false, true]]} />
-              <MapboxGL.SymbolLayer id='pois' style={style.icons} filter={['all', ['has', 'icon'], ['==', ['geometry-type'], 'Point'], filteredFeatureIds ? filteredFeatureIds.nodes : ['match', ['get', 'id'], [''], false, true]]} />
+              <MapboxGL.CircleLayer id='iconHalo' style={style.iconHalo} minZoomLevel={16} filter={filters.iconHalo} />
+              <MapboxGL.CircleLayer id='iconHaloSelected' style={style.iconHaloSelected} minZoomLevel={16} filter={filters.iconHaloSelected} />
+              <MapboxGL.SymbolLayer id='pois' style={style.icons} filter={filters.pois} />
             </MapboxGL.ShapeSource>
-          </MapboxGL.MapView>
-          {/* <StyledMap
-            // centerCoordinate={[77.5946, 12.9716]} remove this because it was causing a crash on iPhone physical device
-            onDidFinishRenderingMapFully={this.onDidFinishRenderingMapFully}
-            onWillStartLoadingMap={this.onWillStartLoadingMap}
-            onDidFailLoadingMap={this.onDidFailLoadingMap}
-            onRegionIsChanging={this.onRegionIsChanging}
-            onRegionDidChange={this.onRegionDidChange}
-            regionDidChangeDebounceTime={10}
-            onPress={this.onPress}
-            minZoomLevel={2}
-            maxZoomLevel={19}
-            ref={(ref) => { this.mapRef = ref }}
-            zoomLevel={12}
-            showUserLocation
-            onUserLocationUpdate={this.onUserLocationUpdate}
-            userTrackingMode={userTrackingMode}
-            styleURL={styleURL}
-          >
-            <MapboxGL.ShapeSource id='geojsonSource' shape={geojson} images={icons}>
-              <MapboxGL.LineLayer id='roadsHighlight' filter={['==', '$type', 'LineString']} style={style.lineHighlight} minZoomLevel={16} />
-              <MapboxGL.LineLayer id='roads' filter={['==', '$type', 'LineString']} style={style.highways} minZoomLevel={16} />
-              <MapboxGL.LineLayer id='roadsLower' filter={['all', ['in', 'highway', 'foot', 'footway', 'hiking', 'living_street', 'cycleway', 'steps'], ['==', '$type', 'LineString']]} style={style.highwaysLower} minZoomLevel={16} />
-              <MapboxGL.LineLayer id='railwayLine' filter={['all', ['has', 'railway'], ['==', '$type', 'LineString']]} style={style.railwayLine} minZoomLevel={16} />
-              <MapboxGL.LineLayer id='waterLine' filter={['all', ['has', 'waterway'], ['==', '$type', 'LineString']]} style={style.waterLine} minZoomLevel={16} />
-              <MapboxGL.FillLayer id='buildings' filter={['all', ['has', 'building'], filteredFeatureIds ? filteredFeatureIds.ways : ['!in', 'id', '']]} style={style.buildings} minZoomLevel={16} />
-              <MapboxGL.FillLayer id='leisure' filter={['any', ['in', 'leisure', 'pitch', 'track', 'garden'], ['in', 'natural', 'wood'], ['in', 'landuse', 'grass', 'forest']]} style={style.leisure} minZoomLevel={16} />
-              <MapboxGL.LineLayer id='featureSelect' filter={selectedFeatureIds ? selectedFeatureIds.ways : ['==', 'id', '']} style={style.lineSelect} minZoomLevel={16} />
-              <MapboxGL.CircleLayer id='iconHalo' style={style.iconHalo} minZoomLevel={16} filter={['all', ['has', 'icon'], ['==', '$type', 'Point'], filteredFeatureIds ? filteredFeatureIds.nodes : ['!in', 'id', '']]} />
-              <MapboxGL.CircleLayer id='iconHaloSelected' style={style.iconHaloSelected} minZoomLevel={16} filter={['all', ['has', 'icon'], ['==', '$type', 'Point'], selectedFeatureIds ? selectedFeatureIds.nodes : ['==', 'id', ''], filteredFeatureIds ? filteredFeatureIds.nodes : ['!in', 'id', '']]} />
-              <MapboxGL.SymbolLayer id='pois' style={style.icons} filter={['all', , ['==', '$type', 'Point'], filteredFeatureIds ? filteredFeatureIds.nodes : ['!in', 'id', '']]} />
-            </MapboxGL.ShapeSource>
-            <MapboxGL.ShapeSource id='editGeojsonSource' shape={editsGeojson}>
-              <MapboxGL.FillLayer id='editedPolygons' filter={['==', '$type', 'Polygon']} style={style.editedPolygons} minZoomLevel={16} />
-              <MapboxGL.CircleLayer id='editedIconHalo' style={style.iconEditedHalo} minZoomLevel={16} filter={['all', ['has', 'icon'], ['==', '$type', 'Point']]} />
-              <MapboxGL.CircleLayer id='editedIconHaloSelected' style={style.iconHaloSelected} minZoomLevel={16} filter={['all', ['has', 'icon'], ['==', '$type', 'Point'], selectedFeatureIds ? selectedFeatureIds.nodes : ['==', 'id', '']]} />
-              <MapboxGL.SymbolLayer id='editedPois' style={style.icons} filter={['all', ['has', 'icon'], ['==', '$type', 'Point']]} />
-            </MapboxGL.ShapeSource>
-          </StyledMap> */}
+          </StyledMap>
           { overlay }
           {/* should hide this entire element when not in loading state */}
           { showLoadingIndicator }
