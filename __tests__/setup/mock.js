@@ -1,13 +1,13 @@
 /* global jest */
 import * as ReactNative from 'react-native'
 
-jest.doMock('react-native', function () {
-  function keyMirror (keys) {
-    let obj = {}
-    keys.forEach((key) => (obj[key] = key))
-    return obj
-  }
+function keyMirror (keys) {
+  let obj = {}
+  keys.forEach((key) => (obj[key] = key))
+  return obj
+}
 
+jest.doMock('react-native', function () {
   ReactNative.MGLModule = {
     // constants
     UserTrackingModes: {},
@@ -165,7 +165,7 @@ jest.doMock('react-native', function () {
     pausePackDownload: () => Promise.resolve(),
     resumePackDownload: () => Promise.resolve(),
     setTileCountLimit: jest.fn(),
-    setProgressEventThrottle: jest.fn()  
+    setProgressEventThrottle: jest.fn()
   }
 
   ReactNative.UIManager = {
@@ -254,4 +254,32 @@ jest.mock('react-native-geolocation-service', () => ({
 jest.mock('react-native-config', () => ({
   OPENCAGE_KEY: 123,
   API_URL: 'http://example.com'
+}))
+
+jest.doMock('@react-native-mapbox-gl/maps', () => ({
+  StyleURL: keyMirror([
+    'Street',
+    'Dark',
+    'Light',
+    'Outdoors',
+    'Satellite',
+    'SatelliteStreet',
+    'TrafficDay',
+    'TrafficNight'
+  ]),
+  offlineManager: {
+    createPack: (packOptions) => {
+      return Promise.resolve({
+        bounds: packOptions.bounds,
+        metadata: JSON.stringify({ name: packOptions.name })
+      })
+    },
+    getPacks: () => Promise.resolve([]),
+    deletePack: () => Promise.resolve(),
+    pausePackDownload: () => Promise.resolve(),
+    resumePackDownload: () => Promise.resolve(),
+    setTileCountLimit: jest.fn(),
+    setProgressEventThrottle: jest.fn()
+  },
+  MapView: jest.fn()
 }))
