@@ -8,7 +8,7 @@ function keyMirror (keys) {
 }
 
 jest.doMock('react-native', function () {
-  ReactNative.MGLModule = {
+  ReactNative.NativeModules.MGLModule = {
     // constants
     UserTrackingModes: {},
     StyleURL: keyMirror([
@@ -153,7 +153,7 @@ jest.doMock('react-native', function () {
     getAccessToken: () => Promise.resolve('test-token')
   }
 
-  ReactNative.MGLOfflineModule = {
+  ReactNative.NativeModules.MGLOfflineModule = {
     createPack: (packOptions) => {
       return Promise.resolve({
         bounds: packOptions.bounds,
@@ -168,15 +168,15 @@ jest.doMock('react-native', function () {
     setProgressEventThrottle: jest.fn()
   }
 
-  ReactNative.UIManager = {
+  ReactNative.NativeModules.UIManager = {
     RCTView: () => ({
       directEventTypes: {}
     })
   }
 
-  ReactNative.KeyboardObserver = {}
+  ReactNative.NativeModules.KeyboardObserver = {}
 
-  ReactNative.RNGestureHandlerModule = {
+  ReactNative.NativeModules.RNGestureHandlerModule = {
     attachGestureHandler: jest.fn(),
     createGestureHandler: jest.fn(),
     dropGestureHandler: jest.fn(),
@@ -185,7 +185,7 @@ jest.doMock('react-native', function () {
     Directions: {}
   }
 
-  ReactNative.PlatformConstants = {
+  ReactNative.NativeModules.PlatformConstants = {
     forceTouchAvailable: false
   }
 
@@ -256,30 +256,3 @@ jest.mock('react-native-config', () => ({
   API_URL: 'http://example.com'
 }))
 
-jest.doMock('@react-native-mapbox-gl/maps', () => ({
-  StyleURL: keyMirror([
-    'Street',
-    'Dark',
-    'Light',
-    'Outdoors',
-    'Satellite',
-    'SatelliteStreet',
-    'TrafficDay',
-    'TrafficNight'
-  ]),
-  offlineManager: {
-    createPack: (packOptions) => {
-      return Promise.resolve({
-        bounds: packOptions.bounds,
-        metadata: JSON.stringify({ name: packOptions.name })
-      })
-    },
-    getPacks: () => Promise.resolve([]),
-    deletePack: () => Promise.resolve(),
-    pausePackDownload: () => Promise.resolve(),
-    resumePackDownload: () => Promise.resolve(),
-    setTileCountLimit: jest.fn(),
-    setProgressEventThrottle: jest.fn()
-  },
-  MapView: jest.fn()
-}))
