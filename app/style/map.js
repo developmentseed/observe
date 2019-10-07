@@ -1,13 +1,13 @@
 const thinLineWidth = [
-  'step',
+  'interpolate', ['linear'],
   ['zoom'],
   16, 3,
   20, 6
 ]
 
 const standardLineWidth = [
-  'step', ['zoom'],
-  16, 5,
+  'interpolate', ['linear'], ['zoom'],
+  16, 4,
   20, 8
 ]
 
@@ -19,7 +19,7 @@ const nodes = {
 
 const lineHighlight = {
   lineWidth: [
-    'step',
+    'interpolate', ['linear'],
     ['zoom'],
     16, 6,
     20, 9
@@ -29,7 +29,7 @@ const lineHighlight = {
 
 const editedLines = {
   lineWidth: [
-    'step',
+    'interpolate', ['linear'],
     ['zoom'],
     16, 6,
     20, 9
@@ -115,7 +115,7 @@ const lineSelect = {
   lineColor: 'red',
   lineOpacity: 0.7,
   lineWidth: [
-    'step',
+    'interpolate', ['linear'],
     ['zoom'],
     10, 6,
     20, 10
