@@ -306,8 +306,8 @@ class Explore extends React.Component {
     let filteredFeatureIds = null
     if (editsGeojson.features.length) {
       filteredFeatureIds = {
-        'nodes': ['match', ['get', 'id'], [], true, false],
-        'ways': ['match', ['get', 'id'], [], true, false]
+        'nodes': ['match', ['get', 'id'], [], false, true],
+        'ways': ['match', ['get', 'id'], [], false, true]
       }
 
       editsGeojson.features.reduce((filteredFeatureIds, feature) => {
@@ -381,7 +381,7 @@ class Explore extends React.Component {
       buildings: [
         'all',
         ['has', 'building'],
-        filteredFeatureIds ? filteredFeatureIds.ways : ['match', ['get', 'id'], [''], false, true]
+        filteredFeatureIds && filteredFeatureIds.ways[2].length ? filteredFeatureIds.ways : ['match', ['get', 'id'], [''], false, true]
       ],
       leisure: [
         'any',
@@ -410,7 +410,7 @@ class Explore extends React.Component {
           '==',
           ['geometry-type'], 'Point'
         ],
-        filteredFeatureIds ? filteredFeatureIds.nodes : ['match', ['get', 'id'], [''], false, true]
+        filteredFeatureIds && filteredFeatureIds.nodes[2].length ? filteredFeatureIds.nodes : ['match', ['get', 'id'], [''], false, true]
       ],
       iconHaloSelected: [
         'all',
@@ -419,7 +419,7 @@ class Explore extends React.Component {
           ['geometry-type'], 'Point'
         ],
         selectedFeatureIds && selectedFeatureIds.nodes[2].length ? selectedFeatureIds.nodes : ['==', ['get', 'id'], ''],
-        filteredFeatureIds ? filteredFeatureIds.nodes : ['match', ['get', 'id'], [''], false, true]
+        filteredFeatureIds && filteredFeatureIds.nodes[2].length ? filteredFeatureIds.nodes : ['match', ['get', 'id'], [''], false, true]
       ],
       pois: [
         'all',
@@ -427,9 +427,28 @@ class Explore extends React.Component {
           'has', 'icon'
         ],
         ['==', ['geometry-type'], 'Point'],
-        filteredFeatureIds ? filteredFeatureIds.nodes : ['match', ['get', 'id'], [''], false, true]
+        filteredFeatureIds && filteredFeatureIds.nodes[2].length ? filteredFeatureIds.nodes : ['match', ['get', 'id'], [''], false, true]
       ],
-      featureSelect: selectedFeatureIds && selectedFeatureIds.ways[2].length ? selectedFeatureIds.ways : ['==', ['get', 'id'], '']
+      featureSelect: [
+        'all',
+        selectedFeatureIds && selectedFeatureIds.ways[2].length ? selectedFeatureIds.ways : ['==', ['get', 'id'], ''],
+        filteredFeatureIds && filteredFeatureIds.ways[2].length ? filteredFeatureIds.ways : ['match', ['get', 'id'], [''], false, true]
+      ],
+      editedPolygons: ['==', ['geometry-type'], 'Polygon'],
+      editedLines: ['==', ['geometry-type'], 'LineString'],
+      editedPois: [
+        'all',
+        ['has', 'icon'],
+        ['==', ['geometry-type'], 'Point']
+      ],
+      editedIconHaloSelected: [
+        'all',
+        [
+          '==',
+          ['geometry-type'], 'Point'
+        ],
+        selectedFeatureIds && selectedFeatureIds.nodes[2].length ? selectedFeatureIds.nodes : ['==', ['get', 'id'], '']
+      ]
     }
 
     return (
@@ -492,6 +511,13 @@ class Explore extends React.Component {
               <MapboxGL.CircleLayer id='iconHalo' style={style.iconHalo} minZoomLevel={16} filter={filters.iconHalo} />
               <MapboxGL.CircleLayer id='iconHaloSelected' style={style.iconHaloSelected} minZoomLevel={16} filter={filters.iconHaloSelected} />
               <MapboxGL.SymbolLayer id='pois' style={style.icons} filter={filters.pois} />
+            </MapboxGL.ShapeSource>
+            <MapboxGL.ShapeSource id='editGeojsonSource' shape={editsGeojson}>
+              <MapboxGL.FillLayer id='editedPolygons' filter={filters.editedPolygons} style={style.editedPolygons} minZoomLevel={16} />
+              <MapboxGL.CircleLayer id='editedIconHalo' style={style.iconEditedHalo} minZoomLevel={16} filter={filters.editedPois} />
+              <MapboxGL.CircleLayer id='editedIconHaloSelected' style={style.iconHaloSelected} minZoomLevel={16} filter={filters.editedIconHaloSelected} />
+              <MapboxGL.LineLayer id='editedLines' filter={filters.editedLines} style={style.editedLines} minZoomLevel={16} />
+              <MapboxGL.SymbolLayer id='editedPois' style={style.icons} filter={filters.editedPois} />
             </MapboxGL.ShapeSource>
           </StyledMap>
           { overlay }
