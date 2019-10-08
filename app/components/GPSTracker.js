@@ -4,8 +4,6 @@ import * as Permissions from 'expo-permissions'
 import * as Location from 'expo-location'
 
 class GPSTracker extends Component {
-
-
   componentDidMount () {
     this.startWatching()
   }
