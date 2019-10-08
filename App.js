@@ -23,6 +23,7 @@ import AuthorizationManager from './app/components/AuthorizationManager'
 import Drawer from './app/components/Drawer'
 import Notification from './app/components/Notification'
 import UploadManager from './app/components/UploadManager'
+import GPSTracker from './app/components/GPSTracker'
 import { preAuth } from './app/services/auth'
 import { ReduxNetworkProvider } from 'react-native-offline'
 import Icon from './app/components/Collecticons'
@@ -143,6 +144,7 @@ export default class App extends Component {
             <Notification />
             <AuthorizationManager />
             <UploadManager />
+            <GPSTracker />
           </ReduxNetworkProvider>
         </PersistGate>
       </Provider>
