@@ -1,5 +1,6 @@
 apply plugin: "com.android.application"
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+apply from: '../../node_modules/react-native-unimodules/gradle.groovy'
 
 import com.android.build.OutputFile
 
@@ -158,6 +159,10 @@ android {
             }
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -195,6 +200,8 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+    
+    addUnimodulesDependencies()
 }
 
 // Run this once to be able to run the application with BUCK
