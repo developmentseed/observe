@@ -2,6 +2,7 @@ import fromEntries from 'fromentries'
 import Config from 'react-native-config'
 
 import * as types from '../actions/actionTypes'
+import _uniqBy from 'lodash.uniqby'
 
 export const initialState = {
   activeTileRequests: [], // quadkeys of all pending tile requests
@@ -227,6 +228,7 @@ export default function (state = initialState, action) {
 
     case types.SET_SELECTED_FEATURES:
       let features = action.features
+      features = _uniqBy(features, 'id')
       return {
         ...state,
         selectedFeatures: features

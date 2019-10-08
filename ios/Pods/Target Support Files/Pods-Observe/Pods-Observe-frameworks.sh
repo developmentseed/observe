@@ -94,7 +94,7 @@ install_dsym() {
     binary="${DERIVED_FILES_DIR}/${basename}.framework.dSYM/Contents/Resources/DWARF/${basename}"
 
     # Strip invalid architectures so "fat" simulator / device frameworks work on device
-    if [[ "$(file "$binary")" == *"Mach-O dSYM companion"* ]]; then
+    if [[ "$(file "$binary")" == *"Mach-O "*"dSYM companion"* ]]; then
       strip_invalid_archs "$binary"
     fi
 
@@ -107,6 +107,14 @@ install_dsym() {
       touch "${DWARF_DSYM_FOLDER_PATH}/${basename}.framework.dSYM"
     fi
   fi
+}
+
+# Copies the bcsymbolmap files of a vendored framework
+install_bcsymbolmap() {
+    local bcsymbolmap_path="$1"
+    local destination="${BUILT_PRODUCTS_DIR}"
+    echo "rsync --delete -av "${RSYNC_PROTECT_TMP_FILES[@]}" --filter "- CVS/" --filter "- .svn/" --filter "- .git/" --filter "- .hg/" --filter "- Headers" --filter "- PrivateHeaders" --filter "- Modules" "${bcsymbolmap_path}" "${destination}""
+    rsync --delete -av "${RSYNC_PROTECT_TMP_FILES[@]}" --filter "- CVS/" --filter "- .svn/" --filter "- .git/" --filter "- .hg/" --filter "- Headers" --filter "- PrivateHeaders" --filter "- Modules" "${bcsymbolmap_path}" "${destination}"
 }
 
 # Signs a framework with the provided identity
@@ -154,9 +162,75 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/DCTAuth/DCTAuth.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/DoubleConversion/DoubleConversion.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/FBReactNativeSpec/FBReactNativeSpec.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Folly/folly.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/RCTTypeSafety/RCTTypeSafety.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/RNGestureHandler/RNGestureHandler.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/RNKeychain/RNKeychain.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/RNVectorIcons/RNVectorIcons.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React-Core/React.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React-CoreModules/CoreModules.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React-RCTActionSheet/RCTActionSheet.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React-RCTAnimation/RCTAnimation.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React-RCTBlob/RCTBlob.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React-RCTImage/RCTImage.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React-RCTLinking/RCTLinking.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React-RCTNetwork/RCTNetwork.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React-RCTPushNotification/RCTPushNotification.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React-RCTSettings/RCTSettings.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React-RCTText/RCTText.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React-RCTVibration/RCTVibration.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React-cxxreact/cxxreact.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React-jsi/jsi.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React-jsiexecutor/jsireact.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React-jsinspector/jsinspector.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/ReactCommon/ReactCommon.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Yoga/yoga.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/glog/glog.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/react-native-config/react_native_config.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/react-native-cookies/react_native_cookies.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/react-native-geolocation/react_native_geolocation.framework"
+  install_framework "${PODS_ROOT}/../../node_modules/@react-native-mapbox-gl/maps/ios/Mapbox.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/react-native-mapbox-gl/react_native_mapbox_gl.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/react-native-netinfo/react_native_netinfo.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/rn-fetch-blob/rn_fetch_blob.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/DCTAuth/DCTAuth.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/DoubleConversion/DoubleConversion.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/FBReactNativeSpec/FBReactNativeSpec.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Folly/folly.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/RCTTypeSafety/RCTTypeSafety.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/RNGestureHandler/RNGestureHandler.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/RNKeychain/RNKeychain.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/RNVectorIcons/RNVectorIcons.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React-Core/React.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React-CoreModules/CoreModules.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React-RCTActionSheet/RCTActionSheet.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React-RCTAnimation/RCTAnimation.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React-RCTBlob/RCTBlob.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React-RCTImage/RCTImage.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React-RCTLinking/RCTLinking.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React-RCTNetwork/RCTNetwork.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React-RCTPushNotification/RCTPushNotification.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React-RCTSettings/RCTSettings.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React-RCTText/RCTText.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React-RCTVibration/RCTVibration.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React-cxxreact/cxxreact.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React-jsi/jsi.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React-jsiexecutor/jsireact.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/React-jsinspector/jsinspector.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/ReactCommon/ReactCommon.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Yoga/yoga.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/glog/glog.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/react-native-config/react_native_config.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/react-native-cookies/react_native_cookies.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/react-native-geolocation/react_native_geolocation.framework"
+  install_framework "${PODS_ROOT}/../../node_modules/@react-native-mapbox-gl/maps/ios/Mapbox.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/react-native-mapbox-gl/react_native_mapbox_gl.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/react-native-netinfo/react_native_netinfo.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/rn-fetch-blob/rn_fetch_blob.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait
