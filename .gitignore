@@ -21,6 +21,11 @@ DerivedData
 *.ipa
 *.xcuserstate
 project.xcworkspace
+!**/*.xcodeproj
+!**/*.pbxproj
+!**/*.xcworkspacedata
+!**/*.xcsettings
+!**/*.xcscheme
 
 # Android/IntelliJ
 #
