@@ -153,6 +153,12 @@ jest.doMock('react-native', function () {
     getAccessToken: () => Promise.resolve('test-token')
   }
 
+  ReactNative.NativeModules.MGLLocationModule = {
+    getLastKnownLocation: jest.fn(),
+    start: jest.fn(),
+    pause: jest.fn()
+  }
+
   ReactNative.NativeModules.MGLOfflineModule = {
     createPack: (packOptions) => {
       return Promise.resolve({
@@ -185,8 +191,14 @@ jest.doMock('react-native', function () {
     Directions: {}
   }
 
-  ReactNative.NativeModules.PlatformConstants = {
-    forceTouchAvailable: false
+  ReactNative.NativeModules.RNCNetInfo = {
+    getCurrentState: jest.fn(() => Promise.resolve()),
+    addListener: jest.fn(),
+    removeListeners: jest.fn()
+  }
+
+  ReactNative.Platform = {
+    OS: 'android'
   }
 
   return ReactNative
@@ -255,4 +267,3 @@ jest.mock('react-native-config', () => ({
   OPENCAGE_KEY: 123,
   API_URL: 'http://example.com'
 }))
-
