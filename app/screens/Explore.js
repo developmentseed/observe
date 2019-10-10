@@ -40,6 +40,7 @@ import BasemapModal from '../components/BasemapModal'
 import ActionButton from '../components/ActionButton'
 import Icon from '../components/Collecticons'
 import { colors } from '../style/variables'
+import { CameraButton } from '../components/CameraButton'
 
 import style from '../style/map'
 import icons from '../assets/icons'
@@ -525,6 +526,7 @@ class Explore extends React.Component {
           { showLoadingIndicator }
           <LocateUserButton onPress={() => this.locateUser()} />
           <BasemapModal onChange={this.props.setBasemap} />
+          <CameraButton onPress={() => navigation.navigate('CameraScreen')} />
           {mode !== 'bbox' && this.renderZoomToEdit()}
         </Container>
       </AndroidBackHandler>

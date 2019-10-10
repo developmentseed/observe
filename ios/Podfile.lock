@@ -3,6 +3,13 @@ PODS:
   - DCTAuth (3.0)
   - DoubleConversion (1.1.6)
   - EXAppLoaderProvider (7.0.0)
+  - EXCamera (7.0.0):
+    - UMBarCodeScannerInterface
+    - UMCore
+    - UMFaceDetectorInterface
+    - UMFileSystemInterface
+    - UMImageLoaderInterface
+    - UMPermissionsInterface
   - EXConstants (7.0.0):
     - UMConstantsInterface
     - UMCore
@@ -269,7 +276,7 @@ PODS:
   - UMFontInterface (4.0.0)
   - UMImageLoaderInterface (4.0.0)
   - UMPermissionsInterface (4.0.0)
-  - UMReactNativeAdapter (4.0.0):
+  - UMReactNativeAdapter (5.0.0-alpha.0):
     - React
     - UMCore
     - UMFontInterface
@@ -281,6 +288,7 @@ DEPENDENCIES:
   - DCTAuth (from `https://github.com/danielctull/DCTAuth.git`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - EXAppLoaderProvider (from `../node_modules/expo-app-loader-provider/ios`)
+  - EXCamera (from `../node_modules/expo-camera/ios`)
   - EXConstants (from `../node_modules/expo-constants/ios`)
   - EXFileSystem (from `../node_modules/expo-file-system/ios`)
   - EXLocation (from `../node_modules/expo-location/ios`)
@@ -347,6 +355,9 @@ EXTERNAL SOURCES:
   EXAppLoaderProvider:
     :path: !ruby/object:Pathname
     path: "../node_modules/expo-app-loader-provider/ios"
+  EXCamera:
+    :path: !ruby/object:Pathname
+    path: "../node_modules/expo-camera/ios"
   EXConstants:
     :path: !ruby/object:Pathname
     path: "../node_modules/expo-constants/ios"
@@ -474,6 +485,7 @@ SPEC CHECKSUMS:
   DCTAuth: 8add154decd00335d62917828896bba790ce47fd
   DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
   EXAppLoaderProvider: 5d348813a9cf09b03bbe5b8b55437bc1bfbddbd1
+  EXCamera: 8ad7012d4e0fef09ff35de14fcb41b410357e9be
   EXConstants: 31e5318521be6175009af6ccd3e97dedf39da96a
   EXFileSystem: 7e53a2c30a2eb6987ba6d5158ab908f947523228
   EXLocation: 452a1d9edceb1b93deb86fd785236606d33742dd
@@ -520,7 +532,7 @@ SPEC CHECKSUMS:
   UMFontInterface: 2d3c128285086bbed3d2a650f1d698323ef3b25a
   UMImageLoaderInterface: 2829a7571a12d2e754c73c55ffe7e327d8402c7d
   UMPermissionsInterface: b6a6e96db0f4011a25aaca14e6022529dd3d6e4e
-  UMReactNativeAdapter: 93c2f520a1cdb6ef3058a7b6a95275a804e0923b
+  UMReactNativeAdapter: e93109c6de5ea830d4a78d08f3a65b8d33a143a3
   UMSensorsInterface: cf59dd7602764a2419e00167429be3e4be39c61d
   UMTaskManagerInterface: 1e70fe58b872355f0ecb44fb81bb1a16484047f0
   Yoga: d8c572ddec8d05b7dba08e4e5f1924004a177078
