@@ -1,6 +1,11 @@
 package com.developmentseed.observe;
 
+import com.developmentseed.observe.generated.BasePackageList;
 import android.app.Application;
+
+import org.unimodules.adapters.react.ModuleRegistryAdapter;
+import org.unimodules.adapters.react.ReactModuleRegistryProvider;
+import org.unimodules.core.interfaces.SingletonModule;
 
 import com.facebook.react.ReactApplication;
 import com.mapbox.rctmgl.RCTMGLPackage;
@@ -25,6 +30,8 @@ import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
 
+    private final ReactModuleRegistryProvider mModuleRegistryProvider = new ReactModuleRegistryProvider(new BasePackageList().getPackageList(), Arrays.<SingletonModule>asList());
+
     private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
         @Override
         public boolean getUseDeveloperSupport() {
@@ -43,7 +50,8 @@ public class MainApplication extends Application implements ReactApplication {
                     new VectorIconsPackage(),
                     new KeychainPackage(),
                     new NetInfoPackage(),
-                    new RNFusedLocationPackage()
+                    new RNFusedLocationPackage(),
+                    new ModuleRegistryAdapter(mModuleRegistryProvider)
             );
         }
 
