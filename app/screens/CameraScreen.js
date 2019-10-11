@@ -9,6 +9,7 @@ import Header from '../components/Header'
 import getPlatformStyles from '../utils/get-platform-styles'
 import Icon from '../components/Collecticons'
 import { colors } from '../style/variables'
+import { savePhoto } from '../actions/camera'
 
 const win = Dimensions.get('window')
 const buttonStyles = getPlatformStyles({
@@ -60,7 +61,8 @@ class CameraScreen extends React.Component {
     if (this.camera) {
       let { uri, width, height } = await this.camera.takePictureAsync()
       console.log(uri, width, height)
-      this.camera.pausePreview()
+      this.props.savePhoto(uri)
+      // this.camera.pausePreview()
     }
   }
   render () {
@@ -103,5 +105,7 @@ class CameraScreen extends React.Component {
 
 const mapStateToProps = state => ({})
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+  savePhoto
+}
 export default connect(mapStateToProps, mapDispatchToProps)(CameraScreen)
