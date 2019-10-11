@@ -19,7 +19,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         currentTrace: newTrace
-      } 
+      }
     }
     case types.TRACE_POINT_CAPTURED: {
       const point = getPoint(action.data)

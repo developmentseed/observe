@@ -5,6 +5,6 @@ export function getNewTrace () {
   }
 }
 
-export function getPoint(location) {
-  return {...location.coords}
+export function getPoint (location) {
+  return { ...location.coords }
 }

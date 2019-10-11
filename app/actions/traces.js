@@ -1,6 +1,6 @@
 import traceService from '../services/trace'
 
-export function startTrace() {
+export function startTrace () {
   console.log('called start trace')
   return (dispatch, getState) => {
     console.log('dispatch start trace')
@@ -13,7 +13,7 @@ export function startTrace() {
   }
 }
 
-export function endTrace() {
+export function endTrace () {
   console.log('called end trace')
   return (dispatch, getState) => {
     console.log('dispatched end trace')
@@ -25,4 +25,3 @@ export function endTrace() {
     traceService.endTrace(dispatch, watcher)
   }
 }
-
