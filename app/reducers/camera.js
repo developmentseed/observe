@@ -6,17 +6,10 @@ export const initialState = {
 
 export default async function (state = initialState, action) {
   switch (action.type) {
-    case types.SAVING_PHOTO: {
-      console.log('saving photo')
-      return {
-        ...state
-      }
-    }
     case types.SAVED_PHOTO: {
-      console.log('saved photo', action.path)
       return {
         ...state,
-        photos: [...state.photos, action.path]
+        photos: [...state.photos, action.photo]
       }
     }
 

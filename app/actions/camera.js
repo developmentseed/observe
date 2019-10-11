@@ -2,7 +2,7 @@ import * as types from './actionTypes'
 import RNFetchBlob from 'rn-fetch-blob'
 import getRandomId from '../utils/get-random-id'
 
-export function savePhoto (uri) {
+export function savePhoto (uri, location) {
   return async dispatch => {
     dispatch({
       type: types.SAVING_PHOTO,
@@ -20,10 +20,14 @@ export function savePhoto (uri) {
     }
     try {
       await RNFetchBlob.fs.createFile(path, uri, 'uri')
+      const photo = {
+        'id': id,
+        'path': path,
+        'location': location
+      }
       dispatch({
         type: types.SAVED_PHOTO,
-        path: path,
-        id: id
+        photo
       })
     } catch (error) {
       console.log('Failed to save photo', error)

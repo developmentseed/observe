@@ -10,6 +10,7 @@ import getPlatformStyles from '../utils/get-platform-styles'
 import Icon from '../components/Collecticons'
 import { colors } from '../style/variables'
 import { savePhoto } from '../actions/camera'
+import * as Location from 'expo-location'
 
 const win = Dimensions.get('window')
 const buttonStyles = getPlatformStyles({
@@ -60,8 +61,9 @@ class CameraScreen extends React.Component {
   async snap () {
     if (this.camera) {
       let { uri, width, height } = await this.camera.takePictureAsync()
-      console.log(uri, width, height)
-      this.props.savePhoto(uri)
+      const location = await Location.getCurrentPositionAsync({})
+      console.log(uri, width, height, location)
+      this.props.savePhoto(uri, location)
       // this.camera.pausePreview()
     }
   }
