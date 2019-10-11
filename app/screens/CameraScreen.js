@@ -49,31 +49,25 @@ class CameraScreen extends React.Component {
     type: Camera.Constants.Type.back
   }
 
-  // async onWillFocus () {
-  //   const { status } = await Permissions.askAsync(Permissions.CAMERA)
-  //   this.setState({
-  //     hasCameraPermission: status === 'granted'
-  //   })
-  // }
   async componentWillMount () {
     const { status } = await Permissions.askAsync(Permissions.CAMERA)
     this.setState({
       hasCameraPermission: status === 'granted'
     })
   }
-  // async componentDidMount () {
-  //   const { status } = await Permissions.askAsync(Permissions.CAMERA)
-  //   this.setState({
-  //     hasCameraPermission: status === 'granted'
-  //   })
-  // }
 
+  async snap () {
+    if (this.camera) {
+      let { uri, width, height } = await this.camera.takePictureAsync()
+      console.log(uri, width, height)
+      this.camera.pausePreview()
+    }
+  }
   render () {
     const { hasCameraPermission } = this.state
     const { navigation } = this.props
     console.log(hasCameraPermission)
     if (hasCameraPermission === null) {
-      console.log('HERE')
       return (
         <View>
           <Text>No access to camera</Text>
@@ -89,14 +83,14 @@ class CameraScreen extends React.Component {
       return (
         <Container>
           <Header back title='Take a picture' navigation={navigation} />
-          <Camera style={{ flex: 1 }} type={this.state.type}>
+          <Camera style={{ flex: 1 }} type={this.state.type} ref={ref => { this.camera = ref }} >
             <View
               style={{
                 flex: 1,
                 backgroundColor: 'transparent',
                 flexDirection: 'row'
               }} >
-              <SnapButton>
+              <SnapButton onPress={() => { this.snap() }}>
                 <Icon name='target' size={20} color='#0B3954' />
               </SnapButton>
             </View>
