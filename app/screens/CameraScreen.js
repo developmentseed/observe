@@ -3,11 +3,40 @@ import { connect } from 'react-redux'
 import * as Permissions from 'expo-permissions'
 import { Camera } from 'expo-camera'
 import styled from 'styled-components/native'
-import { Dimensions } from 'react-native'
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Dimensions, Text, View } from 'react-native'
+import Container from '../components/Container'
+import Header from '../components/Header'
+import getPlatformStyles from '../utils/get-platform-styles'
+import Icon from '../components/Collecticons'
+import { colors } from '../style/variables'
 
-// const View = styled.View``
-// const Text = styled.Text``
+const win = Dimensions.get('window')
+const buttonStyles = getPlatformStyles({
+  ios: {
+    bottom: 100
+  },
+  iphoneX: {
+    bottom: 100
+  },
+  android: {
+    bottom: 20
+  }
+})
+
+const SnapButton = styled.TouchableHighlight`
+  position: absolute;
+  border-radius: ${Math.round(win.width + win.height) / 2};
+  width: 60;
+  height: 60;
+  background-color: ${colors.primary};
+  right: 40%;
+  bottom: ${buttonStyles.bottom};
+  justify-content: center;
+  align-items: center;
+  shadow-color: grey;
+  shadow-opacity: 0.7;
+  shadow-offset: 0px 0px;
+`
 
 class CameraScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -41,6 +70,7 @@ class CameraScreen extends React.Component {
 
   render () {
     const { hasCameraPermission } = this.state
+    const { navigation } = this.props
     console.log(hasCameraPermission)
     if (hasCameraPermission === null) {
       console.log('HERE')
@@ -57,33 +87,21 @@ class CameraScreen extends React.Component {
       )
     } else {
       return (
-        <View style={{ flex: 1 }}>
+        <Container>
+          <Header back title='Take a picture' navigation={navigation} />
           <Camera style={{ flex: 1 }} type={this.state.type}>
             <View
               style={{
                 flex: 1,
                 backgroundColor: 'transparent',
                 flexDirection: 'row'
-              }}>
-              <TouchableOpacity
-                style={{
-                  flex: 0.1,
-                  alignSelf: 'flex-end',
-                  alignItems: 'center'
-                }}
-                onPress={() => {
-                  this.setState({
-                    type:
-                      this.state.type === Camera.Constants.Type.back
-                        ? Camera.Constants.Type.front
-                        : Camera.Constants.Type.back
-                  })
-                }}>
-                <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}> Flip </Text>
-              </TouchableOpacity>
+              }} >
+              <SnapButton>
+                <Icon name='target' size={20} color='#0B3954' />
+              </SnapButton>
             </View>
           </Camera>
-        </View>
+        </Container>
       )
     }
   }
