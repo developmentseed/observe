@@ -4,6 +4,7 @@ import styled from 'styled-components/native'
 
 import { purgeCache, purgeStore } from '../actions/about'
 import { purgeAllEdits } from '../actions/edit'
+import { startTrace, endTrace } from '../actions/traces'
 import Icon from '../components/Collecticons'
 import Header from '../components/Header'
 import PageWrapper from '../components/PageWrapper'
@@ -74,6 +75,20 @@ class Settings extends React.Component {
               color={colors.primary}
             />
           </ButtonWrapper>
+          <ButtonWrapper>
+            <Button
+              onPress={this.props.startTrace}
+              title='Start Trace'
+              color={colors.primary}
+              disabled={!!this.props.currentTrace}
+            />
+            <Button
+              onPress={this.props.endTrace}
+              title='End Trace'
+              color={colors.primary}
+              disabled={!this.props.currentTrace}
+            />
+          </ButtonWrapper>
           <Text>
             Observe-{version}
           </Text>
@@ -83,12 +98,16 @@ class Settings extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({})
+const mapStateToProps = state => ({
+  currentTrace: state.traces.currentTrace
+})
 
 const mapDispatchToProps = {
   purgeCache,
   purgeStore,
-  purgeAllEdits
+  purgeAllEdits,
+  startTrace,
+  endTrace
 }
 
 export default connect(
