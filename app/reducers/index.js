@@ -11,6 +11,7 @@ import PresetReducer from './presets'
 import AccountReducer from './account'
 import EditReducer from './edit'
 import NotificationReducer from './notification'
+import CameraReducer from './camera'
 
 const authorizationPersistConfig = {
   key: 'authorization',
@@ -42,7 +43,8 @@ const rootReducer = combineReducers({
   account: AccountReducer,
   edit: persistReducer(editPersistConfig, EditReducer),
   network,
-  notification: NotificationReducer
+  notification: NotificationReducer,
+  photos: CameraReducer
 })
 
 export default rootReducer
