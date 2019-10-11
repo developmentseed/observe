@@ -4,6 +4,8 @@ import {
   getPoint
 } from '../utils/traces'
 
+import getRandomId from '../utils/get-random-id'
+
 const initialState = {
   currentTrace: null,
   watcher: null,
@@ -30,10 +32,11 @@ export default function (state = initialState, action) {
     }
     case types.ENDED_TRACE: {
       const newTrace = {
-        points: currentTrace.points,
-        id: 'foo', // FIXME: generate random id
+        points: [...state.currentTrace.points],
+        id: getRandomId(),
         pending: true
       }
+      console.log('new trace', newTrace)
       return {
         ...state,
         currentTrace: null,
@@ -48,4 +51,5 @@ export default function (state = initialState, action) {
       }
     }
   }
+  return state
 }

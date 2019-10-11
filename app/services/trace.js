@@ -21,7 +21,7 @@ async function startTrace (dispatch) {
     })
   })
   dispatch({
-    types: types.SET_TRACE_SUBSCRIPTION,
+    type: types.SET_TRACE_SUBSCRIPTION,
     data: watcher
   })
 }
@@ -31,4 +31,9 @@ async function endTrace (dispatch, watcher) {
   dispatch({
     type: types.ENDED_TRACE
   })
+}
+
+export default {
+  startTrace,
+  endTrace
 }
