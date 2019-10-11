@@ -36,8 +36,7 @@ const editPersistConfig = {
   ]
 }
 
-
-//TODO: Add Persist config for TracesReducer
+// TODO: Add Persist config for TracesReducer
 
 const rootReducer = combineReducers({
   about: AboutReducer,
