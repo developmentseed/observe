@@ -4,3 +4,7 @@ export function getNewTrace () {
     points: []
   }
 }
+
+export function getPoint(location) {
+  return {...location.coords}
+}
