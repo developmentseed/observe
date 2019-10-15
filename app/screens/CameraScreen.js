@@ -70,7 +70,6 @@ class CameraScreen extends React.Component {
   render () {
     const { hasCameraPermission } = this.state
     const { navigation } = this.props
-    console.log(hasCameraPermission)
     if (hasCameraPermission === null) {
       return (
         <View>

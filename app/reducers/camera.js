@@ -4,12 +4,15 @@ export const initialState = {
   photos: []
 }
 
-export default async function (state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case types.SAVED_PHOTO: {
+      let photos = [...state.photos]
+      photos.push(action.photo)
+      console.log('saved', photos)
       return {
         ...state,
-        photos: [...state.photos, action.photo]
+        photos
       }
     }
 
@@ -17,4 +20,5 @@ export default async function (state = initialState, action) {
       console.log('save photo failed')
     }
   }
+  return state
 }
