@@ -11,6 +11,7 @@ import Icon from '../components/Collecticons'
 import { colors } from '../style/variables'
 import { savePhoto } from '../actions/camera'
 import * as Location from 'expo-location'
+import LoadingOverlay from '../components/LoadingOverlay'
 
 const win = Dimensions.get('window')
 const buttonStyles = getPlatformStyles({
@@ -48,7 +49,8 @@ class CameraScreen extends React.Component {
   }
   state = {
     hasCameraPermission: null,
-    type: Camera.Constants.Type.back
+    type: Camera.Constants.Type.back,
+    saving: false
   }
 
   async componentWillMount () {
@@ -60,16 +62,30 @@ class CameraScreen extends React.Component {
 
   async snap () {
     if (this.camera) {
+      this.setState({
+        saving: true
+      })
       let { uri, width, height } = await this.camera.takePictureAsync()
       const location = await Location.getCurrentPositionAsync({})
       console.log(uri, width, height, location)
       this.props.savePhoto(uri, location)
-      // this.camera.pausePreview()
+      this.camera.pausePreview()
+      this.setState({
+        saving: false
+      })
+      this.camera.resumePreview()
     }
   }
   render () {
     const { hasCameraPermission } = this.state
     const { navigation } = this.props
+    let showLoadingIndicator = null
+    if (this.state.saving) {
+      showLoadingIndicator = (
+        <LoadingOverlay />
+      )
+    }
+
     if (hasCameraPermission === null) {
       return (
         <View>
@@ -98,6 +114,7 @@ class CameraScreen extends React.Component {
               </SnapButton>
             </View>
           </Camera>
+          { showLoadingIndicator }
         </Container>
       )
     }
