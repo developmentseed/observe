@@ -61,7 +61,6 @@ export function deletePack (pack) {
 
     try {
       await MapboxGL.offlineManager.deletePack(pack)
-
       dispatch({
         type: types.DELETED_PACK,
         pack

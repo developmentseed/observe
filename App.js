@@ -24,6 +24,7 @@ import Drawer from './app/components/Drawer'
 import Notification from './app/components/Notification'
 import UploadManager from './app/components/UploadManager'
 import GPSTracker from './app/components/GPSTracker'
+import CameraScreen from './app/screens/CameraScreen'
 import { preAuth } from './app/services/auth'
 import { ReduxNetworkProvider } from 'react-native-offline'
 import Icon from './app/components/Collecticons'
@@ -81,7 +82,8 @@ const AppNavigator = createDrawerNavigator({
   ViewFeatureDetail: { screen: ViewFeatureDetail },
   AddFeatureDetail: { screen: AddFeatureDetail },
   EditFeatureDetail: { screen: EditFeatureDetail },
-  SelectFeatureType: { screen: SelectFeatureType }
+  SelectFeatureType: { screen: SelectFeatureType },
+  CameraScreen: { screen: CameraScreen }
 }, {
   initialRouteName: 'Explore',
   contentComponent: Drawer,

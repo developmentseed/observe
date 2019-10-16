@@ -237,6 +237,7 @@ jest.mock('rn-fetch-blob', () => ({
     writeFile: jest.fn(),
     unlink: jest.fn(),
     exists: jest.fn(),
+    createFile: jest.fn(),
     stat: () => {
       return {
         size: 7000
@@ -267,3 +268,9 @@ jest.mock('react-native-config', () => ({
   OPENCAGE_KEY: 123,
   API_URL: 'http://example.com'
 }))
+
+jest.mock('../../app/utils/get-random-id', () => {
+  return jest.fn(() => {
+    return 'observe-hauptbanhof'
+  })
+})

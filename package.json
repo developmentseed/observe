@@ -29,6 +29,7 @@
     "@turf/centroid": "^6.0.2",
     "@turf/helpers": "^6.1.4",
     "delay": "^4.1.0",
+    "expo-camera": "^7.0.0",
     "expo-location": "^7.0.0",
     "expo-permissions": "^7.0.0",
     "fromentries": "^1.1.0",
