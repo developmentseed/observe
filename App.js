@@ -17,6 +17,7 @@ import ViewFeatureDetail from './app/screens/Features/ViewFeatureDetail'
 import AddFeatureDetail from './app/screens/Features/AddFeatureDetail'
 import EditFeatureDetail from './app/screens/Features/EditFeatureDetail'
 import SelectFeatureType from './app/screens/Features/SelectFeatureType'
+import PhotosListScreen from './app/screens/Photos/PhotosListScreen'
 
 import AuthorizationManager from './app/components/AuthorizationManager'
 import Drawer from './app/components/Drawer'
@@ -64,6 +65,21 @@ const UserContributionsNavigator = createStackNavigator({
   }
 })
 
+const PhotosListNavigator = createStackNavigator({
+  PhotosListScreen: { screen: PhotosListScreen }
+}, {
+  initialRouteName: 'PhotosListScreen',
+  headerMode: 'none',
+  navigationOptions: {
+    title: 'Your Photos',
+    drawerIcon: () => (
+      <Icon
+        name='picture'
+        style={{ fontSize: 16, color: colors.primary }}
+      />
+    )
+  }
+})
 // This is convenient when iterating on screens, as the active screen will
 // reload when code changes. However, it breaks some uses of react-navigation
 // params, so it's disabled by default
@@ -77,6 +93,7 @@ const AppNavigator = createDrawerNavigator({
     screen: UserContributionsNavigator
   },
   OfflineMaps: { screen: OfflineMapsNavigator },
+  PhotosListScreen: { screen: PhotosListNavigator },
   Account: { screen: Account },
   Settings: { screen: Settings },
   ViewFeatureDetail: { screen: ViewFeatureDetail },
