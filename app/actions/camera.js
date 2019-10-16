@@ -19,7 +19,7 @@ export function savePhoto (uri, location) {
       }
     }
     try {
-      await RNFetchBlob.fs.createFile(path, uri, 'uri')
+      await RNFetchBlob.fs.createFile(path, uri.replace('file://', ''), 'uri')
       const photo = {
         'id': id,
         'path': path,
