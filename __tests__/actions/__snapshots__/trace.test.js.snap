@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test trace actions should start trace correctly 1`] = `
+Array [
+  Object {
+    "type": "STARTED_TRACE",
+  },
+  Object {
+    "data": Object {
+      "remove": [MockFunction],
+    },
+    "type": "SET_TRACE_SUBSCRIPTION",
+  },
+  Object {
+    "data": Object {
+      "latitude": 0,
+      "longitude": 0,
+      "timestamp": 0,
+    },
+    "type": "TRACE_POINT_CAPTURED",
+  },
+  Object {
+    "data": Object {
+      "latitude": 1,
+      "longitude": 1,
+      "timestamp": 1,
+    },
+    "type": "TRACE_POINT_CAPTURED",
+  },
+  Object {
+    "data": Object {
+      "latitude": 2,
+      "longitude": 2,
+      "timestamp": 2,
+    },
+    "type": "TRACE_POINT_CAPTURED",
+  },
+  Object {
+    "data": Object {
+      "latitude": 3,
+      "longitude": 3,
+      "timestamp": 3,
+    },
+    "type": "TRACE_POINT_CAPTURED",
+  },
+]
+`;
