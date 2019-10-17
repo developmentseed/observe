@@ -147,7 +147,8 @@ class Header extends React.Component {
       actions,
       isConnected,
       isRecording,
-      currentTraceLength
+      currentTraceLength,
+      navigation
     } = this.props
 
     let style = {}
@@ -159,7 +160,7 @@ class Header extends React.Component {
     let showRecordingHeader = null
     if (isRecording) {
       showRecordingHeader = (
-        <RecordHeader distance={currentTraceLength} />
+        <RecordHeader paused={false} distance={currentTraceLength} onStopBtnPress={() => { navigation.navigate('SaveTrace') }} />
       )
     }
     return (

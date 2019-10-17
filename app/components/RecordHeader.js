@@ -32,7 +32,7 @@ const DistanceText = styled.Text`
 
 const DistanceUnitText = styled.Text`
   font-size: 12;
-  color: ${colors.muted}
+  color: ${colors.muted};
 `
 
 const HeaderWrapper = styled.View`
@@ -47,10 +47,10 @@ const HeaderWrapper = styled.View`
 const RecordingStatus = styled.View`
   height: 30;
   width: ${win.width};
-  background-color: white;
+  background-color: #fafafa;
   align-items: center;
   justify-content: center;
-  border-bottom-width: 0.2;
+  border-bottom-width: 0.3;
   border-bottom-color: ${colors.muted};
 `
 
@@ -61,14 +61,25 @@ const RecordingActions = styled.View`
   justify-content: center;
 `
 const RecordingDistance = styled.View`
-  align-items: flex-start;
+  flex: 1;
+  align-items: center;
   justify-content: center;
   padding-left: 20;
+  padding-right: 20;
+  padding-top: 10;
+  padding-bottom: 10;
+  border-right-width: 0.2;
+  border-right-color: ${colors.muted};
+`
+const RecordingButtons = styled.View`
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 `
 
-const PauseButton = styled.TouchableOpacity`
+const PauseResumeButton = styled.TouchableOpacity`
   justify-content: center;
-  padding-left: 20;
 `
 
 const StopButton = styled.TouchableOpacity`
@@ -78,6 +89,7 @@ const StopButton = styled.TouchableOpacity`
 
 export default class RecordHeader extends React.Component {
   render () {
+    const icon = this.props.paused ? 'circle-play' : 'circle-pause'
     const { distance, onPauseBtnPress, onStopBtnPress } = this.props
     return (
       <HeaderWrapper>
@@ -91,12 +103,14 @@ export default class RecordHeader extends React.Component {
             <DistanceText>{ distance }</DistanceText>
             <DistanceUnitText>DISTANCE (km)</DistanceUnitText>
           </RecordingDistance>
-          <PauseButton>
-            <Icon name='circle-pause' color={colors.primary} size={30} />
-          </PauseButton>
-          <StopButton>
-            <Icon name='circle-stop' color={colors.primary} size={30} />
-          </StopButton>
+          <RecordingButtons>
+            <PauseResumeButton onPress={onPauseBtnPress}>
+              <Icon name={icon} color={colors.primary} size={30} />
+            </PauseResumeButton>
+            <StopButton onPress={onStopBtnPress}>
+              <Icon name='circle-stop' color={colors.primary} size={30} />
+            </StopButton>
+          </RecordingButtons>
         </RecordingActions>
       </HeaderWrapper>
     )
