@@ -11,13 +11,19 @@ export function startTrace () {
   }
 }
 
-export function endTrace () {
+export function pauseTrace () {
+  return {
+    type: types.PAUSED_TRACE
+  }
+}
+
+export function endTrace (description='') {
   return (dispatch, getState) => {
     const { watcher, currentTrace } = getState().traces
     if (!currentTrace) {
       console.error('endTrace called with no current trace')
       return
     }
-    traceService.endTrace(dispatch, watcher)
+    traceService.endTrace(dispatch, watcher, description)
   }
 }

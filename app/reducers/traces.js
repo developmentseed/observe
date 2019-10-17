@@ -9,6 +9,7 @@ import getRandomId from '../utils/get-random-id'
 const initialState = {
   currentTrace: null,
   watcher: null,
+  paused: false,
   traces: []
 }
 
@@ -21,8 +22,23 @@ export default function (state = initialState, action) {
         currentTrace: newTrace
       }
     }
+    case types.PAUSED_TRACE: {
+      return {
+        ...state,
+        currentTrace: {
+          ...state.currentTrace,
+          paused: true
+        }
+      }
+    }
+
     case types.TRACE_POINT_CAPTURED: {
-      const point = getPoint(action.data)
+
+      // if the current trace is paused, do nothing, don't add point.
+      if (state.currentTrace.paused) {
+        return state
+      }
+      const point = getPoint(action.location)
       return {
         ...state,
         currentTrace: {
@@ -34,6 +50,7 @@ export default function (state = initialState, action) {
       const newTrace = {
         points: [...state.currentTrace.points],
         id: getRandomId(),
+        description: action.description,
         pending: true
       }
       console.log('new trace', newTrace)
