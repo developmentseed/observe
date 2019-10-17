@@ -27,7 +27,7 @@ const getMockCurrentTrace = function () {
 }
 
 describe('test for traces reducer', () => {
-  it('should handle STARTED_TRACE action correctly', () => {
+  it('should handle TRACE_START action correctly', () => {
     const action = {
       type: 'TRACE_START'
     }
@@ -126,7 +126,7 @@ describe('test for traces reducer', () => {
     })
   })
 
-  it('tests that PAUSED_TRACE marks currentTrace as paused', () => {
+  it('tests that TRACE_PAUSE marks traces as paused', () => {
     const mockCurrentTrace = getMockCurrentTrace()
     const state = {
       ...initialState,
@@ -140,7 +140,7 @@ describe('test for traces reducer', () => {
     expect(newState.paused).toEqual(true)
   })
 
-  it('tests that UNPAUSED_TRACE marks currentTrace as paused', () => {
+  it('tests that TRACE_UNPAUSE marks traces as unpaused', () => {
     const mockCurrentTrace = getMockCurrentTrace()
     const state = {
       ...initialState,
@@ -154,7 +154,7 @@ describe('test for traces reducer', () => {
     expect(newState.paused).toEqual(false)
   })
 
-  it('tests that ENDED_TRACE correctly ends a trace', () => {
+  it('tests that TRACE_END correctly ends a trace', () => {
     const mockCurrentTrace = getMockCurrentTrace()
     const state = {
       ...initialState,
