@@ -31,7 +31,7 @@ describe('test for traces reducer', () => {
     }
     const action1 = {
       type: 'TRACE_POINT_CAPTURED',
-      data: {
+      location: {
         coords: {
           longitude: 1.0,
           latitude: 2.0,
@@ -49,7 +49,7 @@ describe('test for traces reducer', () => {
     })
     const action2 = {
       type: 'TRACE_POINT_CAPTURED',
-      data: {
+      location: {
         coords: {
           longitude: 2.0,
           latitude: 3.0,
