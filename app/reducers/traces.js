@@ -15,21 +15,21 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case types.STARTED_TRACE: {
+    case types.TRACE_START: {
       const newTrace = getNewTrace()
       return {
         ...state,
         currentTrace: newTrace
       }
     }
-    case types.PAUSED_TRACE: {
+    case types.TRACE_PAUSE: {
       return {
         ...state,
         paused: true
       }
     }
 
-    case types.UNPAUSED_TRACE: {
+    case types.TRACE_UNPAUSE: {
       return {
         ...state,
         paused: false
@@ -47,7 +47,7 @@ export default function (state = initialState, action) {
       }
     }
 
-    case types.ENDED_TRACE: {
+    case types.TRACE_END: {
       const traceId = getRandomId()
       const newTrace = {
         id: traceId,
@@ -70,7 +70,7 @@ export default function (state = initialState, action) {
         traces: [...state.traces, newTrace]
       }
     }
-    case types.SET_TRACE_SUBSCRIPTION: {
+    case types.TRACE_SET_SUBSCRIPTION: {
       return {
         ...state,
         watcher: action.watcher

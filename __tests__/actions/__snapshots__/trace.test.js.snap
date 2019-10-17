@@ -3,13 +3,13 @@
 exports[`test trace actions should start trace correctly 1`] = `
 Array [
   Object {
-    "type": "STARTED_TRACE",
+    "type": "TRACE_START",
   },
   Object {
     "data": Object {
       "remove": [MockFunction],
     },
-    "type": "SET_TRACE_SUBSCRIPTION",
+    "type": "TRACE_SET_SUBSCRIPTION",
   },
   Object {
     "data": Object {

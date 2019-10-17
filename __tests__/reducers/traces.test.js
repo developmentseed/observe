@@ -29,7 +29,7 @@ const getMockCurrentTrace = function () {
 describe('test for traces reducer', () => {
   it('should handle STARTED_TRACE action correctly', () => {
     const action = {
-      type: 'STARTED_TRACE'
+      type: 'TRACE_START'
     }
     const newState = reducer(initialState, action)
     expect(newState).toEqual({
@@ -134,7 +134,7 @@ describe('test for traces reducer', () => {
       watcher: {}
     }
     const action = {
-      type: 'PAUSED_TRACE'
+      type: 'TRACE_PAUSE'
     }
     const newState = reducer(state, action)
     expect(newState.paused).toEqual(true)
@@ -148,7 +148,7 @@ describe('test for traces reducer', () => {
       watcher: {}
     }
     const action = {
-      type: 'UNPAUSED_TRACE'
+      type: 'TRACE_UNPAUSE'
     }
     const newState = reducer(state, action)
     expect(newState.paused).toEqual(false)
@@ -162,7 +162,7 @@ describe('test for traces reducer', () => {
       watcher: {}
     }
     const action = {
-      type: 'ENDED_TRACE',
+      type: 'TRACE_END',
       description: 'test description'
     }
     const newState = reducer(state, action)

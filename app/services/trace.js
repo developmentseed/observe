@@ -4,7 +4,7 @@ import * as Location from 'expo-location'
 
 async function startTrace (dispatch) {
   dispatch({
-    type: types.STARTED_TRACE
+    type: types.TRACE_START
   })
   let { status } = await Permissions.askAsync(Permissions.LOCATION)
   if (status !== 'granted') {
@@ -21,7 +21,7 @@ async function startTrace (dispatch) {
     })
   })
   dispatch({
-    type: types.SET_TRACE_SUBSCRIPTION,
+    type: types.TRACE_SET_SUBSCRIPTION,
     watcher
   })
 }
@@ -29,7 +29,7 @@ async function startTrace (dispatch) {
 async function endTrace (dispatch, watcher, description) {
   if (watcher) watcher.remove()
   dispatch({
-    type: types.ENDED_TRACE,
+    type: types.TRACE_END,
     description
   })
 }

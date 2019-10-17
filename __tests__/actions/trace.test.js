@@ -15,10 +15,10 @@ jest.mock('../../app/services/trace', () => {
   return {
     startTrace: dispatch => {
       dispatch({
-        type: 'STARTED_TRACE'
+        type: 'TRACE_START'
       })
       dispatch({
-        type: 'SET_TRACE_SUBSCRIPTION',
+        type: 'TRACE_SET_SUBSCRIPTION',
         data: {
           remove: jest.fn()
         }
@@ -36,7 +36,7 @@ jest.mock('../../app/services/trace', () => {
     },
     endTrace: (dispatch, watcher, description) => {
       dispatch({
-        type: 'ENDED_TRACE',
+        type: 'TRACE_END',
         description
       })
     }
@@ -69,7 +69,7 @@ describe('test trace actions', () => {
     expect(actions.length).toEqual(6)
     expect(actions).toMatchSnapshot()
   })
-  
+
   it('should end trace correctly', () => {
     const store = mockStore({
       traces: {
@@ -79,7 +79,7 @@ describe('test trace actions', () => {
     store.dispatch(endTrace('test description'))
     const actions = store.getActions()
     expect(actions.length).toEqual(1)
-    expect(actions[0].type).toEqual('ENDED_TRACE')
+    expect(actions[0].type).toEqual('TRACE_END')
     expect(actions[0].description).toEqual('test description')
   })
   it('should pause trace', () => {
@@ -90,7 +90,7 @@ describe('test trace actions', () => {
     })
     store.dispatch(pauseTrace())
     const actions = store.getActions()
-    expect(actions[0].type).toEqual('PAUSED_TRACE')
+    expect(actions[0].type).toEqual('TRACE_PAUSE')
   })
   it('should unpause trace', () => {
     const store = mockStore({
@@ -100,6 +100,6 @@ describe('test trace actions', () => {
     })
     store.dispatch(unpauseTrace())
     const actions = store.getActions()
-    expect(actions[0].type).toEqual('UNPAUSED_TRACE')
+    expect(actions[0].type).toEqual('TRACE_UNPAUSE')
   })
 })

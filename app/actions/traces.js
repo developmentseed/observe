@@ -14,13 +14,13 @@ export function startTrace () {
 
 export function pauseTrace () {
   return {
-    type: types.PAUSED_TRACE
+    type: types.TRACE_PAUSE
   }
 }
 
 export function unpauseTrace () {
   return {
-    type: types.UNPAUSED_TRACE
+    type: types.TRACE_UNPAUSE
   }
 }
 
