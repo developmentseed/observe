@@ -1,3 +1,4 @@
+import * as types from './actionTypes'
 import traceService from '../services/trace'
 
 export function startTrace () {
@@ -17,7 +18,7 @@ export function pauseTrace () {
   }
 }
 
-export function endTrace (description='') {
+export function endTrace (description = '') {
   return (dispatch, getState) => {
     const { watcher, currentTrace } = getState().traces
     if (!currentTrace) {

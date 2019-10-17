@@ -11,7 +11,7 @@ export function getNewTrace () {
 
 /**
  * Returns a trace point object to store in the state
- * @param {Object} location - location object returned from expo watchCurrentPosition 
+ * @param {Object} location - location object returned from expo watchCurrentPosition
  */
 export function getPoint (location) {
   return { ...location.coords }
@@ -70,16 +70,16 @@ export function toTraceJSON (trace) {
 
 /**
  * Accepts a trace as a GeoJSON feature and checks for validity
- * @param {Object<GeoJSON Feature>} traceGeoJSON 
+ * @param {Object<GeoJSON Feature>} traceGeoJSON
  * @param {Object} options
  * @param {Number} options.minTraceLength - mininimum number of points for a valid trace
  * @param {Number} options.minTraceDistance - minimum distance of trace (in metres)
- * @returns {Boolean} 
+ * @returns {Boolean}
  */
-export function isValidTrace(traceGeoJSON, options) {
+export function isValidTrace (traceGeoJSON, options) {
   const defaults = {
-    minTraceLength = 3,
-    minTraceDistance = 50
+    minTraceLength: 3,
+    minTraceDistance: 50
   }
   const opts = Object.assign({}, defaults, options)
   const numPoints = traceGeoJSON.geometry.coordinates.length
@@ -91,8 +91,8 @@ export function isValidTrace(traceGeoJSON, options) {
 
 /**
  * Accepts a LineString GeoJSON and returns the length, in meters
- * @param {Object<GeoJSON Feature>} traceGeoJSON 
+ * @param {Object<GeoJSON Feature>} traceGeoJSON
  */
-export function getTraceLength(traceGeoJSON) {
-  return turfLength(traceGeoJSON, {units: 'kilometers'}) * 1000
+export function getTraceLength (traceGeoJSON) {
+  return turfLength(traceGeoJSON, { units: 'kilometers' }) * 1000
 }

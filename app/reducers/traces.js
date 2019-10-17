@@ -33,7 +33,6 @@ export default function (state = initialState, action) {
     }
 
     case types.TRACE_POINT_CAPTURED: {
-
       // if the current trace is paused, do nothing, don't add point.
       if (state.currentTrace.paused) {
         return state
