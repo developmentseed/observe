@@ -18,6 +18,12 @@ export function pauseTrace () {
   }
 }
 
+export function unpauseTrace () {
+  return {
+    type: types.UNPAUSED_TRACE
+  }
+}
+
 export function endTrace (description = '') {
   return (dispatch, getState) => {
     const { watcher, currentTrace } = getState().traces

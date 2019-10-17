@@ -8,6 +8,21 @@ const initialState = {
   traces: []
 }
 
+const getMockCurrentTrace = function () {
+  return {
+    points: [{
+      longitude: 1.0,
+      latitude: 2.0,
+      timestamp: 100
+    }, {
+      longitude: 2.0,
+      latitude: 3.0,
+      timestamp: 200
+    }],
+    paused: false
+  }
+}
+
 describe('test for traces reducer', () => {
   it('should handle STARTED_TRACE action correctly', () => {
     const action = {
@@ -73,18 +88,36 @@ describe('test for traces reducer', () => {
     })
   })
 
-  it('tests that ENDED_TRACE correctly ends a trace', () => {
-    const mockCurrentTrace = {
-      points: [{
-        longitude: 1.0,
-        latitude: 2.0,
-        timestamp: 100
-      }, {
-        longitude: 2.0,
-        latitude: 3.0,
-        timestamp: 200
-      }]
+  it('tests that PAUSED_TRACE marks currentTrace as paused', () => {
+    const mockCurrentTrace = getMockCurrentTrace()
+    const state = {
+      ...initialState,
+      currentTrace: mockCurrentTrace,
+      watcher: {}
     }
+    const action = {
+      type: 'PAUSED_TRACE'
+    }
+    const newState = reducer(state, action)
+    expect(newState.currentTrace.paused).toEqual(true)
+  })
+
+  it('tests that UNPAUSED_TRACE marks currentTrace as paused', () => {
+    const mockCurrentTrace = getMockCurrentTrace()
+    const state = {
+      ...initialState,
+      currentTrace: mockCurrentTrace,
+      watcher: {}
+    }
+    const action = {
+      type: 'UNPAUSED_TRACE'
+    }
+    const newState = reducer(state, action)
+    expect(newState.currentTrace.paused).toEqual(false)
+  })
+
+  it('tests that ENDED_TRACE correctly ends a trace', () => {
+    const mockCurrentTrace = getMockCurrentTrace()
     const state = {
       ...initialState,
       currentTrace: mockCurrentTrace,

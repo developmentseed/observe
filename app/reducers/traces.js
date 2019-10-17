@@ -32,6 +32,16 @@ export default function (state = initialState, action) {
       }
     }
 
+    case types.UNPAUSED_TRACE: {
+      return {
+        ...state,
+        currentTrace: {
+          ...state.currentTrace,
+          paused: false
+        }
+      }
+    }
+
     case types.TRACE_POINT_CAPTURED: {
       // if the current trace is paused, do nothing, don't add point.
       if (state.currentTrace.paused) {
