@@ -78,6 +78,7 @@ const StopButton = styled.TouchableOpacity`
 
 export default class RecordHeader extends React.Component {
   render () {
+    const { distance, onPauseBtnPress, onStopBtnPress } = this.props
     return (
       <HeaderWrapper>
         <RecordingStatus>
@@ -87,7 +88,7 @@ export default class RecordHeader extends React.Component {
         </RecordingStatus>
         <RecordingActions>
           <RecordingDistance>
-            <DistanceText>12</DistanceText>
+            <DistanceText>{ distance }</DistanceText>
             <DistanceUnitText>DISTANCE (km)</DistanceUnitText>
           </RecordingDistance>
           <PauseButton>

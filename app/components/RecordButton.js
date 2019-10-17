@@ -22,6 +22,9 @@ const Button = styled.TouchableHighlight`
 `
 
 export class RecordButton extends React.Component {
+  // FIXME: The button is being passed a `status` prop
+  // which will be either 'recording', 'paused', or 'none'.
+  // The icon will need to change based on this status.
   render () {
     return (
       <Button underlayColor='#333' onPress={this.props.onPress}>

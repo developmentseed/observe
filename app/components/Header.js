@@ -10,6 +10,10 @@ import { unsetNotification } from '../actions/notification'
 
 import { colors } from '../style/variables'
 import RecordHeader from '../components/RecordHeader'
+import {
+  getCurrentTraceLength,
+  getIsTracing
+} from '../selectors'
 
 const win = Dimensions.get('window')
 const Container = styled.View``
@@ -139,7 +143,12 @@ class Header extends React.Component {
   }
 
   render () {
-    const { actions, isConnected, isRecording } = this.props
+    const {
+      actions,
+      isConnected,
+      isRecording,
+      currentTraceLength
+    } = this.props
 
     let style = {}
 
@@ -150,7 +159,7 @@ class Header extends React.Component {
     let showRecordingHeader = null
     if (isRecording) {
       showRecordingHeader = (
-        <RecordHeader />
+        <RecordHeader distance={currentTraceLength} />
       )
     }
     return (
@@ -174,7 +183,8 @@ class Header extends React.Component {
 
 const mapStateToProps = state => ({
   isConnected: state.network.isConnected,
-  isRecording: true || !!state.currentTrace // FIXME: change this to actual state attrubute
+  isRecording: getIsTracing(state),
+  currentTraceLength: getCurrentTraceLength(state)
 })
 
 const mapDispatchToProps = {
