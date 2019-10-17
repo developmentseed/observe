@@ -174,7 +174,7 @@ class Header extends React.Component {
 
 const mapStateToProps = state => ({
   isConnected: state.network.isConnected,
-  isRecording: !!state.currentTrace // FIXME: change this to actual state attrubute
+  isRecording: true || !!state.currentTrace // FIXME: change this to actual state attrubute
 })
 
 const mapDispatchToProps = {
