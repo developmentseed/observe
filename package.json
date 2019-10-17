@@ -28,6 +28,7 @@
     "@turf/buffer": "^5.1.5",
     "@turf/centroid": "^6.0.2",
     "@turf/helpers": "^6.1.4",
+    "@turf/length": "^6.0.2",
     "delay": "^4.1.0",
     "expo-camera": "^7.0.0",
     "expo-location": "^7.0.0",
