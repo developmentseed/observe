@@ -17,19 +17,20 @@ async function startTrace (dispatch) {
   }, location => {
     dispatch({
       type: types.TRACE_POINT_CAPTURED,
-      data: location
+      location
     })
   })
   dispatch({
     type: types.SET_TRACE_SUBSCRIPTION,
-    data: watcher
+    watcher
   })
 }
 
-async function endTrace (dispatch, watcher) {
+async function endTrace (dispatch, watcher, description) {
   if (watcher) watcher.remove()
   dispatch({
-    type: types.ENDED_TRACE
+    type: types.ENDED_TRACE,
+    description
   })
 }
 

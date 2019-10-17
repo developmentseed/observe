@@ -148,3 +148,5 @@ export const getOfflineResourceStatus = createSelector(
 )
 
 export const getPendingEviction = state => state.map.pendingEviction
+
+export const isTracing = state => !!state.traces.currentTrace
