@@ -8,11 +8,17 @@ import Icon from './Collecticons'
 
 import { unsetNotification } from '../actions/notification'
 
+import {
+  pauseTrace,
+  unpauseTrace
+} from '../actions/traces'
+
 import { colors } from '../style/variables'
 import RecordHeader from '../components/RecordHeader'
 import {
   getCurrentTraceLength,
-  getIsTracing
+  getIsTracing,
+  getCurrentTraceStatus
 } from '../selectors'
 
 const win = Dimensions.get('window')
@@ -105,6 +111,19 @@ class Header extends React.Component {
     this.props.navigation.openDrawer()
   }
 
+  onPauseBtnPress = () => {
+    const {
+      currentTraceStatus,
+      pauseTrace,
+      unpauseTrace
+    } = this.props
+    if (currentTraceStatus === 'paused') {
+      unpauseTrace()
+    } else {
+      pauseTrace()
+    }
+  }
+
   renderMenu () {
     return (
       <HeaderIcon onPress={() => this.onMenuPress()}>
@@ -148,6 +167,7 @@ class Header extends React.Component {
       isConnected,
       isRecording,
       currentTraceLength,
+      currentTraceStatus,
       navigation
     } = this.props
 
@@ -160,7 +180,12 @@ class Header extends React.Component {
     let showRecordingHeader = null
     if (isRecording) {
       showRecordingHeader = (
-        <RecordHeader paused={false} distance={currentTraceLength} onStopBtnPress={() => { navigation.navigate('SaveTrace') }} />
+        <RecordHeader
+          paused={currentTraceStatus === 'paused'}
+          distance={currentTraceLength}
+          onStopBtnPress={() => { navigation.navigate('SaveTrace') }}
+          onPauseBtnPress={this.onPauseBtnPress}
+        />
       )
     }
     return (
@@ -185,11 +210,14 @@ class Header extends React.Component {
 const mapStateToProps = state => ({
   isConnected: state.network.isConnected,
   isRecording: getIsTracing(state),
+  currentTraceStatus: getCurrentTraceStatus(state),
   currentTraceLength: getCurrentTraceLength(state)
 })
 
 const mapDispatchToProps = {
-  unsetNotification
+  unsetNotification,
+  pauseTrace,
+  unpauseTrace
 }
 
 export default connect(
