@@ -9,8 +9,10 @@ import Icon from './Collecticons'
 import { unsetNotification } from '../actions/notification'
 
 import { colors } from '../style/variables'
+import RecordHeader from '../components/RecordHeader'
 
 const win = Dimensions.get('window')
+const Container = styled.View``
 
 const headerStyles = getPlatformStyles({
   ios: {
@@ -137,7 +139,7 @@ class Header extends React.Component {
   }
 
   render () {
-    const { actions, isConnected } = this.props
+    const { actions, isConnected, isRecording } = this.props
 
     let style = {}
 
@@ -145,24 +147,34 @@ class Header extends React.Component {
       style.borderTopWidth = 2
     }
 
+    let showRecordingHeader = null
+    if (isRecording) {
+      showRecordingHeader = (
+        <RecordHeader />
+      )
+    }
     return (
-      <HeaderWrapper style={style}>
-        <HeaderRow>
-          {
-            this.props.back
-              ? this.renderBack()
-              : this.renderMenu()
-          }
-          { this.renderTitle() }
-          { actions && this.renderActions() }
-        </HeaderRow>
-      </HeaderWrapper>
+      <Container>
+        <HeaderWrapper style={style}>
+          <HeaderRow>
+            {
+              this.props.back
+                ? this.renderBack()
+                : this.renderMenu()
+            }
+            { this.renderTitle() }
+            { actions && this.renderActions() }
+          </HeaderRow>
+        </HeaderWrapper>
+        { showRecordingHeader }
+      </Container>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  isConnected: state.network.isConnected
+  isConnected: state.network.isConnected,
+  isRecording: !!state.currentTrace // FIXME: change this to actual state attrubute
 })
 
 const mapDispatchToProps = {
