@@ -150,7 +150,7 @@ class Header extends React.Component {
     let showRecordingHeader = null
     if (isRecording) {
       showRecordingHeader = (
-        <RecordHeader />
+        <RecordHeader paused={false} pause={() => { console.log('pause pressed') }} stop={() => { console.log('stop pressed') }} />
       )
     }
     return (
