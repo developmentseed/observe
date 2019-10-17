@@ -5,65 +5,48 @@ import turfLength from '@turf/length'
  */
 export function getNewTrace () {
   return {
-    points: []
+    type: 'Feature',
+    properties: {
+      timestamps: [],
+      accuracies: []
+    },
+    geometry: {
+      type: 'LineString',
+      coordinates: []
+    }
   }
 }
 
 /**
- * Returns a trace point object to store in the state
+ * Takes a point emitted by the location watcher and the current GeoJSON
+ * And returns a new GeoJSON object with the point added
  * @param {Object} location - location object returned from expo watchCurrentPosition
+ * @param {Object<GeoJSON Feature>} currentTrace - current trace geojson
  */
-export function getPoint (location) {
-  return { ...location.coords }
-}
-
-/**
- *
- * @param {Object} trace - trace object
- * @returns {Object} - TraceJSON representation of trace
- * @example
- * const trace = {
- *   'description': 'some trace',
- *   'points': [
- *     {
- *       'latitude': 1.0,
- *       'longitude': 1.0,
- *       'timestamp': 100
- *     },
- *     {
- *       'latitude': 2.0,
- *       'longitude': 2.0,
- *       'timestamp': 200
- *     }
- *   ]
- * }
- * toTraceJSON(trace)
- * {
- *   type: 'Feature',
- *   properties: {
- *     timestamps: [
- *       100, 200
- *     ],
- *     description: 'some trace'
- *   },
- *   coordinates: [
- *     [1.0,1.0],
- *     [2.0,2.0]
- *   ]
- * }
- */
-export function toTraceJSON (trace) {
-  const timestamps = trace.points.map(t => t.timestamp)
-  const coordinates = trace.points.map(t => [t.longitude, t.latitude])
+export function getPoint (location, currentTrace) {
+  const obj = location.coords
   return {
-    type: 'Feature',
+    ...currentTrace,
     properties: {
-      timestamps,
-      description: trace.description
+      ...currentTrace.properties,
+      timestamps: [
+        ...currentTrace.properties.timestamps,
+        obj.timestamp
+      ],
+      accuracies: [
+        ...currentTrace.properties.accuracies,
+        obj.accuracy
+      ]
     },
     geometry: {
-      type: 'LineString',
-      coordinates
+      ...currentTrace.geometry,
+      coordinates: [
+        ...currentTrace.geometry.coordinates,
+        [
+          obj.longitude,
+          obj.latitude
+        ]
+      ]
     }
   }
 }

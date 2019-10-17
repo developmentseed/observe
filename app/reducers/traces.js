@@ -25,43 +25,43 @@ export default function (state = initialState, action) {
     case types.PAUSED_TRACE: {
       return {
         ...state,
-        currentTrace: {
-          ...state.currentTrace,
-          paused: true
-        }
+        paused: true
       }
     }
 
     case types.UNPAUSED_TRACE: {
       return {
         ...state,
-        currentTrace: {
-          ...state.currentTrace,
-          paused: false
-        }
+        paused: false
       }
     }
 
     case types.TRACE_POINT_CAPTURED: {
       // if the current trace is paused, do nothing, don't add point.
-      if (state.currentTrace.paused) {
+      if (state.paused) {
         return state
       }
-      const point = getPoint(action.location)
       return {
         ...state,
-        currentTrace: {
-          points: [...state.currentTrace.points, point]
-        }
+        currentTrace: getPoint(action.location, state.currentTrace)
       }
     }
+
     case types.ENDED_TRACE: {
+      const traceId = getRandomId()
       const newTrace = {
-        points: [...state.currentTrace.points],
-        id: getRandomId(),
-        description: action.description,
-        pending: true
+        id: traceId,
+        pending: true,
+        geojson: {
+          ...state.currentTrace,
+          properties: {
+            ...state.currentTrace.properties,
+            id: traceId,
+            description: action.description
+          }
+        }
       }
+
       console.log('new trace', newTrace)
       return {
         ...state,
@@ -73,7 +73,7 @@ export default function (state = initialState, action) {
     case types.SET_TRACE_SUBSCRIPTION: {
       return {
         ...state,
-        watcher: action.data
+        watcher: action.watcher
       }
     }
   }

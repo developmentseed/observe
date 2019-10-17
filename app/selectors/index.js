@@ -8,7 +8,6 @@ import { featureCollection } from '@turf/helpers'
 import { addIconUrl } from '../utils/add-icon-url'
 import { bboxToTiles } from '../utils/bbox'
 import {
-  toTraceJSON,
   getTraceLength
 } from '../utils/traces'
 import cache from '../utils/data-cache'
@@ -155,16 +154,12 @@ export const getPendingEviction = state => state.map.pendingEviction
 
 export const getIsTracing = state => !!state.traces.currentTrace
 
-export const getCurrentTraceGeoJSON = state => {
-  const currentTrace = state.traces.currentTrace
-  if (!currentTrace) return false
-  return toTraceJSON(currentTrace)
-}
+export const getCurrentTraceGeoJSON = state => state.currentTrace
 
 export const getCurrentTraceLength = state => {
   const currentTrace = state.traces.currentTrace
-  if (!currentTrace) return 0
-  return getTraceLength(toTraceJSON(currentTrace))
+  if (!currentTrace || currentTrace.geometry.coordinates.length < 2) return 0
+  return getTraceLength(currentTrace)
 }
 
 /**
@@ -173,8 +168,8 @@ export const getCurrentTraceLength = state => {
  * @returns {String} - one of 'recording', 'paused', 'none'
  */
 export const getCurrentTraceStatus = state => {
-  const currentTrace = state.traces.currentTrace
+  const { currentTrace, paused } = state.traces
   if (!currentTrace) return 'none'
-  if (currentTrace.paused) return 'paused'
+  if (paused) return 'paused'
   return 'recording'
 }
