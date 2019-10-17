@@ -7,6 +7,10 @@ import { featureCollection } from '@turf/helpers'
 
 import { addIconUrl } from '../utils/add-icon-url'
 import { bboxToTiles } from '../utils/bbox'
+import {
+  toTraceJSON,
+  getTraceLength
+} from '../utils/traces'
 import cache from '../utils/data-cache'
 import { filterTags } from '../utils/filter-tags'
 
@@ -149,4 +153,28 @@ export const getOfflineResourceStatus = createSelector(
 
 export const getPendingEviction = state => state.map.pendingEviction
 
-export const isTracing = state => !!state.traces.currentTrace
+export const getIsTracing = state => !!state.traces.currentTrace
+
+export const getCurrentTraceGeoJSON = state => {
+  const currentTrace = state.traces.currentTrace
+  if (!currentTrace) return false
+  return toTraceJSON(currentTrace)
+}
+
+export const getCurrentTraceLength = state => {
+  const currentTrace = state.traces.currentTrace
+  if (!currentTrace) return 0
+  return getTraceLength(toTraceJSON(currentTrace))
+}
+
+/**
+ *
+ * @param {Object} state
+ * @returns {String} - one of 'recording', 'paused', 'none'
+ */
+export const getCurrentTraceStatus = state => {
+  const currentTrace = state.traces.currentTrace
+  if (!currentTrace) return 'none'
+  if (currentTrace.paused) return 'paused'
+  return 'recording'
+}

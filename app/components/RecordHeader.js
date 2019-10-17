@@ -90,6 +90,7 @@ const StopButton = styled.TouchableOpacity`
 export default class RecordHeader extends React.Component {
   render () {
     const icon = this.props.paused ? 'circle-play' : 'circle-pause'
+    const { distance, onPauseBtnPress, onStopBtnPress } = this.props
     return (
       <HeaderWrapper>
         <RecordingStatus>
@@ -99,14 +100,14 @@ export default class RecordHeader extends React.Component {
         </RecordingStatus>
         <RecordingActions>
           <RecordingDistance>
-            <DistanceText>12</DistanceText>
+            <DistanceText>{ distance }</DistanceText>
             <DistanceUnitText>DISTANCE (km)</DistanceUnitText>
           </RecordingDistance>
           <RecordingButtons>
-            <PauseResumeButton onPress={this.props.pause}>
+            <PauseResumeButton onPress={onPauseBtnPress}>
               <Icon name={icon} color={colors.primary} size={30} />
             </PauseResumeButton>
-            <StopButton onPress={this.props.stop}>
+            <StopButton onPress={onStopBtnPress}>
               <Icon name='circle-stop' color={colors.primary} size={30} />
             </StopButton>
           </RecordingButtons>
