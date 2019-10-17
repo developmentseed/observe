@@ -41,6 +41,7 @@ import ActionButton from '../components/ActionButton'
 import Icon from '../components/Collecticons'
 import { colors } from '../style/variables'
 import { CameraButton } from '../components/CameraButton'
+import { RecordButton } from '../components/RecordButton'
 
 import style from '../style/map'
 import icons from '../assets/icons'
@@ -527,6 +528,7 @@ class Explore extends React.Component {
           <LocateUserButton onPress={() => this.locateUser()} />
           <BasemapModal onChange={this.props.setBasemap} />
           <CameraButton onPress={() => navigation.navigate('CameraScreen')} />
+          <RecordButton onPress={() => console.log('start trace')} />
           {mode !== 'bbox' && this.renderZoomToEdit()}
         </Container>
       </AndroidBackHandler>
