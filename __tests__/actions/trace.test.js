@@ -45,16 +45,15 @@ jest.mock('../../app/services/trace', () => {
 
 const getMockCurrentTrace = function () {
   return {
-    points: [{
-      longitude: 1.0,
-      latitude: 2.0,
-      timestamp: 100
-    }, {
-      longitude: 2.0,
-      latitude: 3.0,
-      timestamp: 200
-    }],
-    paused: false
+    type: 'Feature',
+    properties: {
+      timestamps: [],
+      accuracies: []
+    },
+    geometry: {
+      type: 'LineString',
+      coordinates: []
+    }
   }
 }
 
@@ -70,6 +69,7 @@ describe('test trace actions', () => {
     expect(actions.length).toEqual(6)
     expect(actions).toMatchSnapshot()
   })
+  
   it('should end trace correctly', () => {
     const store = mockStore({
       traces: {
