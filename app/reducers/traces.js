@@ -76,7 +76,8 @@ export default function (state = initialState, action) {
     case types.TRACE_START_SAVING: {
       return {
         ...state,
-        saving: true
+        saving: true,
+        paused: true
       }
     }
 
