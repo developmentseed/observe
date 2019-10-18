@@ -44,9 +44,9 @@ class SaveTrace extends React.Component {
         onPress: () => {
           console.log('save')
           const { endTrace } = this.props
-          const description = '' // FIXME: get description
+          const description = this.state.description
           endTrace(description)
-          // FIXME: navigate away
+          navigation.navigate('Explore')
         }
       },
       {
