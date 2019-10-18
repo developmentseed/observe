@@ -11,10 +11,30 @@ import Container from '../components/Container'
 import PageWrapper from '../components/PageWrapper'
 import { DescriptionInputField } from '../components/Input'
 import { NavigationEvents } from 'react-navigation'
+import { colors } from '../style/variables'
+import { getCurrentTraceLength } from '../selectors'
+import formatDate from '../utils/format-date'
 
 const View = styled.View`
   height: 100;
+  margin-top: 10;
 `
+
+const TraceDetails = styled.View`
+  border-bottom-width: 0.2;
+  border-bottom-color: ${colors.muted};
+`
+const DistanceText = styled.Text`
+  font-size: 24;
+  letter-spacing: 1;
+`
+const TimeText = styled.Text`
+  font-size: 18;
+  letter-spacing: 1;
+  color: ${colors.muted}
+  margin-bottom: 5;
+`
+
 class SaveTrace extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
@@ -28,6 +48,9 @@ class SaveTrace extends React.Component {
 
   onDidFocus = () => {
     this.props.startSavingTrace()
+    this.setState({
+      description: ''
+    })
   }
 
   onDidBlur = () => {
@@ -58,6 +81,8 @@ class SaveTrace extends React.Component {
       }
     ]
 
+    console.log(this.props.currentTrace)
+
     return (
       <>
         <NavigationEvents
@@ -67,6 +92,14 @@ class SaveTrace extends React.Component {
         <Container>
           <Header back title={title} navigation={navigation} actions={headerActions} />
           <PageWrapper>
+            <TraceDetails>
+              <DistanceText>
+                {Math.floor(this.props.currentTraceLength)} km
+              </DistanceText>
+              <TimeText>
+                {formatDate(this.props.currentTrace.properties.timestamps[0])}
+              </TimeText>
+            </TraceDetails>
             <View>
               <DescriptionInputField value={this.state.description} onValueChange={(value) => this.setState({
                 description: value
@@ -79,7 +112,10 @@ class SaveTrace extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({})
+const mapStateToProps = state => ({
+  currentTrace: state.traces.currentTrace,
+  currentTraceLength: getCurrentTraceLength(state)
+})
 
 const mapDispatchToProps = {
   endTrace,

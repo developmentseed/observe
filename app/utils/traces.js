@@ -31,7 +31,7 @@ export function getPoint (location, currentTrace) {
       ...currentTrace.properties,
       timestamps: [
         ...currentTrace.properties.timestamps,
-        obj.timestamp
+        location.timestamp
       ],
       accuracies: [
         ...currentTrace.properties.accuracies,
