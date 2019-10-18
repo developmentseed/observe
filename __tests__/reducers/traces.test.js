@@ -200,6 +200,7 @@ describe('test for traces reducer', () => {
     }
     const newState = reducer(state, action)
     expect(newState.saving).toEqual(true)
+    expect(newState.paused).toEqual(true)
   })
 
   it('tests that TRACE_DISCARD correctly discards a trace', () => {
