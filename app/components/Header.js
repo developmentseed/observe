@@ -3,15 +3,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components/native'
 import getPlatformStyles from '../utils/get-platform-styles'
-
 import Icon from './Collecticons'
-
 import { unsetNotification } from '../actions/notification'
+import ConfirmDialog from './ConfirmDialog'
 
 import {
   pauseTrace,
-  unpauseTrace,
-  startSavingTrace
+  unpauseTrace
 } from '../actions/traces'
 
 import { colors } from '../style/variables'
@@ -77,6 +75,10 @@ const HeaderActions = styled.View`
 `
 
 class Header extends React.Component {
+  state = {
+    dialogVisible: false
+  }
+
   renderTitle () {
     if (this.props.title) {
       return (
@@ -125,6 +127,15 @@ class Header extends React.Component {
     }
   }
 
+  cancelDialog = () => {
+    this.setState({ dialogVisible: false })
+  }
+
+  saveTrace = () => {
+    this.cancelDialog()
+    this.props.navigation.navigate('SaveTrace')
+  }
+
   renderMenu () {
     return (
       <HeaderIcon onPress={() => this.onMenuPress()}>
@@ -168,8 +179,7 @@ class Header extends React.Component {
       isConnected,
       isRecording,
       currentTraceLength,
-      currentTraceStatus,
-      navigation
+      currentTraceStatus
     } = this.props
 
     let style = {}
@@ -184,7 +194,7 @@ class Header extends React.Component {
         <RecordHeader
           paused={currentTraceStatus === 'paused'}
           distance={currentTraceLength}
-          onStopBtnPress={() => { navigation.navigate('SaveTrace') }}
+          onStopBtnPress={() => { this.setState({ dialogVisible: true }) }}
           onPauseBtnPress={this.onPauseBtnPress}
         />
       )
@@ -203,6 +213,7 @@ class Header extends React.Component {
           </HeaderRow>
         </HeaderWrapper>
         { showRecordingHeader }
+        <ConfirmDialog title='Stop recording and save?' description='Stop GPS logging and save the current track' visible={this.state.dialogVisible} cancel={this.cancelDialog} continue={this.saveTrace} />
       </Container>
     )
   }
