@@ -3,11 +3,14 @@ import { connect } from 'react-redux'
 import Header from '../components/Header'
 import styled from 'styled-components/native'
 import {
-  endTrace
+  endTrace,
+  startSavingTrace,
+  stopSavingTrace
 } from '../actions/traces'
 import Container from '../components/Container'
 import PageWrapper from '../components/PageWrapper'
 import { DescriptionInputField } from '../components/Input'
+import { NavigationEvents } from 'react-navigation'
 
 const View = styled.View`
   height: 100;
@@ -21,6 +24,14 @@ class SaveTrace extends React.Component {
 
   state = {
     description: ''
+  }
+
+  onDidFocus = () => {
+    this.props.startSavingTrace()
+  }
+
+  onDidBlur = () => {
+    this.props.stopSavingTrace()
   }
 
   render () {
@@ -48,16 +59,22 @@ class SaveTrace extends React.Component {
     ]
 
     return (
-      <Container>
-        <Header back title={title} navigation={navigation} actions={headerActions} />
-        <PageWrapper>
-          <View>
-            <DescriptionInputField value={this.state.description} onValueChange={(value) => this.setState({
-              description: value
-            })} />
-          </View>
-        </PageWrapper>
-      </Container>
+      <>
+        <NavigationEvents
+          onDidFocus={this.onDidFocus}
+          onDidBlur={this.onDidBlur}
+        />
+        <Container>
+          <Header back title={title} navigation={navigation} actions={headerActions} />
+          <PageWrapper>
+            <View>
+              <DescriptionInputField value={this.state.description} onValueChange={(value) => this.setState({
+                description: value
+              })} />
+            </View>
+          </PageWrapper>
+        </Container>
+      </>
     )
   }
 }
@@ -65,7 +82,9 @@ class SaveTrace extends React.Component {
 const mapStateToProps = state => ({})
 
 const mapDispatchToProps = {
-  endTrace
+  endTrace,
+  startSavingTrace,
+  stopSavingTrace
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SaveTrace)

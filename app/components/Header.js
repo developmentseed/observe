@@ -10,15 +10,16 @@ import { unsetNotification } from '../actions/notification'
 
 import {
   pauseTrace,
-  unpauseTrace
+  unpauseTrace,
+  startSavingTrace
 } from '../actions/traces'
 
 import { colors } from '../style/variables'
 import RecordHeader from '../components/RecordHeader'
 import {
   getCurrentTraceLength,
-  getIsTracing,
-  getCurrentTraceStatus
+  getCurrentTraceStatus,
+  showRecordingHeader
 } from '../selectors'
 
 const win = Dimensions.get('window')
@@ -209,7 +210,7 @@ class Header extends React.Component {
 
 const mapStateToProps = state => ({
   isConnected: state.network.isConnected,
-  isRecording: getIsTracing(state),
+  isRecording: showRecordingHeader(state),
   currentTraceStatus: getCurrentTraceStatus(state),
   currentTraceLength: getCurrentTraceLength(state)
 })

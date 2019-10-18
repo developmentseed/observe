@@ -81,6 +81,13 @@ export default function (state = initialState, action) {
       }
     }
 
+    case types.TRACE_STOP_SAVING: {
+      return {
+        ...state,
+        saving: false
+      }
+    }
+
     case types.TRACE_DISCARD: {
       return {
         ...state,

@@ -173,3 +173,9 @@ export const getCurrentTraceStatus = state => {
   if (paused) return 'paused'
   return 'recording'
 }
+
+export const showRecordingHeader = state => {
+  const { currentTrace, saving } = state.traces
+  if (saving) return false
+  if (currentTrace) return true
+}
