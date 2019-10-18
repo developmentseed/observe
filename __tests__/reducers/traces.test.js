@@ -6,7 +6,8 @@ const initialState = {
   currentTrace: null,
   watcher: null,
   traces: [],
-  paused: false
+  paused: false,
+  saving: false
 }
 
 const getMockCurrentTrace = function () {
@@ -46,7 +47,8 @@ describe('test for traces reducer', () => {
         }
       },
       traces: [],
-      paused: false
+      paused: false,
+      saving: false
     })
   })
 
@@ -178,6 +180,7 @@ describe('test for traces reducer', () => {
       currentTrace: null,
       watcher: null,
       paused: false,
+      saving: false,
       traces: [
         {
           id: 'observe-hauptbanhof',
@@ -186,5 +189,32 @@ describe('test for traces reducer', () => {
         }
       ]
     })
+  })
+
+  it('tests that TRACE_START_SAVING sets saving to true', () => {
+    const state = {
+      ...initialState
+    }
+    const action = {
+      type: 'TRACE_START_SAVING'
+    }
+    const newState = reducer(state, action)
+    expect(newState.saving).toEqual(true)
+  })
+
+  it('tests that TRACE_DISCARD correctly discards a trace', () => {
+    const state = {
+      ...initialState,
+      currentState: getMockCurrentTrace(),
+      paused: true,
+      saving: true
+    }
+    const action = {
+      type: 'TRACE_DISCARD'
+    }
+    const newState = reducer(state, action)
+    expect(newState.currentTrace).toEqual(null)
+    expect(newState.paused).toEqual(false)
+    expect(newState.saving).toEqual(false)
   })
 })

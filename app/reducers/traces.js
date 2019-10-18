@@ -10,6 +10,7 @@ const initialState = {
   currentTrace: null,
   watcher: null,
   paused: false,
+  saving: false,
   traces: []
 }
 
@@ -67,9 +68,28 @@ export default function (state = initialState, action) {
         ...state,
         currentTrace: null,
         watcher: null,
+        saving: false,
         traces: [...state.traces, newTrace]
       }
     }
+
+    case types.TRACE_START_SAVING: {
+      return {
+        ...state,
+        saving: true
+      }
+    }
+
+    case types.TRACE_DISCARD: {
+      return {
+        ...state,
+        currentTrace: null,
+        watcher: null,
+        saving: false,
+        paused: false
+      }
+    }
+
     case types.TRACE_SET_SUBSCRIPTION: {
       return {
         ...state,

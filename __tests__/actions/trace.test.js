@@ -6,7 +6,9 @@ import {
   startTrace,
   endTrace,
   pauseTrace,
-  unpauseTrace
+  unpauseTrace,
+  startSavingTrace,
+  discardTrace
 } from '../../app/actions/traces'
 const middlewares = [thunk]
 const mockStore = configureStore(middlewares)
@@ -101,5 +103,23 @@ describe('test trace actions', () => {
     store.dispatch(unpauseTrace())
     const actions = store.getActions()
     expect(actions[0].type).toEqual('TRACE_UNPAUSE')
+  })
+  it('should start saving trace', () => {
+    const store = mockStore({})
+    store.dispatch(startSavingTrace())
+    const actions = store.getActions()
+    expect(actions[0].type).toEqual('TRACE_START_SAVING')
+  })
+  it('should discard trace', () => {
+    const store = mockStore({
+      traces: {
+        watcher: {
+          remove: jest.fn()
+        }
+      }
+    })
+    store.dispatch(discardTrace())
+    const actions = store.getActions()
+    expect(actions[0].type).toEqual('TRACE_DISCARD')
   })
 })
