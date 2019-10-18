@@ -1,23 +1,26 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Header from '../components/Header'
-import getPlatformStyles from '../utils/get-platform-styles'
-import Icon from '../components/Collecticons'
-import { colors } from '../style/variables'
+import styled from 'styled-components/native'
 import {
   endTrace
 } from '../actions/traces'
-import { Dimensions } from 'react-native'
 import Container from '../components/Container'
 import PageWrapper from '../components/PageWrapper'
+import { DescriptionInputField } from '../components/Input'
 
-const win = Dimensions.get('window')
-
+const View = styled.View`
+  height: 100;
+`
 class SaveTrace extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: 'Save GPX Track'
     }
+  }
+
+  state = {
+    description: ''
   }
 
   render () {
@@ -47,7 +50,13 @@ class SaveTrace extends React.Component {
     return (
       <Container>
         <Header back title={title} navigation={navigation} actions={headerActions} />
-        <PageWrapper />
+        <PageWrapper>
+          <View>
+            <DescriptionInputField value={this.state.description} onValueChange={(value) => this.setState({
+              description: value
+            })} />
+          </View>
+        </PageWrapper>
       </Container>
     )
   }
