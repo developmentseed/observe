@@ -5,7 +5,8 @@ import styled from 'styled-components/native'
 import {
   endTrace,
   startSavingTrace,
-  stopSavingTrace
+  stopSavingTrace,
+  discardTrace
 } from '../actions/traces'
 import Container from '../components/Container'
 import PageWrapper from '../components/PageWrapper'
@@ -14,6 +15,7 @@ import { NavigationEvents } from 'react-navigation'
 import { colors } from '../style/variables'
 import { getCurrentTraceLength } from '../selectors'
 import formatDate from '../utils/format-date'
+import ConfirmDialog from '../components/ConfirmDialog'
 
 const View = styled.View`
   height: 100;
@@ -43,7 +45,8 @@ class SaveTrace extends React.Component {
   }
 
   state = {
-    description: ''
+    description: '',
+    dialogVisible: false
   }
 
   onDidFocus = () => {
@@ -57,8 +60,19 @@ class SaveTrace extends React.Component {
     this.props.stopSavingTrace()
   }
 
+  cancelDialog = () => {
+    this.setState({ dialogVisible: false })
+  }
+
+  confirmDiscardTrace = () => {
+    const { navigation, discardTrace } = this.props
+    discardTrace()
+    navigation.navigate('Explore')
+    this.cancelDialog()
+  }
+
   render () {
-    const { navigation } = this.props
+    const { navigation, endTrace } = this.props
     const title = 'Save GPX Track'
 
     const headerActions = [
@@ -66,7 +80,6 @@ class SaveTrace extends React.Component {
         name: 'tick',
         onPress: () => {
           console.log('save')
-          const { endTrace } = this.props
           const description = this.state.description
           endTrace(description)
           navigation.navigate('Explore')
@@ -76,39 +89,42 @@ class SaveTrace extends React.Component {
         name: 'trash-bin',
         onPress: () => {
           console.log('remove trace')
-          // FIXME: we need to add an action to cancel trace
+          this.setState({ dialogVisible: true })
         }
       }
     ]
 
-    console.log(this.props.currentTrace)
-
-    return (
-      <>
-        <NavigationEvents
-          onDidFocus={this.onDidFocus}
-          onDidBlur={this.onDidBlur}
-        />
-        <Container>
-          <Header back title={title} navigation={navigation} actions={headerActions} />
-          <PageWrapper>
-            <TraceDetails>
-              <DistanceText>
-                {Math.floor(this.props.currentTraceLength)} km
-              </DistanceText>
-              <TimeText>
-                {formatDate(this.props.currentTrace.properties.timestamps[0])}
-              </TimeText>
-            </TraceDetails>
-            <View>
-              <DescriptionInputField value={this.state.description} onValueChange={(value) => this.setState({
-                description: value
-              })} />
-            </View>
-          </PageWrapper>
-        </Container>
-      </>
-    )
+    if (this.props.currentTrace) {
+      return (
+        <>
+          <NavigationEvents
+            onDidFocus={this.onDidFocus}
+            onDidBlur={this.onDidBlur}
+          />
+          <Container>
+            <Header back title={title} navigation={navigation} actions={headerActions} />
+            <PageWrapper>
+              <TraceDetails>
+                <DistanceText>
+                  {Math.floor(this.props.currentTraceLength)} km
+                </DistanceText>
+                <TimeText>
+                  {formatDate(this.props.currentTrace.properties.timestamps[0])}
+                </TimeText>
+              </TraceDetails>
+              <View>
+                <DescriptionInputField value={this.state.description} onValueChange={(value) => this.setState({
+                  description: value
+                })} />
+              </View>
+            </PageWrapper>
+            <ConfirmDialog title='Discard track?' description='Are you sure you want to discard this track? This cannot be undone.' visible={this.state.dialogVisible} cancel={this.cancelDialog} continue={this.confirmDiscardTrace} />
+          </Container>
+        </>
+      )
+    } else {
+      return null
+    }
   }
 }
 
@@ -120,7 +136,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   endTrace,
   startSavingTrace,
-  stopSavingTrace
+  stopSavingTrace,
+  discardTrace
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SaveTrace)
