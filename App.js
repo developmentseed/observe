@@ -23,8 +23,9 @@ import AuthorizationManager from './app/components/AuthorizationManager'
 import Drawer from './app/components/Drawer'
 import Notification from './app/components/Notification'
 import UploadManager from './app/components/UploadManager'
-import GPSTracker from './app/components/GPSTracker'
 import CameraScreen from './app/screens/CameraScreen'
+import SaveTrace from './app/screens/SaveTrace'
+
 import { preAuth } from './app/services/auth'
 import { ReduxNetworkProvider } from 'react-native-offline'
 import Icon from './app/components/Collecticons'
@@ -83,7 +84,8 @@ const AppNavigator = createDrawerNavigator({
   AddFeatureDetail: { screen: AddFeatureDetail },
   EditFeatureDetail: { screen: EditFeatureDetail },
   SelectFeatureType: { screen: SelectFeatureType },
-  CameraScreen: { screen: CameraScreen }
+  CameraScreen: { screen: CameraScreen },
+  SaveTrace: { screen: SaveTrace }
 }, {
   initialRouteName: 'Explore',
   contentComponent: Drawer,
@@ -146,7 +148,6 @@ export default class App extends Component {
             <Notification />
             <AuthorizationManager />
             <UploadManager />
-            <GPSTracker />
           </ReduxNetworkProvider>
         </PersistGate>
       </Provider>

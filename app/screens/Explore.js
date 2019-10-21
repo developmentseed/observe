@@ -27,6 +27,13 @@ import {
   setNotification
 } from '../actions/notification'
 
+import {
+  startTrace,
+  pauseTrace,
+  unpauseTrace,
+  endTrace
+} from '../actions/traces'
+
 import Header from '../components/Header'
 import MapOverlay from '../components/MapOverlay'
 import AddPointOverlay from '../components/AddPointOverlay'
@@ -35,12 +42,22 @@ import ZoomToEdit from '../components/ZoomToEdit'
 import getRandomId from '../utils/get-random-id'
 import LocateUserButton from '../components/LocateUserButton'
 import getUserLocation from '../utils/get-user-location'
-import { getVisibleBounds, getVisibleFeatures, getZoom, isLoadingData } from '../selectors'
+import {
+  getVisibleBounds,
+  getVisibleFeatures,
+  getZoom,
+  isLoadingData,
+  getIsTracing,
+  getCurrentTraceGeoJSON,
+  getCurrentTraceLength,
+  getCurrentTraceStatus
+} from '../selectors'
 import BasemapModal from '../components/BasemapModal'
 import ActionButton from '../components/ActionButton'
 import Icon from '../components/Collecticons'
 import { colors } from '../style/variables'
 import { CameraButton } from '../components/CameraButton'
+import { RecordButton } from '../components/RecordButton'
 
 import style from '../style/map'
 import icons from '../assets/icons'
@@ -289,8 +306,32 @@ class Explore extends React.Component {
     }
   }
 
+  onRecordPress = () => {
+    const { currentTraceStatus, startTrace, pauseTrace, unpauseTrace } = this.props
+    switch (currentTraceStatus) {
+      case 'none':
+        startTrace()
+        break
+      case 'paused':
+        unpauseTrace()
+        break
+      case 'recording':
+        pauseTrace()
+        break
+      default:
+        console.error('invalid current trace status')
+    }
+  }
+
   render () {
-    const { navigation, geojson, selectedFeatures, editsGeojson, mode } = this.props
+    const {
+      navigation,
+      geojson,
+      selectedFeatures,
+      editsGeojson,
+      mode,
+      currentTraceStatus
+    } = this.props
     let selectedFeatureIds = null
 
     if (selectedFeatures && selectedFeatures.length) {
@@ -527,6 +568,7 @@ class Explore extends React.Component {
           <LocateUserButton onPress={() => this.locateUser()} />
           <BasemapModal onChange={this.props.setBasemap} />
           <CameraButton onPress={() => navigation.navigate('CameraScreen')} />
+          <RecordButton status={currentTraceStatus} onPress={() => this.onRecordPress()} />
           {mode !== 'bbox' && this.renderZoomToEdit()}
         </Container>
       </AndroidBackHandler>
@@ -536,6 +578,10 @@ class Explore extends React.Component {
 
 const mapStateToProps = state => ({
   geojson: getVisibleFeatures(state),
+  isTracing: getIsTracing(state),
+  currentTrace: getCurrentTraceGeoJSON(state),
+  currentTraceLength: getCurrentTraceLength(state),
+  currentTraceStatus: getCurrentTraceStatus(state),
   isConnected: state.network.isConnected,
   selectedFeatures: state.map.selectedFeatures || false,
   mode: state.map.mode,
@@ -558,7 +604,11 @@ const mapDispatchToProps = {
   updateVisibleBounds,
   uploadEdits,
   setBasemap,
-  setNotification
+  setNotification,
+  startTrace,
+  endTrace,
+  pauseTrace,
+  unpauseTrace
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Explore)

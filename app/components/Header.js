@@ -3,14 +3,25 @@ import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components/native'
 import getPlatformStyles from '../utils/get-platform-styles'
-
 import Icon from './Collecticons'
-
 import { unsetNotification } from '../actions/notification'
+import ConfirmDialog from './ConfirmDialog'
+
+import {
+  pauseTrace,
+  unpauseTrace
+} from '../actions/traces'
 
 import { colors } from '../style/variables'
+import RecordHeader from '../components/RecordHeader'
+import {
+  getCurrentTraceLength,
+  getCurrentTraceStatus,
+  showRecordingHeader
+} from '../selectors'
 
 const win = Dimensions.get('window')
+const Container = styled.View``
 
 const headerStyles = getPlatformStyles({
   ios: {
@@ -64,6 +75,10 @@ const HeaderActions = styled.View`
 `
 
 class Header extends React.Component {
+  state = {
+    dialogVisible: false
+  }
+
   renderTitle () {
     if (this.props.title) {
       return (
@@ -97,6 +112,28 @@ class Header extends React.Component {
   onMenuPress () {
     this.props.unsetNotification()
     this.props.navigation.openDrawer()
+  }
+
+  onPauseBtnPress = () => {
+    const {
+      currentTraceStatus,
+      pauseTrace,
+      unpauseTrace
+    } = this.props
+    if (currentTraceStatus === 'paused') {
+      unpauseTrace()
+    } else {
+      pauseTrace()
+    }
+  }
+
+  cancelDialog = () => {
+    this.setState({ dialogVisible: false })
+  }
+
+  saveTrace = () => {
+    this.cancelDialog()
+    this.props.navigation.navigate('SaveTrace')
   }
 
   renderMenu () {
@@ -137,7 +174,13 @@ class Header extends React.Component {
   }
 
   render () {
-    const { actions, isConnected } = this.props
+    const {
+      actions,
+      isConnected,
+      isRecording,
+      currentTraceLength,
+      currentTraceStatus
+    } = this.props
 
     let style = {}
 
@@ -145,28 +188,48 @@ class Header extends React.Component {
       style.borderTopWidth = 2
     }
 
+    let showRecordingHeader = null
+    if (isRecording) {
+      showRecordingHeader = (
+        <RecordHeader
+          paused={currentTraceStatus === 'paused'}
+          distance={currentTraceLength.toFixed(2)}
+          onStopBtnPress={() => { this.setState({ dialogVisible: true }) }}
+          onPauseBtnPress={this.onPauseBtnPress}
+        />
+      )
+    }
     return (
-      <HeaderWrapper style={style}>
-        <HeaderRow>
-          {
-            this.props.back
-              ? this.renderBack()
-              : this.renderMenu()
-          }
-          { this.renderTitle() }
-          { actions && this.renderActions() }
-        </HeaderRow>
-      </HeaderWrapper>
+      <Container>
+        <HeaderWrapper style={style}>
+          <HeaderRow>
+            {
+              this.props.back
+                ? this.renderBack()
+                : this.renderMenu()
+            }
+            { this.renderTitle() }
+            { actions && this.renderActions() }
+          </HeaderRow>
+        </HeaderWrapper>
+        { showRecordingHeader }
+        <ConfirmDialog title='Stop recording and save?' description='Stop GPS logging and save the current track' visible={this.state.dialogVisible} cancel={this.cancelDialog} continue={this.saveTrace} />
+      </Container>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  isConnected: state.network.isConnected
+  isConnected: state.network.isConnected,
+  isRecording: showRecordingHeader(state),
+  currentTraceStatus: getCurrentTraceStatus(state),
+  currentTraceLength: getCurrentTraceLength(state)
 })
 
 const mapDispatchToProps = {
-  unsetNotification
+  unsetNotification,
+  pauseTrace,
+  unpauseTrace
 }
 
 export default connect(
