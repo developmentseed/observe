@@ -101,7 +101,7 @@ export default class RecordHeader extends React.Component {
         <RecordingActions>
           <RecordingDistance>
             <DistanceText>{ distance }</DistanceText>
-            <DistanceUnitText>DISTANCE (km)</DistanceUnitText>
+            <DistanceUnitText>DISTANCE (m)</DistanceUnitText>
           </RecordingDistance>
           <RecordingButtons>
             <PauseResumeButton onPress={onPauseBtnPress}>

@@ -106,7 +106,7 @@ class SaveTrace extends React.Component {
             <PageWrapper>
               <TraceDetails>
                 <DistanceText>
-                  {Math.floor(this.props.currentTraceLength)} km
+                  {this.props.currentTraceLength.toFixed(2)} m
                 </DistanceText>
                 <TimeText>
                   {formatDate(this.props.currentTrace.properties.timestamps[0])}

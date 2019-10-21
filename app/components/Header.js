@@ -193,7 +193,7 @@ class Header extends React.Component {
       showRecordingHeader = (
         <RecordHeader
           paused={currentTraceStatus === 'paused'}
-          distance={currentTraceLength}
+          distance={currentTraceLength.toFixed(2)}
           onStopBtnPress={() => { this.setState({ dialogVisible: true }) }}
           onPauseBtnPress={this.onPauseBtnPress}
         />
