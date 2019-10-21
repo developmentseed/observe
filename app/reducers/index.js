@@ -36,7 +36,14 @@ const editPersistConfig = {
   ]
 }
 
-// TODO: Add Persist config for TracesReducer
+const tracesPersistConfig = {
+  key: 'traces',
+  storage,
+  whitelist: [
+    'currentTrace',
+    'traces'
+  ]
+}
 
 const rootReducer = combineReducers({
   about: AboutReducer,
@@ -48,7 +55,7 @@ const rootReducer = combineReducers({
   network,
   notification: NotificationReducer,
   photos: CameraReducer,
-  traces: TracesReducer
+  traces: persistReducer(tracesPersistConfig, TracesReducer)
 })
 
 export default rootReducer
