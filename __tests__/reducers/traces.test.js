@@ -70,10 +70,10 @@ describe('test for traces reducer', () => {
     const action1 = {
       type: 'TRACE_POINT_CAPTURED',
       location: {
+        timestamp: 100,
         coords: {
           longitude: 1.0,
           latitude: 2.0,
-          timestamp: 100,
           accuracy: 10
         }
       }
@@ -95,10 +95,10 @@ describe('test for traces reducer', () => {
     const action2 = {
       type: 'TRACE_POINT_CAPTURED',
       location: {
+        timestamp: 200,
         coords: {
           longitude: 2.0,
           latitude: 3.0,
-          timestamp: 200,
           accuracy: 20
         }
       }

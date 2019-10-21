@@ -393,6 +393,34 @@ export class ReadOnlyField extends Component {
   }
 }
 
+export class DescriptionInputField extends Component {
+  render () {
+    const { onValueChange, value } = this.props
+
+    return (
+      <View ref={x => (this._root = x)} style={{ flex: 1 }}>
+        <FieldWrapper style={{ borderColor: colors.primary }}>
+          <LabelWrapper>
+            <Label style={{ color: colors.primary, letterSpacing: 0.4 }}>Description</Label>
+          </LabelWrapper>
+
+          <InputWrapper>
+            <TextInput
+              autoCapitalize='none'
+              autoCorrect
+              onChangeText={(value) => onValueChange(value)}
+              placeholder=''
+              placeholderTextColor={colors.baseMuted}
+              underlineColorAndroid='transparent'
+              value={value}
+            />
+          </InputWrapper>
+        </FieldWrapper>
+      </View>
+    )
+  }
+}
+
 export const getFieldInput = type => {
   if (!type) return TextField
 

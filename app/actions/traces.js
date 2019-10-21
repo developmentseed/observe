@@ -46,6 +46,12 @@ export function startSavingTrace () {
   }
 }
 
+export function stopSavingTrace () {
+  return {
+    type: types.TRACE_STOP_SAVING
+  }
+}
+
 export function discardTrace () {
   return (dispatch, getState) => {
     const { watcher } = getState().traces
