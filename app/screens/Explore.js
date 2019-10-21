@@ -330,7 +330,8 @@ class Explore extends React.Component {
       selectedFeatures,
       editsGeojson,
       mode,
-      currentTraceStatus
+      currentTraceStatus,
+      currentTrace
     } = this.props
     let selectedFeatureIds = null
 
@@ -560,6 +561,9 @@ class Explore extends React.Component {
               <MapboxGL.CircleLayer id='editedIconHaloSelected' style={style.iconHaloSelected} minZoomLevel={16} filter={filters.editedIconHaloSelected} />
               <MapboxGL.LineLayer id='editedLines' filter={filters.editedLines} style={style.editedLines} minZoomLevel={16} />
               <MapboxGL.SymbolLayer id='editedPois' style={style.icons} filter={filters.editedPois} />
+            </MapboxGL.ShapeSource>
+            <MapboxGL.ShapeSource id='currentTraceGeojsonSource' shape={currentTrace}>
+              <MapboxGL.LineLayer id='trace' style={style.traces} minZoomLevel={16} />
             </MapboxGL.ShapeSource>
           </StyledMap>
           { overlay }

@@ -154,7 +154,19 @@ export const getPendingEviction = state => state.map.pendingEviction
 
 export const getIsTracing = state => !!state.traces.currentTrace
 
-export const getCurrentTraceGeoJSON = state => state.currentTrace
+export const getCurrentTraceGeoJSON = state => {
+  if (state.traces.currentTrace && state.traces.currentTrace.geometry.coordinates.length > 2) {
+    return {
+      'type': 'FeatureCollection',
+      'features': [ state.traces.currentTrace ]
+    }
+  } else {
+    return {
+      'type': 'FeatureCollection',
+      'features': []
+    }
+  }
+}
 
 export const getCurrentTraceLength = state => {
   const currentTrace = state.traces.currentTrace

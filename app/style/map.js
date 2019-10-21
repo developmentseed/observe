@@ -37,6 +37,16 @@ const editedLines = {
   lineColor: 'blue'
 }
 
+const traces = {
+  lineWidth: [
+    'interpolate', ['linear'],
+    ['zoom'],
+    16, 1,
+    20, 3
+  ],
+  lineColor: 'red'
+}
+
 const highways = {
   lineWidth: standardLineWidth,
   lineColor: [
@@ -170,5 +180,6 @@ export default {
   icons,
   iconEditedHalo,
   editedPolygons,
-  editedLines
+  editedLines,
+  traces
 }
