@@ -100,6 +100,10 @@ const SectionTitle = styled.Text`
   letter-spacing: 1;
   margin-top: 10;
   margin-bottom: 10;
+  padding-left: 10;
+  padding-right: 10;
+  padding-top: 10;
+  padding-bottom: 10;
 `
 const SwitchSection = styled.View`
   flex-direction: row;
@@ -127,7 +131,12 @@ const BasemapItem = styled.TouchableOpacity`
 `
 class BasemapModal extends React.Component {
   state = {
-    modalVisible: false
+    modalVisible: false,
+    overlays: {
+      osm: true,
+      photos: false,
+      traces: false
+    }
   }
 
   onPress = (event) => {
@@ -151,6 +160,10 @@ class BasemapModal extends React.Component {
     }
   }
 
+  toggleOverlay = (layer) => {
+    console.log(layer)
+  }
+
   render () {
     return (
       <Container>
@@ -167,7 +180,7 @@ class BasemapModal extends React.Component {
                 <OverlaySection>
                   <SectionTitle>OVERLAYS</SectionTitle>
                   <SwitchSection>
-                    <Switch />
+                    <Switch onValueChange={() => { this.toggleOverlay('osm') }} />
                     <LayerName>OSM Data</LayerName>
                   </SwitchSection>
                   <SwitchSection>
