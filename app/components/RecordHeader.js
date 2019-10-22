@@ -14,7 +14,7 @@ const headerStyles = getPlatformStyles({
     height: 100
   },
   android: {
-    height: 64,
+    height: 80,
     paddingTop: 0
   }
 })
