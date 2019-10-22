@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components/native'
-import { Dimensions, Switch } from 'react-native'
+import { Dimensions, Switch, findNodeHandle } from 'react-native'
 import Icon from './Collecticons'
-import ModalSelector from 'react-native-modal-selector'
 import Config from 'react-native-config'
+import { colors } from '../style/variables'
 
 const osmLayer = Config.OSM_LAYER_NAME || 'Mapbox Streets'
 const satelliteLayer = Config.SATELLITE_LAYER_NAME || 'Mapbox Satellite'
@@ -28,9 +28,13 @@ const Button = styled.TouchableHighlight`
 `
 
 const CancelButton = styled.TouchableOpacity`
-  margin-top: 2;
+  margin-top: 5;
+  padding-left: 5;
+  padding-right: 5;
+  padding-top: 5;
+  padding-bottom: 5;
   border-radius: 5;
-  background-color: 'rgba(255,255,255,0.8)';
+  background-color: white;
   height: 40;
   justify-content: center;
 `
@@ -52,25 +56,80 @@ const Modal = styled.Modal`
 
 const Container = styled.View``
 
-const Overlay = styled.View`
+const OverlayBackdrop = styled.TouchableWithoutFeedback`
+`
+const OverlayInner = styled.View`
   flex: 1;
   justify-content: center;
-  padding: 5%;
+  padding: 10%;
   background-color: 'rgba(0,0,0,0.7)';
 `
 
 const View = styled.View`
   flex-shrink: 1;
   border-radius: 5;
-  background-color: 'rgba(255,255,255,0.8)';
+  background-color: white;
+  padding-left: 10;
+  padding-right: 10;
+  padding-top: 10;
+  padding-bottom: 10;
 `
-const Text = styled.Text`
+
+const OverlaySection = styled.View`
+  padding-left: 10;
+  padding-right: 10;
+  padding-top: 10;
+  padding-bottom: 10;
+  border-bottom-width: 0.5;
+  border-bottom-color: ${colors.muted};
+`
+
+const BasemapSection = styled.View`
+  padding-left: 10;
+  padding-right: 10;
+  padding-top: 10;
+  padding-bottom: 10;
+`
+
+const SectionTitle = styled.Text`
+  font-size: 14;
+  color: ${colors.muted}
+  letter-spacing: 1;
+  margin-top: 10;
+  margin-bottom: 10;
+`
+const SwitchSection = styled.View`
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+  padding-left: 5;
+  padding-right: 5;
+  padding-top: 5;
+  padding-bottom: 5;
+`
+
+const LayerName = styled.Text`
+  margin-left: 10;
+  font-size: 20;
+`
+
+const BasemapItem = styled.TouchableOpacity`
+  width: ${win.width}
 `
 
 export default class BasemapModal extends React.Component {
   state = {
     modalVisible: false
   }
+
+  onPress = (event) => {
+    // Handler for making sure the modal will be closed if pressed in the backdrop
+    let elementHandle = findNodeHandle(this.refs['overlay'])
+    if (elementHandle === event.nativeEvent.target) {
+      this.setState({ modalVisible: false })
+    }
+  }
+
   render () {
     return (
       <Container>
@@ -81,44 +140,47 @@ export default class BasemapModal extends React.Component {
           transparent
           visible={this.state.modalVisible}
         >
-          <Overlay>
-            <View>
-              <Switch />
-              <Text>Some text</Text>
-              <Text>Some text</Text>
-              <Text>Some text</Text>
-              <Text>Some text</Text>
-            </View>
-            <CancelContainer>
-              <CancelButton>
-                <CancelText>Cancel</CancelText>
+          <OverlayBackdrop ref='overlay' onPress={(event) => { this.onPress(event) }}>
+            <OverlayInner>
+              <View>
+                <OverlaySection>
+                  <SectionTitle>OVERLAYS</SectionTitle>
+                  <SwitchSection>
+                    <Switch />
+                    <LayerName>OSM Data</LayerName>
+                  </SwitchSection>
+                  <SwitchSection>
+                    <Switch />
+                    <LayerName>Your Traces</LayerName>
+                  </SwitchSection>
+                  <SwitchSection>
+                    <Switch />
+                    <LayerName>Your Photos</LayerName>
+                  </SwitchSection>
+                </OverlaySection>
+                <BasemapSection>
+                  <SectionTitle>BASEMAP</SectionTitle>
+                  <SwitchSection>
+                    <BasemapItem onPress={() => { this.props.onChange('default') }}>
+                      <LayerName>{osmLayer}</LayerName>
+                    </BasemapItem>
+                  </SwitchSection>
+                  <SwitchSection>
+                    <BasemapItem onPress={() => { this.props.onChange('satellite') }}>
+                      <LayerName>{satelliteLayer}</LayerName>
+                    </BasemapItem>
+                  </SwitchSection>
+                </BasemapSection>
+              </View>
+            </OverlayInner>
+            {/* <CancelContainer>
+              <CancelButton onPress={() => this.setState({ modalVisible: false })}>
+                <CancelText>Close</CancelText>
               </CancelButton>
-            </CancelContainer>
-          </Overlay>
+            </CancelContainer> */}
+          </OverlayBackdrop>
         </Modal>
       </Container>
     )
   }
-  // render () {
-  //   let index = 0
-  //   // TODO: pick layer names from the json config properly
-  //   const data = [
-  //     { key: index++, section: true, label: 'Select a basemap' },
-  //     { key: index++, label: satelliteLayer, layer: 'satellite' },
-  //     { key: index++, label: osmLayer, layer: 'default' }
-  //   ]
-  //   return (
-  //     <ModalSelector
-  //       style={{ position: 'absolute', right: 16, bottom: 128 }}
-  //       data={data}
-  //       cancelText={'Cancel'}
-  //       ref={selector => { this.selector = selector }}
-  //       onChange={(option) => { this.props.onChange(option.layer) }}
-  //       customSelector={
-  //         <Button underlayColor='#333'>
-  //           <Icon name='iso-stack' size={20} color='#0B3954' onPress={() => this.selector.open()} />
-  //         </Button>
-  //       } />
-  //   )
-  // }
 }
