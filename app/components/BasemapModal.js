@@ -4,9 +4,12 @@ import { Dimensions, Switch, findNodeHandle } from 'react-native'
 import Icon from './Collecticons'
 import Config from 'react-native-config'
 import { colors } from '../style/variables'
+import { connect } from 'react-redux'
 
-const osmLayer = Config.OSM_LAYER_NAME || 'Mapbox Streets'
-const satelliteLayer = Config.SATELLITE_LAYER_NAME || 'Mapbox Satellite'
+const mapLayers = {
+  'default': Config.OSM_LAYER_NAME || 'Mapbox Streets',
+  'satellite': Config.SATELLITE_LAYER_NAME || 'Mapbox Satellite'
+}
 
 const win = Dimensions.get('window')
 
@@ -27,28 +30,28 @@ const Button = styled.TouchableHighlight`
   elevation: 1;
 `
 
-const CancelButton = styled.TouchableOpacity`
-  margin-top: 5;
-  padding-left: 5;
-  padding-right: 5;
-  padding-top: 5;
-  padding-bottom: 5;
-  border-radius: 5;
-  background-color: white;
-  height: 40;
-  justify-content: center;
-`
+// const CancelButton = styled.TouchableOpacity`
+//   margin-top: 5;
+//   padding-left: 5;
+//   padding-right: 5;
+//   padding-top: 5;
+//   padding-bottom: 5;
+//   border-radius: 5;
+//   background-color: white;
+//   height: 40;
+//   justify-content: center;
+// `
 
-const CancelContainer = styled.View`
-  align-self: stretch;
-  justify-content: center;
-  text-align-vertical: center;
-`
+// const CancelContainer = styled.View`
+//   align-self: stretch;
+//   justify-content: center;
+//   text-align-vertical: center;
+// `
 
-const CancelText = styled.Text`
-  text-align: center;
-  color: #333;
-`
+// const CancelText = styled.Text`
+//   text-align: center;
+//   color: #333;
+// `
 
 const Modal = styled.Modal`
   position: absolute;
@@ -113,11 +116,16 @@ const LayerName = styled.Text`
   font-size: 20;
 `
 
+const CurrentLayerName = styled.Text`
+  margin-left: 10;
+  font-size: 20;
+  color: ${colors.primary}
+`
+
 const BasemapItem = styled.TouchableOpacity`
   width: ${win.width}
 `
-
-export default class BasemapModal extends React.Component {
+class BasemapModal extends React.Component {
   state = {
     modalVisible: false
   }
@@ -127,6 +135,19 @@ export default class BasemapModal extends React.Component {
     let elementHandle = findNodeHandle(this.refs['overlay'])
     if (elementHandle === event.nativeEvent.target) {
       this.setState({ modalVisible: false })
+    }
+  }
+
+  getNameStyle = (name) => {
+    const currentBaseLayer = this.props.currentBaseLayer || 'default'
+    if (name === currentBaseLayer) {
+      return (
+        <CurrentLayerName>{mapLayers[name]}</CurrentLayerName>
+      )
+    } else {
+      return (
+        <LayerName>{mapLayers[name]}</LayerName>
+      )
     }
   }
 
@@ -162,12 +183,12 @@ export default class BasemapModal extends React.Component {
                   <SectionTitle>BASEMAP</SectionTitle>
                   <SwitchSection>
                     <BasemapItem onPress={() => { this.props.onChange('default') }}>
-                      <LayerName>{osmLayer}</LayerName>
+                      {this.getNameStyle('default')}
                     </BasemapItem>
                   </SwitchSection>
                   <SwitchSection>
                     <BasemapItem onPress={() => { this.props.onChange('satellite') }}>
-                      <LayerName>{satelliteLayer}</LayerName>
+                      {this.getNameStyle('satellite')}
                     </BasemapItem>
                   </SwitchSection>
                 </BasemapSection>
@@ -184,3 +205,14 @@ export default class BasemapModal extends React.Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+  currentBaseLayer: state.map.baseLayer
+})
+
+const mapDispatchToProps = {}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BasemapModal)
