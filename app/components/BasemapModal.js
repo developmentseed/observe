@@ -66,7 +66,7 @@ const OverlayInner = styled.View`
   flex: 1;
   justify-content: center;
   padding: 10%;
-  background-color: 'rgba(0,0,0,0.7)';
+  background-color: 'rgba(0,0,0,0.2)';
 `
 
 const View = styled.View`
