@@ -50,6 +50,9 @@ async function waitForPreauthorization () {
  * to being able to fetch request tokens.
  */
 export async function preAuth () {
+  const cookies = await CookieManager.getAll()
+  console.log('preAuth cookies', cookies)
+  // await CookieManager.clearAll()
   if (!await checkInternetConnection()) {
     // return early if not connected
     return false
@@ -90,7 +93,13 @@ export async function preAuth () {
       return true
     }
 
-    await Linking.openURL(Config.PREAUTH_URL)
+    try {
+      const cookies = await CookieManager.getAll()
+      console.log('before opening PREAUTH_URL cookies', cookies)
+      await Linking.openURL(Config.PREAUTH_URL)
+    } catch (err) {
+      console.log('error checking PREAUTH_URL', err)
+    }
 
     // TODO MobileSafari on iOS currently doesn't redirect when preauth is
     // involved (perhaps due to the way the redirect is presented?)
@@ -114,6 +123,7 @@ export async function preAuth () {
         query[key]
       )
 
+      console.log('cookie manager setting', `${key}=${query[key]}`)
       await CookieManager.setFromResponse(
         Config.API_URL,
         `${key}=${query[key]}`
@@ -162,6 +172,7 @@ export async function getAdditionalHeaders (url) {
       Config.PREAUTH_URL
     )
 
+    console.log('getAdditionalHeaders headers.Cookie', `${username}=${password}`)
     headers.Cookie = `${username}=${password}`
   }
 
