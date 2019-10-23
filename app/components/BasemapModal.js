@@ -31,29 +31,6 @@ const Button = styled.TouchableHighlight`
   elevation: 1;
 `
 
-// const CancelButton = styled.TouchableOpacity`
-//   margin-top: 5;
-//   padding-left: 5;
-//   padding-right: 5;
-//   padding-top: 5;
-//   padding-bottom: 5;
-//   border-radius: 5;
-//   background-color: white;
-//   height: 40;
-//   justify-content: center;
-// `
-
-// const CancelContainer = styled.View`
-//   align-self: stretch;
-//   justify-content: center;
-//   text-align-vertical: center;
-// `
-
-// const CancelText = styled.Text`
-//   text-align: center;
-//   color: #333;
-// `
-
 const Modal = styled.Modal`
   position: absolute;
 `
@@ -208,11 +185,6 @@ class BasemapModal extends React.Component {
                 </BasemapSection>
               </View>
             </OverlayInner>
-            {/* <CancelContainer>
-              <CancelButton onPress={() => this.setState({ modalVisible: false })}>
-                <CancelText>Close</CancelText>
-              </CancelButton>
-            </CancelContainer> */}
           </OverlayBackdrop>
         </Modal>
       </Container>
