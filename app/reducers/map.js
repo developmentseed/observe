@@ -10,6 +10,11 @@ export const initialState = {
   selectedFeature: false, // GeoJSON feature that is currently selected, or false
   mode: 'explore', // mode can be 'explore', 'add' or 'edit'
   baseLayer: null,
+  overlays: {
+    osm: true,
+    photos: false,
+    traces: false
+  },
   offlineResources: {},
   lru: [],
   // should be used as a set, but needs to be persisted in order to clean up
@@ -480,6 +485,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         baseLayer: action.baseLayer
+      }
+
+    case types.TOGGLE_OVERLAY:
+      return {
+        ...state,
+        overlays: action.overlays
       }
 
     case types.NEW_DATA_AVAILABLE: {

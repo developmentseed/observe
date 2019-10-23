@@ -5,6 +5,7 @@ import Icon from './Collecticons'
 import Config from 'react-native-config'
 import { colors } from '../style/variables'
 import { connect } from 'react-redux'
+import { toggleOverlay } from '../actions/map'
 
 const mapLayers = {
   'default': Config.OSM_LAYER_NAME || 'Mapbox Streets',
@@ -131,12 +132,7 @@ const BasemapItem = styled.TouchableOpacity`
 `
 class BasemapModal extends React.Component {
   state = {
-    modalVisible: false,
-    overlays: {
-      osm: true,
-      photos: false,
-      traces: false
-    }
+    modalVisible: false
   }
 
   onPress = (event) => {
@@ -160,10 +156,6 @@ class BasemapModal extends React.Component {
     }
   }
 
-  toggleOverlay = (layer) => {
-    console.log(layer)
-  }
-
   render () {
     return (
       <Container>
@@ -180,15 +172,24 @@ class BasemapModal extends React.Component {
                 <OverlaySection>
                   <SectionTitle>OVERLAYS</SectionTitle>
                   <SwitchSection>
-                    <Switch onValueChange={() => { this.toggleOverlay('osm') }} />
+                    <Switch
+                      onValueChange={() => { this.props.toggleOverlay('osm') }}
+                      value={this.props.overlays['osm']}
+                    />
                     <LayerName>OSM Data</LayerName>
                   </SwitchSection>
                   <SwitchSection>
-                    <Switch />
+                    <Switch
+                      onValueChange={() => { this.props.toggleOverlay('traces') }}
+                      value={this.props.overlays['traces']}
+                    />
                     <LayerName>Your Traces</LayerName>
                   </SwitchSection>
                   <SwitchSection>
-                    <Switch />
+                    <Switch
+                      onValueChange={() => { this.props.toggleOverlay('photos') }}
+                      value={this.props.overlays['photos']}
+                    />
                     <LayerName>Your Photos</LayerName>
                   </SwitchSection>
                 </OverlaySection>
@@ -220,10 +221,13 @@ class BasemapModal extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  currentBaseLayer: state.map.baseLayer
+  currentBaseLayer: state.map.baseLayer,
+  overlays: state.map.overlays
 })
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+  toggleOverlay
+}
 
 export default connect(
   mapStateToProps,
