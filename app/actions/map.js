@@ -773,13 +773,9 @@ export function setBasemap (baseLayer) {
 }
 
 export function toggleOverlay (layer) {
-  return (dispatch, getState) => {
-    let overlays = getState().map.overlays
-    overlays[layer] = !overlays[layer]
-    dispatch({
-      type: types.TOGGLE_OVERLAY,
-      overlays
-    })
+  return {
+    type: types.TOGGLE_OVERLAY,
+    layer
   }
 }
 

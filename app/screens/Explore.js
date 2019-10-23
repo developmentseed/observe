@@ -494,6 +494,11 @@ class Explore extends React.Component {
       ]
     }
 
+    // set layer visibility
+    Object.keys(style).forEach(key => {
+      style[key].visibility = this.props.overlays['osm'] ? 'visible' : 'none'
+    })
+
     return (
       <AndroidBackHandler onBackPress={() => this.onBackButtonPress()}>
         <NavigationEvents
@@ -594,7 +599,8 @@ const mapStateToProps = state => ({
   loadingData: isLoadingData(state),
   visibleBounds: getVisibleBounds(state),
   zoom: getZoom(state),
-  baseLayer: state.map.baseLayer
+  baseLayer: state.map.baseLayer,
+  overlays: state.map.overlays
 })
 
 const mapDispatchToProps = {

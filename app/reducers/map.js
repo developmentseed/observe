@@ -488,9 +488,11 @@ export default function (state = initialState, action) {
       }
 
     case types.TOGGLE_OVERLAY:
+      let overlays = { ...state.overlays }
+      overlays[action.layer] = !overlays[action.layer]
       return {
         ...state,
-        overlays: action.overlays
+        overlays: overlays
       }
 
     case types.NEW_DATA_AVAILABLE: {
