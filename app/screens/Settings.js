@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components/native'
 
-import { purgeCache, purgeStore } from '../actions/about'
+import { purgeCache, purgeStore, purgeCookies } from '../actions/about'
 import { purgeAllEdits } from '../actions/edit'
 import { startTrace, endTrace } from '../actions/traces'
 import Icon from '../components/Collecticons'
@@ -77,6 +77,13 @@ class Settings extends React.Component {
           </ButtonWrapper>
           <ButtonWrapper>
             <Button
+              onPress={this.props.purgeCookies}
+              title='Delete Cookies'
+              color={colors.primary}
+            />
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <Button
               onPress={this.props.startTrace}
               title='Start Trace'
               color={colors.primary}
@@ -105,6 +112,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   purgeCache,
   purgeStore,
+  purgeCookies,
   purgeAllEdits,
   startTrace,
   endTrace
