@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { AppState } from 'react-native'
+import { AppState, Linking, Platform } from 'react-native'
 import Config from 'react-native-config'
 import { Provider } from 'react-redux'
 
@@ -133,6 +133,16 @@ export default class App extends Component {
 
   componentWillMount () {
     AppState.addEventListener('change', this._handleAppStateChange)
+    if (Platform.OS === 'android') {
+      Linking.getInitialURL().then(url => {
+        console.log('URL', url)
+      });
+    }
+    Linking.addEventListener('url', this.handleOpenURL)
+  }
+
+  handleOpenURL () {
+    console.log('handle open url called', arguments)
   }
 
   componentWillUnmount () {
