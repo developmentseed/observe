@@ -492,7 +492,7 @@ export default function (state = initialState, action) {
       overlays[action.layer] = !overlays[action.layer]
       return {
         ...state,
-        overlays: overlays
+        overlays
       }
 
     case types.NEW_DATA_AVAILABLE: {
