@@ -52,7 +52,7 @@ async function waitForPreauthorization () {
 export async function preAuth () {
   const cookies = await CookieManager.getAll()
   console.log('preAuth cookies', cookies)
-  // await CookieManager.clearAll()
+
   if (!await checkInternetConnection()) {
     // return early if not connected
     return false
