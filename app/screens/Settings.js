@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components/native'
-
+import { Linking } from 'react-native'
+import Config from 'react-native-config'
 import { purgeCache, purgeStore } from '../actions/about'
 import { purgeAllEdits } from '../actions/edit'
 import { startTrace, endTrace } from '../actions/traces'
@@ -46,6 +47,12 @@ class Settings extends React.Component {
     }
   }
 
+  apiLogin = () => {
+    const redirectURL = 'observe://apilogin'
+    const loginURL = `${Config.OBSERVE_API_URL}/login?redirect=${redirectURL}`
+    Linking.openURL(loginURL).catch(e => console.log('error opening url', e))
+  }
+
   render () {
     const { navigation } = this.props
 
@@ -87,6 +94,13 @@ class Settings extends React.Component {
               title='End Trace'
               color={colors.primary}
               disabled={!this.props.currentTrace}
+            />
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <Button
+              onPress={this.apiLogin}
+              title='Login to Observe API'
+              color={colors.primary}
             />
           </ButtonWrapper>
           <Text>
