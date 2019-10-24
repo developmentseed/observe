@@ -50,7 +50,8 @@ import {
   getIsTracing,
   getCurrentTraceGeoJSON,
   getCurrentTraceLength,
-  getCurrentTraceStatus
+  getCurrentTraceStatus,
+  getTracesGeojson
 } from '../selectors'
 import BasemapModal from '../components/BasemapModal'
 import ActionButton from '../components/ActionButton'
@@ -331,7 +332,8 @@ class Explore extends React.Component {
       editsGeojson,
       mode,
       currentTraceStatus,
-      currentTrace
+      currentTrace,
+      tracesGeojson
     } = this.props
     let selectedFeatureIds = null
 
@@ -563,7 +565,10 @@ class Explore extends React.Component {
               <MapboxGL.SymbolLayer id='editedPois' style={style.icons} filter={filters.editedPois} />
             </MapboxGL.ShapeSource>
             <MapboxGL.ShapeSource id='currentTraceGeojsonSource' shape={currentTrace}>
-              <MapboxGL.LineLayer id='trace' style={style.traces} minZoomLevel={16} />
+              <MapboxGL.LineLayer id='currentTrace' style={style.traces} minZoomLevel={16} />
+            </MapboxGL.ShapeSource>
+            <MapboxGL.ShapeSource id='tracesGeojsonSource' shape={tracesGeojson}>
+              <MapboxGL.LineLayer id='traces' style={style.traces} minZoomLevel={16} />
             </MapboxGL.ShapeSource>
           </StyledMap>
           { overlay }
@@ -594,7 +599,8 @@ const mapStateToProps = state => ({
   loadingData: isLoadingData(state),
   visibleBounds: getVisibleBounds(state),
   zoom: getZoom(state),
-  baseLayer: state.map.baseLayer
+  baseLayer: state.map.baseLayer,
+  tracesGeojson: getTracesGeojson(state)
 })
 
 const mapDispatchToProps = {
