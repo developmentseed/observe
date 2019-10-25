@@ -95,6 +95,7 @@ class Header extends React.Component {
       return navigation.navigate(back)
     } else if (typeof back === 'function') {
       // if back was a function, call it
+      console.log('back is a function')
       return back()
     }
 

@@ -40,6 +40,7 @@ const SnapButton = styled.TouchableHighlight`
   shadow-opacity: 0.7;
   shadow-offset: 0px 0px;
 `
+const ImageBackground = styled.ImageBackground``
 
 class CameraScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -50,7 +51,8 @@ class CameraScreen extends React.Component {
   state = {
     hasCameraPermission: null,
     type: Camera.Constants.Type.back,
-    saving: false
+    saving: false,
+    image: null
   }
 
   async componentWillMount () {
@@ -68,10 +70,13 @@ class CameraScreen extends React.Component {
       let { uri, width, height } = await this.camera.takePictureAsync()
       const location = await Location.getCurrentPositionAsync({})
       console.log(uri, width, height, location)
-      this.props.savePhoto(uri, location)
-      this.camera.pausePreview()
+      // this.props.savePhoto(uri, location)
+      // this.camera.pausePreview()
       this.setState({
         saving: false
+      })
+      this.setState({
+        image: uri
       })
       this.camera.resumePreview()
     }
@@ -98,6 +103,17 @@ class CameraScreen extends React.Component {
           <Text>No access to camera</Text>
         </View>
       )
+    } else if (this.state.image) {
+      return (
+        <Container>
+          <Header back={() => this.setState({ image: null })} title='Save picture' navigation={navigation} />
+          <View>
+            <ImageBackground
+              source={{ uri: this.state.image }}
+            />
+          </View>
+        </Container>
+      )
     } else {
       return (
         <Container>
@@ -110,7 +126,7 @@ class CameraScreen extends React.Component {
                 flexDirection: 'row'
               }} >
               <SnapButton onPress={() => { this.snap() }}>
-                <Icon name='target' size={20} color='#0B3954' />
+                <Icon name='camera' size={20} color='#0B3954' />
               </SnapButton>
             </View>
           </Camera>
