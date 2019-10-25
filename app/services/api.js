@@ -80,7 +80,6 @@ export async function getDataForBbox (bbox) {
   }
 
   const data = await response.text()
-  console.log(data)
   const xmlData = XML_PARSER.parseFromString(data, 'text/xml')
   return osmtogeojson(filterRelations(xmlData), { flatProperties: true, wayRefs: true })
 }
@@ -99,7 +98,6 @@ export async function getUserDetails () {
     const response = await fetch(url, { headers })
     const data = await response.text()
 
-    console.log('getUserDetails', data)
     if (data === notPermittedError || data === couldNotAuthError || response.status !== 200) {
       throw new AuthError(undefined, data)
     } else {
