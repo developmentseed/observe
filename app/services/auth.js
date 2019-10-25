@@ -50,9 +50,6 @@ async function waitForPreauthorization () {
  * to being able to fetch request tokens.
  */
 export async function preAuth () {
-  const cookies = await CookieManager.getAll()
-  console.log('preAuth cookies', cookies)
-
   if (!await checkInternetConnection()) {
     // return early if not connected
     return false
@@ -94,8 +91,6 @@ export async function preAuth () {
     }
 
     try {
-      const cookies = await CookieManager.getAll()
-      console.log('before opening PREAUTH_URL cookies', cookies)
       await Linking.openURL(Config.PREAUTH_URL)
     } catch (err) {
       console.log('error checking PREAUTH_URL', err)
@@ -123,7 +118,6 @@ export async function preAuth () {
         query[key]
       )
 
-      console.log('cookie manager setting', `${key}=${query[key]}`)
       await CookieManager.setFromResponse(
         Config.API_URL,
         `${key}=${query[key]}`
@@ -172,7 +166,6 @@ export async function getAdditionalHeaders (url) {
       Config.PREAUTH_URL
     )
 
-    console.log('getAdditionalHeaders headers.Cookie', `${username}=${password}`)
     headers.Cookie = `${username}=${password}`
   }
 

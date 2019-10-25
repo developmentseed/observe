@@ -325,8 +325,7 @@ class Explore extends React.Component {
     }
   }
 
-  renderAuthMessage () {
-    console.log('renderAuthInfo')
+  renderAuthPrompt () {
     return (
       <AuthMessage onPress={async () => {
         await authorize()
@@ -507,7 +506,7 @@ class Explore extends React.Component {
         selectedFeatureIds && selectedFeatureIds.nodes[2].length ? selectedFeatureIds.nodes : ['==', ['get', 'id'], '']
       ]
     }
-console.log('isAuthorized, userDetails', isAuthorized, userDetails)
+
     return (
       <AndroidBackHandler onBackPress={() => this.onBackButtonPress()}>
         <NavigationEvents
@@ -536,8 +535,8 @@ console.log('isAuthorized, userDetails', isAuthorized, userDetails)
             title={this.getTitle()}
           />
           {
-            !userDetails
-              ? this.renderAuthMessage()
+            Config.PREAUTH_URL && !userDetails
+              ? this.renderAuthPrompt()
               : (
                 <StyledMap
                   styleURL={styleURL}
@@ -584,7 +583,7 @@ console.log('isAuthorized, userDetails', isAuthorized, userDetails)
                     <MapboxGL.LineLayer id='trace' style={style.traces} minZoomLevel={16} />
                   </MapboxGL.ShapeSource>
                 </StyledMap>
-              ) 
+              )
           }
           { overlay }
           {/* should hide this entire element when not in loading state */}

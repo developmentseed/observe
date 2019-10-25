@@ -68,7 +68,6 @@ export function initiateAuthorization () {
         message: 'You have signed in'
       }))
     } catch (err) {
-      console.log('Authorization failed:', err)
       dispatch(setNotification({
         level: 'error',
         message: 'There was an error signing in'
