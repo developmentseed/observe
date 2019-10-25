@@ -60,7 +60,6 @@ import { colors } from '../style/variables'
 import { CameraButton } from '../components/CameraButton'
 import { RecordButton } from '../components/RecordButton'
 
-import style from '../style/map'
 import icons from '../assets/icons'
 import { preAuth } from '../services/auth'
 
@@ -333,7 +332,8 @@ class Explore extends React.Component {
       mode,
       currentTraceStatus,
       currentTrace,
-      tracesGeojson
+      tracesGeojson,
+      style
     } = this.props
     let selectedFeatureIds = null
 
@@ -496,12 +496,6 @@ class Explore extends React.Component {
       ]
     }
 
-    // set layer visibility
-    Object.keys(style['osm']).forEach(key => {
-      style.osm[key].visibility = this.props.overlays['osm'] ? 'visible' : 'none'
-    })
-    style.traces.traces.visibility = this.props.overlays['traces'] ? 'visible' : 'none'
-
     return (
       <AndroidBackHandler onBackPress={() => this.onBackButtonPress()}>
         <NavigationEvents
@@ -607,7 +601,8 @@ const mapStateToProps = state => ({
   zoom: getZoom(state),
   baseLayer: state.map.baseLayer,
   tracesGeojson: getTracesGeojson(state),
-  overlays: state.map.overlays
+  overlays: state.map.overlays,
+  style: state.map.style
 })
 
 const mapDispatchToProps = {
