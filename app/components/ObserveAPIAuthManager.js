@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { Linking } from 'react-native'
 import { setObserveAPIToken } from '../actions/observeApi'
 
-
 class ObserveAPIAuthManager extends PureComponent {
   componentDidMount () {
     Linking.addEventListener('url', this.handleOpenURL)
