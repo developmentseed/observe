@@ -316,7 +316,6 @@ class Explore extends React.Component {
       selectedFeatures,
       editsGeojson,
       mode,
-      isAuthorized,
       userDetails
     } = this.props
     let selectedFeatureIds = null
