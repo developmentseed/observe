@@ -165,21 +165,25 @@ const icons = {
 }
 
 export default {
-  nodes,
-  highways,
-  highwaysLower,
-  railwayLine,
-  waterLine,
-  lineHighlight,
-  lineSelect,
-  polygons,
-  buildings,
-  leisure,
-  iconHalo,
-  iconHaloSelected,
-  icons,
-  iconEditedHalo,
-  editedPolygons,
-  editedLines,
-  traces
+  osm: {
+    nodes,
+    highways,
+    highwaysLower,
+    railwayLine,
+    waterLine,
+    lineHighlight,
+    lineSelect,
+    polygons,
+    buildings,
+    leisure,
+    iconHalo,
+    iconHaloSelected,
+    icons,
+    iconEditedHalo,
+    editedPolygons,
+    editedLines
+  },
+  traces: {
+    traces
+  }
 }
