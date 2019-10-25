@@ -772,6 +772,13 @@ export function setBasemap (baseLayer) {
   }
 }
 
+export function toggleOverlay (layer) {
+  return {
+    type: types.TOGGLE_OVERLAY,
+    layer
+  }
+}
+
 export function evictedTile (tile) {
   return {
     type: types.EVICTED_TILE,

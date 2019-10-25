@@ -55,7 +55,8 @@ import {
   getIsTracing,
   getCurrentTraceGeoJSON,
   getCurrentTraceLength,
-  getCurrentTraceStatus
+  getCurrentTraceStatus,
+  getTracesGeojson
 } from '../selectors'
 import BasemapModal from '../components/BasemapModal'
 import ActionButton from '../components/ActionButton'
@@ -64,7 +65,6 @@ import { colors } from '../style/variables'
 import { CameraButton } from '../components/CameraButton'
 import { RecordButton } from '../components/RecordButton'
 
-import style from '../style/map'
 import icons from '../assets/icons'
 import { authorize } from '../services/auth'
 
@@ -343,7 +343,9 @@ class Explore extends React.Component {
       mode,
       currentTraceStatus,
       currentTrace,
-      userDetails
+      userDetails,
+      tracesGeojson,
+      style
     } = this.props
     let selectedFeatureIds = null
 
@@ -560,26 +562,29 @@ class Explore extends React.Component {
                   <MapboxGL.UserLocation />
                   <MapboxGL.Images images={icons} />
                   <MapboxGL.ShapeSource id='geojsonSource' shape={geojson}>
-                    <MapboxGL.LineLayer id='roadsHighlight' filter={filters.allRoads} style={style.lineHighlight} minZoomLevel={16} />
-                    <MapboxGL.LineLayer id='roads' filter={filters.allRoads} style={style.highways} minZoomLevel={16} />
+                    <MapboxGL.LineLayer id='roadsHighlight' filter={filters.allRoads} style={style.osm.lineHighlight} minZoomLevel={16} />
+                    <MapboxGL.LineLayer id='roads' filter={filters.allRoads} style={style.osm.highways} minZoomLevel={16} />
                     <MapboxGL.LineLayer id='railwayLine' filter={filters.railwayLine} minZoomLevel={16} />
-                    <MapboxGL.LineLayer id='waterLine' filter={filters.waterLine} style={style.waterLine} minZoomLevel={16} />
-                    <MapboxGL.FillLayer id='buildings' filter={filters.buildings} style={style.buildings} minZoomLevel={16} />
-                    <MapboxGL.FillLayer id='leisure' filter={filters.leisure} style={style.leisure} minZoomLevel={16} />
-                    <MapboxGL.LineLayer id='featureSelect' filter={filters.featureSelect} style={style.lineSelect} minZoomLevel={16} />
-                    <MapboxGL.CircleLayer id='iconHalo' style={style.iconHalo} minZoomLevel={16} filter={filters.iconHalo} />
-                    <MapboxGL.CircleLayer id='iconHaloSelected' style={style.iconHaloSelected} minZoomLevel={16} filter={filters.iconHaloSelected} />
-                    <MapboxGL.SymbolLayer id='pois' style={style.icons} filter={filters.pois} />
+                    <MapboxGL.LineLayer id='waterLine' filter={filters.waterLine} style={style.osm.waterLine} minZoomLevel={16} />
+                    <MapboxGL.FillLayer id='buildings' filter={filters.buildings} style={style.osm.buildings} minZoomLevel={16} />
+                    <MapboxGL.FillLayer id='leisure' filter={filters.leisure} style={style.osm.leisure} minZoomLevel={16} />
+                    <MapboxGL.LineLayer id='featureSelect' filter={filters.featureSelect} style={style.osm.lineSelect} minZoomLevel={16} />
+                    <MapboxGL.CircleLayer id='iconHalo' style={style.osm.iconHalo} minZoomLevel={16} filter={filters.iconHalo} />
+                    <MapboxGL.CircleLayer id='iconHaloSelected' style={style.osm.iconHaloSelected} minZoomLevel={16} filter={filters.iconHaloSelected} />
+                    <MapboxGL.SymbolLayer id='pois' style={style.osm.icons} filter={filters.pois} />
                   </MapboxGL.ShapeSource>
                   <MapboxGL.ShapeSource id='editGeojsonSource' shape={editsGeojson}>
-                    <MapboxGL.FillLayer id='editedPolygons' filter={filters.editedPolygons} style={style.editedPolygons} minZoomLevel={16} />
-                    <MapboxGL.CircleLayer id='editedIconHalo' style={style.iconEditedHalo} minZoomLevel={16} filter={filters.editedPois} />
-                    <MapboxGL.CircleLayer id='editedIconHaloSelected' style={style.iconHaloSelected} minZoomLevel={16} filter={filters.editedIconHaloSelected} />
-                    <MapboxGL.LineLayer id='editedLines' filter={filters.editedLines} style={style.editedLines} minZoomLevel={16} />
-                    <MapboxGL.SymbolLayer id='editedPois' style={style.icons} filter={filters.editedPois} />
+                    <MapboxGL.FillLayer id='editedPolygons' filter={filters.editedPolygons} style={style.osm.editedPolygons} minZoomLevel={16} />
+                    <MapboxGL.CircleLayer id='editedIconHalo' style={style.osm.iconEditedHalo} minZoomLevel={16} filter={filters.editedPois} />
+                    <MapboxGL.CircleLayer id='editedIconHaloSelected' style={style.osm.iconHaloSelected} minZoomLevel={16} filter={filters.editedIconHaloSelected} />
+                    <MapboxGL.LineLayer id='editedLines' filter={filters.editedLines} style={style.osm.editedLines} minZoomLevel={16} />
+                    <MapboxGL.SymbolLayer id='editedPois' style={style.osm.icons} filter={filters.editedPois} />
+                  </MapboxGL.ShapeSource>
+                  <MapboxGL.ShapeSource id='tracesGeojsonSource' shape={tracesGeojson}>
+                    <MapboxGL.LineLayer id='traces' style={style.traces.traces} minZoomLevel={16} />
                   </MapboxGL.ShapeSource>
                   <MapboxGL.ShapeSource id='currentTraceGeojsonSource' shape={currentTrace}>
-                    <MapboxGL.LineLayer id='trace' style={style.traces} minZoomLevel={16} />
+                    <MapboxGL.LineLayer id='currentTrace' style={style.traces.traces} minZoomLevel={16} />
                   </MapboxGL.ShapeSource>
                 </StyledMap>
               )
@@ -614,7 +619,10 @@ const mapStateToProps = state => ({
   zoom: getZoom(state),
   baseLayer: state.map.baseLayer,
   isAuthorized: state.authorization.isAuthorized,
-  userDetails: state.account.userDetails
+  userDetails: state.account.userDetails,
+  tracesGeojson: getTracesGeojson(state),
+  overlays: state.map.overlays,
+  style: state.map.style
 })
 
 const mapDispatchToProps = {

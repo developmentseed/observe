@@ -191,3 +191,16 @@ export const showRecordingHeader = state => {
   if (saving) return false
   if (currentTrace) return true
 }
+
+export const getTracesGeojson = state => {
+  const traces = state.traces.traces
+  const tracesGeojson = {
+    'type': 'FeatureCollection',
+    'features': []
+  }
+  traces.map(trace => {
+    return tracesGeojson.features.push(trace.geojson)
+  })
+
+  return tracesGeojson
+}

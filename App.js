@@ -23,6 +23,7 @@ import AuthorizationManager from './app/components/AuthorizationManager'
 import Drawer from './app/components/Drawer'
 import Notification from './app/components/Notification'
 import UploadManager from './app/components/UploadManager'
+import ObserveAPIAuthManager from './app/components/ObserveAPIAuthManager'
 import CameraScreen from './app/screens/CameraScreen'
 import SaveTrace from './app/screens/SaveTrace'
 
@@ -147,6 +148,7 @@ export default class App extends Component {
             <AppContainer persistenceKey={persistenceKey} />
             <Notification />
             <AuthorizationManager />
+            <ObserveAPIAuthManager />
             <UploadManager />
           </ReduxNetworkProvider>
         </PersistGate>

@@ -13,6 +13,7 @@ import EditReducer from './edit'
 import NotificationReducer from './notification'
 import CameraReducer from './camera'
 import TracesReducer from './traces'
+import ObserveAPIReducer from './observeApi'
 
 const authorizationPersistConfig = {
   key: 'authorization',
@@ -55,7 +56,8 @@ const rootReducer = combineReducers({
   network,
   notification: NotificationReducer,
   photos: CameraReducer,
-  traces: persistReducer(tracesPersistConfig, TracesReducer)
+  traces: persistReducer(tracesPersistConfig, TracesReducer),
+  observeApi: ObserveAPIReducer
 })
 
 export default rootReducer
