@@ -343,7 +343,6 @@ class Explore extends React.Component {
       mode,
       currentTraceStatus,
       currentTrace,
-      isAuthorized,
       userDetails
     } = this.props
     let selectedFeatureIds = null
