@@ -99,6 +99,7 @@ export async function getUserDetails () {
     const response = await fetch(url, { headers })
     const data = await response.text()
 
+    console.log('getUserDetails', data)
     if (data === notPermittedError || data === couldNotAuthError || response.status !== 200) {
       throw new AuthError(undefined, data)
     } else {

@@ -7722,9 +7722,9 @@ react-native-config@^0.11.7:
   resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-0.11.7.tgz#a2b323f2ecd76a4df88cbb6bc86eaa2ef9febee7"
   integrity sha512-dn5s+zhwLyE25vRT/vaEtLk/j8ZL1UZKvejORNDWakSwpOnLmFurFeaZV83IqkPlfWHXHFdsYe2IRYG1WN4WkQ==
 
-react-native-cookies@developmentseed/react-native-cookies#5cc6702d85efacb2a9580c349a309684a15a9900:
+react-native-cookies@developmentseed/react-native-cookies#3fec1ad:
   version "3.3.0"
-  resolved "https://codeload.github.com/developmentseed/react-native-cookies/tar.gz/5cc6702d85efacb2a9580c349a309684a15a9900"
+  resolved "https://codeload.github.com/developmentseed/react-native-cookies/tar.gz/3fec1ad23e5c3d6829dccdf8ba0db10c97916b9d"
   dependencies:
     invariant "^2.1.0"
 

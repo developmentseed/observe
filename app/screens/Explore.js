@@ -290,6 +290,25 @@ class Explore extends React.Component {
     }
   }
 
+  renderAuthPrompt () {
+    return (
+      <AuthMessage onPress={async () => {
+        await authorize()
+        await this.props.loadUserDetails()
+      }} />
+    )
+  }
+
+  renderAuthMessage () {
+    console.log('renderAuthInfo')
+    return (
+      <AuthMessage onPress={async () => {
+        await authorize()
+        await this.props.loadUserDetails()
+      }} />
+    )
+  }
+
   render () {
     const {
       navigation,
@@ -301,16 +320,6 @@ class Explore extends React.Component {
       userDetails
     } = this.props
     let selectedFeatureIds = null
-
-    renderAuthMessage = () => {
-      console.log('renderAuthInfo')
-      return (
-        <AuthMessage onPress={async () => {
-          await authorize()
-          await this.props.loadUserDetails()
-        }} />
-      )
-    }
 
     if (selectedFeatures && selectedFeatures.length) {
       selectedFeatureIds = {
@@ -470,6 +479,7 @@ class Explore extends React.Component {
         selectedFeatureIds && selectedFeatureIds.nodes[2].length ? selectedFeatureIds.nodes : ['==', ['get', 'id'], '']
       ]
     }
+
     return (
       <AndroidBackHandler onBackPress={() => this.onBackButtonPress()}>
         <NavigationEvents
@@ -498,8 +508,8 @@ class Explore extends React.Component {
             title={this.getTitle()}
           />
           {
-            !userDetails
-              ? this.renderAuthMessage()
+            Config.PREAUTH_URL && !userDetails
+              ? this.renderAuthPrompt()
               : (
                 <StyledMap
                   styleURL={styleURL}
@@ -543,7 +553,7 @@ class Explore extends React.Component {
                     <MapboxGL.SymbolLayer id='editedPois' style={style.icons} filter={filters.editedPois} />
                   </MapboxGL.ShapeSource>
                 </StyledMap>
-              ) 
+              )
           }
           { overlay }
           {/* should hide this entire element when not in loading state */}
