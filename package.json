@@ -34,6 +34,7 @@
     "expo-location": "^7.0.0",
     "expo-permissions": "^7.0.0",
     "fromentries": "^1.1.0",
+    "lodash.clonedeep": "^4.5.0",
     "lodash.difference": "^4.5.0",
     "lodash.find": "^4.6.0",
     "lodash.flatten": "^4.4.0",
