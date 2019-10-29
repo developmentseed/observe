@@ -44,7 +44,8 @@ const traces = {
     16, 1,
     20, 3
   ],
-  lineColor: 'red'
+  lineColor: 'red',
+  visibility: 'none'
 }
 
 const highways = {
@@ -168,7 +169,8 @@ const photoIcon = {
   iconImage: 'maki_attraction',
   iconAllowOverlap: false,
   iconIgnorePlacement: false,
-  iconSize: 0.8
+  iconSize: 0.8,
+  visibility: 'none'
 }
 
 const photoIconHalo = {
@@ -176,7 +178,8 @@ const photoIconHalo = {
   circleColor: 'blue',
   circleOpacity: 0.6,
   circleStrokeColor: 'white',
-  circleStrokeWidth: 0.5
+  circleStrokeWidth: 0.5,
+  visibility: 'none'
 }
 
 export default {

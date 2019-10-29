@@ -492,7 +492,9 @@ export default function (state = initialState, action) {
 
     case types.TOGGLE_OVERLAY:
       let overlays = { ...state.overlays }
+      console.log('overlays before', overlays)
       overlays[action.layer] = !overlays[action.layer]
+      console.log('overlays after', overlays)
       let updatedStyle = _cloneDeep(state.style)
       updatedStyle.traces.traces.visibility = overlays['traces'] ? 'visible' : 'none'
       Object.keys(updatedStyle['osm']).forEach(key => {
