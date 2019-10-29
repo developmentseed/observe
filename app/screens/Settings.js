@@ -6,6 +6,7 @@ import Config from 'react-native-config'
 import { purgeCache, purgeStore, purgeCookies } from '../actions/about'
 import { purgeAllEdits } from '../actions/edit'
 import { startTrace, endTrace } from '../actions/traces'
+import { getProfile } from '../actions/observeApi'
 import Icon from '../components/Collecticons'
 import Header from '../components/Header'
 import PageWrapper from '../components/PageWrapper'
@@ -110,6 +111,13 @@ class Settings extends React.Component {
               color={colors.primary}
             />
           </ButtonWrapper>
+          <ButtonWrapper>
+            <Button
+              onPress={this.props.getProfile}
+              title='Get Observe API Profile'
+              color={colors.primary}
+            />
+          </ButtonWrapper>
           <Text>
             Observe-{version}
           </Text>
@@ -129,7 +137,8 @@ const mapDispatchToProps = {
   purgeCookies,
   purgeAllEdits,
   startTrace,
-  endTrace
+  endTrace,
+  getProfile
 }
 
 export default connect(
