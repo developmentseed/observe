@@ -3,7 +3,7 @@
 /* global __dirname */
 /* global expect */
 
-import { getDataForBbox, getFeature, createChangeset, getMemberNodes, saveDataForTile } from '../../app/services/api'
+import { getDataForBbox, getFeature, createChangeset, getMemberNodes, saveDataForTile } from '../../app/services/osm-api'
 import path from 'path'
 import fs from 'fs'
 

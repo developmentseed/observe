@@ -1,5 +1,5 @@
 import * as types from './actionTypes'
-import { getUserDetails } from '../services/api'
+import { getUserDetails } from '../services/osm-api'
 import { authorize, clearCredentials } from '../services/auth'
 import { setNotification } from './notification'
 

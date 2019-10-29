@@ -5,7 +5,7 @@ import {
   uploadOsmChange,
   closeChangeset,
   getMemberNodes
-} from '../services/api'
+} from '../services/osm-api'
 
 import { version } from '../../package.json'
 /**
