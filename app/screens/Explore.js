@@ -56,7 +56,8 @@ import {
   getCurrentTraceGeoJSON,
   getCurrentTraceLength,
   getCurrentTraceStatus,
-  getTracesGeojson
+  getTracesGeojson,
+  getPhotosGeojson
 } from '../selectors'
 import BasemapModal from '../components/BasemapModal'
 import ActionButton from '../components/ActionButton'
@@ -354,9 +355,12 @@ class Explore extends React.Component {
       currentTrace,
       requiresPreauth,
       tracesGeojson,
-      style
+      style,
+      photosGeojson
     } = this.props
     let selectedFeatureIds = null
+
+    console.log(photosGeojson)
 
     if (selectedFeatures && selectedFeatures.length) {
       selectedFeatureIds = {
@@ -595,6 +599,10 @@ class Explore extends React.Component {
                   <MapboxGL.ShapeSource id='currentTraceGeojsonSource' shape={currentTrace}>
                     <MapboxGL.LineLayer id='currentTrace' style={style.traces.traces} minZoomLevel={16} />
                   </MapboxGL.ShapeSource>
+                  <MapboxGL.ShapeSource id='photoGeojsonSource' shape={photosGeojson}>
+                    <MapboxGL.CircleLayer id='photosHalo' style={style.photos.photoIconHalo} minZoomLevel={16} />
+                    <MapboxGL.SymbolLayer id='photos' style={style.photos.photoIcon} minZoomLevel={16} />
+                  </MapboxGL.ShapeSource>
                 </StyledMap>
               )
           }
@@ -635,7 +643,8 @@ const mapStateToProps = (state) => {
     requiresPreauth: Config.PREAUTH_URL && !userDetails,
     tracesGeojson: getTracesGeojson(state),
     overlays: state.map.overlays,
-    style: state.map.style
+    style: state.map.style,
+    photosGeojson: getPhotosGeojson(state)
   }
 }
 

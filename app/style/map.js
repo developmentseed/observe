@@ -164,6 +164,21 @@ const icons = {
   iconSize: 0.8
 }
 
+const photoIcon = {
+  iconImage: 'maki_attraction',
+  iconAllowOverlap: false,
+  iconIgnorePlacement: false,
+  iconSize: 0.8
+}
+
+const photoIconHalo = {
+  circleRadius: 12,
+  circleColor: 'blue',
+  circleOpacity: 0.6,
+  circleStrokeColor: 'white',
+  circleStrokeWidth: 0.5
+}
+
 export default {
   osm: {
     nodes,
@@ -185,5 +200,9 @@ export default {
   },
   traces: {
     traces
+  },
+  photos: {
+    photoIcon,
+    photoIconHalo
   }
 }
