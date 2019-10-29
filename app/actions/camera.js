@@ -2,7 +2,7 @@ import * as types from './actionTypes'
 import RNFetchBlob from 'rn-fetch-blob'
 import getRandomId from '../utils/get-random-id'
 
-export function savePhoto (uri, location) {
+export function savePhoto (uri, location, description) {
   return async dispatch => {
     dispatch({
       type: types.SAVING_PHOTO,
@@ -23,7 +23,9 @@ export function savePhoto (uri, location) {
       const photo = {
         'id': id,
         'path': path,
-        'location': location
+        'location': location,
+        'description': description,
+        'pending': true
       }
       dispatch({
         type: types.SAVED_PHOTO,
