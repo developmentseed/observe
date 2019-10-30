@@ -13,7 +13,6 @@ class PhotosListScreen extends React.Component {
 
   render () {
     const { navigation, photos } = this.props
-    console.log('photos', photos)
     const headerActions = [
       {
         name: 'upload-2',

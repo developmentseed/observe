@@ -69,7 +69,6 @@ class PhotosItem extends React.PureComponent {
 
   render () {
     const { item } = this.props
-    console.log('item', item)
     let statusIcon = this.getStatusIcon()
     return (
       <View
