@@ -45,6 +45,7 @@ const Image = styled.Image`
   width: 80;
   height: 80;
   margin-right: 10;
+  resize-mode: contain;
 `
 
 class PhotosItem extends React.PureComponent {

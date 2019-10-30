@@ -16,6 +16,10 @@ PODS:
   - EXFileSystem (7.0.0):
     - UMCore
     - UMFileSystemInterface
+  - EXImageManipulator (7.0.0):
+    - UMCore
+    - UMFileSystemInterface
+    - UMImageLoaderInterface
   - EXLocation (7.0.0):
     - UMCore
     - UMPermissionsInterface
@@ -291,6 +295,7 @@ DEPENDENCIES:
   - EXCamera (from `../node_modules/expo-camera/ios`)
   - EXConstants (from `../node_modules/expo-constants/ios`)
   - EXFileSystem (from `../node_modules/expo-file-system/ios`)
+  - EXImageManipulator (from `../node_modules/expo-image-manipulator/ios`)
   - EXLocation (from `../node_modules/expo-location/ios`)
   - EXPermissions (from `../node_modules/expo-permissions/ios`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
@@ -364,6 +369,9 @@ EXTERNAL SOURCES:
   EXFileSystem:
     :path: !ruby/object:Pathname
     path: "../node_modules/expo-file-system/ios"
+  EXImageManipulator:
+    :path: !ruby/object:Pathname
+    path: "../node_modules/expo-image-manipulator/ios"
   EXLocation:
     :path: !ruby/object:Pathname
     path: "../node_modules/expo-location/ios"
@@ -488,6 +496,7 @@ SPEC CHECKSUMS:
   EXCamera: 8ad7012d4e0fef09ff35de14fcb41b410357e9be
   EXConstants: 31e5318521be6175009af6ccd3e97dedf39da96a
   EXFileSystem: 7e53a2c30a2eb6987ba6d5158ab908f947523228
+  EXImageManipulator: 211c40025c6d5452b919c5f89cc07a3d833dd660
   EXLocation: 452a1d9edceb1b93deb86fd785236606d33742dd
   EXPermissions: df10ad83df2f6b647aec304619354f8ab48d5f63
   FBLazyVector: 0846affdb2924b01093eb696766ecb0104e409e0
