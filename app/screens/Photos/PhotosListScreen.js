@@ -2,10 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Header from '../../components/Header'
 import Container from '../../components/Container'
-import styled from 'styled-components/native'
-
-const View = styled.View``
-const Text = styled.Text``
+import PhotosList from '../../components/PhotosList'
 
 class PhotosListScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -30,12 +27,13 @@ class PhotosListScreen extends React.Component {
     return (
       <Container>
         <Header
+          title='Your Photos'
           navigation={navigation}
           actions={headerActions}
         />
-        <View>
-          <Text>Photos List</Text>
-        </View>
+        <PhotosList
+          data={photos.photos}
+        />
 
       </Container>
     )

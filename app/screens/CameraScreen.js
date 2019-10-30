@@ -152,7 +152,6 @@ class CameraScreen extends React.Component {
         </View>
       )
     } else if (this.state.image) {
-      console.log(this.state)
       return (
         <Container>
           <Header back={() => this.setState({ image: null })} title='Save picture' navigation={navigation} actions={headerActions} />
