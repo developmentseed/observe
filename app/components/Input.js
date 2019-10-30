@@ -14,6 +14,7 @@ const FieldWrapper = styled.View`
   margin-top: 16;
   flex: 1;
   flex-direction: row;
+  flex-shrink: 0;
 `
 
 const LabelWrapper = styled.View`
