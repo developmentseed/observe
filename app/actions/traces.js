@@ -41,8 +41,38 @@ export function uploadPendingTraces () {
     const { traces } = getState().traces
     const pendingTraces = traces.filter(t => t.pending)
     for (let trace of pendingTraces) {
-      await uploadTrace(trace)
+      dispatch(startUploadingTrace(trace))
+      try {
+        const id = await uploadTrace(trace)
+        dispatch(uploadedTrace(trace, id))
+      }
+      catch (e) {
+        dispatch(uploadTraceFailed(trace, e))
+      }
     }
+  }
+}
+
+function startUploadingTrace (trace) {
+  return {
+    type: types.TRACE_UPLOAD_STARTED,
+    trace
+  }
+}
+
+function uploadedTrace (trace, id) {
+  return {
+    type: types.TRACE_UPLOADED,
+    trace,
+    newId: id
+  }
+}
+
+function uploadTraceFailed (trace, error) {
+  return {
+    type: types.TRACE_UPLOAD_FAILED,
+    trace,
+    error
   }
 }
 
