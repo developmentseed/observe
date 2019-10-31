@@ -1,5 +1,6 @@
 import * as types from './actionTypes'
 import traceService from '../services/trace'
+import { uploadTrace } from '../utils/traces'
 
 export function startTrace () {
   return (dispatch, getState) => {
@@ -32,6 +33,16 @@ export function endTrace (description = '') {
       return
     }
     traceService.endTrace(dispatch, watcher, description)
+  }
+}
+
+export function uploadPendingTraces () {
+  return async (dispatch, getState) => {
+    const { traces } = getState().traces
+    const pendingTraces = traces.filter(t => t.pending)
+    for (let trace of pendingTraces) {
+      await uploadTrace(trace)
+    }
   }
 }
 

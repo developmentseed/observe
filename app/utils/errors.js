@@ -86,3 +86,10 @@ export class FeatureDeletedError extends ObserveError {
     this.retryable = false
   }
 }
+
+export class ObserveAPIError extends ObserveError {
+  constructor (message = 'Error from Observe API', status) {
+    super('ObserveAPIError', message)
+    this.status = status
+  }
+}

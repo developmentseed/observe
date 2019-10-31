@@ -1,5 +1,5 @@
 import * as types from './actionTypes'
-import { getProfile as apiGetProfile } from '../services/observe-api'
+import * as api from '../services/observe-api'
 
 export function setObserveAPIToken (token) {
   return {
@@ -10,6 +10,6 @@ export function setObserveAPIToken (token) {
 
 export function getProfile () {
   return async dispatch => {
-    await dispatch(apiGetProfile())
+    await dispatch(api.getProfile())
   }
 }

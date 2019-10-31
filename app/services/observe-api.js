@@ -1,6 +1,6 @@
 import { store } from '../utils/store'
 import Config from 'react-native-config'
-import { ObserveError } from '../utils/errors'
+import { ObserveError, ObserveAPIError } from '../utils/errors'
 import qs from 'qs'
 
 /**
@@ -31,17 +31,30 @@ export async function callAPI (path, method = 'GET', data) {
       fetchOpts.body = JSON.stringify(data)
     }
   }
-  // FIXME: look into whether we should do more error handling here,
-  // or in wrapper functions
-  return fetch(url, fetchOpts)
+
+  try {
+    const response = await fetch(url, fetchOpts)
+    const data = await response.json()
+    if (response.status > 400) {
+      throw new ObserveAPIError(data.message, response.status)
+    } else {
+      return data
+    }
+  } catch (err) {
+    console.log('fetch to API failed, network error')
+    // FIXME: throw a NetworkError or so
+  }
 }
 
 export async function getProfile () {
   try {
-    const response = await callAPI('/profile')
-    const data = await response.json()
+    const data = await callAPI('/profile')
     console.log('data', data)
   } catch (err) {
     console.log('error fetching profile', err)
   }
+}
+
+export async function uploadTrace (trace) {
+  return callAPI('/traces', 'POST', trace)
 }
