@@ -127,8 +127,12 @@ class Explore extends React.Component {
   }
 
   onDidFocus = () => {
-    this.forceUpdate()
-    this.locateUser()
+    const { requiresPreauth } = this.props
+
+    if (!requiresPreauth) {
+      this.forceUpdate()
+      this.locateUser()
+    }
   }
 
   onWillStartLoadingMap = () => {
@@ -179,10 +183,14 @@ class Explore extends React.Component {
     try {
       const userLocation = await getUserLocation()
       if (userLocation.hasOwnProperty('coords')) {
-        this.cameraRef.setCamera({
-          centerCoordinate: [userLocation.coords.longitude, userLocation.coords.latitude],
+        const centerCoordinate = [userLocation.coords.longitude, userLocation.coords.latitude]
+
+        this.cameraRef && this.cameraRef.setCamera({
+          centerCoordinate,
           zoomLevel: 18
         })
+
+        this.setState({ centerCoordinate })
       }
     } catch (error) {
       console.log('error fetching user location', error)
@@ -305,6 +313,7 @@ class Explore extends React.Component {
       <AuthMessage onPress={async () => {
         await authorize()
         await this.props.loadUserDetails()
+        this.locateUser()
       }} />
     )
   }
@@ -316,7 +325,7 @@ class Explore extends React.Component {
       selectedFeatures,
       editsGeojson,
       mode,
-      userDetails
+      requiresPreauth
     } = this.props
     let selectedFeatureIds = null
 
@@ -507,7 +516,7 @@ class Explore extends React.Component {
             title={this.getTitle()}
           />
           {
-            Config.PREAUTH_URL && !userDetails
+            requiresPreauth
               ? this.renderAuthPrompt()
               : (
                 <StyledMap
@@ -525,7 +534,7 @@ class Explore extends React.Component {
                 >
                   <MapboxGL.Camera zoomLevel={12}
                     defaultSettings={{
-                      centerCoordinate: [77.5946, 12.9716],
+                      centerCoordinate: [0, 0],
                       zoomLevel: 12
                     }}
                     ref={(ref) => { this.cameraRef = ref }}
@@ -566,20 +575,25 @@ class Explore extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  geojson: getVisibleFeatures(state),
-  isConnected: state.network.isConnected,
-  selectedFeatures: state.map.selectedFeatures || false,
-  mode: state.map.mode,
-  edits: state.edit.edits,
-  editsGeojson: state.edit.editsGeojson,
-  loadingData: isLoadingData(state),
-  visibleBounds: getVisibleBounds(state),
-  zoom: getZoom(state),
-  baseLayer: state.map.baseLayer,
-  isAuthorized: state.authorization.isAuthorized,
-  userDetails: state.account.userDetails
-})
+const mapStateToProps = (state) => {
+  const { userDetails } = state.account
+  
+  return {
+    geojson: getVisibleFeatures(state),
+    isConnected: state.network.isConnected,
+    selectedFeatures: state.map.selectedFeatures || false,
+    mode: state.map.mode,
+    edits: state.edit.edits,
+    editsGeojson: state.edit.editsGeojson,
+    loadingData: isLoadingData(state),
+    visibleBounds: getVisibleBounds(state),
+    zoom: getZoom(state),
+    baseLayer: state.map.baseLayer,
+    isAuthorized: state.authorization.isAuthorized,
+    userDetails,
+    requiresPreauth: Config.PREAUTH_URL && !userDetails,
+  }
+}
 
 const mapDispatchToProps = {
   fetchData,
