@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { AppState } from 'react-native'
 import Config from 'react-native-config'
 import { Provider } from 'react-redux'
 
@@ -27,7 +26,6 @@ import ObserveAPIAuthManager from './app/components/ObserveAPIAuthManager'
 import CameraScreen from './app/screens/CameraScreen'
 import SaveTrace from './app/screens/SaveTrace'
 
-import { preAuth } from './app/services/auth'
 import { ReduxNetworkProvider } from 'react-native-offline'
 import Icon from './app/components/Collecticons'
 import { colors } from './app/style/variables'
@@ -123,23 +121,7 @@ const AppNavigator = createDrawerNavigator({
 
 const AppContainer = createAppContainer(AppNavigator)
 
-// FIXME: we should pass a <Loading /> component to loading= on the PersistGate to show while app state is being loaded
-// from persistent store
 export default class App extends Component {
-  _handleAppStateChange (nextState) {
-    if (nextState === 'active') {
-      preAuth()
-    }
-  }
-
-  componentWillMount () {
-    AppState.addEventListener('change', this._handleAppStateChange)
-  }
-
-  componentWillUnmount () {
-    AppState.removeEventListener('change', this._handleAppStateChange)
-  }
-
   render () {
     return (
       <Provider store={store}>
