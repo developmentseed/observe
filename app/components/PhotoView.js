@@ -3,6 +3,7 @@ import styled from 'styled-components/native'
 import { Dimensions } from 'react-native'
 import { colors } from '../style/variables'
 import formatDate from '../utils/format-date'
+import Icon from '../components/Collecticons'
 
 const win = Dimensions.get('window')
 
@@ -16,9 +17,16 @@ const Image = styled.Image`
   resize-mode: cover;
 `
 
-const ImageDetailsView = styled.View`
+const View = styled.View`
+  flex-direction: row;
+  align-items: center;
   border-bottom-width: 0.2
   border-bottom-color: ${colors.muted}
+  `
+
+const ImageDetailsView = styled.View`
+  margin-left: 10;
+
   padding-top: 10;
   text-align: left;
 `
@@ -44,10 +52,13 @@ export class PhotoView extends React.Component {
 export class ImageDetails extends React.Component {
   render () {
     return (
-      <ImageDetailsView>
-        <TimeText>{formatDate(this.props.timestamp)}</TimeText>
-        <LocationText>{`${this.props.location.coords.latitude.toFixed(2)}, ${this.props.location.coords.longitude.toFixed(2)}`}</LocationText>
-      </ImageDetailsView>
+      <View>
+        <Icon name='camera' size={24} color='black' />
+        <ImageDetailsView>
+          <TimeText>{formatDate(this.props.timestamp)}</TimeText>
+          <LocationText>{`${this.props.location.coords.latitude.toFixed(2)}, ${this.props.location.coords.longitude.toFixed(2)}`}</LocationText>
+        </ImageDetailsView>
+      </View>
     )
   }
 }

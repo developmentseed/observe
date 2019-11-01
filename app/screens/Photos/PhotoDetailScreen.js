@@ -9,22 +9,6 @@ import Header from '../../components/Header'
 import PageWrapper from '../../components/PageWrapper'
 import { colors } from '../../style/variables'
 
-const Text = styled.Text``
-const PhotoDetails = styled.View`
-  margin-top: 10;
-  height: 80;
-  border-bottom-width: 0.2;
-  border-bottom-color: ${colors.muted}
-`
-const TimeText = styled.Text`
-  font-size: 24;
-  letter-spacing: 1;
-`
-const LocationText = styled.Text`
-  color: ${colors.muted};
-  padding-bottom: 5;
-`
-
 class PhotoDetailScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
