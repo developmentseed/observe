@@ -7,7 +7,7 @@ import { colors } from '../style/variables'
 import formatDate from '../utils/format-date'
 
 const ItemContainer = styled.TouchableOpacity`
-  border-bottom-width: 1;
+  border-bottom-width: 0.2;
   border-bottom-color: ${colors.baseMuted};
   flex: 1;
   flex-direction: row;
