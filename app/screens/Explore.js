@@ -577,7 +577,7 @@ class Explore extends React.Component {
 
 const mapStateToProps = (state) => {
   const { userDetails } = state.account
-  
+
   return {
     geojson: getVisibleFeatures(state),
     isConnected: state.network.isConnected,
@@ -591,7 +591,7 @@ const mapStateToProps = (state) => {
     baseLayer: state.map.baseLayer,
     isAuthorized: state.authorization.isAuthorized,
     userDetails,
-    requiresPreauth: Config.PREAUTH_URL && !userDetails,
+    requiresPreauth: Config.PREAUTH_URL && !userDetails
   }
 }
 
