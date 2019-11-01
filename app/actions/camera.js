@@ -21,7 +21,7 @@ export function savePhoto (uri, location, description) {
     }
     try {
       let manipulatedImage = await ImageManipulator.manipulateAsync(uri, [
-        { resize: { width: 540, height: 780 } }
+        // { resize: { width: 540, height: 780 } }
       ], { base64: true, compress: 0.2 })
 
       await RNFetchBlob.fs.createFile(path, manipulatedImage.uri.replace('file://', ''), 'uri')

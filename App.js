@@ -18,6 +18,7 @@ import AddFeatureDetail from './app/screens/Features/AddFeatureDetail'
 import EditFeatureDetail from './app/screens/Features/EditFeatureDetail'
 import SelectFeatureType from './app/screens/Features/SelectFeatureType'
 import PhotosListScreen from './app/screens/Photos/PhotosListScreen'
+import PhotoDetailScreen from './app/screens/Photos/PhotoDetailScreen'
 
 import AuthorizationManager from './app/components/AuthorizationManager'
 import Drawer from './app/components/Drawer'
@@ -66,7 +67,8 @@ const UserContributionsNavigator = createStackNavigator({
 })
 
 const PhotosListNavigator = createStackNavigator({
-  PhotosListScreen: { screen: PhotosListScreen }
+  PhotosListScreen: { screen: PhotosListScreen },
+  PhotoDetailScreen: { screen: PhotoDetailScreen }
 }, {
   initialRouteName: 'PhotosListScreen',
   headerMode: 'none',

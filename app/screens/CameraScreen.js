@@ -16,6 +16,7 @@ import { DescriptionInputField } from '../components/Input'
 import PageWrapper from '../components/PageWrapper'
 import formatDate from '../utils/format-date'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import PhotoView from '../components/PhotoView'
 
 const win = Dimensions.get('window')
 const buttonStyles = getPlatformStyles({
@@ -43,15 +44,6 @@ const SnapButton = styled.TouchableHighlight`
   shadow-color: grey;
   shadow-opacity: 0.7;
   shadow-offset: 0px 0px;
-`
-
-const ImageContainer = styled.View`
-  align-items: center;
-`
-
-const ImageBackground = styled.Image`
-  width: ${win.width - 20}
-  height: 400
 `
 
 const View = styled.View`
@@ -166,11 +158,7 @@ class CameraScreen extends React.Component {
             enableOnAndroid
           >
             <PageWrapper>
-              <ImageContainer>
-                <ImageBackground
-                  source={{ uri: this.state.image }}
-                />
-              </ImageContainer>
+              <PhotoView path={this.state.image} />
               <ImageDetails>
                 <TimeText>{formatDate(this.state.location.timestamp)}</TimeText>
                 <LocationText>{`${this.state.location.coords.latitude.toFixed(2)}, ${this.state.location.coords.longitude.toFixed(2)}`}</LocationText>

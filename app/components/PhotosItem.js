@@ -68,6 +68,8 @@ class PhotosItem extends React.PureComponent {
     return <Icon name={iconName} size={16} color={color} />
   }
 
+  _onPress = () => this.props.onPress && this.props.onPress(this.props.item)
+
   render () {
     const { item } = this.props
     let statusIcon = this.getStatusIcon()
@@ -80,7 +82,7 @@ class PhotosItem extends React.PureComponent {
           }
         }) => (this.height = height)}
       >
-        <ItemContainer>
+        <ItemContainer onPress={this._onPress}>
           <Container>
             <StatusContainer>{statusIcon}</StatusContainer>
             <Image source={{ uri: `file://${item.path}` }} />

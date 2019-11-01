@@ -15,7 +15,7 @@ const StyledFlatList = styled.FlatList``
 
 export default class PhotosList extends React.Component {
   render () {
-    const { data } = this.props
+    const { data, onSelectItem } = this.props
     if (data && !data.length) {
       return (
         <Container>
@@ -31,7 +31,10 @@ export default class PhotosList extends React.Component {
         data={data}
         keyExtractor={item => `${item.id}`}
         renderItem={({ item }) => (
-          <PhotosItem item={item} />
+          <PhotosItem
+            item={item}
+            onPress={onSelectItem}
+          />
         )}
       />
     )

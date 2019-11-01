@@ -11,6 +11,12 @@ class PhotosListScreen extends React.Component {
     }
   }
 
+  select = photo => {
+    const { navigation } = this.props
+    console.log('select', photo)
+    navigation.navigate('PhotoDetailScreen', { photo: photo })
+  }
+
   render () {
     const { navigation, photos } = this.props
     const headerActions = [
@@ -32,6 +38,7 @@ class PhotosListScreen extends React.Component {
         />
         <PhotosList
           data={photos.photos}
+          onSelectItem={this.select}
         />
 
       </Container>
