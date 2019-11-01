@@ -21,6 +21,7 @@ export function savePhoto (uri, location, description) {
     }
     try {
       let manipulatedImage = await ImageManipulator.manipulateAsync(uri, [
+        // FIXME: figure out a resizing strategy once API is hooked up
         // { resize: { width: 540, height: 780 } }
       ], { base64: true, compress: 0.2 })
 

@@ -16,7 +16,7 @@ import { DescriptionInputField } from '../components/Input'
 import PageWrapper from '../components/PageWrapper'
 import formatDate from '../utils/format-date'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import PhotoView from '../components/PhotoView'
+import { PhotoView, ImageDetails } from '../components/PhotoView'
 
 const win = Dimensions.get('window')
 const buttonStyles = getPlatformStyles({
@@ -51,20 +51,6 @@ const View = styled.View`
   padding-left: 5;
   padding-right: 5;
   padding-top: 5;
-  padding-bottom: 5;
-`
-const ImageDetails = styled.View`
-  border-bottom-width: 0.2
-  border-bottom-color: ${colors.muted}
-  padding-top: 10;
-  text-align: left;
-`
-const TimeText = styled.Text`
-  font-size: 24;
-  letter-spacing: 1;
-`
-const LocationText = styled.Text`
-  color: ${colors.muted};
   padding-bottom: 5;
 `
 
@@ -159,10 +145,7 @@ class CameraScreen extends React.Component {
           >
             <PageWrapper>
               <PhotoView path={this.state.image} />
-              <ImageDetails>
-                <TimeText>{formatDate(this.state.location.timestamp)}</TimeText>
-                <LocationText>{`${this.state.location.coords.latitude.toFixed(2)}, ${this.state.location.coords.longitude.toFixed(2)}`}</LocationText>
-              </ImageDetails>
+              <ImageDetails timestamp={this.state.location.timestamp} location={this.state.location} />
               <View>
                 <DescriptionInputField value={this.state.description} onValueChange={(value) => this.setState({ description: value })} />
               </View>
