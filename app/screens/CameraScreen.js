@@ -94,27 +94,22 @@ class CameraScreen extends React.Component {
   async componentWillMount () {
     const { status } = await Permissions.askAsync(Permissions.CAMERA)
     this.setState({
-      hasCameraPermission: status === 'granted'
+      hasCameraPermission: status === 'granted',
+      image: null,
+      location: null,
+      description: null
     })
   }
 
   async snap () {
     if (this.camera) {
-      this.setState({
-        saving: true
-      })
       let { uri, width, height } = await this.camera.takePictureAsync()
       const location = await Location.getCurrentPositionAsync({})
       console.log(uri, width, height, location)
-      // this.camera.pausePreview()
-      this.setState({
-        saving: false
-      })
       this.setState({
         image: uri,
         location: location
       })
-      this.camera.resumePreview()
     }
   }
   render () {
@@ -131,9 +126,17 @@ class CameraScreen extends React.Component {
       {
         name: 'tick',
         onPress: () => {
+          this.setState({
+            saving: true
+          })
           const description = this.state.description
           console.log('save', description)
           this.props.savePhoto(this.state.image, this.state.location, this.state.description)
+          this.setState({
+            image: null,
+            location: null,
+            description: null
+          })
           navigation.navigate('Explore')
         }
       }
@@ -154,7 +157,7 @@ class CameraScreen extends React.Component {
     } else if (this.state.image) {
       return (
         <Container>
-          <Header back={() => this.setState({ image: null })} title='Save picture' navigation={navigation} actions={headerActions} />
+          <Header back={() => this.setState({ image: null, location: null, description: null })} title='Save picture' navigation={navigation} actions={headerActions} />
           <KeyboardAwareScrollView
             style={{ backgroundColor: '#fff' }}
             resetScrollToCoords={{ x: 0, y: 0 }}
