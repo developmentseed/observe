@@ -1,6 +1,6 @@
 import * as types from './actionTypes'
 import traceService from '../services/trace'
-import { uploadTrace } from '../utils/traces'
+import * as api from '../services/observe-api'
 
 export function startTrace () {
   return (dispatch, getState) => {
@@ -26,13 +26,14 @@ export function unpauseTrace () {
 }
 
 export function endTrace (description = '') {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const { watcher, currentTrace } = getState().traces
     if (!currentTrace) {
       console.error('endTrace called with no current trace')
       return
     }
     traceService.endTrace(dispatch, watcher, description)
+    await uploadPendingTraces()
   }
 }
 
@@ -41,37 +42,36 @@ export function uploadPendingTraces () {
     const { traces } = getState().traces
     const pendingTraces = traces.filter(t => t.pending)
     for (let trace of pendingTraces) {
-      dispatch(startUploadingTrace(trace))
+      dispatch(startUploadingTrace(trace.id))
       try {
-        const id = await uploadTrace(trace)
-        dispatch(uploadedTrace(trace, id))
-      }
-      catch (e) {
-        dispatch(uploadTraceFailed(trace, e))
+        const newId = await api.uploadTrace(trace)
+        dispatch(uploadedTrace(trace.id, newId))
+      } catch (e) {
+        dispatch(uploadTraceFailed(trace.id, e))
       }
     }
   }
 }
 
-function startUploadingTrace (trace) {
+function startUploadingTrace (id) {
   return {
     type: types.TRACE_UPLOAD_STARTED,
-    trace
+    id
   }
 }
 
-function uploadedTrace (trace, id) {
+function uploadedTrace (oldId, newId) {
   return {
     type: types.TRACE_UPLOADED,
-    trace,
-    newId: id
+    oldId,
+    newId
   }
 }
 
-function uploadTraceFailed (trace, error) {
+function uploadTraceFailed (id, error) {
   return {
     type: types.TRACE_UPLOAD_FAILED,
-    trace,
+    id,
     error
   }
 }

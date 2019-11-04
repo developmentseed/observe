@@ -1,5 +1,4 @@
 import turfLength from '@turf/length'
-import * as api from '../services/observe-api'
 
 /**
  * Returns an empty trace object
@@ -79,9 +78,4 @@ export function isValidTrace (traceGeoJSON, options) {
  */
 export function getTraceLength (traceGeoJSON) {
   return turfLength(traceGeoJSON, { units: 'kilometers' }) * 1000
-}
-
-
-export async function uploadTrace (trace) {
-  
 }

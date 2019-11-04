@@ -185,6 +185,8 @@ describe('test for traces reducer', () => {
         {
           id: 'observe-hauptbanhof',
           pending: true,
+          uploading: false,
+          errors: [],
           geojson: expectedTraceGeoJSON
         }
       ]
