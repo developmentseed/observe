@@ -28,6 +28,7 @@ import getFields from '../../utils/get-fields'
 import { getParentPreset } from '../../utils/get-parent-preset'
 import getPresetByTags from '../../utils/get-preset-by-tags'
 import { colors } from '../../style/variables'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const FieldsList = styled.FlatList`
 `
@@ -469,11 +470,19 @@ class EditFeatureDetail extends React.Component {
           feature={feature}
           navigation={navigation}
         />
-        <PageWrapper>
-          {this.renderFields()}
-          {this.renderAddField()}
-        </PageWrapper>
-        <TagEditor ref={(ref) => (this._tageditor = ref)} properties={this.createTagEditorProperties()} onUpdate={this.onTagEditorUpdate} />
+        <KeyboardAwareScrollView
+          style={{ backgroundColor: '#fff' }}
+          resetScrollToCoords={{ x: 0, y: 0 }}
+          scrollEnabled
+          extraScrollHeight={150}
+          enableOnAndroid
+        >
+          <PageWrapper>
+            {this.renderFields()}
+            {this.renderAddField()}
+          </PageWrapper>
+          <TagEditor ref={(ref) => (this._tageditor = ref)} properties={this.createTagEditorProperties()} onUpdate={this.onTagEditorUpdate} />
+        </KeyboardAwareScrollView>
         <SaveEditDialog visible={this.state.dialogVisible} cancel={this.cancelEditDialog} save={this.saveEditDialog} />
       </Container>
     )
