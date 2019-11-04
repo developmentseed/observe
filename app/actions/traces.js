@@ -33,7 +33,7 @@ export function endTrace (description = '') {
       return
     }
     traceService.endTrace(dispatch, watcher, description)
-    await uploadPendingTraces()
+    await dispatch(uploadPendingTraces())
   }
 }
 

@@ -56,6 +56,7 @@ export async function getProfile () {
 }
 
 export async function uploadTrace (trace) {
+  console.log('upload trace called', trace)
   const data = await callAPI('/traces', 'POST', trace)
   return data.properties.id
 }
