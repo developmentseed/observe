@@ -14,7 +14,6 @@ import * as Location from 'expo-location'
 import LoadingOverlay from '../components/LoadingOverlay'
 import { DescriptionInputField } from '../components/Input'
 import PageWrapper from '../components/PageWrapper'
-import formatDate from '../utils/format-date'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { PhotoView, ImageDetails } from '../components/PhotoView'
 
