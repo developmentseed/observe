@@ -88,7 +88,7 @@ class PhotoDetailScreen extends React.Component {
       showDescription = (
         <DescriptionView>
           <View>
-            <DescriptionInputField value={this.state.description} onValueChange={(value) => this.setState({ description: value })} />
+            <DescriptionInputField focus={this.state.editing} value={this.state.description} onValueChange={(value) => this.setState({ description: value })} />
           </View>
         </DescriptionView>
       )
