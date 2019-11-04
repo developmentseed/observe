@@ -47,3 +47,11 @@ export function savePhoto (uri, location, description) {
     }
   }
 }
+
+export function editPhoto (photo, description) {
+  return {
+    type: types.EDIT_PHOTO,
+    photo,
+    description
+  }
+}

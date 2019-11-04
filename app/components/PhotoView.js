@@ -25,14 +25,14 @@ const View = styled.View`
   `
 
 const ImageDetailsView = styled.View`
-  margin-left: 10;
-
   padding-top: 10;
+  padding-left: 15;
+  padding-bottom: 10;
   text-align: left;
 `
 
 const TimeText = styled.Text`
-  font-size: 24;
+  font-size: 20;
   letter-spacing: 1;
 `
 const LocationText = styled.Text`
