@@ -200,12 +200,68 @@ describe('trace upload / async actions', () => {
         traces: [
           getMockTrace(1)
         ]
-      },
-      observeApi: {
-        token: 'abcd'
       }
     })
+    fetch.resetMocks()
     fetch.once(JSON.stringify(getMockTracePostResponse(1, 'fakeid')))
+    await store.dispatch(uploadPendingTraces())
+    const actions = store.getActions()
+    expect(actions).toMatchSnapshot()
+    expect(fetch.mock.calls).toMatchSnapshot()
+  })
+
+  it('should upload multiple pending traces', async () => {
+    const store = mockStore({
+      traces: {
+        traces: [
+          getMockTrace(1),
+          getMockTrace(2)
+        ]
+      }
+    })
+    fetch.resetMocks()
+    fetch.once(JSON.stringify(getMockTracePostResponse(1, 'fakeid-1')))
+      .once(JSON.stringify(getMockTracePostResponse(2, 'fakeid-2')))
+    await store.dispatch(uploadPendingTraces())
+    const actions = store.getActions()
+    expect(actions).toMatchSnapshot()
+    expect(fetch.mock.calls).toMatchSnapshot()
+  })
+
+  it('should not upload non-pending traces', async () => {
+    const trace1 = getMockTrace(1)
+    const trace2 = getMockTrace(2)
+    trace2.pending = false
+    const store = mockStore({
+      traces: {
+        traces: [
+          trace1,
+          trace2
+        ]
+      }
+    })
+    fetch.resetMocks()
+    fetch.once(JSON.stringify(getMockTracePostResponse(1, 'fakeid-1')))
+    await store.dispatch(uploadPendingTraces())
+    const actions = store.getActions()
+    expect(actions).toMatchSnapshot()
+    expect(fetch.mock.calls).toMatchSnapshot()
+  })
+
+  it('should not upload uploading traces', async () => {
+    const trace1 = getMockTrace(1)
+    trace1.uploading = true
+    const trace2 = getMockTrace(2)
+    const store = mockStore({
+      traces: {
+        traces: [
+          trace1,
+          trace2
+        ]
+      }
+    })
+    fetch.resetMocks()
+    fetch.once(JSON.stringify(getMockTracePostResponse(2, 'fakeid-2')))
     await store.dispatch(uploadPendingTraces())
     const actions = store.getActions()
     expect(actions).toMatchSnapshot()
