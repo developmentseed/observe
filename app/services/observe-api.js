@@ -47,7 +47,8 @@ export async function callAPI (path, method = 'GET', data) {
       return data
     }
   } catch (err) {
-    console.log('fetch to API failed, network error', err)
+    console.log('fetch to API failed', err)
+    throw err
     // FIXME: throw a NetworkError or so
   }
 }

@@ -46,6 +46,36 @@ Array [
 ]
 `;
 
+exports[`trace upload / async actions should add error to the trace for an error response 1`] = `
+Array [
+  Object {
+    "id": "id-1",
+    "type": "TRACE_UPLOAD_STARTED",
+  },
+  Object {
+    "error": [Error: Unknown error],
+    "id": "id-1",
+    "type": "TRACE_UPLOAD_FAILED",
+  },
+]
+`;
+
+exports[`trace upload / async actions should add error to the trace for an error response 2`] = `
+Array [
+  Array [
+    "http://localhost:3000/traces",
+    Object {
+      "body": "{\\"tracejson\\":{\\"type\\":\\"Feature\\",\\"properties\\":{\\"timestamps\\":[1,11,21],\\"description\\":\\"\\"},\\"geometry\\":{\\"type\\":\\"LineString\\",\\"coordinates\\":[[1,1],[2,0],[3,-1]]}}}",
+      "headers": Object {
+        "Authorization": "abcd",
+        "Content-Type": "application/json",
+      },
+      "method": "POST",
+    },
+  ],
+]
+`;
+
 exports[`trace upload / async actions should not upload non-pending traces 1`] = `
 Array [
   Object {

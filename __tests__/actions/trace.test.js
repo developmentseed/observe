@@ -267,4 +267,21 @@ describe('trace upload / async actions', () => {
     expect(actions).toMatchSnapshot()
     expect(fetch.mock.calls).toMatchSnapshot()
   })
+
+  it('should add error to the trace for an error response', async () => {
+    const trace1 = getMockTrace(1)
+    const store = mockStore({
+      traces: {
+        traces: [
+          trace1
+        ]
+      }
+    })
+    fetch.resetMocks()
+    fetch.once(JSON.stringify({'message': 'Unknown error'}), {status: 500})
+    await store.dispatch(uploadPendingTraces())
+    const actions = store.getActions()
+    expect(actions).toMatchSnapshot()
+    expect(fetch.mock.calls).toMatchSnapshot()
+  })
 })
