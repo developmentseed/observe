@@ -41,7 +41,7 @@ export function uploadPendingTraces () {
   return async (dispatch, getState) => {
     console.log('called upload pending traces')
     const { traces } = getState().traces
-    const pendingTraces = traces.filter(t => t.pending)
+    const pendingTraces = traces.filter(t => t.pending && !t.uploading)
     for (let trace of pendingTraces) {
       dispatch(startUploadingTrace(trace.id))
       try {
