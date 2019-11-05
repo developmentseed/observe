@@ -46,6 +46,14 @@ const tracesPersistConfig = {
   ]
 }
 
+const observeApiPersistConfig = {
+  key: 'observeApi',
+  whitelist: [
+    'token'
+  ]
+}
+
+
 const rootReducer = combineReducers({
   about: AboutReducer,
   authorization: persistReducer(authorizationPersistConfig, AuthorizationReducer),
@@ -57,7 +65,7 @@ const rootReducer = combineReducers({
   notification: NotificationReducer,
   photos: CameraReducer,
   traces: persistReducer(tracesPersistConfig, TracesReducer),
-  observeApi: ObserveAPIReducer
+  observeApi: persistReducer(observeApiPersistConfig, ObserveAPIReducer)
 })
 
 export default rootReducer
