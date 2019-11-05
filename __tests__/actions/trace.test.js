@@ -77,8 +77,8 @@ const getMockCurrentTrace = function () {
 }
 
 /**
- * 
- * @param {Number} m - used to construct id, timestamps, coords 
+ *
+ * @param {Number} m - used to construct id, timestamps, coords
  */
 const getMockTrace = function (m) {
   return {
@@ -97,9 +97,9 @@ const getMockTrace = function (m) {
       geometry: {
         type: 'LineString',
         coordinates: [
-          [m,m],
-          [m+1, m-1],
-          [m+2, m-2]
+          [m, m],
+          [m + 1, m - 1],
+          [m + 2, m - 2]
         ]
       }
     }
@@ -120,9 +120,9 @@ const getMockTracePostResponse = function (m, id) {
     geometry: {
       type: 'LineString',
       coordinates: [
-        [m,m],
-        [m+1, m-1],
-        [m+2, m-2]
+        [m, m],
+        [m + 1, m - 1],
+        [m + 2, m - 2]
       ]
     }
   }

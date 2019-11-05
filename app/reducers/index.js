@@ -53,7 +53,6 @@ const observeApiPersistConfig = {
   ]
 }
 
-
 const rootReducer = combineReducers({
   about: AboutReducer,
   authorization: persistReducer(authorizationPersistConfig, AuthorizationReducer),

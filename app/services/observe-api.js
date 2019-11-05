@@ -63,6 +63,6 @@ export async function getProfile () {
 
 export async function uploadTrace (trace) {
   const traceGeoJSON = getTraceGeoJSON(trace)
-  const data = await callAPI('/traces', 'POST', {'tracejson': traceGeoJSON})
+  const data = await callAPI('/traces', 'POST', { 'tracejson': traceGeoJSON })
   return data.properties.id
 }
