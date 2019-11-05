@@ -33,6 +33,10 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 const FieldsList = styled.FlatList`
 `
 
+const ScrollView = styled.ScrollView`
+  background-color: white
+`
+
 class EditFeatureDetail extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
@@ -452,6 +456,7 @@ class EditFeatureDetail extends React.Component {
       headerActions.push({
         name: 'tick',
         onPress: () => {
+          Keyboard.dismiss()
           this.setState({ dialogVisible: true })
         }
       })
@@ -459,31 +464,38 @@ class EditFeatureDetail extends React.Component {
 
     return (
       <Container>
-        <Header
-          back
-          title={title}
-          navigation={navigation}
-          actions={headerActions}
-        />
-        <FeatureDetailHeader
-          preset={preset}
-          feature={feature}
-          navigation={navigation}
-        />
-        <KeyboardAwareScrollView
-          style={{ backgroundColor: '#fff' }}
-          resetScrollToCoords={{ x: 0, y: 0 }}
-          scrollEnabled
-          extraScrollHeight={150}
-          enableOnAndroid
+        <ScrollView
+          keyboardShouldPersistTaps='handled'
+
         >
-          <PageWrapper>
-            {this.renderFields()}
-            {this.renderAddField()}
-          </PageWrapper>
-          <TagEditor ref={(ref) => (this._tageditor = ref)} properties={this.createTagEditorProperties()} onUpdate={this.onTagEditorUpdate} />
-        </KeyboardAwareScrollView>
-        <SaveEditDialog visible={this.state.dialogVisible} cancel={this.cancelEditDialog} save={this.saveEditDialog} />
+          <Header
+            back
+            title={title}
+            navigation={navigation}
+            actions={headerActions}
+          />
+          <FeatureDetailHeader
+            preset={preset}
+            feature={feature}
+            navigation={navigation}
+          />
+          <KeyboardAwareScrollView
+            style={{ backgroundColor: '#fff' }}
+            resetScrollToCoords={{ x: 0, y: 0 }}
+            scrollEnabled
+            extraScrollHeight={150}
+            enableOnAndroid
+            keyboardShouldPersistTaps='handled'
+          >
+            <PageWrapper
+            >
+              {this.renderFields()}
+              {this.renderAddField()}
+            </PageWrapper>
+            <TagEditor ref={(ref) => (this._tageditor = ref)} properties={this.createTagEditorProperties()} onUpdate={this.onTagEditorUpdate} />
+          </KeyboardAwareScrollView>
+          <SaveEditDialog visible={this.state.dialogVisible} cancel={this.cancelEditDialog} save={this.saveEditDialog} />
+        </ScrollView>
       </Container>
     )
   }
