@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`test trace actions should start trace correctly 1`] = `
+exports[`test trace sync actions should start trace correctly 1`] = `
 Array [
   Object {
     "type": "TRACE_START",
@@ -43,5 +43,35 @@ Array [
     },
     "type": "TRACE_POINT_CAPTURED",
   },
+]
+`;
+
+exports[`trace upload / async actions should upload a single trace 1`] = `
+Array [
+  Object {
+    "id": "id-1",
+    "type": "TRACE_UPLOAD_STARTED",
+  },
+  Object {
+    "newId": "fakeid",
+    "oldId": "id-1",
+    "type": "TRACE_UPLOADED",
+  },
+]
+`;
+
+exports[`trace upload / async actions should upload a single trace 2`] = `
+Array [
+  Array [
+    "http://localhost:3000/traces",
+    Object {
+      "body": "{\\"tracejson\\":{\\"type\\":\\"Feature\\",\\"properties\\":{\\"timestamps\\":[1,11,21],\\"description\\":\\"\\"},\\"geometry\\":{\\"type\\":\\"LineString\\",\\"coordinates\\":[[1,1],[2,0],[3,-1]]}}}",
+      "headers": Object {
+        "Authorization": "abcd",
+        "Content-Type": "application/json",
+      },
+      "method": "POST",
+    },
+  ],
 ]
 `;

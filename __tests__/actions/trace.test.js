@@ -1,4 +1,4 @@
-/* global jest, it, expect, describe */
+/* global jest, it, expect, describe, fetch */
 
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
@@ -8,7 +8,8 @@ import {
   pauseTrace,
   unpauseTrace,
   startSavingTrace,
-  discardTrace
+  discardTrace,
+  uploadPendingTraces
 } from '../../app/actions/traces'
 const middlewares = [thunk]
 const mockStore = configureStore(middlewares)
@@ -45,6 +46,22 @@ jest.mock('../../app/services/trace', () => {
   }
 })
 
+// This is required because the observe API service calls the store directly
+// to get the token.
+jest.mock('../../app/utils/store', () => {
+  return {
+    store: {
+      getState: () => {
+        return {
+          observeApi: {
+            token: 'abcd'
+          }
+        }
+      }
+    }
+  }
+})
+
 const getMockCurrentTrace = function () {
   return {
     type: 'Feature',
@@ -59,7 +76,59 @@ const getMockCurrentTrace = function () {
   }
 }
 
-describe('test trace actions', () => {
+/**
+ * 
+ * @param {Number} m - used to construct id, timestamps, coords 
+ */
+const getMockTrace = function (m) {
+  return {
+    id: `id-${m}`,
+    pending: true,
+    uploading: false,
+    geojson: {
+      type: 'Feature',
+      properties: {
+        timestamps: [
+          m,
+          m + 10,
+          m + 20
+        ]
+      },
+      geometry: {
+        type: 'LineString',
+        coordinates: [
+          [m,m],
+          [m+1, m-1],
+          [m+2, m-2]
+        ]
+      }
+    }
+  }
+}
+
+const getMockTracePostResponse = function (m, id) {
+  return {
+    type: 'Feature',
+    properties: {
+      id,
+      timestamps: [
+        m,
+        m + 10,
+        m + 20
+      ]
+    },
+    geometry: {
+      type: 'LineString',
+      coordinates: [
+        [m,m],
+        [m+1, m-1],
+        [m+2, m-2]
+      ]
+    }
+  }
+}
+
+describe('test trace sync actions', () => {
   it('should start trace correctly', () => {
     const store = mockStore({
       traces: {
@@ -121,5 +190,25 @@ describe('test trace actions', () => {
     store.dispatch(discardTrace())
     const actions = store.getActions()
     expect(actions[0].type).toEqual('TRACE_DISCARD')
+  })
+})
+
+describe('trace upload / async actions', () => {
+  it('should upload a single trace', async () => {
+    const store = mockStore({
+      traces: {
+        traces: [
+          getMockTrace(1)
+        ]
+      },
+      observeApi: {
+        token: 'abcd'
+      }
+    })
+    fetch.once(JSON.stringify(getMockTracePostResponse(1, 'fakeid')))
+    await store.dispatch(uploadPendingTraces())
+    const actions = store.getActions()
+    expect(actions).toMatchSnapshot()
+    expect(fetch.mock.calls).toMatchSnapshot()
   })
 })
