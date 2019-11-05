@@ -278,7 +278,7 @@ describe('trace upload / async actions', () => {
       }
     })
     fetch.resetMocks()
-    fetch.once(JSON.stringify({'message': 'Unknown error'}), {status: 500})
+    fetch.once(JSON.stringify({ 'message': 'Unknown error' }), { status: 500 })
     await store.dispatch(uploadPendingTraces())
     const actions = store.getActions()
     expect(actions).toMatchSnapshot()
