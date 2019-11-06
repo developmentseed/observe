@@ -1,6 +1,7 @@
 import React from 'react'
 import { ScrollView, Platform } from 'react-native'
-import { DrawerItems, SafeAreaView } from 'react-navigation'
+import { SafeAreaView } from 'react-navigation'
+import { DrawerNavigatorItems as DrawerItems } from 'react-navigation-drawer'
 import styled from 'styled-components/native'
 import { colors } from '../style/variables'
 
