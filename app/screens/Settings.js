@@ -5,7 +5,7 @@ import { Linking } from 'react-native'
 import Config from 'react-native-config'
 import { purgeCache, purgeStore, purgeCookies } from '../actions/about'
 import { purgeAllEdits } from '../actions/edit'
-import { startTrace, endTrace } from '../actions/traces'
+// import { startTrace, endTrace } from '../actions/traces'
 import Icon from '../components/Collecticons'
 import Header from '../components/Header'
 import PageWrapper from '../components/PageWrapper'
@@ -89,7 +89,7 @@ class Settings extends React.Component {
               color={colors.primary}
             />
           </ButtonWrapper>
-          <ButtonWrapper>
+          {/* <ButtonWrapper>
             <Button
               onPress={this.props.startTrace}
               title='Start Trace'
@@ -102,7 +102,7 @@ class Settings extends React.Component {
               color={colors.primary}
               disabled={!this.props.currentTrace}
             />
-          </ButtonWrapper>
+          </ButtonWrapper> */}
           <ButtonWrapper>
             <Button
               onPress={this.apiLogin}
@@ -127,9 +127,9 @@ const mapDispatchToProps = {
   purgeCache,
   purgeStore,
   purgeCookies,
-  purgeAllEdits,
-  startTrace,
-  endTrace
+  purgeAllEdits
+  // startTrace,
+  // endTrace
 }
 
 export default connect(
