@@ -2,7 +2,10 @@ import React, { Component } from 'react'
 import Config from 'react-native-config'
 import { Provider } from 'react-redux'
 
-import { createStackNavigator, createDrawerNavigator, createAppContainer } from 'react-navigation'
+import { createAppContainer } from 'react-navigation'
+import { createDrawerNavigator } from 'react-navigation-drawer'
+import { createStackNavigator } from 'react-navigation-stack'
+
 import { PersistGate } from 'redux-persist/integration/react'
 
 import { store, persistor } from './app/utils/store'
