@@ -159,6 +159,7 @@ class BasemapModal extends React.Component {
                     <Switch
                       onValueChange={() => { this.props.toggleOverlay('traces') }}
                       value={this.props.overlays['traces']}
+                      disabled
                     />
                     <LayerName>Your Traces</LayerName>
                   </SwitchSection>
@@ -166,6 +167,7 @@ class BasemapModal extends React.Component {
                     <Switch
                       onValueChange={() => { this.props.toggleOverlay('photos') }}
                       value={this.props.overlays['photos']}
+                      disabled
                     />
                     <LayerName>Your Photos</LayerName>
                   </SwitchSection>

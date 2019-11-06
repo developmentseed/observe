@@ -62,8 +62,8 @@ import BasemapModal from '../components/BasemapModal'
 import ActionButton from '../components/ActionButton'
 import Icon from '../components/Collecticons'
 import { colors } from '../style/variables'
-import { CameraButton } from '../components/CameraButton'
-import { RecordButton } from '../components/RecordButton'
+// import { CameraButton } from '../components/CameraButton'
+// import { RecordButton } from '../components/RecordButton'
 
 import icons from '../assets/icons'
 import { authorize } from '../services/auth'
@@ -350,10 +350,10 @@ class Explore extends React.Component {
       selectedFeatures,
       editsGeojson,
       mode,
-      currentTraceStatus,
-      currentTrace,
+      // currentTraceStatus,
+      // currentTrace,
       requiresPreauth,
-      tracesGeojson,
+      // tracesGeojson,
       style
     } = this.props
     let selectedFeatureIds = null
@@ -589,12 +589,12 @@ class Explore extends React.Component {
                     <MapboxGL.LineLayer id='editedLines' filter={filters.editedLines} style={style.osm.editedLines} minZoomLevel={16} />
                     <MapboxGL.SymbolLayer id='editedPois' style={style.osm.icons} filter={filters.editedPois} />
                   </MapboxGL.ShapeSource>
-                  <MapboxGL.ShapeSource id='tracesGeojsonSource' shape={tracesGeojson}>
+                  {/* <MapboxGL.ShapeSource id='tracesGeojsonSource' shape={tracesGeojson}>
                     <MapboxGL.LineLayer id='traces' style={style.traces.traces} minZoomLevel={16} />
-                  </MapboxGL.ShapeSource>
-                  <MapboxGL.ShapeSource id='currentTraceGeojsonSource' shape={currentTrace}>
+                  </MapboxGL.ShapeSource> */}
+                  {/* <MapboxGL.ShapeSource id='currentTraceGeojsonSource' shape={currentTrace}>
                     <MapboxGL.LineLayer id='currentTrace' style={style.traces.traces} minZoomLevel={16} />
-                  </MapboxGL.ShapeSource>
+                  </MapboxGL.ShapeSource> */}
                 </StyledMap>
               )
           }
@@ -603,8 +603,8 @@ class Explore extends React.Component {
           { showLoadingIndicator }
           <LocateUserButton onPress={() => this.locateUser()} />
           <BasemapModal onChange={this.props.setBasemap} />
-          <CameraButton onPress={() => navigation.navigate('CameraScreen')} />
-          <RecordButton status={currentTraceStatus} onPress={() => this.onRecordPress()} />
+          {/* <CameraButton onPress={() => navigation.navigate('CameraScreen')} />
+          <RecordButton status={currentTraceStatus} onPress={() => this.onRecordPress()} /> */}
           {mode !== 'bbox' && this.renderZoomToEdit()}
         </Container>
       </AndroidBackHandler>
