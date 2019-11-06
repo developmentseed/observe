@@ -466,7 +466,8 @@ class EditFeatureDetail extends React.Component {
       <Container>
         <ScrollView
           keyboardShouldPersistTaps='handled'
-
+          stickyHeaderIndices={[0]}
+          bounces={false}
         >
           <Header
             back
