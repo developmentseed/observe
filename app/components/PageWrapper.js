@@ -1,6 +1,6 @@
 import styled from 'styled-components/native'
 
-const PageWrapper = styled.View`
+const PageWrapper = styled.ScrollView`
   flex: 1;
   background-color: white;
   padding-top: 16;

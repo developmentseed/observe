@@ -53,6 +53,14 @@ const observeApiPersistConfig = {
   ]
 }
 
+const photosPersistConfig = {
+  key: 'photos',
+  storage,
+  whitelist: [
+    'photos'
+  ]
+}
+
 const rootReducer = combineReducers({
   about: AboutReducer,
   authorization: persistReducer(authorizationPersistConfig, AuthorizationReducer),
@@ -62,9 +70,9 @@ const rootReducer = combineReducers({
   edit: persistReducer(editPersistConfig, EditReducer),
   network,
   notification: NotificationReducer,
-  photos: CameraReducer,
   traces: persistReducer(tracesPersistConfig, TracesReducer),
-  observeApi: persistReducer(observeApiPersistConfig, ObserveAPIReducer)
+  observeApi: persistReducer(observeApiPersistConfig, ObserveAPIReducer),
+  photos: persistReducer(photosPersistConfig, CameraReducer)
 })
 
 export default rootReducer

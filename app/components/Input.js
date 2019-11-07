@@ -396,7 +396,7 @@ export class ReadOnlyField extends Component {
 
 export class DescriptionInputField extends Component {
   render () {
-    const { onValueChange, value } = this.props
+    const { onValueChange, value, focus } = this.props
 
     return (
       <View ref={x => (this._root = x)} style={{ flex: 1 }}>
@@ -407,6 +407,7 @@ export class DescriptionInputField extends Component {
 
           <InputWrapper>
             <TextInput
+              autoFocus={focus}
               autoCapitalize='none'
               autoCorrect
               onChangeText={(value) => onValueChange(value)}

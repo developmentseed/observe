@@ -204,3 +204,32 @@ export const getTracesGeojson = state => {
 
   return tracesGeojson
 }
+
+export const getPhotosGeojson = state => {
+  const photos = state.photos.photos
+  const photosGeojson = {
+    'type': 'FeatureCollection',
+    'features': []
+  }
+
+  if (photos.length > 0) {
+    photos.map(photo => {
+      const photoGeojson = {
+        'type': 'Feature',
+        'geometry': {
+          'type': 'Point',
+          'coordinates': [
+            photo.location.coords.longitude,
+            photo.location.coords.latitude
+          ]
+        },
+        'properties': {
+          'description': photo.description
+        }
+      }
+      return photosGeojson.features.push(photoGeojson)
+    })
+  }
+
+  return photosGeojson
+}

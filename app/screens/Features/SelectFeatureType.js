@@ -63,8 +63,10 @@ class SelectFeatureType extends React.Component {
     })
   }
 
-  componentDidMount () {
-    this.props.navigation.addListener('willBlur', payload => {
+  componentDidMount = async () => {
+    this.props.navigation.addListener('willBlur', async (payload) => {
+      // clear the search text from the last time
+      await this.search.onDelete()
       this.resetState()
     })
   }
@@ -156,6 +158,7 @@ class SelectFeatureType extends React.Component {
         <PageWrapper>
           <SearchWrapper>
             <Search
+              ref={(ref) => { this.search = ref }}
               onSearch={(text) => this.onSearch(text)}
               onChangeText={(text) => this.onSearch(text)}
               backgroundColor='#ffffff'

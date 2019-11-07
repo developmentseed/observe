@@ -3,6 +3,8 @@
  * @lint-ignore-every XPLATJSCOPYRIGHT1
  */
 
+import 'react-native-gesture-handler'
+
 import { AppRegistry } from 'react-native'
 import Config from 'react-native-config'
 import MapboxGL from '@react-native-mapbox-gl/maps'

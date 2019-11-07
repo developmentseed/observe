@@ -204,6 +204,17 @@ jest.doMock('react-native', function () {
   return ReactNative
 })
 
+jest.mock('expo-image-manipulator', () => ({
+  manipulateAsync: () => {
+    return {
+      base64: '/9j/4AAQSkZJRgABAQAASABIAAD/4QBYRXhpZgAATU0AKgAAAA',
+      width: 540,
+      height: 780,
+      uri: 'file:///Users/geohacker/Library/Developer/CoreSimulator/Devices/4CE00AFA-5C08-4AE7-AC0F-71E72602761A/data/Containers/Data/Application/C9CE7995-ED78-4297-9D9E-773B9BF51B57/Library/Caches/ImageManipulator/591F660D-A509-4608-A685-D2AF29401AA1.jpg'
+    }
+  }
+}))
+
 jest.mock('react-native-cookies', () => ({
   addEventListener: jest.fn(),
   removeEventListener: jest.fn(),
