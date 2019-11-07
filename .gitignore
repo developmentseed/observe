@@ -70,4 +70,4 @@ app/assets/satellite.json
 xcshareddata
 
 # CocoaPods
-/ios/Pods/
+/ios/Pods/*
