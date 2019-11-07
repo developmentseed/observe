@@ -103,13 +103,13 @@ class Settings extends React.Component {
               disabled={!this.props.currentTrace}
             />
           </ButtonWrapper> */}
-          <ButtonWrapper>
+          {/* <ButtonWrapper>
             <Button
               onPress={this.apiLogin}
               title='Login to Observe API'
               color={colors.primary}
             />
-          </ButtonWrapper>
+          </ButtonWrapper> */}
           <Text>
             Observe-{version}
           </Text>
