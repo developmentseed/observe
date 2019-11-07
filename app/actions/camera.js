@@ -1,8 +1,9 @@
 import * as types from './actionTypes'
 import RNFetchBlob from 'rn-fetch-blob'
 import getRandomId from '../utils/get-random-id'
+import * as ImageManipulator from 'expo-image-manipulator'
 
-export function savePhoto (uri, location) {
+export function savePhoto (uri, location, description) {
   return async dispatch => {
     dispatch({
       type: types.SAVING_PHOTO,
@@ -19,11 +20,19 @@ export function savePhoto (uri, location) {
       }
     }
     try {
-      await RNFetchBlob.fs.createFile(path, uri.replace('file://', ''), 'uri')
+      let manipulatedImage = await ImageManipulator.manipulateAsync(uri, [
+        // FIXME: figure out a resizing strategy once API is hooked up
+        // { resize: { width: 540, height: 780 } }
+      ], { base64: true, compress: 0.2 })
+
+      await RNFetchBlob.fs.createFile(path, manipulatedImage.uri.replace('file://', ''), 'uri')
+
       const photo = {
         'id': id,
         'path': path,
-        'location': location
+        'location': location,
+        'description': description,
+        'pending': true
       }
       dispatch({
         type: types.SAVED_PHOTO,
@@ -36,5 +45,13 @@ export function savePhoto (uri, location) {
         uri: uri
       })
     }
+  }
+}
+
+export function editPhoto (photo, description) {
+  return {
+    type: types.EDIT_PHOTO,
+    photo,
+    description
   }
 }

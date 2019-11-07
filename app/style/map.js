@@ -44,7 +44,8 @@ const traces = {
     16, 1,
     20, 3
   ],
-  lineColor: 'red'
+  lineColor: 'red',
+  visibility: 'none'
 }
 
 const highways = {
@@ -164,6 +165,23 @@ const icons = {
   iconSize: 0.8
 }
 
+const photoIcon = {
+  iconImage: 'maki_attraction',
+  iconAllowOverlap: false,
+  iconIgnorePlacement: false,
+  iconSize: 0.8,
+  visibility: 'none'
+}
+
+const photoIconHalo = {
+  circleRadius: 12,
+  circleColor: 'blue',
+  circleOpacity: 0.6,
+  circleStrokeColor: 'white',
+  circleStrokeWidth: 0.5,
+  visibility: 'none'
+}
+
 export default {
   osm: {
     nodes,
@@ -185,5 +203,9 @@ export default {
   },
   traces: {
     traces
+  },
+  photos: {
+    photoIcon,
+    photoIconHalo
   }
 }

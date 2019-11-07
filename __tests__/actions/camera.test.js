@@ -27,7 +27,7 @@ describe('test save photo action', () => {
       },
       timestamp: 1571221845199.04
     }
-    await savePhoto('uri', mockLocation)(store.dispatch)
+    await savePhoto('uri', mockLocation, 'test photo')(store.dispatch)
     const actions = store.getActions()
     expect(actions[0]).toEqual({
       type: 'SAVING_PHOTO',
@@ -36,9 +36,12 @@ describe('test save photo action', () => {
     expect(actions[1]).toEqual({
       type: 'SAVED_PHOTO',
       photo:
-          { id: 'observe-hauptbanhof',
+          {
+            id: 'observe-hauptbanhof',
+            description: 'test photo',
             path: '/photos/observe-hauptbanhof.jpg',
-            location: mockLocation
+            location: mockLocation,
+            pending: true
           }
     })
   })

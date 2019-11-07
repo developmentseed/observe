@@ -499,6 +499,10 @@ export default function (state = initialState, action) {
         updatedStyle.osm[key].visibility = overlays['osm'] ? 'visible' : 'none'
       })
 
+      Object.keys(updatedStyle['photos']).forEach(key => {
+        updatedStyle.photos[key].visibility = overlays['photos'] ? 'visible' : 'none'
+      })
+
       return {
         ...state,
         overlays,

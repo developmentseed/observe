@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import * as Permissions from 'expo-permissions'
 import { Camera } from 'expo-camera'
 import styled from 'styled-components/native'
-import { Dimensions, Text, View } from 'react-native'
+import { Dimensions, Text } from 'react-native'
 import Container from '../components/Container'
 import Header from '../components/Header'
 import getPlatformStyles from '../utils/get-platform-styles'
@@ -12,6 +12,10 @@ import { colors } from '../style/variables'
 import { savePhoto } from '../actions/camera'
 import * as Location from 'expo-location'
 import LoadingOverlay from '../components/LoadingOverlay'
+import { DescriptionInputField } from '../components/Input'
+import PageWrapper from '../components/PageWrapper'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { PhotoView, ImageDetails } from '../components/PhotoView'
 
 const win = Dimensions.get('window')
 const buttonStyles = getPlatformStyles({
@@ -41,6 +45,14 @@ const SnapButton = styled.TouchableHighlight`
   shadow-offset: 0px 0px;
 `
 
+const View = styled.View`
+  height: 100;
+  padding-left: 5;
+  padding-right: 5;
+  padding-top: 5;
+  padding-bottom: 5;
+`
+
 class CameraScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
@@ -50,30 +62,31 @@ class CameraScreen extends React.Component {
   state = {
     hasCameraPermission: null,
     type: Camera.Constants.Type.back,
-    saving: false
+    saving: false,
+    image: null,
+    location: null,
+    description: null
   }
 
   async componentWillMount () {
     const { status } = await Permissions.askAsync(Permissions.CAMERA)
     this.setState({
-      hasCameraPermission: status === 'granted'
+      hasCameraPermission: status === 'granted',
+      image: null,
+      location: null,
+      description: null
     })
   }
 
   async snap () {
     if (this.camera) {
-      this.setState({
-        saving: true
-      })
       let { uri, width, height } = await this.camera.takePictureAsync()
       const location = await Location.getCurrentPositionAsync({})
       console.log(uri, width, height, location)
-      this.props.savePhoto(uri, location)
-      this.camera.pausePreview()
       this.setState({
-        saving: false
+        image: uri,
+        location: location
       })
-      this.camera.resumePreview()
     }
   }
   render () {
@@ -85,6 +98,24 @@ class CameraScreen extends React.Component {
         <LoadingOverlay />
       )
     }
+
+    const headerActions = [
+      {
+        name: 'tick',
+        onPress: () => {
+          this.setState({
+            saving: true
+          })
+          this.props.savePhoto(this.state.image, this.state.location, this.state.description)
+          this.setState({
+            image: null,
+            location: null,
+            description: null
+          })
+          navigation.navigate('Explore')
+        }
+      }
+    ]
 
     if (hasCameraPermission === null) {
       return (
@@ -98,6 +129,27 @@ class CameraScreen extends React.Component {
           <Text>No access to camera</Text>
         </View>
       )
+    } else if (this.state.image) {
+      return (
+        <Container>
+          <Header back={() => this.setState({ image: null, location: null, description: null })} title='Save picture' navigation={navigation} actions={headerActions} />
+          <KeyboardAwareScrollView
+            style={{ backgroundColor: '#fff' }}
+            resetScrollToCoords={{ x: 0, y: 0 }}
+            scrollEnabled={false}
+            extraScrollHeight={100}
+            enableOnAndroid
+          >
+            <PageWrapper>
+              <PhotoView path={this.state.image} />
+              <ImageDetails timestamp={this.state.location.timestamp} location={this.state.location} />
+              <View>
+                <DescriptionInputField value={this.state.description} onValueChange={(value) => this.setState({ description: value })} />
+              </View>
+            </PageWrapper>
+          </KeyboardAwareScrollView>
+        </Container>
+      )
     } else {
       return (
         <Container>
@@ -110,7 +162,7 @@ class CameraScreen extends React.Component {
                 flexDirection: 'row'
               }} >
               <SnapButton onPress={() => { this.snap() }}>
-                <Icon name='target' size={20} color='#0B3954' />
+                <Icon name='camera' size={20} color='#0B3954' />
               </SnapButton>
             </View>
           </Camera>
