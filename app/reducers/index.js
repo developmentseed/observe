@@ -48,6 +48,7 @@ const tracesPersistConfig = {
 
 const observeApiPersistConfig = {
   key: 'observeApi',
+  storage,
   whitelist: [
     'token'
   ]
