@@ -224,7 +224,10 @@ export const getPhotosGeojson = state => {
           ]
         },
         'properties': {
-          'description': photo.description
+          'id': photo.id,
+          'type': 'photo',
+          'description': photo.description,
+          'path': photo.path
         }
       }
       return photosGeojson.features.push(photoGeojson)

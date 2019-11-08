@@ -6,6 +6,7 @@ import MapboxGL from '@react-native-mapbox-gl/maps'
 import { AndroidBackHandler } from 'react-navigation-backhandler'
 import Config from 'react-native-config'
 import { NavigationEvents } from 'react-navigation'
+import _partition from 'lodash.partition'
 
 import {
   loadUserDetails
@@ -18,7 +19,8 @@ import {
   startAddPoint,
   setMapMode,
   updateVisibleBounds,
-  setBasemap
+  setBasemap,
+  setSelectedPhotos
 } from '../actions/map'
 
 import {
@@ -128,7 +130,9 @@ class Explore extends React.Component {
   onDidFinishRenderingMapFully = async () => {
     this.setState({
       isMapLoaded: true,
-      clickableLayers: ['editedPois', 'pois', 'editedPolygons', 'buildings', 'roads', 'roadsLower', 'railwayLine', 'waterLine', 'leisure'],
+      clickableLayers: ['editedPois', 'pois', 'editedPolygons',
+        'buildings', 'roads', 'roadsLower',
+        'railwayLine', 'waterLine', 'leisure', 'photos'],
       userTrackingMode: MapboxGL.UserTrackingModes.None
     })
 
@@ -219,7 +223,9 @@ class Explore extends React.Component {
   async loadFeaturesAtPoint (rect) {
     try {
       const { features } = await this.mapRef.queryRenderedFeaturesInRect(rect, null, this.state.clickableLayers)
-      this.props.setSelectedFeatures(features)
+      const [ photos, osmFeatures ] = _partition(features, (f) => { return f.properties.type === 'photo' })
+      this.props.setSelectedFeatures(osmFeatures)
+      this.props.setSelectedPhotos(photos)
     } catch (err) {
       console.log('failed getting features', err)
     }
@@ -356,9 +362,11 @@ class Explore extends React.Component {
       requiresPreauth,
       tracesGeojson,
       style,
-      photosGeojson
+      photosGeojson,
+      selectedPhotos
     } = this.props
     let selectedFeatureIds = null
+    let selectedPhotoIds = null
 
     if (selectedFeatures && selectedFeatures.length) {
       selectedFeatureIds = {
@@ -371,6 +379,16 @@ class Explore extends React.Component {
       }, selectedFeatureIds)
     }
 
+    console.log('selectedPhotos', selectedPhotos)
+    if (selectedPhotos && selectedPhotos.length) {
+      selectedPhotoIds = ['match', ['get', 'id'], [], true, false]
+      selectedPhotos.reduce((selectedPhotoIds, photo) => {
+        selectedPhotoIds[2].push(photo.properties.id)
+        return selectedPhotoIds
+      }, selectedPhotoIds)
+    }
+
+    console.log('select photo ids', selectedPhotoIds)
     let filteredFeatureIds = null
     if (editsGeojson.features.length) {
       filteredFeatureIds = {
@@ -516,7 +534,8 @@ class Explore extends React.Component {
           ['geometry-type'], 'Point'
         ],
         selectedFeatureIds && selectedFeatureIds.nodes[2].length ? selectedFeatureIds.nodes : ['==', ['get', 'id'], '']
-      ]
+      ],
+      photosHaloSelected: selectedPhotoIds && selectedPhotoIds.length ? selectedPhotoIds : ['==', ['get', 'id'], '']
     }
 
     return (
@@ -598,6 +617,7 @@ class Explore extends React.Component {
                     <MapboxGL.LineLayer id='currentTrace' style={style.traces.traces} minZoomLevel={16} />
                   </MapboxGL.ShapeSource>
                   <MapboxGL.ShapeSource id='photoGeojsonSource' shape={photosGeojson}>
+                    <MapboxGL.CircleLayer id='photosHaloSelected' style={style.photos.photoIconSelected} filter={filters.photosHaloSelected} minZoomLevel={16} />
                     <MapboxGL.CircleLayer id='photosHalo' style={style.photos.photoIconHalo} minZoomLevel={16} />
                     <MapboxGL.SymbolLayer id='photos' style={style.photos.photoIcon} minZoomLevel={16} />
                   </MapboxGL.ShapeSource>
@@ -642,7 +662,8 @@ const mapStateToProps = (state) => {
     tracesGeojson: getTracesGeojson(state),
     overlays: state.map.overlays,
     style: state.map.style,
-    photosGeojson: getPhotosGeojson(state)
+    photosGeojson: getPhotosGeojson(state),
+    selectedPhotos: state.map.selectedPhotos
   }
 }
 
@@ -662,7 +683,8 @@ const mapDispatchToProps = {
   endTrace,
   pauseTrace,
   unpauseTrace,
-  loadUserDetails
+  loadUserDetails,
+  setSelectedPhotos
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Explore)

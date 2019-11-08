@@ -23,7 +23,8 @@ export const initialState = {
   // between app activations
   pendingEviction: [],
   serialNumber: 0,
-  style: style
+  style: style,
+  selectedPhotos: false
 }
 
 const TILE_CACHE_SIZE = Config.TILE_CACHE_SIZE || 10000
@@ -515,6 +516,14 @@ export default function (state = initialState, action) {
       return {
         ...state,
         serialNumber: serialNumber + 1
+      }
+    }
+
+    case types.SET_SELECTED_PHOTOS: {
+      console.log('reducer', action.photos)
+      return {
+        ...state,
+        selectedPhotos: action.photos
       }
     }
   }
