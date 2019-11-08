@@ -56,6 +56,7 @@ class PhotoDetailScreen extends React.Component {
 
   render () {
     const { navigation, editPhoto } = this.props
+    const previousScreen = navigation.state.key
     const photoId = this.props.navigation.getParam('photo')
     const photo = this.getPhoto(photoId)
     const headerActions = [
@@ -97,9 +98,13 @@ class PhotoDetailScreen extends React.Component {
       )
     }
 
+    let backButton = 'PhotosListScreen'
+    if (previousScreen === 'Explore') {
+      backButton = 'Explore'
+    }
     return (
       <Container>
-        <Header back title='Photo Details' navigation={navigation} actions={headerActions} />
+        <Header back={backButton} title='Photo Details' navigation={navigation} actions={headerActions} />
         <KeyboardAwareScrollView
           style={{ backgroundColor: '#fff' }}
           resetScrollToCoords={{ x: 0, y: 0 }}
