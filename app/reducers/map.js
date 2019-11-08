@@ -520,7 +520,6 @@ export default function (state = initialState, action) {
     }
 
     case types.SET_SELECTED_PHOTOS: {
-      console.log('reducer', action.photos)
       return {
         ...state,
         selectedPhotos: action.photos

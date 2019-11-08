@@ -8,8 +8,8 @@ import {
 import styled from 'styled-components/native'
 import { colors } from '../style/variables'
 import getTaginfo from '../utils/get-taginfo'
-
 import BottomDrawer from 'rn-bottom-drawer'
+import formatDate from '../utils/format-date'
 
 const win = Dimensions.get('window')
 
@@ -42,7 +42,7 @@ const FeatureListWrapper = styled.View`
   width: ${win.width - 96};
 `
 
-const FeatureList = styled.FlatList`
+const ItemList = styled.SectionList`
   height: 400;
   align-self: stretch;
 `
@@ -77,7 +77,6 @@ const Grabber = styled.View`
 class MapOverlay extends Component {
   renderFeature (feature) {
     const { navigation } = this.props
-
     function onPress () {
       navigation.navigate('ViewFeatureDetail', { feature })
     }
@@ -101,9 +100,38 @@ class MapOverlay extends Component {
     )
   }
 
+  renderPhoto (photo) {
+    const { navigation } = this.props
+    const photoId = photo.properties.id
+    function onPress () {
+      navigation.navigate('PhotoDetailScreen', { photo: photoId })
+    }
+
+    return (
+      <Feature onPress={onPress}>
+        <FeatureText>
+          <NameText>Photo</NameText>
+          <BoldText>{photo.properties.description}</BoldText>
+          <Text>{formatDate(photo.properties.timestamp)}</Text>
+        </FeatureText>
+      </Feature>
+    )
+  }
+
+  renderItem = (item) => {
+    if (item.properties.type === 'photo') {
+      return this.renderPhoto(item)
+    } else {
+      return this.renderFeature(item)
+    }
+  }
+
   render () {
-    const { features, selectedFeatures } = this.props
-    if (selectedFeatures && selectedFeatures.length > 0) {
+    const { features, selectedFeatures, selectedPhotos } = this.props
+    if ((selectedFeatures && selectedFeatures.length > 0) || (selectedPhotos && selectedPhotos.length > 0)) {
+      const featureSection = { 'title': 'Featues', 'data': selectedFeatures || features }
+      const photoSection = { 'title': 'Photos', 'data': selectedPhotos }
+
       return (
         <Container pointerEvents={Platform.OS === 'ios' ? 'box-none' : 'auto'}>
           <Drawer
@@ -114,10 +142,10 @@ class MapOverlay extends Component {
           >
             <FeatureListWrapper>
               <Grabber />
-              <FeatureList
-                data={selectedFeatures || features}
-                renderItem={({ item }) => this.renderFeature(item)}
-                keyExtractor={(item, i) => `feature-${i}-${item.id}`}
+              <ItemList
+                sections={[featureSection, photoSection]}
+                renderItem={({ item }) => { return this.renderItem(item) }}
+                keyExtractor={(item, i) => `${item.properties.id}`}
               />
             </FeatureListWrapper>
           </Drawer>
@@ -131,7 +159,8 @@ class MapOverlay extends Component {
 
 const mapStateToProps = state => {
   return {
-    selectedFeatures: state.map.selectedFeatures || false
+    selectedFeatures: state.map.selectedFeatures || false,
+    selectedPhotos: state.map.selectedPhotos
   }
 }
 

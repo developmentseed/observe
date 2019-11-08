@@ -379,7 +379,6 @@ class Explore extends React.Component {
       }, selectedFeatureIds)
     }
 
-    console.log('selectedPhotos', selectedPhotos)
     if (selectedPhotos && selectedPhotos.length) {
       selectedPhotoIds = ['match', ['get', 'id'], [], true, false]
       selectedPhotos.reduce((selectedPhotoIds, photo) => {
@@ -388,7 +387,6 @@ class Explore extends React.Component {
       }, selectedPhotoIds)
     }
 
-    console.log('select photo ids', selectedPhotoIds)
     let filteredFeatureIds = null
     if (editsGeojson.features.length) {
       filteredFeatureIds = {
