@@ -15,7 +15,9 @@ const uninterestingKeys = [
   'addr:street',
   'icon',
   'ndrefs',
-  'FIXME'
+  'FIXME',
+  'height',
+  'levels'
 ]
 
 /**
