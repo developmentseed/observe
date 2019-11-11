@@ -432,7 +432,7 @@ class EditFeatureDetail extends React.Component {
           bounces={false}
         >
           <Header
-            back
+            back={'SelectFeatureType'}
             title='Add Point'
             navigation={navigation}
             actions={headerActions}
