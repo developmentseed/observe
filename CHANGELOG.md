@@ -4,9 +4,34 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## [v0.1.10] - 2019-11-11
 
-- ...
+### Changed
+- Major react-native 0.61.1 upgrade [`#98`](https://github.com/developmentseed/observe/pull/98)
+- Improve preath & location access flow [`#122`](https://github.com/developmentseed/observe/pull/122)
+- Rename services/api.js to services/osm-api.js [`#117`](https://github.com/developmentseed/observe/pull/117)
+
+
+### Added
+- Map layer switcher [`#111`](https://github.com/developmentseed/observe/pull/111)
+- More API tests [`#83`](https://github.com/developmentseed/observe/pull/83)
+- More util tests [`#82`](https://github.com/developmentseed/observe/pull/82)
+- Edit workflow tests [`#80`](https://github.com/developmentseed/observe/pull/80)
+- Test edit utils [`#81`](https://github.com/developmentseed/observe/pull/81)
+
+### Fixed
+- Clear search text on blur [`#129`](https://github.com/developmentseed/observe/pull/129)
+- Scroll the screen to avoid keyboard overlapping input fields [`#123`](https://github.com/developmentseed/observe/pull/123)
+- Hide upload and trash buttons if there are no edits [`#124`](https://github.com/developmentseed/observe/pull/124)
+- Fix field collapse in add/edit feature panel [`#120`](https://github.com/developmentseed/observe/pull/120)
+- Use proper asset url for ios and android [`#76`](https://github.com/developmentseed/observe/pull/76)
+
+### Unreleased
+- Setup expo-location with react-native 0.61, GPSTracker component [`#99`](https://github.com/developmentseed/observe/pull/99)
+- Integrate expo-camera [`#103`](https://github.com/developmentseed/observe/pull/103)
+- Trace actions and reducers [`#104`](https://github.com/developmentseed/observe/pull/104)
+- Show traces on the map [`#115`](https://github.com/developmentseed/observe/pull/115)
+- Show gps track while recording [`#110`](https://github.com/developmentseed/observe/pull/110)
 
 ## [v0.1.8] - 2019-06-29
 
