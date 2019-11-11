@@ -221,3 +221,9 @@ describe('test for traces reducer', () => {
     expect(newState.saving).toEqual(false)
   })
 })
+
+describe('tests for upload trace actions', () => {
+  it('should handle TRACE_UPLOAD_START action correctly', () => {
+    
+  })
+})

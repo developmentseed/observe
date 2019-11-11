@@ -13,6 +13,7 @@ import {
 } from '../../app/actions/traces'
 const middlewares = [thunk]
 const mockStore = configureStore(middlewares)
+import { getMockTrace } from '../test-utils'
 
 jest.mock('../../app/services/trace', () => {
   return {
@@ -76,35 +77,6 @@ const getMockCurrentTrace = function () {
   }
 }
 
-/**
- *
- * @param {Number} m - used to construct id, timestamps, coords
- */
-const getMockTrace = function (m) {
-  return {
-    id: `id-${m}`,
-    pending: true,
-    uploading: false,
-    geojson: {
-      type: 'Feature',
-      properties: {
-        timestamps: [
-          m,
-          m + 10,
-          m + 20
-        ]
-      },
-      geometry: {
-        type: 'LineString',
-        coordinates: [
-          [m, m],
-          [m + 1, m - 1],
-          [m + 2, m - 2]
-        ]
-      }
-    }
-  }
-}
 
 const getMockTracePostResponse = function (m, id) {
   return {
