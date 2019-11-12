@@ -1380,10 +1380,10 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/netinfo/-/netinfo-4.3.1.tgz#0601954eae93c1e06647b74600c0b82c65689d22"
   integrity sha512-djUdmm/RCnKKCNR6w6APDLH1oRhS7EgMHcgghU4cxlgEGJMQ4yVO6jl+99DpI3pY4WElahgU9D8IK1PKTz6rig==
 
-"@react-native-mapbox-gl/maps@^7.0.6":
-  version "7.0.6"
-  resolved "https://registry.yarnpkg.com/@react-native-mapbox-gl/maps/-/maps-7.0.6.tgz#f96adda0c7ea5a7399c749561151881dd1050dd4"
-  integrity sha512-cI/8FRfwV0qSgukmf1j23DT3BI6at3WtabJ8C1mP/rjOESrab+J3AbmuZq+387k2fgMvFV4tEDeCJc1joGdGXA==
+"@react-native-mapbox-gl/maps@^7.0.8":
+  version "7.0.8"
+  resolved "https://registry.yarnpkg.com/@react-native-mapbox-gl/maps/-/maps-7.0.8.tgz#f2d4ee09a889d1c62217c20ea29743f8ce0f886e"
+  integrity sha512-6LCvTx0ZJwaySjxlOtf4zUKHkMXOGCTANDBLtGoxZtrYdcvJNfd/rtSyR7c/0amljZEhxN0u1k0Q8hkNkxOgHg==
   dependencies:
     "@mapbox/geo-viewport" ">= 0.4.0"
     "@turf/along" ">= 4.0.0 <7.0.0"
