@@ -26,6 +26,7 @@ export function getMockTrace (m) {
     id: `id-${m}`,
     pending: true,
     uploading: false,
+    errors: [],
     geojson: {
       type: 'Feature',
       properties: {

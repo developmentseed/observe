@@ -125,10 +125,7 @@ export default function (state = initialState, action) {
       traces[index].pending = false
       traces[index].uploading = false
       traces[index].id = action.newId
-      if (!traces[index].properties) {
-        traces[index].properties = {}
-      }
-      traces[index].properties.id = action.newId
+      traces[index].geojson.properties.id = action.newId
       return {
         ...state,
         traces

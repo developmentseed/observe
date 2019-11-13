@@ -1,6 +1,8 @@
 /* global describe, it, expect */
 
 import reducer from '../../app/reducers/traces'
+import { getMockTrace } from '../test-utils'
+import { ObserveAPIError } from '../../app/utils/errors'
 
 const initialState = {
   currentTrace: null,
@@ -223,7 +225,69 @@ describe('test for traces reducer', () => {
 })
 
 describe('tests for upload trace actions', () => {
-  it('should handle TRACE_UPLOAD_START action correctly', () => {
-    
+  it('should handle TRACE_UPLOAD_STARTED action correctly', () => {
+    const mockTrace1 = getMockTrace(1)
+    const mockTrace2 = getMockTrace(2)
+    const state = {
+      ...initialState,
+      traces: [
+        mockTrace1,
+        mockTrace2
+      ]
+    }
+    const action = {
+      type: 'TRACE_UPLOAD_STARTED',
+      id: mockTrace1.id
+    }
+    const newState = reducer(state, action)
+    expect(newState.traces[0].uploading).toEqual(true)
+    expect(newState.traces[1].uploading).toEqual(false)
+  })
+
+  it('should handle TRACE_UPLOADED action correctly', () => {
+    const mockTrace1 = getMockTrace(1)
+    mockTrace1.uploading = true
+    const mockTrace2 = getMockTrace(2)
+    const state = {
+      ...initialState,
+      traces: [
+        mockTrace1,
+        mockTrace2
+      ]
+    }
+    const action = {
+      type: 'TRACE_UPLOADED',
+      oldId: mockTrace1.id,
+      newId: 'fakeid'
+    }
+    const newState = reducer(state, action)
+    expect(newState.traces[0].id).toEqual('fakeid')
+    expect(newState.traces[0].uploading).toEqual(false)
+    expect(newState.traces[0].pending).toEqual(false)
+    expect(newState.traces[0].geojson.properties.id).toEqual('fakeid')
+  })
+
+  it('should handle TRACE_UPLOAD_FAILED action correctly', () => {
+    const mockTrace1 = getMockTrace(1)
+    mockTrace1.uploading = true
+    const mockTrace2 = getMockTrace(2)
+    const state = {
+      ...initialState,
+      traces: [
+        mockTrace1,
+        mockTrace2
+      ]
+    }
+    const action = {
+      type: 'TRACE_UPLOAD_FAILED',
+      id: mockTrace1.id,
+      error: new ObserveAPIError('fake', 404)
+    }
+    const newState = reducer(state, action)
+    expect(newState.traces[0].errors.length).toEqual(1)
+    expect(newState.traces[0].pending).toEqual(true)
+    expect(newState.traces[0].uploading).toEqual(false)
+    expect(newState.traces[0].errors[0].message).toEqual('fake')
+    expect(newState.traces[0].errors[0].status).toEqual(404)
   })
 })
