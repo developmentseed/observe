@@ -186,8 +186,7 @@ describe('test for traces reducer', () => {
       traces: [
         {
           id: 'observe-hauptbanhof',
-          pending: true,
-          uploading: false,
+          status: 'pending',
           errors: [],
           geojson: expectedTraceGeoJSON
         }
@@ -240,8 +239,8 @@ describe('tests for upload trace actions', () => {
       id: mockTrace1.id
     }
     const newState = reducer(state, action)
-    expect(newState.traces[0].uploading).toEqual(true)
-    expect(newState.traces[1].uploading).toEqual(false)
+    expect(newState.traces[0].status).toEqual('uploading')
+    expect(newState.traces[1].status).toEqual('pending')
   })
 
   it('should handle TRACE_UPLOADED action correctly', () => {
@@ -262,8 +261,7 @@ describe('tests for upload trace actions', () => {
     }
     const newState = reducer(state, action)
     expect(newState.traces[0].id).toEqual('fakeid')
-    expect(newState.traces[0].uploading).toEqual(false)
-    expect(newState.traces[0].pending).toEqual(false)
+    expect(newState.traces[0].status).toEqual('uploaded')
     expect(newState.traces[0].geojson.properties.id).toEqual('fakeid')
   })
 
@@ -285,8 +283,7 @@ describe('tests for upload trace actions', () => {
     }
     const newState = reducer(state, action)
     expect(newState.traces[0].errors.length).toEqual(1)
-    expect(newState.traces[0].pending).toEqual(true)
-    expect(newState.traces[0].uploading).toEqual(false)
+    expect(newState.traces[0].status).toEqual('pending')
     expect(newState.traces[0].errors[0].message).toEqual('fake')
     expect(newState.traces[0].errors[0].status).toEqual(404)
   })

@@ -18,14 +18,13 @@ export function getFeature (
 }
 
 /**
- * 
+ *
  * @param {Number} m - used to construct id, timestamps, coords
  */
 export function getMockTrace (m) {
   return {
     id: `id-${m}`,
-    pending: true,
-    uploading: false,
+    status: 'pending',
     errors: [],
     geojson: {
       type: 'Feature',
@@ -47,4 +46,3 @@ export function getMockTrace (m) {
     }
   }
 }
-

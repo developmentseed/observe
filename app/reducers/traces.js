@@ -54,8 +54,7 @@ export default function (state = initialState, action) {
       const traceId = getRandomId()
       const newTrace = {
         id: traceId,
-        pending: true,
-        uploading: false,
+        status: 'pending',
         errors: [],
         geojson: {
           ...state.currentTrace,
@@ -112,7 +111,7 @@ export default function (state = initialState, action) {
     case types.TRACE_UPLOAD_STARTED: {
       const traces = _cloneDeep(state.traces)
       const index = _findIndex(state.traces, t => t.id === action.id)
-      traces[index].uploading = true
+      traces[index].status = 'uploading'
       return {
         ...state,
         traces
@@ -122,8 +121,7 @@ export default function (state = initialState, action) {
     case types.TRACE_UPLOADED: {
       const traces = _cloneDeep(state.traces)
       const index = _findIndex(state.traces, t => t.id === action.oldId)
-      traces[index].pending = false
-      traces[index].uploading = false
+      traces[index].status = 'uploaded'
       traces[index].id = action.newId
       traces[index].geojson.properties.id = action.newId
       return {
@@ -135,7 +133,7 @@ export default function (state = initialState, action) {
     case types.TRACE_UPLOAD_FAILED: {
       const traces = _cloneDeep(state.traces)
       const index = _findIndex(state.traces, t => t.id === action.id)
-      traces[index].uploading = false
+      traces[index].status = 'pending'
       traces[index].errors.push(action.error)
       return {
         ...state,
