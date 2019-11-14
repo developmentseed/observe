@@ -182,6 +182,16 @@ const photoIconHalo = {
   visibility: 'none'
 }
 
+const photoIconSelected = {
+  circleRadius: 15,
+  circleColor: 'brown',
+  circleOpacity: 0.6,
+  circleStrokeColor: 'blue',
+  circleStrokeWidth: 2,
+  circleStrokeOpacity: 0.6,
+  visibility: 'none'
+}
+
 export default {
   osm: {
     nodes,
@@ -206,6 +216,7 @@ export default {
   },
   photos: {
     photoIcon,
-    photoIconHalo
+    photoIconHalo,
+    photoIconSelected
   }
 }

@@ -697,6 +697,13 @@ export function setSelectedFeatures (features) {
   }
 }
 
+export function setSelectedPhotos (photos) {
+  return {
+    type: types.SET_SELECTED_PHOTOS,
+    photos: photos
+  }
+}
+
 export function startAddPoint () {
   return {
     type: types.START_ADD_POINT
