@@ -104,7 +104,7 @@ class MapOverlay extends Component {
     const { navigation } = this.props
     const photoId = photo.properties.id
     function onPress () {
-      navigation.navigate({ routeName: 'PhotoDetailScreen', params: { photo: photoId }, key: 'Explore' })
+      navigation.navigate({ routeName: 'PhotoDetailScreen', params: { photo: photoId, previousScreen: 'Explore' } })
     }
 
     return (
