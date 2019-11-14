@@ -70,8 +70,7 @@ const UserContributionsNavigator = createStackNavigator({
 })
 
 const PhotosListNavigator = createStackNavigator({
-  PhotosListScreen: { screen: PhotosListScreen },
-  PhotoDetailScreen: { screen: PhotoDetailScreen }
+  PhotosListScreen: { screen: PhotosListScreen }
 }, {
   initialRouteName: 'PhotosListScreen',
   headerMode: 'none',
@@ -105,6 +104,7 @@ const AppNavigator = createDrawerNavigator({
   AddFeatureDetail: { screen: AddFeatureDetail },
   EditFeatureDetail: { screen: EditFeatureDetail },
   SelectFeatureType: { screen: SelectFeatureType },
+  PhotoDetailScreen: { screen: PhotoDetailScreen },
   CameraScreen: { screen: CameraScreen },
   SaveTrace: { screen: SaveTrace }
 }, {
