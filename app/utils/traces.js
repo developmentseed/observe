@@ -79,3 +79,14 @@ export function isValidTrace (traceGeoJSON, options) {
 export function getTraceLength (traceGeoJSON) {
   return turfLength(traceGeoJSON, { units: 'kilometers' }) * 1000
 }
+
+export function getTraceGeoJSON (trace) {
+  return {
+    type: 'Feature',
+    properties: {
+      timestamps: trace.geojson.properties.timestamps,
+      description: trace.geojson.properties.description || ''
+    },
+    geometry: trace.geojson.geometry
+  }
+}

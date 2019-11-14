@@ -5,6 +5,8 @@ import {
 } from '../utils/traces'
 
 import getRandomId from '../utils/get-random-id'
+import _cloneDeep from 'lodash.clonedeep'
+import _findIndex from 'lodash.findindex'
 
 const initialState = {
   currentTrace: null,
@@ -52,7 +54,8 @@ export default function (state = initialState, action) {
       const traceId = getRandomId()
       const newTrace = {
         id: traceId,
-        pending: true,
+        status: 'pending',
+        errors: [],
         geojson: {
           ...state.currentTrace,
           properties: {
@@ -102,6 +105,39 @@ export default function (state = initialState, action) {
       return {
         ...state,
         watcher: action.watcher
+      }
+    }
+
+    case types.TRACE_UPLOAD_STARTED: {
+      const traces = _cloneDeep(state.traces)
+      const index = _findIndex(state.traces, t => t.id === action.id)
+      traces[index].status = 'uploading'
+      return {
+        ...state,
+        traces
+      }
+    }
+
+    case types.TRACE_UPLOADED: {
+      const traces = _cloneDeep(state.traces)
+      const index = _findIndex(state.traces, t => t.id === action.oldId)
+      traces[index].status = 'uploaded'
+      traces[index].id = action.newId
+      traces[index].geojson.properties.id = action.newId
+      return {
+        ...state,
+        traces
+      }
+    }
+
+    case types.TRACE_UPLOAD_FAILED: {
+      const traces = _cloneDeep(state.traces)
+      const index = _findIndex(state.traces, t => t.id === action.id)
+      traces[index].status = 'pending'
+      traces[index].errors.push(action.error)
+      return {
+        ...state,
+        traces
       }
     }
   }

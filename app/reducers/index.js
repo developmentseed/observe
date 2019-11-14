@@ -46,6 +46,14 @@ const tracesPersistConfig = {
   ]
 }
 
+const observeApiPersistConfig = {
+  key: 'observeApi',
+  storage,
+  whitelist: [
+    'token'
+  ]
+}
+
 const photosPersistConfig = {
   key: 'photos',
   storage,
@@ -64,7 +72,7 @@ const rootReducer = combineReducers({
   network,
   notification: NotificationReducer,
   traces: persistReducer(tracesPersistConfig, TracesReducer),
-  observeApi: ObserveAPIReducer,
+  observeApi: persistReducer(observeApiPersistConfig, ObserveAPIReducer),
   photos: persistReducer(photosPersistConfig, CameraReducer)
 })
 

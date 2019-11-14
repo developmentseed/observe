@@ -222,7 +222,7 @@ PODS:
     - React
   - react-native-geolocation (1.4.2):
     - React
-  - react-native-mapbox-gl (7.0.6):
+  - react-native-mapbox-gl (7.0.8):
     - React
   - react-native-netinfo (4.3.1):
     - React
@@ -515,7 +515,7 @@ SPEC CHECKSUMS:
   react-native-config: 55548054279d92e0e4566ea15a8b9b81028ec342
   react-native-cookies: 854d59c4135c70b92a02ca4930e68e4e2eb58150
   react-native-geolocation: a7b94614afbd5fd8350e0233a2025c8228fc8041
-  react-native-mapbox-gl: 4988be25f86de3daa43bda9325dca9020a7825e0
+  react-native-mapbox-gl: fcd88e2bf0ddea552b0209cc2770a5ac2b9c9910
   react-native-netinfo: 397dc351976ee5640fabca2452c23813895be2e5
   React-RCTActionSheet: af4d951113b1e068bb30611f91b984a7a73597ff
   React-RCTAnimation: 4f518d70bb6890b7c3d9d732f84786d6693ca297
