@@ -71,3 +71,4 @@ xcshareddata
 
 # CocoaPods
 /ios/Pods/*
+!/ios/Pods/Manifest.lock
