@@ -13,7 +13,7 @@ class PhotosListScreen extends React.Component {
 
   select = photo => {
     const { navigation } = this.props
-    navigation.navigate({ routeName: 'PhotoDetailScreen', params: { photo: photo.id }, key: 'PhotoListScreen' })
+    navigation.navigate({ routeName: 'PhotoDetailScreen', params: { photo: photo.id } })
   }
 
   render () {
