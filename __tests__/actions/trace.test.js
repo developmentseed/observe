@@ -11,9 +11,9 @@ import {
   discardTrace,
   uploadPendingTraces
 } from '../../app/actions/traces'
+import { getMockTrace } from '../test-utils'
 const middlewares = [thunk]
 const mockStore = configureStore(middlewares)
-import { getMockTrace } from '../test-utils'
 
 jest.mock('../../app/services/trace', () => {
   return {
@@ -76,7 +76,6 @@ const getMockCurrentTrace = function () {
     }
   }
 }
-
 
 const getMockTracePostResponse = function (m, id) {
   return {
@@ -203,7 +202,7 @@ describe('trace upload / async actions', () => {
   it('should not upload non-pending traces', async () => {
     const trace1 = getMockTrace(1)
     const trace2 = getMockTrace(2)
-    trace2.pending = false
+    trace2.status = 'uploaded'
     const store = mockStore({
       traces: {
         traces: [
@@ -222,7 +221,7 @@ describe('trace upload / async actions', () => {
 
   it('should not upload uploading traces', async () => {
     const trace1 = getMockTrace(1)
-    trace1.uploading = true
+    trace1.status = 'uploading'
     const trace2 = getMockTrace(2)
     const store = mockStore({
       traces: {
