@@ -78,6 +78,10 @@ export const SAVING_PHOTO = 'SAVING_PHOTO'
 export const SAVED_PHOTO = 'SAVED_PHOTO'
 export const SAVE_PHOTO_FAILED = 'SAVE_PHOTO_FAILED'
 export const EDIT_PHOTO = 'EDIT_PHOTO'
+export const DELETE_PHOTO = 'DELETE_PHOTO'
+export const DELETING_PHOTO = 'DELETING_PHOTO'
+export const DELETED_PHOTO = 'DELETED_PHOTO'
+export const DELETE_PHOTO_FAILED = 'DELETE_PHOTO_FAILED'
 
 // Actions for Traces
 export const TRACE_START = 'TRACE_START'

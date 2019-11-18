@@ -55,3 +55,28 @@ export function editPhoto (photo, description) {
     description
   }
 }
+
+export function deletePhoto (photo) {
+  console.log('delete photo action')
+  return async dispatch => {
+    dispatch({
+      type: types.DELETING_PHOTO,
+      photo: photo
+    })
+
+    const path = `${RNFetchBlob.fs.dirs.DocumentDir}/photos/${photo}.jpg`
+    try {
+      await RNFetchBlob.fs.unlink(path)
+    } catch (err) {
+      console.log('File unlink failed', err)
+      dispatch({
+        type: types.DELETE_PHOTO_FAILED,
+        photo: photo
+      })
+    }
+    dispatch({
+      type: types.DELETED_PHOTO,
+      photo
+    })
+  }
+}
