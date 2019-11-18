@@ -57,7 +57,6 @@ export function editPhoto (photo, description) {
 }
 
 export function deletePhoto (photo) {
-  console.log('delete photo action')
   return async dispatch => {
     dispatch({
       type: types.DELETING_PHOTO,

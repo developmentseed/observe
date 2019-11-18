@@ -34,7 +34,6 @@ export default function (state = initialState, action) {
     }
 
     case types.DELETED_PHOTO: {
-      console.log('delete photo reducer', action.photo)
       let photos = [...state.photos]
       photos = photos.filter(photo => photo.id !== action.photo)
       return {

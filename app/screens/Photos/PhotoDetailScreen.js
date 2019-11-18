@@ -65,7 +65,6 @@ class PhotoDetailScreen extends React.Component {
     const { navigation, deletePhoto } = this.props
     const photo = navigation.getParam('photo')
     this.cancelDialog()
-    // FIXME: this doesn't seem to happen properly so PhotoDetailScreen componentWillMount fires again
     navigation.navigate('PhotosListScreen')
     deletePhoto(photo)
   }
@@ -111,30 +110,34 @@ class PhotoDetailScreen extends React.Component {
       showDescription = (
         <DescriptionView>
           <DescriptionTitle>Description</DescriptionTitle>
-          <Text>{photo.description}</Text>
+          <Text>{this.state.description}</Text>
         </DescriptionView>
       )
     }
 
-    return (
-      <Container>
-        <Header back={previousScreen} title='Photo Details' navigation={navigation} actions={headerActions} />
-        <KeyboardAwareScrollView
-          style={{ backgroundColor: '#fff' }}
-          resetScrollToCoords={{ x: 0, y: 0 }}
-          scrollEnabled={false}
-          extraScrollHeight={100}
-          enableOnAndroid
-        >
-          <PageWrapper>
-            <PhotoView path={photo.path} />
-            <ImageDetails timestamp={photo.location.timestamp} location={photo.location} />
-            {showDescription}
-          </PageWrapper>
-        </KeyboardAwareScrollView>
-        <ConfirmDialog visible={this.state.dialogVisible} title='Delete this photo?' description='This cannot be undone' cancel={this.cancelDialog} continue={this.confirmDelete} />
-      </Container>
-    )
+    if (photo) {
+      return (
+        <Container>
+          <Header back={previousScreen} title='Photo Details' navigation={navigation} actions={headerActions} />
+          <KeyboardAwareScrollView
+            style={{ backgroundColor: '#fff' }}
+            resetScrollToCoords={{ x: 0, y: 0 }}
+            scrollEnabled={false}
+            extraScrollHeight={100}
+            enableOnAndroid
+          >
+            <PageWrapper>
+              <PhotoView path={photo.path} />
+              <ImageDetails timestamp={photo.location.timestamp} location={photo.location} />
+              {showDescription}
+            </PageWrapper>
+          </KeyboardAwareScrollView>
+          <ConfirmDialog visible={this.state.dialogVisible} title='Delete this photo?' description='This cannot be undone' cancel={this.cancelDialog} continue={this.confirmDelete} />
+        </Container>
+      )
+    } else {
+      return null
+    }
   }
 }
 
