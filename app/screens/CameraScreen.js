@@ -65,16 +65,21 @@ class CameraScreen extends React.Component {
     saving: false,
     image: null,
     location: null,
-    description: null
+    description: null,
+    feature: null
   }
 
   async componentWillMount () {
     const { status } = await Permissions.askAsync(Permissions.CAMERA)
+    const { navigation } = this.props
+    const { state: { params: { feature } } } = navigation
+    console.log('feature in camerascreen', feature)
     this.setState({
       hasCameraPermission: status === 'granted',
       image: null,
       location: null,
-      description: null
+      description: null,
+      feature: feature
     })
   }
 
@@ -106,7 +111,7 @@ class CameraScreen extends React.Component {
           this.setState({
             saving: true
           })
-          this.props.savePhoto(this.state.image, this.state.location, this.state.description)
+          this.props.savePhoto(this.state.image, this.state.location, this.state.description, this.state.feature.id)
           this.setState({
             image: null,
             location: null,
