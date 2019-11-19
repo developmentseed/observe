@@ -7,8 +7,9 @@ import Header from '../../components/Header'
 import PageWrapper from '../../components/PageWrapper'
 import { DescriptionInputField } from '../../components/Input'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { editPhoto } from '../../actions/camera'
+import { editPhoto, deletePhoto } from '../../actions/camera'
 import _find from 'lodash.find'
+import ConfirmDialog from '../../components/ConfirmDialog'
 
 const DescriptionView = styled.View`
   padding-top: 10;
@@ -54,6 +55,20 @@ class PhotoDetailScreen extends React.Component {
     })
   }
 
+  cancelDialog = () => {
+    this.setState({
+      dialogVisible: false
+    })
+  }
+
+  confirmDelete = async () => {
+    const { navigation, deletePhoto } = this.props
+    const photo = navigation.getParam('photo')
+    this.cancelDialog()
+    navigation.navigate('PhotosListScreen')
+    deletePhoto(photo)
+  }
+
   render () {
     const { navigation, editPhoto } = this.props
     const previousScreen = navigation.getParam('previousScreen') || 'PhotosListScreen'
@@ -75,7 +90,9 @@ class PhotoDetailScreen extends React.Component {
       {
         name: 'trash-bin',
         onPress: () => {
-          // this.setState({ dialogVisible: true })
+          this.setState({
+            dialogVisible: true
+          })
         }
       }
     ]
@@ -93,29 +110,34 @@ class PhotoDetailScreen extends React.Component {
       showDescription = (
         <DescriptionView>
           <DescriptionTitle>Description</DescriptionTitle>
-          <Text>{photo.description}</Text>
+          <Text>{this.state.description}</Text>
         </DescriptionView>
       )
     }
 
-    return (
-      <Container>
-        <Header back={previousScreen} title='Photo Details' navigation={navigation} actions={headerActions} />
-        <KeyboardAwareScrollView
-          style={{ backgroundColor: '#fff' }}
-          resetScrollToCoords={{ x: 0, y: 0 }}
-          scrollEnabled={false}
-          extraScrollHeight={100}
-          enableOnAndroid
-        >
-          <PageWrapper>
-            <PhotoView path={photo.path} />
-            <ImageDetails timestamp={photo.location.timestamp} location={photo.location} />
-            {showDescription}
-          </PageWrapper>
-        </KeyboardAwareScrollView>
-      </Container>
-    )
+    if (photo) {
+      return (
+        <Container>
+          <Header back={previousScreen} title='Photo Details' navigation={navigation} actions={headerActions} />
+          <KeyboardAwareScrollView
+            style={{ backgroundColor: '#fff' }}
+            resetScrollToCoords={{ x: 0, y: 0 }}
+            scrollEnabled={false}
+            extraScrollHeight={100}
+            enableOnAndroid
+          >
+            <PageWrapper>
+              <PhotoView path={photo.path} />
+              <ImageDetails timestamp={photo.location.timestamp} location={photo.location} />
+              {showDescription}
+            </PageWrapper>
+          </KeyboardAwareScrollView>
+          <ConfirmDialog visible={this.state.dialogVisible} title='Delete this photo?' description='This cannot be undone' cancel={this.cancelDialog} continue={this.confirmDelete} />
+        </Container>
+      )
+    } else {
+      return null
+    }
   }
 }
 
@@ -126,7 +148,8 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-  editPhoto
+  editPhoto,
+  deletePhoto
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PhotoDetailScreen)
