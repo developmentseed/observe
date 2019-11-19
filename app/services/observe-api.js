@@ -3,20 +3,21 @@ import Config from 'react-native-config'
 import { ObserveError, ObserveAPIError } from '../utils/errors'
 import qs from 'qs'
 import { getTraceGeoJSON } from '../utils/traces'
+import { logoutUser } from '../actions/observeApi'
 
 /**
  * Base function to call the Observe API. Ideally, you would not
  * use this function directly from the outside.
  *
+ * @param {Function} dispatch - Dispatch function, so that actions can be called
  * @param {String} path - Path to endpoint, beginning with a '/', eg. '/traces'
  * @param {String} method - Method to use for request, eg. GET, POST, DELETE, PATCH. Defaults to GET.
  * @param {Object} data - object with data to send with the request
  */
-export async function callAPI (path, method = 'GET', data) {
+export async function callAPI (dispatch, path, method = 'GET', data) {
   let url = `${Config.OBSERVE_API_URL}${path}`
   const token = store.getState().observeApi.token
   if (!token) {
-    console.log('no token found!')
     throw new ObserveError('Not logged in to Observe API') // FIXME: create error class
   }
   let fetchOpts = {
@@ -41,6 +42,9 @@ export async function callAPI (path, method = 'GET', data) {
     const response = await fetch(url, fetchOpts)
     const data = await response.json()
     console.log('response data', data, response.status)
+    if (response.status === 401) { // token is expired or invalid, logout user
+      dispatch(logoutUser())
+    }
     if (response.status > 400) {
       throw new ObserveAPIError(data.message, response.status)
     } else {
@@ -53,17 +57,12 @@ export async function callAPI (path, method = 'GET', data) {
   }
 }
 
-export async function getProfile () {
-  try {
-    const data = await callAPI('/profile')
-    console.log('data', data)
-  } catch (err) {
-    console.log('error fetching profile', err)
-  }
+export async function getProfile (dispatch) {
+  return callAPI(dispatch, '/profile')
 }
 
-export async function uploadTrace (trace) {
+export async function uploadTrace (dispatch, trace) {
   const traceGeoJSON = getTraceGeoJSON(trace)
-  const data = await callAPI('/traces', 'POST', { 'tracejson': traceGeoJSON })
+  const data = await callAPI(dispatch, '/traces', 'POST', { 'tracejson': traceGeoJSON })
   return data.properties.id
 }

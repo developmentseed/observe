@@ -10,6 +10,23 @@ export function setObserveAPIToken (token) {
 
 export function getProfile () {
   return async dispatch => {
-    await dispatch(api.getProfile())
+    try {
+      const user = await api.getProfile(dispatch)
+      return {
+        type: types.OBSERVE_API_PROFILE_SUCCESS,
+        user
+      }
+    } catch (error) {
+      return {
+        type: types.OBSERVE_API_PROFILE_ERROR,
+        error
+      }
+    }
+  }
+}
+
+export function logoutUser () {
+  return {
+    type: types.OBSERVE_API_LOGOUT
   }
 }
