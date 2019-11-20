@@ -97,6 +97,8 @@ class CameraScreen extends React.Component {
   render () {
     const { hasCameraPermission } = this.state
     const { navigation } = this.props
+    const previousScreen = navigation.getParam('previousScreen')
+
     let showLoadingIndicator = null
     if (this.state.saving) {
       showLoadingIndicator = (
@@ -117,7 +119,6 @@ class CameraScreen extends React.Component {
             location: null,
             description: null
           })
-          const previousScreen = navigation.getParam('previousScreen')
           if (previousScreen === 'EditFeatureDetail') {
             const feature = navigation.getParam('feature')
             navigation.navigate(previousScreen, { feature })
@@ -164,7 +165,7 @@ class CameraScreen extends React.Component {
     } else {
       return (
         <Container>
-          <Header back title='Take a picture' navigation={navigation} />
+          <Header back={previousScreen} title='Take a picture' navigation={navigation} />
           <Camera style={{ flex: 1 }} type={this.state.type} ref={ref => { this.camera = ref }} >
             <View
               style={{
