@@ -97,7 +97,6 @@ class ViewFeatureDetail extends React.Component {
 
   openPhoto = photo => {
     const { navigation } = this.props
-    console.log('opening photo', photo.id)
     navigation.navigate({ routeName: 'PhotoDetailScreen', params: { photo: photo.id, previousScreen: 'ViewFeatureDetail' } })
   }
 
