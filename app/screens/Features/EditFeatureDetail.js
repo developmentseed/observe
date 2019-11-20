@@ -29,6 +29,8 @@ import { getParentPreset } from '../../utils/get-parent-preset'
 import getPresetByTags from '../../utils/get-preset-by-tags'
 import { colors } from '../../style/variables'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { getPhotosForFeature } from '../../utils/photos'
+import PhotoGrid from '../../components/PhotoGrid'
 
 const FieldsList = styled.FlatList`
 `
@@ -42,16 +44,18 @@ const View = styled.View`
   padding-top: 10;
   padding-bottom: 10;
   align-items: flex-start;
+  flex-direction: row;
 `
 
 const AddPhoto = styled.TouchableOpacity`
+  width: 62;
+  height: 62;
   border: 0.5px;
   border-color: ${colors.muted}
   border-radius: 4;
-  padding-left: 20;
-  padding-top: 20;
-  padding-bottom: 20;
-  padding-right: 20;
+  margin-right: 10;
+  align-items: center;
+  justify-content: center;
 `
 
 class EditFeatureDetail extends React.Component {
@@ -469,9 +473,11 @@ class EditFeatureDetail extends React.Component {
   }
   render () {
     const { preset } = this.state
-    const { navigation } = this.props
+    const { navigation, photos } = this.props
     const { state: { params: { feature } } } = navigation
     const title = feature.properties.name || feature.id
+    const featurePhotos = getPhotosForFeature(photos, feature.id)
+
     let headerActions = []
 
     if (this.hasFeatureChanged()) {
@@ -520,6 +526,7 @@ class EditFeatureDetail extends React.Component {
               <AddPhoto onPress={this.onPressAddPhoto} >
                 <Icon name='camera' color='gray' size={25} />
               </AddPhoto>
+              <PhotoGrid data={featurePhotos} />
             </View>
           </KeyboardAwareScrollView>
           <SaveEditDialog visible={this.state.dialogVisible} cancel={this.cancelEditDialog} save={this.saveEditDialog} />
@@ -533,7 +540,8 @@ const mapStateToProps = state => {
   return {
     allFields: objToArray(state.presets.fields),
     allTags: state.presets.tags,
-    presets: state.presets.presets
+    presets: state.presets.presets,
+    photos: state.photos.photos
   }
 }
 
