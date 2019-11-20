@@ -5,7 +5,7 @@ const FlatList = styled.FlatList`
   padding-bottom: 30;
 `
 
-const View = styled.View`
+const Container = styled.TouchableHighlight`
   border: 0.5px;
   margin-right: 10;
 `
@@ -16,25 +16,33 @@ const Image = styled.Image`
 `
 
 class GridItem extends React.Component {
+  _onPress = () => {
+    this.props.onPress && this.props.onPress(this.props.item)
+  }
+
   render () {
     const { item } = this.props
     return (
-      <View>
+      <Container onPress={this._onPress}>
         <Image source={{ uri: `file://${item.path}` }} />
-      </View>
+      </Container>
     )
   }
 }
+
 export default class PhotoGrid extends React.Component {
   render () {
-    const { data } = this.props
+    const { data, onSelect } = this.props
     return (
       <FlatList
         horizontal
         data={data}
         keyExtractor={item => `${item.id}`}
         renderItem={({ item }) => (
-          <GridItem item={item} />
+          <GridItem
+            onPress={onSelect}
+            item={item}
+          />
         )}
       />
     )

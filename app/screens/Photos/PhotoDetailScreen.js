@@ -10,6 +10,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { editPhoto, deletePhoto } from '../../actions/camera'
 import _find from 'lodash.find'
 import ConfirmDialog from '../../components/ConfirmDialog'
+import { NavigationEvents } from 'react-navigation'
 
 const DescriptionView = styled.View`
   padding-top: 10;
@@ -39,6 +40,7 @@ class PhotoDetailScreen extends React.Component {
   state = {
     editing: false,
     description: null
+    // photo: null
   }
 
   getPhoto = (id) => {
@@ -48,10 +50,29 @@ class PhotoDetailScreen extends React.Component {
   }
 
   componentWillMount = () => {
+    // const { navigation } = this.props
+    // const photo = this.getPhoto(navigation.getParam('photo'))
+    // console.log('viewing photo', photo)
+    // this.setState({
+    //   description: photo.description,
+    //   photo: photo
+    // })
+  }
+
+  onWillFocus = () => {
     const { navigation } = this.props
     const photo = this.getPhoto(navigation.getParam('photo'))
+    console.log('viewing photo', photo)
     this.setState({
       description: photo.description
+    })
+  }
+
+  onWillBlur = () => {
+    this.setState({
+      editing: false,
+      description: null,
+      photo: null
     })
   }
 
@@ -74,6 +95,7 @@ class PhotoDetailScreen extends React.Component {
     const previousScreen = navigation.getParam('previousScreen') || 'PhotosListScreen'
     const photoId = navigation.getParam('photo')
     const photo = this.getPhoto(photoId)
+
     const headerActions = [
       {
         name: this.state.editing ? 'tick' : 'pencil',
@@ -117,23 +139,29 @@ class PhotoDetailScreen extends React.Component {
 
     if (photo) {
       return (
-        <Container>
-          <Header back={previousScreen} title='Photo Details' navigation={navigation} actions={headerActions} />
-          <KeyboardAwareScrollView
-            style={{ backgroundColor: '#fff' }}
-            resetScrollToCoords={{ x: 0, y: 0 }}
-            scrollEnabled={false}
-            extraScrollHeight={100}
-            enableOnAndroid
-          >
-            <PageWrapper>
-              <PhotoView path={photo.path} />
-              <ImageDetails timestamp={photo.location.timestamp} location={photo.location} />
-              {showDescription}
-            </PageWrapper>
-          </KeyboardAwareScrollView>
-          <ConfirmDialog visible={this.state.dialogVisible} title='Delete this photo?' description='This cannot be undone' cancel={this.cancelDialog} continue={this.confirmDelete} />
-        </Container>
+        <>
+          <NavigationEvents
+            onWillFocus={this.onWillFocus}
+            onWillBlur={this.onWillBlur}
+          />
+          <Container>
+            <Header back={previousScreen} title='Photo Details' navigation={navigation} actions={headerActions} />
+            <KeyboardAwareScrollView
+              style={{ backgroundColor: '#fff' }}
+              resetScrollToCoords={{ x: 0, y: 0 }}
+              scrollEnabled={false}
+              extraScrollHeight={100}
+              enableOnAndroid
+            >
+              <PageWrapper>
+                <PhotoView path={photo.path} />
+                <ImageDetails timestamp={photo.location.timestamp} location={photo.location} />
+                {showDescription}
+              </PageWrapper>
+            </KeyboardAwareScrollView>
+            <ConfirmDialog visible={this.state.dialogVisible} title='Delete this photo?' description='This cannot be undone' cancel={this.cancelDialog} continue={this.confirmDelete} />
+          </Container>
+        </>
       )
     } else {
       return null

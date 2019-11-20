@@ -95,6 +95,12 @@ class ViewFeatureDetail extends React.Component {
     )
   }
 
+  openPhoto = photo => {
+    const { navigation } = this.props
+    console.log('opening photo', photo.id)
+    navigation.navigate({ routeName: 'PhotoDetailScreen', params: { photo: photo.id, previousScreen: 'ViewFeatureDetail' } })
+  }
+
   render () {
     const { navigation, photos } = this.props
     const { state: { params: { feature } } } = navigation
@@ -150,7 +156,7 @@ class ViewFeatureDetail extends React.Component {
         />
         <PageWrapper>
           {this.renderFields([presetSection, metaSection])}
-          <PhotoGrid data={featurePhotos} />
+          <PhotoGrid data={featurePhotos} onSelect={this.openPhoto} />
         </PageWrapper>
         <SaveEditDialog visible={this.state.dialogVisible} cancel={cancelEditDialog} save={saveEditDialog} action='delete' />
       </Container>
