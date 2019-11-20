@@ -45,7 +45,7 @@ export function uploadPendingTraces () {
     for (let trace of pendingTraces) {
       dispatch(startUploadingTrace(trace.id))
       try {
-        const newId = await api.uploadTrace(trace)
+        const newId = await api.uploadTrace(dispatch, trace)
         dispatch(uploadedTrace(trace.id, newId))
       } catch (e) {
         dispatch(uploadTraceFailed(trace.id, e))

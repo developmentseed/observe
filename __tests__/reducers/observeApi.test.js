@@ -17,4 +17,16 @@ describe('test for observe api reducer', () => {
       token: 'abcd'
     })
   })
+
+  it('should handle OBSERVE_API_LOGOUT', () => {
+    const action = {
+      type: 'OBSERVE_API_LOGOUT'
+    }
+    const state = {
+      ...initialState,
+      token: 'abcd'
+    }
+    const newState = reducer(state, action)
+    expect(newState.token).toEqual(null)
+  })
 })

@@ -12,6 +12,13 @@ export default function (state = initialState, action) {
         token: action.token
       }
     }
+
+    case types.OBSERVE_API_LOGOUT: {
+      return {
+        ...state,
+        token: null
+      }
+    }
   }
   return state
 }
