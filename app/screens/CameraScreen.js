@@ -117,7 +117,13 @@ class CameraScreen extends React.Component {
             location: null,
             description: null
           })
-          navigation.navigate('Explore')
+          const previousScreen = navigation.getParam('previousScreen')
+          if (previousScreen === 'EditFeatureDetail') {
+            const feature = navigation.getParam('feature')
+            navigation.navigate(previousScreen, { feature })
+          } else {
+            navigation.navigate('Explore')
+          }
         }
       }
     ]

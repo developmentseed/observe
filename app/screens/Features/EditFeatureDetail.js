@@ -465,7 +465,7 @@ class EditFeatureDetail extends React.Component {
   onPressAddPhoto = () => {
     const { navigation } = this.props
     const { state: { params: { feature } } } = navigation
-    navigation.navigate('CameraScreen', { feature })
+    navigation.navigate('CameraScreen', { feature: feature, previousScreen: 'EditFeatureDetail' })
   }
   render () {
     const { preset } = this.state

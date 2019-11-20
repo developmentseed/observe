@@ -16,6 +16,8 @@ import orderPresets from '../../utils/order-presets'
 import SaveEditDialog from '../../components/SaveEditDialog'
 import { deleteFeature, uploadEdits } from '../../actions/edit'
 import { colors } from '../../style/variables'
+import PhotoGrid from '../../components/PhotoGrid'
+import { getPhotosForFeature } from '../../utils/photos'
 
 const FieldsList = styled.SectionList`
 `
@@ -94,10 +96,11 @@ class ViewFeatureDetail extends React.Component {
   }
 
   render () {
-    const { navigation } = this.props
+    const { navigation, photos } = this.props
     const { state: { params: { feature } } } = navigation
     const { preset } = this.state
 
+    const featurePhotos = getPhotosForFeature(photos, feature.id)
     const title = feature.properties.name || feature.id
     const fields = getFeatureFields(feature)
     const [ meta, presets ] = _partition(fields, field => {
@@ -147,6 +150,7 @@ class ViewFeatureDetail extends React.Component {
         />
         <PageWrapper>
           {this.renderFields([presetSection, metaSection])}
+          <PhotoGrid data={featurePhotos} />
         </PageWrapper>
         <SaveEditDialog visible={this.state.dialogVisible} cancel={cancelEditDialog} save={saveEditDialog} action='delete' />
       </Container>
@@ -154,9 +158,10 @@ class ViewFeatureDetail extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    edits: state.edit.edits
+    edits: state.edit.edits,
+    photos: state.photos.photos
   }
 }
 
