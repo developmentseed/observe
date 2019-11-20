@@ -73,7 +73,6 @@ class CameraScreen extends React.Component {
     const { status } = await Permissions.askAsync(Permissions.CAMERA)
     const { navigation } = this.props
     const { state: { params: { feature } } } = navigation
-    console.log('feature in camerascreen', feature)
     this.setState({
       hasCameraPermission: status === 'granted',
       image: null,
