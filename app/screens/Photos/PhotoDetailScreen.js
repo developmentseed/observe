@@ -49,20 +49,9 @@ class PhotoDetailScreen extends React.Component {
     return photo
   }
 
-  componentWillMount = () => {
-    // const { navigation } = this.props
-    // const photo = this.getPhoto(navigation.getParam('photo'))
-    // console.log('viewing photo', photo)
-    // this.setState({
-    //   description: photo.description,
-    //   photo: photo
-    // })
-  }
-
   onWillFocus = () => {
     const { navigation } = this.props
     const photo = this.getPhoto(navigation.getParam('photo'))
-    console.log('viewing photo', photo)
     this.setState({
       description: photo.description
     })
