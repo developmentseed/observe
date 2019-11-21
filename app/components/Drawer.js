@@ -30,7 +30,7 @@ export default function Drawer (props) {
   const { items } = props
 
   const topnav = items.filter((item) => {
-    return ['Explore', 'OfflineMaps', 'UserContributions', 'PhotosListScreen'].includes(item.key)
+    return ['Explore', 'OfflineMaps', 'UserContributions', 'PhotosListScreen', 'TracesListScreen'].includes(item.key)
   })
 
   const bottomnav = items.filter((item) => {
