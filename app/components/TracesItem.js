@@ -42,19 +42,12 @@ const StatusContainer = styled.View`
   width: 44;
 `
 
-const Image = styled.Image`
-  width: 80;
-  height: 80;
-  margin-right: 10;
-  resize-mode: contain;
-`
-
 class TracesItem extends React.PureComponent {
   constructor (props) {
     super(props)
 
     // unknown height
-    this.height = 100
+    this.height = 80
   }
 
   getStatusIcon () {
