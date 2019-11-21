@@ -112,7 +112,11 @@ class CameraScreen extends React.Component {
           this.setState({
             saving: true
           })
-          this.props.savePhoto(this.state.image, this.state.location, this.state.description, this.state.feature.id)
+          if (this.state.feature) {
+            this.props.savePhoto(this.state.image, this.state.location, this.state.description, this.state.feature.id)
+          } else {
+            this.props.savePhoto(this.state.image, this.state.location, this.state.description, null)
+          }
           this.setState({
             image: null,
             location: null,
