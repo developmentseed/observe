@@ -39,25 +39,6 @@ const ScrollView = styled.ScrollView`
   background-color: white
 `
 
-const View = styled.View`
-  padding-left: 10;
-  padding-top: 10;
-  padding-bottom: 10;
-  align-items: flex-start;
-  flex-direction: row;
-`
-
-const AddPhoto = styled.TouchableOpacity`
-  width: 62;
-  height: 62;
-  border: 0.5px;
-  border-color: ${colors.muted}
-  border-radius: 4;
-  margin-right: 10;
-  align-items: center;
-  justify-content: center;
-`
-
 class EditFeatureDetail extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
@@ -466,11 +447,6 @@ class EditFeatureDetail extends React.Component {
     return tagEditorProperties
   }
 
-  onPressAddPhoto = () => {
-    const { navigation } = this.props
-    const { state: { params: { feature } } } = navigation
-    navigation.navigate('CameraScreen', { feature: feature, previousScreen: 'EditFeatureDetail' })
-  }
   render () {
     const { preset } = this.state
     const { navigation, photos } = this.props
@@ -522,12 +498,12 @@ class EditFeatureDetail extends React.Component {
               {this.renderAddField()}
             </PageWrapper>
             <TagEditor ref={(ref) => (this._tageditor = ref)} properties={this.createTagEditorProperties()} onUpdate={this.onTagEditorUpdate} />
-            <View>
-              <AddPhoto onPress={this.onPressAddPhoto} >
-                <Icon name='camera' color='gray' size={25} />
-              </AddPhoto>
-              <PhotoGrid data={featurePhotos} />
-            </View>
+            <PhotoGrid
+              data={featurePhotos}
+              previousScreen='EditFeatureDetail'
+              feature={feature}
+              navigation={navigation}
+            />
           </KeyboardAwareScrollView>
           <SaveEditDialog visible={this.state.dialogVisible} cancel={this.cancelEditDialog} save={this.saveEditDialog} />
         </ScrollView>
