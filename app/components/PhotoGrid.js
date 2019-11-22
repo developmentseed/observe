@@ -13,7 +13,6 @@ const Container = styled.TouchableHighlight`
 const Image = styled.Image`
   width: 60;
   height: 60;
-  border: 0.5px;
   border-radius: 4;
   resize-mode: contain;
 `
