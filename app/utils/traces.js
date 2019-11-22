@@ -1,4 +1,5 @@
 import turfLength from '@turf/length'
+import turfBBox from '@turf/bbox'
 
 /**
  * Returns an empty trace object
@@ -89,4 +90,12 @@ export function getTraceGeoJSON (trace) {
     },
     geometry: trace.geojson.geometry
   }
+}
+
+/**
+ * For a trace GeoJSON, return the bounds
+ * @param {Object<GeoJSON Feature>} traceGeoJSON
+ */
+export function getTraceBounds (traceGeoJSON) {
+  return turfBBox(traceGeoJSON)
 }

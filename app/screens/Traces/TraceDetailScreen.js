@@ -9,10 +9,21 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import _find from 'lodash.find'
 import ConfirmDialog from '../../components/ConfirmDialog'
 import { NavigationEvents } from 'react-navigation'
-import { getTraceLength } from '../../utils/traces'
+import { getTraceLength, getTraceBounds } from '../../utils/traces'
 import formatDate from '../../utils/format-date'
 import { colors } from '../../style/variables'
 import { editTrace } from '../../actions/traces'
+import MapboxGL from '@react-native-mapbox-gl/maps'
+import Config from 'react-native-config'
+import style from '../../style/map'
+import { Platform } from 'react-native'
+
+let osmStyleURL = Config.MAPBOX_STYLE_URL || MapboxGL.StyleURL.Street
+
+// fix asset URLs for Android
+if (!osmStyleURL.includes(':/') && Platform.OS === 'android') {
+  osmStyleURL = `asset://${osmStyleURL}`
+}
 
 const DescriptionView = styled.View`
   padding-top: 10;
@@ -52,6 +63,10 @@ const TimeText = styled.Text`
 const MapContainer = styled.View`
   height: 400;
   background-color: gray;
+`
+const Map = styled(MapboxGL.MapView)`
+  flex: 1;
+  width: 100%
 `
 class TraceDetailScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -106,6 +121,7 @@ class TraceDetailScreen extends React.Component {
     const traceId = navigation.getParam('trace')
     const trace = this.getTrace(traceId)
     const length = getTraceLength(trace.geojson).toFixed(2)
+    const bounds = getTraceBounds(trace.geojson)
     const timestamp = trace.geojson.properties.timestamps[0]
     const headerActions = [
       {
@@ -148,6 +164,9 @@ class TraceDetailScreen extends React.Component {
       )
     }
 
+    // set traces to visible, because by default it's set to none
+    style.traces.traces.visibility = 'visible'
+
     if (trace) {
       return (
         <>
@@ -165,7 +184,30 @@ class TraceDetailScreen extends React.Component {
               enableOnAndroid
             >
               <PageWrapper>
-                <MapContainer />
+                <MapContainer>
+                  <Map
+                    styleURL={osmStyleURL}
+                  >
+                    <MapboxGL.Camera
+                      defaultSettings={{
+                        centerCoordinate: [0, 0]
+                      }}
+                      bounds={{
+                        ne: [bounds[0], bounds[1]],
+                        sw: [bounds[2], bounds[3]],
+                        paddingLeft: 15,
+                        paddingRight: 15,
+                        paddingTop: 15,
+                        paddingBottom: 15
+                      }}
+                      animationDuration={0}
+                      ref={(ref) => { this.cameraRef = ref }}
+                    />
+                    <MapboxGL.ShapeSource id='tracesGeojsonSource' shape={trace.geojson}>
+                      <MapboxGL.LineLayer id='traces' style={style.traces.traces} minZoomLevel={12} />
+                    </MapboxGL.ShapeSource>
+                  </Map>
+                </MapContainer>
                 <TitleView>
                   <LengthText>{length} m Trace</LengthText>
                   <TimeText>{formatDate(timestamp)}</TimeText>
