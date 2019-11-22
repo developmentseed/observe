@@ -9,6 +9,10 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import _find from 'lodash.find'
 import ConfirmDialog from '../../components/ConfirmDialog'
 import { NavigationEvents } from 'react-navigation'
+import { getTraceLength } from '../../utils/traces'
+import formatDate from '../../utils/format-date'
+import { colors } from '../../style/variables'
+import { editTrace } from '../../actions/traces'
 
 const DescriptionView = styled.View`
   padding-top: 10;
@@ -18,7 +22,7 @@ const DescriptionTitle = styled.Text`
   font-weight: bold;
 `
 const Text = styled.Text`
-  padding-top: 10
+  padding-top: 5
 `
 const View = styled.View`
   height: 100;
@@ -27,7 +31,28 @@ const View = styled.View`
   padding-top: 5;
   padding-bottom: 5;
 `
+const TitleView = styled.View`
+  padding-top: 10;
+  padding-bottom: 10;
+  border-bottom-width: 0.2
+  border-bottom-color: ${colors.muted}
+`
 
+const LengthText = styled.Text`
+  font-size: 20;
+  letter-spacing: 1;
+`
+
+const TimeText = styled.Text`
+  padding-top: 5;
+  padding-bottom: 5;
+  letter-spacing: 1;
+`
+
+const MapContainer = styled.View`
+  height: 400;
+  background-color: gray;
+`
 class TraceDetailScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
@@ -40,24 +65,26 @@ class TraceDetailScreen extends React.Component {
     description: null
   }
 
-  // getPhoto = (id) => {
-  //   const { photos } = this.props
-  //   const photo = _find(photos, (p) => { return p.id === id })
-  //   return photo
-  // }
-
-  componentWillMount = () => {
-    // const { navigation } = this.props
-    // const photo = this.getPhoto(navigation.getParam('photo'))
-    // this.setState({
-    //   description: photo.description
-    // })
+  getTrace = (id) => {
+    const { traces } = this.props
+    const trace = _find(traces, (t) => { return t.id === id })
+    return trace
   }
 
   onWillFocus = () => {
     const { navigation } = this.props
     const traceId = navigation.getParam('trace')
-    console.log(traceId)
+    const trace = this.getTrace(traceId)
+    this.setState({
+      description: trace.geojson.properties.description
+    })
+  }
+
+  onWillBlur = () => {
+    this.setState({
+      editing: false,
+      description: null
+    })
   }
 
   cancelDialog = () => {
@@ -67,29 +94,30 @@ class TraceDetailScreen extends React.Component {
   }
 
   confirmDelete = async () => {
-    // const { navigation, deletePhoto } = this.props
-    // const photo = navigation.getParam('photo')
+    const { navigation } = this.props
     this.cancelDialog()
-    // navigation.navigate('PhotosListScreen')
-    // deletePhoto(photo)
+    // FIXME: wire up trace delete actions
+    navigation.navigate('TracesListScreen')
   }
 
   render () {
-    const { navigation } = this.props
+    const { navigation, editTrace } = this.props
     const previousScreen = navigation.getParam('previousScreen') || 'TracesListScreen'
-    const trace = true
+    const traceId = navigation.getParam('trace')
+    const trace = this.getTrace(traceId)
+    const length = getTraceLength(trace.geojson).toFixed(2)
+    const timestamp = trace.geojson.properties.timestamps[0]
     const headerActions = [
       {
         name: this.state.editing ? 'tick' : 'pencil',
         onPress: () => {
-          console.log('edit')
-          // const editing = !this.state.editing
-          // if (photo.description !== this.state.description) {
-          //   editPhoto(photo, this.state.description)
-          // }
-          // this.setState({
-          //   editing: editing
-          // })
+          const editing = !this.state.editing
+          if (trace.description !== this.state.description) {
+            editTrace(trace, this.state.description)
+          }
+          this.setState({
+            editing: editing
+          })
         }
       },
       {
@@ -123,9 +151,10 @@ class TraceDetailScreen extends React.Component {
     if (trace) {
       return (
         <>
-          <NavigationEvents>
+          <NavigationEvents
             onWillFocus={this.onWillFocus}
-          </NavigationEvents>
+            onWillBlur={this.onWillBlur}
+          />
           <Container>
             <Header back={previousScreen} title='Trace Details' navigation={navigation} actions={headerActions} />
             <KeyboardAwareScrollView
@@ -136,10 +165,15 @@ class TraceDetailScreen extends React.Component {
               enableOnAndroid
             >
               <PageWrapper>
-                {/* {showDescription} */}
+                <MapContainer />
+                <TitleView>
+                  <LengthText>{length} m Trace</LengthText>
+                  <TimeText>{formatDate(timestamp)}</TimeText>
+                </TitleView>
+                {showDescription}
               </PageWrapper>
             </KeyboardAwareScrollView>
-            <ConfirmDialog visible={this.state.dialogVisible} title='Delete this photo?' description='This cannot be undone' cancel={this.cancelDialog} continue={this.confirmDelete} />
+            <ConfirmDialog visible={this.state.dialogVisible} title='Delete this trace?' description='This cannot be undone' cancel={this.cancelDialog} continue={this.confirmDelete} />
           </Container>
         </>
       )
@@ -156,8 +190,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-  // editPhoto,
-  // deletePhoto
+  editTrace
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TraceDetailScreen)

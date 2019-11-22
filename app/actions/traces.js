@@ -103,3 +103,11 @@ export function discardTrace () {
     })
   }
 }
+
+export function editTrace (trace, description) {
+  return {
+    type: types.EDIT_TRACE,
+    trace,
+    description
+  }
+}
