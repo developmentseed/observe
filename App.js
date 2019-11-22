@@ -23,6 +23,7 @@ import SelectFeatureType from './app/screens/Features/SelectFeatureType'
 import PhotosListScreen from './app/screens/Photos/PhotosListScreen'
 import PhotoDetailScreen from './app/screens/Photos/PhotoDetailScreen'
 import TracesListScreen from './app/screens/Traces/TracesListScreen'
+import TraceDetailScreen from './app/screens/Traces/TraceDetailScreen'
 
 import AuthorizationManager from './app/components/AuthorizationManager'
 import Drawer from './app/components/Drawer'
@@ -125,7 +126,8 @@ const AppNavigator = createDrawerNavigator({
   SelectFeatureType: { screen: SelectFeatureType },
   PhotoDetailScreen: { screen: PhotoDetailScreen },
   CameraScreen: { screen: CameraScreen },
-  SaveTrace: { screen: SaveTrace }
+  SaveTrace: { screen: SaveTrace },
+  TraceDetailScreen: { screen: TraceDetailScreen }
 }, {
   initialRouteName: 'Explore',
   contentComponent: Drawer,

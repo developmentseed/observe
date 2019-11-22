@@ -11,10 +11,10 @@ class TracesListScreen extends React.Component {
     }
   }
 
-  // select = trace => {
-  //   const { navigation } = this.props
-  //   navigation.navigate({ routeName: 'TraceDetailScreen', params: { trace: trace.id } })
-  // }
+  select = trace => {
+    const { navigation } = this.props
+    navigation.navigate({ routeName: 'TraceDetailScreen', params: { trace: trace.id } })
+  }
 
   render () {
     const { navigation, traces } = this.props
