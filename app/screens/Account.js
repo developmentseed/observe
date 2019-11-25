@@ -5,10 +5,11 @@ import Header from '../components/Header'
 import Container from '../components/Container'
 import Icon from '../components/Collecticons'
 import { loadUserDetails, initiateAuthorization, reset } from '../actions/account'
-import { View } from 'react-native'
+import { View, Linking } from 'react-native'
 import PageWrapper from '../components/PageWrapper'
 import LoadingOverlay from '../components/LoadingOverlay'
 import { colors } from '../style/variables'
+import Config from 'react-native-config'
 
 const Text = styled.Text`
 `
@@ -22,11 +23,14 @@ const Image = styled.Image`
   overflow: hidden;
 `
 
-const OfflineView = styled.View`
+const AccountView = styled.View`
   flex: 1;
+  margin-top: 30px;
   align-items: center;
   justify-content: center;
+  height: 200;
 `
+
 const AccountIcon = styled.Text`
   padding-bottom: 10;
 `
@@ -59,6 +63,12 @@ const DetailsList = styled.FlatList`
   padding-top: 10;
 `
 
+const ObserveDetailsView = styled.View`
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+`
+
 class Account extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
@@ -74,6 +84,12 @@ class Account extends React.Component {
 
   async componentDidMount () {
     this.props.loadUserDetails()
+  }
+
+  apiLogin = () => {
+    const redirectURL = 'observe://apilogin'
+    const loginURL = `${Config.OBSERVE_API_URL}/login?redirect=${redirectURL}`
+    Linking.openURL(loginURL).catch(e => console.log('error opening url', e))
   }
 
   renderDetail (detail) {
@@ -102,18 +118,80 @@ class Account extends React.Component {
         detailsList.push({ 'key': keyLabelMap[k], 'value': details[k] })
       }
     })
+
+    let showImage = null
+    if (details.image) {
+      showImage = (
+        <ImageView>
+          <Image
+            style={{ width: 100, height: 100 }}
+            source={{ uri: details.image }}
+          />
+        </ImageView>
+      )
+    }
     return (
-      <DetailsList
-        data={detailsList}
-        renderItem={({ item }) => this.renderDetail(item)}
-        keyExtractor={(item) => item.value}
-      />
+      <>
+        {showImage}
+        <DetailsList
+          data={detailsList}
+          renderItem={({ item }) => this.renderDetail(item)}
+          keyExtractor={(item) => item.value}
+        />
+      </>
     )
   }
+
+  renderOSMDetails (userDetails) {
+    if (userDetails) {
+      return this.renderDetails(userDetails)
+    } else {
+      return (
+        <AccountView>
+          <AccountIcon>
+            <Icon name='user' size={30} color='grey' />
+          </AccountIcon>
+          <Text>It seems that you're not logged in.</Text>
+          <Text style={{ marginBottom: 8 }}>Do you have an account?</Text>
+          <LoginButton
+            title='Log in'
+            onPress={this.props.initiateAuthorization}
+            color={colors.primary}
+          />
+        </AccountView>
+      )
+    }
+  }
+
+  renderObserveApiDetails () {
+    const { observeApi } = this.props
+    console.log('observeApi', observeApi)
+    if (!observeApi) {
+      return (
+        <AccountView>
+          <Text>Observe API is not connected.</Text>
+          <Text style={{ marginBottom: 8 }}>Authorize to upload photos and traces.</Text>
+          <LoginButton
+            title='Authorize'
+            onPress={this.apiLogin}
+            color={colors.primary}
+          />
+        </AccountView>
+      )
+    } else {
+      return (
+        <ObserveDetailsView>
+          <Icon name='circle-tick' size={30} color='blue' />
+          <Text style={{ marginLeft: 10 }}>Observe API authorized.
+          </Text>
+        </ObserveDetailsView>
+      )
+    }
+  }
+
   render () {
     const { navigation } = this.props
     const { userDetails } = this.props
-
     let showLoadingIndicator = null
     if (this.props.loadingDetails) {
       showLoadingIndicator = (
@@ -129,53 +207,25 @@ class Account extends React.Component {
         }
       }
     ]
-    if (userDetails) {
-      return (
-        <Container>
-          <Header navigation={navigation} actions={headerActions} />
-          <PageWrapper>
-            {
-              userDetails.image && (
-                <ImageView>
-                  <Image
-                    style={{ width: 100, height: 100 }}
-                    source={{ uri: userDetails.image }}
-                  />
-                </ImageView>
-              )
-            }
-            {this.renderDetails(userDetails)}
-          </PageWrapper>
-        </Container>
-      )
-      // render userDetails
-    } else {
-      return (
-        <Container>
-          <Header navigation={navigation} />
-          <OfflineView>
-            <AccountIcon>
-              <Icon name='user' size={30} color='grey' />
-            </AccountIcon>
-            <Text>It seems that you're not logged in.</Text>
-            <Text style={{ marginBottom: 8 }}>Do you have an account?</Text>
-            <LoginButton
-              title='Log in'
-              onPress={this.props.initiateAuthorization}
-              color={colors.primary}
-            />
-            {showLoadingIndicator}
-          </OfflineView>
-        </Container>
-      )
-    }
+
+    return (
+      <Container>
+        <Header title='Account' navigation={navigation} actions={headerActions} />
+        <PageWrapper>
+          {this.renderOSMDetails(userDetails)}
+          {this.renderObserveApiDetails()}
+          {showLoadingIndicator}
+        </PageWrapper>
+      </Container>
+    )
   }
 }
 
 const mapStateToProps = state => {
   return {
     userDetails: state.account.userDetails,
-    loadingDetails: state.account.loadingDetails
+    loadingDetails: state.account.loadingDetails,
+    observeApi: state.observeApi.token || false
   }
 }
 

@@ -1,12 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components/native'
-import { Linking } from 'react-native'
-import Config from 'react-native-config'
 import { purgeCache, purgeStore, purgeCookies } from '../actions/about'
 import { purgeAllEdits } from '../actions/edit'
-import { startTrace, endTrace } from '../actions/traces'
-import { getProfile } from '../actions/observeApi'
+import { logoutUser } from '../actions/observeApi'
 import Icon from '../components/Collecticons'
 import Header from '../components/Header'
 import PageWrapper from '../components/PageWrapper'
@@ -48,12 +45,6 @@ class Settings extends React.Component {
     }
   }
 
-  apiLogin = () => {
-    const redirectURL = 'observe://apilogin'
-    const loginURL = `${Config.OBSERVE_API_URL}/login?redirect=${redirectURL}`
-    Linking.openURL(loginURL).catch(e => console.log('error opening url', e))
-  }
-
   render () {
     const { navigation } = this.props
 
@@ -85,36 +76,15 @@ class Settings extends React.Component {
           </ButtonWrapper>
           <ButtonWrapper>
             <Button
+              onPress={this.props.logoutUser}
+              title='Clear Observe API Token'
+              color={colors.primary}
+            />
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <Button
               onPress={this.props.purgeCookies}
               title='Delete Cookies'
-              color={colors.primary}
-            />
-          </ButtonWrapper>
-          <ButtonWrapper>
-            <Button
-              onPress={this.props.startTrace}
-              title='Start Trace'
-              color={colors.primary}
-              disabled={!!this.props.currentTrace}
-            />
-            <Button
-              onPress={this.props.endTrace}
-              title='End Trace'
-              color={colors.primary}
-              disabled={!this.props.currentTrace}
-            />
-          </ButtonWrapper>
-          <ButtonWrapper>
-            <Button
-              onPress={this.apiLogin}
-              title='Login to Observe API'
-              color={colors.primary}
-            />
-          </ButtonWrapper>
-          <ButtonWrapper>
-            <Button
-              onPress={this.props.getProfile}
-              title='Get Observe API Profile'
               color={colors.primary}
             />
           </ButtonWrapper>
@@ -136,9 +106,7 @@ const mapDispatchToProps = {
   purgeStore,
   purgeCookies,
   purgeAllEdits,
-  startTrace,
-  endTrace,
-  getProfile
+  logoutUser
 }
 
 export default connect(
