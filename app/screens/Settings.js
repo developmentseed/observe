@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import styled from 'styled-components/native'
 import { purgeCache, purgeStore, purgeCookies } from '../actions/about'
 import { purgeAllEdits } from '../actions/edit'
+import { logoutUser } from '../actions/observeApi'
 import Icon from '../components/Collecticons'
 import Header from '../components/Header'
 import PageWrapper from '../components/PageWrapper'
@@ -75,6 +76,13 @@ class Settings extends React.Component {
           </ButtonWrapper>
           <ButtonWrapper>
             <Button
+              onPress={this.props.logoutUser}
+              title='Clear Observe API Token'
+              color={colors.primary}
+            />
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <Button
               onPress={this.props.purgeCookies}
               title='Delete Cookies'
               color={colors.primary}
@@ -97,7 +105,8 @@ const mapDispatchToProps = {
   purgeCache,
   purgeStore,
   purgeCookies,
-  purgeAllEdits
+  purgeAllEdits,
+  logoutUser
 }
 
 export default connect(
