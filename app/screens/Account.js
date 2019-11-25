@@ -28,6 +28,7 @@ const AccountView = styled.View`
   margin-top: 30px;
   align-items: center;
   justify-content: center;
+  height: 200;
 `
 
 const AccountIcon = styled.Text`
@@ -60,6 +61,12 @@ const LoginButton = styled.Button`
 
 const DetailsList = styled.FlatList`
   padding-top: 10;
+`
+
+const ObserveDetailsView = styled.View`
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
 `
 
 class Account extends React.Component {
@@ -124,14 +131,14 @@ class Account extends React.Component {
       )
     }
     return (
-      <PageWrapper>
+      <>
         {showImage}
         <DetailsList
           data={detailsList}
           renderItem={({ item }) => this.renderDetail(item)}
           keyExtractor={(item) => item.value}
         />
-      </PageWrapper>
+      </>
     )
   }
 
@@ -163,7 +170,7 @@ class Account extends React.Component {
       return (
         <AccountView>
           <Text>Observe API is not connected.</Text>
-          <Text>Authorize to upload photos and traces.</Text>
+          <Text style={{ marginBottom: 8 }}>Authorize to upload photos and traces.</Text>
           <LoginButton
             title='Authorize'
             onPress={this.apiLogin}
@@ -173,11 +180,11 @@ class Account extends React.Component {
       )
     } else {
       return (
-        <PageWrapper>
+        <ObserveDetailsView>
           <Icon name='circle-tick' size={30} color='blue' />
-          <Text style={{ marginTop: 10 }}>Observe API authorized.
+          <Text style={{ marginLeft: 10 }}>Observe API authorized.
           </Text>
-        </PageWrapper>
+        </ObserveDetailsView>
       )
     }
   }
@@ -204,9 +211,11 @@ class Account extends React.Component {
     return (
       <Container>
         <Header title='Account' navigation={navigation} actions={headerActions} />
-        {this.renderOSMDetails(userDetails)}
-        {this.renderObserveApiDetails()}
-        {showLoadingIndicator}
+        <PageWrapper>
+          {this.renderOSMDetails(userDetails)}
+          {this.renderObserveApiDetails()}
+          {showLoadingIndicator}
+        </PageWrapper>
       </Container>
     )
   }
