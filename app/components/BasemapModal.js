@@ -32,7 +32,7 @@ const Button = styled.TouchableHighlight`
   width: 40;
   height: 40;
   right: 20;
-  top: -${headerHeight.height + 516};
+  top: ${headerHeight.height - 48};
   background-color: #fff;
   justify-content: center;
   align-items: center;
@@ -46,8 +46,6 @@ const Button = styled.TouchableHighlight`
 const Modal = styled.Modal`
   position: absolute;
 `
-
-const Container = styled.View``
 
 const OverlayBackdrop = styled.TouchableWithoutFeedback`
 `
@@ -147,7 +145,7 @@ class BasemapModal extends React.Component {
 
   render () {
     return (
-      <Container>
+      <>
         <Button>
           <Icon name='iso-stack' size={16} color='#0B3954' onPress={() => this.setState({ modalVisible: true })} />
         </Button>
@@ -199,7 +197,7 @@ class BasemapModal extends React.Component {
             </OverlayInner>
           </OverlayBackdrop>
         </Modal>
-      </Container>
+      </>
     )
   }
 }

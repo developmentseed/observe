@@ -24,7 +24,7 @@ const Button = styled.TouchableHighlight`
   height: 40;
   background-color: #fff;
   right: 20;
-  top: ${headerHeight.height * 2};
+  top: ${headerHeight.height};
   justify-content: center;
   align-items: center;
   shadow-color: grey;

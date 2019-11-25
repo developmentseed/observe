@@ -47,19 +47,22 @@ const TitleText = styled.Text`
 `
 
 const HeaderWrapper = styled.View`
-  height: ${headerStyles.height};
+  min-height: ${headerStyles.height};
   background-color: ${colors.primary};
   width: ${win.width};
   border-top-color: #e66533;
   padding-top: ${headerStyles.paddingTop};
   display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
 `
 
 const HeaderRow = styled.View`
-  flex: 1;
+  min-height: ${headerStyles.height};
   flex-direction: row;
   align-items: center;
   padding-left: 16;
+  flex-shrink: 0;
 `
 
 const HeaderIcon = styled.TouchableOpacity`
@@ -211,8 +214,8 @@ class Header extends React.Component {
             { this.renderTitle() }
             { actions && this.renderActions() }
           </HeaderRow>
+          { showRecordingHeader }
         </HeaderWrapper>
-        { showRecordingHeader }
         <ConfirmDialog title='Stop recording and save?' description='Stop GPS logging and save the current track' visible={this.state.dialogVisible} cancel={this.cancelDialog} continue={this.saveTrace} />
       </Container>
     )
