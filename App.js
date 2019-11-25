@@ -22,6 +22,8 @@ import EditFeatureDetail from './app/screens/Features/EditFeatureDetail'
 import SelectFeatureType from './app/screens/Features/SelectFeatureType'
 import PhotosListScreen from './app/screens/Photos/PhotosListScreen'
 import PhotoDetailScreen from './app/screens/Photos/PhotoDetailScreen'
+import TracesListScreen from './app/screens/Traces/TracesListScreen'
+import TraceDetailScreen from './app/screens/Traces/TraceDetailScreen'
 
 import AuthorizationManager from './app/components/AuthorizationManager'
 import Drawer from './app/components/Drawer'
@@ -84,6 +86,23 @@ const PhotosListNavigator = createStackNavigator({
     )
   }
 })
+
+const TracesListNavigator = createStackNavigator({
+  TracesListScreen: { screen: TracesListScreen }
+}, {
+  initialRouteName: 'TracesListScreen',
+  headerMode: 'none',
+  navigationOptions: {
+    title: 'Your Traces',
+    drawerIcon: () => (
+      <Icon
+        name='road'
+        style={{ fontSize: 16, color: colors.primary }}
+      />
+    )
+  }
+})
+
 // This is convenient when iterating on screens, as the active screen will
 // reload when code changes. However, it breaks some uses of react-navigation
 // params, so it's disabled by default
@@ -98,6 +117,7 @@ const AppNavigator = createDrawerNavigator({
   },
   OfflineMaps: { screen: OfflineMapsNavigator },
   PhotosListScreen: { screen: PhotosListNavigator },
+  TracesListScreen: { screen: TracesListNavigator },
   Account: { screen: Account },
   Settings: { screen: Settings },
   ViewFeatureDetail: { screen: ViewFeatureDetail },
@@ -106,7 +126,8 @@ const AppNavigator = createDrawerNavigator({
   SelectFeatureType: { screen: SelectFeatureType },
   PhotoDetailScreen: { screen: PhotoDetailScreen },
   CameraScreen: { screen: CameraScreen },
-  SaveTrace: { screen: SaveTrace }
+  SaveTrace: { screen: SaveTrace },
+  TraceDetailScreen: { screen: TraceDetailScreen }
 }, {
   initialRouteName: 'Explore',
   contentComponent: Drawer,
