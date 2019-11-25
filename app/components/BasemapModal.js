@@ -162,6 +162,8 @@ class BasemapModal extends React.Component {
                     <Switch
                       onValueChange={() => { this.props.toggleOverlay('osm') }}
                       value={this.props.overlays['osm']}
+                      trackColor={{ false: colors.muted, true: colors.primary }}
+                      thumbColor={colors.primary}
                     />
                     <LayerName>OSM Data</LayerName>
                   </SwitchSection>
@@ -169,6 +171,8 @@ class BasemapModal extends React.Component {
                     <Switch
                       onValueChange={() => { this.props.toggleOverlay('traces') }}
                       value={this.props.overlays['traces']}
+                      trackColor={{ false: colors.muted, true: colors.primary }}
+                      thumbColor={colors.primary}
                     />
                     <LayerName>Your Traces</LayerName>
                   </SwitchSection>
@@ -176,6 +180,8 @@ class BasemapModal extends React.Component {
                     <Switch
                       onValueChange={() => { this.props.toggleOverlay('photos') }}
                       value={this.props.overlays['photos']}
+                      trackColor={{ false: colors.muted, true: colors.primary }}
+                      thumbColor={colors.primary}
                     />
                     <LayerName>Your Photos</LayerName>
                   </SwitchSection>
