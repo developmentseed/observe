@@ -18,6 +18,7 @@ class TracesListScreen extends React.Component {
 
   render () {
     const { navigation, traces } = this.props
+    traces.traces.sort((a, b) => b.timestamp > a.timestamp ? 1 : -1)
     const headerActions = [
       {
         name: 'upload-2',
