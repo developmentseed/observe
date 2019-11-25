@@ -204,7 +204,7 @@ class TraceDetailScreen extends React.Component {
                       ref={(ref) => { this.cameraRef = ref }}
                     />
                     <MapboxGL.ShapeSource id='tracesGeojsonSource' shape={trace.geojson}>
-                      <MapboxGL.LineLayer id='traces' style={style.traces.traces} minZoomLevel={12} />
+                      <MapboxGL.LineLayer id='traces' style={style.traces.traces} minZoomLevel={6} />
                     </MapboxGL.ShapeSource>
                   </Map>
                 </MapContainer>
