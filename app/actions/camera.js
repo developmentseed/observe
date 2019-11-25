@@ -3,7 +3,7 @@ import RNFetchBlob from 'rn-fetch-blob'
 import getRandomId from '../utils/get-random-id'
 import * as ImageManipulator from 'expo-image-manipulator'
 
-export function savePhoto (uri, location, description) {
+export function savePhoto (uri, location, description, featureId) {
   return async dispatch => {
     dispatch({
       type: types.SAVING_PHOTO,
@@ -32,7 +32,8 @@ export function savePhoto (uri, location, description) {
         'path': path,
         'location': location,
         'description': description,
-        'pending': true
+        'pending': true,
+        'featureId': featureId
       }
       dispatch({
         type: types.SAVED_PHOTO,
