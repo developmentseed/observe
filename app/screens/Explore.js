@@ -632,7 +632,6 @@ class Explore extends React.Component {
                   </StyledMap>
                 )
             }
-            { overlay }
             {/* should hide this entire element when not in loading state */}
             { showLoadingIndicator }
             <LocateUserButton onPress={() => this.locateUser()} />
@@ -641,6 +640,7 @@ class Explore extends React.Component {
             <RecordButton status={currentTraceStatus} onPress={() => this.onRecordPress()} />
             {mode !== 'bbox' && this.renderZoomToEdit()}
           </MainBody>
+          { overlay }
         </Container>
       </AndroidBackHandler>
     )

@@ -137,7 +137,7 @@ class MapOverlay extends Component {
           <Drawer
             startUp={false}
             containerHeight={300}
-            offset={120}
+            offset={64}
             elevation={10}
           >
             <FeatureListWrapper>
