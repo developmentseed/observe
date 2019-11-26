@@ -38,10 +38,8 @@ export async function callAPI (dispatch, path, method = 'GET', data) {
   }
 
   try {
-    console.log('opts', url, fetchOpts)
     const response = await fetch(url, fetchOpts)
     const data = await response.json()
-    console.log('response data', data, response.status)
     if (response.status === 401) { // token is expired or invalid, logout user
       dispatch(logoutUser())
     }

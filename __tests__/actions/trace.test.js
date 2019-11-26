@@ -171,6 +171,9 @@ describe('trace upload / async actions', () => {
         traces: [
           getMockTrace(1)
         ]
+      },
+      network: {
+        isConnected: true
       }
     })
     fetch.resetMocks()
@@ -188,6 +191,9 @@ describe('trace upload / async actions', () => {
           getMockTrace(1),
           getMockTrace(2)
         ]
+      },
+      network: {
+        isConnected: true
       }
     })
     fetch.resetMocks()
@@ -209,6 +215,9 @@ describe('trace upload / async actions', () => {
           trace1,
           trace2
         ]
+      },
+      network: {
+        isConnected: true
       }
     })
     fetch.resetMocks()
@@ -229,6 +238,9 @@ describe('trace upload / async actions', () => {
           trace1,
           trace2
         ]
+      },
+      network: {
+        isConnected: true
       }
     })
     fetch.resetMocks()
@@ -246,6 +258,9 @@ describe('trace upload / async actions', () => {
         traces: [
           trace1
         ]
+      },
+      network: {
+        isConnected: true
       }
     })
     fetch.resetMocks()
