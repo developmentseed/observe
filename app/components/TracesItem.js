@@ -62,6 +62,23 @@ class TracesItem extends React.PureComponent {
     return <Icon name={iconName} size={16} color={color} />
   }
 
+  getStatusText () {
+    const { item } = this.props
+    switch (item.status) {
+      case 'uploaded':
+        return 'Uploaded'
+      case 'pending':
+        if (item.errors.length > 0) {
+          const error = item.errors[item.errors.length - 1]
+          return error.message
+        } else {
+          return 'An unknown error occured'
+        }
+      default:
+        return ''
+    }
+  }
+
   _onPress = () => this.props.onPress && this.props.onPress(this.props.item)
 
   render () {
@@ -69,8 +86,8 @@ class TracesItem extends React.PureComponent {
     console.log('trace', item)
     const timestamp = item.geojson.properties.timestamps[0]
     const length = getTraceLength(item.geojson).toFixed(2)
-    const description = item.geojson.properties.description || 'No description'
-    let statusIcon = this.getStatusIcon()
+    const statusIcon = this.getStatusIcon()
+    const statusText = this.getStatusText()
     return (
       <View
         style={{ height: this.height }}
@@ -85,8 +102,8 @@ class TracesItem extends React.PureComponent {
             <StatusContainer>{statusIcon}</StatusContainer>
             <TextContainer>
               <TitleText>{formatDate(timestamp)}</TitleText>
-              <SubtitleText>{description}</SubtitleText>
               <SubtitleText>{length} m</SubtitleText>
+              <SubtitleText>{statusText}</SubtitleText>
             </TextContainer>
           </Container>
         </ItemContainer>
