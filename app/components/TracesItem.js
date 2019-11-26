@@ -65,6 +65,8 @@ class TracesItem extends React.PureComponent {
   getStatusText () {
     const { item } = this.props
     switch (item.status) {
+      case 'uploading':
+        return 'Uploading...'
       case 'uploaded':
         return 'Uploaded'
       case 'pending':
