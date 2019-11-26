@@ -136,7 +136,7 @@ class CameraScreen extends React.Component {
             style={{ backgroundColor: '#fff' }}
             resetScrollToCoords={{ x: 0, y: 0 }}
             scrollEnabled={false}
-            extraScrollHeight={100}
+            extraScrollHeight={220}
             enableOnAndroid
           >
             <PageWrapper>
