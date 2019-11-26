@@ -68,14 +68,17 @@ class TracesItem extends React.PureComponent {
       case 'uploaded':
         return 'Uploaded'
       case 'pending':
+        if (item.errors.length === 0) {
+          return 'Waiting for network...'
+        }
+
         if (item.errors.length > 0) {
           const error = item.errors[item.errors.length - 1]
           return error.message
-        } else {
-          return 'An unknown error occured'
         }
+        break
       default:
-        return ''
+        return 'An unknown error has occured'
     }
   }
 
@@ -83,7 +86,6 @@ class TracesItem extends React.PureComponent {
 
   render () {
     const { item } = this.props
-    console.log('trace', item)
     const timestamp = item.geojson.properties.timestamps[0]
     const length = getTraceLength(item.geojson).toFixed(2)
     const statusIcon = this.getStatusIcon()
