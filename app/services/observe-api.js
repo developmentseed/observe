@@ -1,6 +1,6 @@
 import { store } from '../utils/store'
 import Config from 'react-native-config'
-import { ObserveError, ObserveAPIError } from '../utils/errors'
+import { ObserveAPIError } from '../utils/errors'
 import qs from 'qs'
 import { getTraceGeoJSON } from '../utils/traces'
 import { logoutUser } from '../actions/observeApi'

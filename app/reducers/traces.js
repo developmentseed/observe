@@ -54,6 +54,7 @@ export default function (state = initialState, action) {
       const traceId = getRandomId()
       const newTrace = {
         id: traceId,
+        apiId: null,
         status: 'pending',
         errors: [],
         geojson: {
@@ -66,7 +67,6 @@ export default function (state = initialState, action) {
         }
       }
 
-      console.log('new trace', newTrace)
       return {
         ...state,
         currentTrace: null,
