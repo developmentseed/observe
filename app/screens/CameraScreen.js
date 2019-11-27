@@ -64,16 +64,20 @@ class CameraScreen extends React.Component {
     saving: false,
     image: null,
     location: null,
-    description: null
+    description: null,
+    feature: null
   }
 
   async componentWillMount () {
     const { status } = await Permissions.askAsync(Permissions.CAMERA)
+    const { navigation } = this.props
+    const { state: { params: { feature } } } = navigation
     this.setState({
       hasCameraPermission: status === 'granted',
       image: null,
       location: null,
-      description: null
+      description: null,
+      feature: feature
     })
   }
 
@@ -91,6 +95,8 @@ class CameraScreen extends React.Component {
   render () {
     const { hasCameraPermission } = this.state
     const { navigation } = this.props
+    const previousScreen = navigation.getParam('previousScreen')
+
     let showLoadingIndicator = null
     if (this.state.saving) {
       showLoadingIndicator = (
@@ -105,13 +111,17 @@ class CameraScreen extends React.Component {
           this.setState({
             saving: true
           })
-          this.props.savePhoto(this.state.image, this.state.location, this.state.description)
+          if (this.state.feature) {
+            this.props.savePhoto(this.state.image, this.state.location, this.state.description, this.state.feature.id)
+          } else {
+            this.props.savePhoto(this.state.image, this.state.location, this.state.description, null)
+          }
           this.setState({
             image: null,
             location: null,
             description: null
           })
-          navigation.navigate('Explore')
+          navigation.navigate(previousScreen)
         }
       }
     ]
@@ -152,7 +162,7 @@ class CameraScreen extends React.Component {
     } else {
       return (
         <Container>
-          <Header back title='Take a picture' navigation={navigation} />
+          <Header back={previousScreen} title='Take a picture' navigation={navigation} />
           <Camera style={{ flex: 1 }} type={this.state.type} ref={ref => { this.camera = ref }} >
             <View
               style={{

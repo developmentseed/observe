@@ -140,6 +140,18 @@ export default function (state = initialState, action) {
         traces
       }
     }
+
+    case types.EDIT_TRACE: {
+      let editedTrace = { ...action.trace }
+      let traces = _cloneDeep(state.traces)
+      traces = traces.filter(trace => trace.id !== action.trace.id)
+      editedTrace.geojson.properties.description = action.description
+      traces.push(editedTrace)
+      return {
+        ...state,
+        traces
+      }
+    }
   }
   return state
 }

@@ -2,22 +2,23 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Header from '../../components/Header'
 import Container from '../../components/Container'
-import PhotosList from '../../components/PhotosList'
+import TracesList from '../../components/TracesList'
 
-class PhotosListScreen extends React.Component {
+class TracesListScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: 'Your Photos'
+      title: 'Your Traces'
     }
   }
 
-  select = photo => {
+  select = trace => {
     const { navigation } = this.props
-    navigation.navigate({ routeName: 'PhotoDetailScreen', params: { photo: photo.id, previousScreen: 'PhotosListScreen' } })
+    navigation.navigate({ routeName: 'TraceDetailScreen', params: { trace: trace.id } })
   }
 
   render () {
-    const { navigation, photos } = this.props
+    const { navigation, traces } = this.props
+    traces.traces.sort((a, b) => b.timestamp > a.timestamp ? 1 : -1)
     const headerActions = [
       {
         name: 'upload-2',
@@ -31,12 +32,12 @@ class PhotosListScreen extends React.Component {
     return (
       <Container>
         <Header
-          title='Your Photos'
+          title='Your Traces'
           navigation={navigation}
           actions={headerActions}
         />
-        <PhotosList
-          data={photos.photos}
+        <TracesList
+          data={traces.traces}
           onSelectItem={this.select}
         />
 
@@ -46,9 +47,9 @@ class PhotosListScreen extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  photos: state.photos
+  traces: state.traces
 })
 
 const mapDispatchToProps = {}
 
-export default connect(mapStateToProps, mapDispatchToProps)(PhotosListScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(TracesListScreen)

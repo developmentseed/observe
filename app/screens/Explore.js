@@ -636,7 +636,7 @@ class Explore extends React.Component {
             { showLoadingIndicator }
             <LocateUserButton onPress={() => this.locateUser()} />
             <BasemapModal onChange={this.props.setBasemap} />
-            <CameraButton onPress={() => navigation.navigate('CameraScreen')} />
+            <CameraButton onPress={() => navigation.navigate('CameraScreen'), { previousScreen: 'Explore' }} />
             <RecordButton status={currentTraceStatus} onPress={() => this.onRecordPress()} />
             {mode !== 'bbox' && this.renderZoomToEdit()}
           </MainBody>
