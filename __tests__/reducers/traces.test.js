@@ -260,7 +260,8 @@ describe('tests for upload trace actions', () => {
       newId: 'fakeid'
     }
     const newState = reducer(state, action)
-    expect(newState.traces[0].id).toEqual('fakeid')
+    expect(newState.traces[0].id).toEqual('id-1')
+    expect(newState.traces[0].apiId).toEqual('fakeid')
     expect(newState.traces[0].status).toEqual('uploaded')
     expect(newState.traces[0].geojson.properties.id).toEqual('fakeid')
   })
