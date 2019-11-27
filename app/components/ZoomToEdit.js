@@ -22,7 +22,7 @@ const TextWrapper = styled.TouchableOpacity`
   padding-bottom: 16;
   padding-left: 16;
   border-radius: 4;
-  width: 150;
+  width: 180;
   flex-direction: row;
 `
 
@@ -32,8 +32,8 @@ const Text = styled.Text`
 `
 
 const PlusIcon = styled(Icon)`
-  margin-right: 4;
-  margin-top: 2;
+  margin-right: 12;
+  margin-top: 3;
 `
 
 export default class ZoomToEdit extends React.Component {

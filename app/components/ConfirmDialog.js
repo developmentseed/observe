@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components/native'
 import Dialog from 'react-native-dialog'
+import { colors } from '../style/variables'
 
 const View = styled.View`
 `
@@ -11,12 +12,12 @@ export default class ConfirmDialog extends React.Component {
     return (
       <View>
         <Dialog.Container visible={this.props.visible} {...{ onBackdropPress: this.props.cancel }}>
-          <Dialog.Title>{title}</Dialog.Title>
-          <Dialog.Description>
+          <Dialog.Title style={{ fontWeight: 'bold' }}>{title}</Dialog.Title>
+          <Dialog.Description style={{ color: colors.base }}>
             {description}
           </Dialog.Description>
-          <Dialog.Button label='Cancel' onPress={this.props.cancel} />
-          <Dialog.Button label='Continue' onPress={() => { this.props.continue() }} />
+          <Dialog.Button color={colors.secondary} label='Cancel' onPress={this.props.cancel} />
+          <Dialog.Button color={colors.primary} label='Continue' onPress={() => { this.props.continue() }} />
         </Dialog.Container>
       </View>
     )

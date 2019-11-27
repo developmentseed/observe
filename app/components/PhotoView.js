@@ -53,7 +53,7 @@ export class ImageDetails extends React.Component {
   render () {
     return (
       <View>
-        <Icon name='camera' size={24} color='black' />
+        <Icon name='camera' size={20} color={colors.base} />
         <ImageDetailsView>
           <TimeText>{formatDate(this.props.timestamp)}</TimeText>
           <LocationText>{`${this.props.location.coords.latitude.toFixed(2)}, ${this.props.location.coords.longitude.toFixed(2)}`}</LocationText>

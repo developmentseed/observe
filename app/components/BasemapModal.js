@@ -6,6 +6,7 @@ import Config from 'react-native-config'
 import { colors } from '../style/variables'
 import { connect } from 'react-redux'
 import { toggleOverlay } from '../actions/map'
+import getPlatformStyles from '../utils/get-platform-styles'
 
 const mapLayers = {
   'default': Config.OSM_LAYER_NAME || 'Mapbox Streets',
@@ -13,14 +14,25 @@ const mapLayers = {
 }
 
 const win = Dimensions.get('window')
+const headerHeight = getPlatformStyles({
+  ios: {
+    height: 80
+  },
+  iphoneX: {
+    height: 100
+  },
+  android: {
+    height: 64
+  }
+})
 
 const Button = styled.TouchableHighlight`
   position: absolute;
   border-radius: ${Math.round(win.width + win.height) / 2};
-  width: 48;
-  height: 48;
-  right: 16;
-  bottom: 130;
+  width: 40;
+  height: 40;
+  right: 20;
+  top: ${headerHeight.height - 48};
   background-color: #fff;
   justify-content: center;
   align-items: center;
@@ -34,8 +46,6 @@ const Button = styled.TouchableHighlight`
 const Modal = styled.Modal`
   position: absolute;
 `
-
-const Container = styled.View``
 
 const OverlayBackdrop = styled.TouchableWithoutFeedback`
 `
@@ -135,9 +145,9 @@ class BasemapModal extends React.Component {
 
   render () {
     return (
-      <Container>
+      <>
         <Button>
-          <Icon name='iso-stack' size={20} color='#0B3954' onPress={() => this.setState({ modalVisible: true })} />
+          <Icon name='iso-stack' size={16} color='#0B3954' onPress={() => this.setState({ modalVisible: true })} />
         </Button>
         <Modal
           transparent
@@ -152,6 +162,8 @@ class BasemapModal extends React.Component {
                     <Switch
                       onValueChange={() => { this.props.toggleOverlay('osm') }}
                       value={this.props.overlays['osm']}
+                      trackColor={{ false: colors.muted, true: colors.primary }}
+                      thumbColor={colors.primary}
                     />
                     <LayerName>OSM Data</LayerName>
                   </SwitchSection>
@@ -159,6 +171,8 @@ class BasemapModal extends React.Component {
                     <Switch
                       onValueChange={() => { this.props.toggleOverlay('traces') }}
                       value={this.props.overlays['traces']}
+                      trackColor={{ false: colors.muted, true: colors.primary }}
+                      thumbColor={colors.primary}
                     />
                     <LayerName>Your Traces</LayerName>
                   </SwitchSection>
@@ -166,6 +180,8 @@ class BasemapModal extends React.Component {
                     <Switch
                       onValueChange={() => { this.props.toggleOverlay('photos') }}
                       value={this.props.overlays['photos']}
+                      trackColor={{ false: colors.muted, true: colors.primary }}
+                      thumbColor={colors.primary}
                     />
                     <LayerName>Your Photos</LayerName>
                   </SwitchSection>
@@ -187,7 +203,7 @@ class BasemapModal extends React.Component {
             </OverlayInner>
           </OverlayBackdrop>
         </Modal>
-      </Container>
+      </>
     )
   }
 }

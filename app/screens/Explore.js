@@ -85,6 +85,15 @@ if (!satelliteStyleURL.includes(':/') && Platform.OS === 'android') {
 
 const Container = styled.View`
   flex: 1;
+  display: flex;
+  flex-flow: column nowrap;
+`
+const MainBody = styled.View`
+  flex: 1;
+  position: relative;
+`
+const MainHeader = styled(Header)`
+
 `
 
 const StyledMap = styled(MapboxGL.MapView)`
@@ -557,79 +566,81 @@ class Explore extends React.Component {
           }}
         />
         <Container>
-          <Header
+          <MainHeader
             actions={navigation.getParam('actions', [])}
             back={this.getBackButton()}
             navigation={navigation}
             title={this.getTitle()}
           />
-          {
-            requiresPreauth
-              ? this.renderAuthPrompt()
-              : (
-                <StyledMap
-                  styleURL={styleURL}
-                  showUserLocation
-                  userTrackingMode={MapboxGL.UserTrackingModes.Follow}
-                  ref={(ref) => { this.mapRef = ref }}
-                  onDidFinishRenderingMapFully={this.onDidFinishRenderingMapFully}
-                  onWillStartLoadingMap={this.onWillStartLoadingMap}
-                  onDidFailLoadingMap={this.onDidFailLoadingMap}
-                  onRegionIsChanging={this.onRegionIsChanging}
-                  onRegionDidChange={this.onRegionDidChange}
-                  regionDidChangeDebounceTime={10}
-                  onPress={this.onPress}
-                >
-                  <MapboxGL.Camera zoomLevel={12}
-                    defaultSettings={{
-                      centerCoordinate: [0, 0],
-                      zoomLevel: 12
-                    }}
-                    ref={(ref) => { this.cameraRef = ref }}
-                  />
-                  <MapboxGL.UserLocation />
-                  <MapboxGL.Images images={icons} />
-                  <MapboxGL.ShapeSource id='geojsonSource' shape={geojson}>
-                    <MapboxGL.LineLayer id='roadsHighlight' filter={filters.allRoads} style={style.osm.lineHighlight} minZoomLevel={16} />
-                    <MapboxGL.LineLayer id='roads' filter={filters.allRoads} style={style.osm.highways} minZoomLevel={16} />
-                    <MapboxGL.LineLayer id='railwayLine' filter={filters.railwayLine} minZoomLevel={16} />
-                    <MapboxGL.LineLayer id='waterLine' filter={filters.waterLine} style={style.osm.waterLine} minZoomLevel={16} />
-                    <MapboxGL.FillLayer id='buildings' filter={filters.buildings} style={style.osm.buildings} minZoomLevel={16} />
-                    <MapboxGL.FillLayer id='leisure' filter={filters.leisure} style={style.osm.leisure} minZoomLevel={16} />
-                    <MapboxGL.LineLayer id='featureSelect' filter={filters.featureSelect} style={style.osm.lineSelect} minZoomLevel={16} />
-                    <MapboxGL.CircleLayer id='iconHalo' style={style.osm.iconHalo} minZoomLevel={16} filter={filters.iconHalo} />
-                    <MapboxGL.CircleLayer id='iconHaloSelected' style={style.osm.iconHaloSelected} minZoomLevel={16} filter={filters.iconHaloSelected} />
-                    <MapboxGL.SymbolLayer id='pois' style={style.osm.icons} filter={filters.pois} />
-                  </MapboxGL.ShapeSource>
-                  <MapboxGL.ShapeSource id='editGeojsonSource' shape={editsGeojson}>
-                    <MapboxGL.FillLayer id='editedPolygons' filter={filters.editedPolygons} style={style.osm.editedPolygons} minZoomLevel={16} />
-                    <MapboxGL.CircleLayer id='editedIconHalo' style={style.osm.iconEditedHalo} minZoomLevel={16} filter={filters.editedPois} />
-                    <MapboxGL.CircleLayer id='editedIconHaloSelected' style={style.osm.iconHaloSelected} minZoomLevel={16} filter={filters.editedIconHaloSelected} />
-                    <MapboxGL.LineLayer id='editedLines' filter={filters.editedLines} style={style.osm.editedLines} minZoomLevel={16} />
-                    <MapboxGL.SymbolLayer id='editedPois' style={style.osm.icons} filter={filters.editedPois} />
-                  </MapboxGL.ShapeSource>
-                  <MapboxGL.ShapeSource id='tracesGeojsonSource' shape={tracesGeojson}>
-                    <MapboxGL.LineLayer id='traces' style={style.traces.traces} minZoomLevel={16} />
-                  </MapboxGL.ShapeSource>
-                  <MapboxGL.ShapeSource id='currentTraceGeojsonSource' shape={currentTrace}>
-                    <MapboxGL.LineLayer id='currentTrace' style={style.traces.traces} minZoomLevel={16} />
-                  </MapboxGL.ShapeSource>
-                  <MapboxGL.ShapeSource id='photoGeojsonSource' shape={photosGeojson}>
-                    <MapboxGL.CircleLayer id='photosHaloSelected' style={style.photos.photoIconSelected} filter={filters.photosHaloSelected} minZoomLevel={16} />
-                    <MapboxGL.CircleLayer id='photosHalo' style={style.photos.photoIconHalo} minZoomLevel={16} />
-                    <MapboxGL.SymbolLayer id='photos' style={style.photos.photoIcon} minZoomLevel={16} />
-                  </MapboxGL.ShapeSource>
-                </StyledMap>
-              )
-          }
+          <MainBody>
+            {
+              requiresPreauth
+                ? this.renderAuthPrompt()
+                : (
+                  <StyledMap
+                    styleURL={styleURL}
+                    showUserLocation
+                    userTrackingMode={MapboxGL.UserTrackingModes.Follow}
+                    ref={(ref) => { this.mapRef = ref }}
+                    onDidFinishRenderingMapFully={this.onDidFinishRenderingMapFully}
+                    onWillStartLoadingMap={this.onWillStartLoadingMap}
+                    onDidFailLoadingMap={this.onDidFailLoadingMap}
+                    onRegionIsChanging={this.onRegionIsChanging}
+                    onRegionDidChange={this.onRegionDidChange}
+                    regionDidChangeDebounceTime={10}
+                    onPress={this.onPress}
+                  >
+                    <MapboxGL.Camera zoomLevel={12}
+                      defaultSettings={{
+                        centerCoordinate: [0, 0],
+                        zoomLevel: 12
+                      }}
+                      ref={(ref) => { this.cameraRef = ref }}
+                    />
+                    <MapboxGL.UserLocation />
+                    <MapboxGL.Images images={icons} />
+                    <MapboxGL.ShapeSource id='geojsonSource' shape={geojson}>
+                      <MapboxGL.LineLayer id='roadsHighlight' filter={filters.allRoads} style={style.osm.lineHighlight} minZoomLevel={16} />
+                      <MapboxGL.LineLayer id='roads' filter={filters.allRoads} style={style.osm.highways} minZoomLevel={16} />
+                      <MapboxGL.LineLayer id='railwayLine' filter={filters.railwayLine} minZoomLevel={16} />
+                      <MapboxGL.LineLayer id='waterLine' filter={filters.waterLine} style={style.osm.waterLine} minZoomLevel={16} />
+                      <MapboxGL.FillLayer id='buildings' filter={filters.buildings} style={style.osm.buildings} minZoomLevel={16} />
+                      <MapboxGL.FillLayer id='leisure' filter={filters.leisure} style={style.osm.leisure} minZoomLevel={16} />
+                      <MapboxGL.LineLayer id='featureSelect' filter={filters.featureSelect} style={style.osm.lineSelect} minZoomLevel={16} />
+                      <MapboxGL.CircleLayer id='iconHalo' style={style.osm.iconHalo} minZoomLevel={16} filter={filters.iconHalo} />
+                      <MapboxGL.CircleLayer id='iconHaloSelected' style={style.osm.iconHaloSelected} minZoomLevel={16} filter={filters.iconHaloSelected} />
+                      <MapboxGL.SymbolLayer id='pois' style={style.osm.icons} filter={filters.pois} />
+                    </MapboxGL.ShapeSource>
+                    <MapboxGL.ShapeSource id='editGeojsonSource' shape={editsGeojson}>
+                      <MapboxGL.FillLayer id='editedPolygons' filter={filters.editedPolygons} style={style.osm.editedPolygons} minZoomLevel={16} />
+                      <MapboxGL.CircleLayer id='editedIconHalo' style={style.osm.iconEditedHalo} minZoomLevel={16} filter={filters.editedPois} />
+                      <MapboxGL.CircleLayer id='editedIconHaloSelected' style={style.osm.iconHaloSelected} minZoomLevel={16} filter={filters.editedIconHaloSelected} />
+                      <MapboxGL.LineLayer id='editedLines' filter={filters.editedLines} style={style.osm.editedLines} minZoomLevel={16} />
+                      <MapboxGL.SymbolLayer id='editedPois' style={style.osm.icons} filter={filters.editedPois} />
+                    </MapboxGL.ShapeSource>
+                    <MapboxGL.ShapeSource id='tracesGeojsonSource' shape={tracesGeojson}>
+                      <MapboxGL.LineLayer id='traces' style={style.traces.traces} minZoomLevel={16} />
+                    </MapboxGL.ShapeSource>
+                    <MapboxGL.ShapeSource id='currentTraceGeojsonSource' shape={currentTrace}>
+                      <MapboxGL.LineLayer id='currentTrace' style={style.traces.traces} minZoomLevel={16} />
+                    </MapboxGL.ShapeSource>
+                    <MapboxGL.ShapeSource id='photoGeojsonSource' shape={photosGeojson}>
+                      <MapboxGL.CircleLayer id='photosHaloSelected' style={style.photos.photoIconSelected} filter={filters.photosHaloSelected} minZoomLevel={16} />
+                      <MapboxGL.CircleLayer id='photosHalo' style={style.photos.photoIconHalo} minZoomLevel={16} />
+                      <MapboxGL.SymbolLayer id='photos' style={style.photos.photoIcon} minZoomLevel={16} />
+                    </MapboxGL.ShapeSource>
+                  </StyledMap>
+                )
+            }
+            {/* should hide this entire element when not in loading state */}
+            { showLoadingIndicator }
+            <LocateUserButton onPress={() => this.locateUser()} />
+            <BasemapModal onChange={this.props.setBasemap} />
+            <CameraButton onPress={() => navigation.navigate('CameraScreen', { previousScreen: 'Explore' })} />
+            <RecordButton status={currentTraceStatus} onPress={() => this.onRecordPress()} />
+            {mode !== 'bbox' && this.renderZoomToEdit()}
+          </MainBody>
           { overlay }
-          {/* should hide this entire element when not in loading state */}
-          { showLoadingIndicator }
-          <LocateUserButton onPress={() => this.locateUser()} />
-          <BasemapModal onChange={this.props.setBasemap} />
-          <CameraButton onPress={() => navigation.navigate('CameraScreen', { previousScreen: 'Explore' })} />
-          <RecordButton status={currentTraceStatus} onPress={() => this.onRecordPress()} />
-          {mode !== 'bbox' && this.renderZoomToEdit()}
         </Container>
       </AndroidBackHandler>
     )

@@ -20,10 +20,10 @@ const headerStyles = getPlatformStyles({
 })
 
 const Text = styled.Text`
-  color: red;
   font-size: 12;
-  margin-right: 20;
   letter-spacing: 1;
+  text-transform: uppercase;
+  margin-left: 10px;
 `
 const DistanceText = styled.Text`
   font-size: 24;
@@ -84,18 +84,19 @@ const PauseResumeButton = styled.TouchableOpacity`
 
 const StopButton = styled.TouchableOpacity`
   justify-content: center;
-  padding-left: 20;
+  margin-left: 24;
 `
 
 export default class RecordHeader extends React.Component {
   render () {
     const icon = this.props.paused ? 'circle-play' : 'circle-pause'
+    const iconColor = this.props.paused ? colors.secondary : colors.primary
     const { distance, onPauseBtnPress, onStopBtnPress } = this.props
     return (
       <HeaderWrapper>
         <RecordingStatus>
-          <Icon name='brand-flickr'>
-            <Text> RECORDING TRACK</Text>
+          <Icon name={this.props.paused ? 'circle-pause' : 'circle-play'} color={this.props.paused ? 'gray' : 'red'}>
+            <Text style={{ color: this.props.paused ? 'gray' : 'red' }}>{ this.props.paused ? ' Recording paused' : ' Recording track' }</Text>
           </Icon>
         </RecordingStatus>
         <RecordingActions>
@@ -105,10 +106,10 @@ export default class RecordHeader extends React.Component {
           </RecordingDistance>
           <RecordingButtons>
             <PauseResumeButton onPress={onPauseBtnPress}>
-              <Icon name={icon} color={colors.primary} size={30} />
+              <Icon name={icon} color={iconColor} size={30} />
             </PauseResumeButton>
             <StopButton onPress={onStopBtnPress}>
-              <Icon name='circle-stop' color={colors.primary} size={30} />
+              <Icon name='circle-stop' color={colors.baseMed} size={30} />
             </StopButton>
           </RecordingButtons>
         </RecordingActions>

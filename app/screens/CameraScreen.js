@@ -31,12 +31,11 @@ const buttonStyles = getPlatformStyles({
 })
 
 const SnapButton = styled.TouchableHighlight`
-  position: absolute;
+  align-self: center;
   border-radius: ${Math.round(win.width + win.height) / 2};
   width: 60;
   height: 60;
   background-color: ${colors.primary};
-  right: 40%;
   bottom: ${buttonStyles.bottom};
   justify-content: center;
   align-items: center;
@@ -147,7 +146,7 @@ class CameraScreen extends React.Component {
             style={{ backgroundColor: '#fff' }}
             resetScrollToCoords={{ x: 0, y: 0 }}
             scrollEnabled={false}
-            extraScrollHeight={100}
+            extraScrollHeight={220}
             enableOnAndroid
           >
             <PageWrapper>
@@ -169,10 +168,11 @@ class CameraScreen extends React.Component {
               style={{
                 flex: 1,
                 backgroundColor: 'transparent',
-                flexDirection: 'row'
+                flexDirection: 'column',
+                justifyContent: 'flex-end'
               }} >
               <SnapButton onPress={() => { this.snap() }}>
-                <Icon name='camera' size={20} color='#0B3954' />
+                <Icon name='camera' size={20} color='#FFFFFF' />
               </SnapButton>
             </View>
           </Camera>
