@@ -9,7 +9,8 @@ import ConfirmDialog from './ConfirmDialog'
 
 import {
   pauseTrace,
-  unpauseTrace
+  unpauseTrace,
+  discardTrace
 } from '../actions/traces'
 
 import { colors } from '../style/variables'
@@ -19,6 +20,7 @@ import {
   getCurrentTraceStatus,
   showRecordingHeader
 } from '../selectors'
+import { isValidTrace } from '../utils/traces'
 
 const win = Dimensions.get('window')
 const Container = styled.View``
@@ -79,7 +81,8 @@ const HeaderActions = styled.View`
 
 class Header extends React.Component {
   state = {
-    dialogVisible: false
+    dialogVisible: false,
+    discardDialogVisible: false
   }
 
   renderTitle () {
@@ -130,8 +133,27 @@ class Header extends React.Component {
     }
   }
 
+  onStopBtnPress = () => {
+    const { currentTrace } = this.props
+    if (!isValidTrace(currentTrace)) {
+      this.setState({ discardDialogVisible: true })
+    } else {
+      this.setState({ dialogVisible: true })
+    }
+  }
+
   cancelDialog = () => {
     this.setState({ dialogVisible: false })
+  }
+
+  cancelDiscardDialog = () => {
+    this.setState({ discardDialogVisible: false })
+  }
+
+  continueDiscardTrace = () => {
+    const { discardTrace } = this.props
+    this.setState({ discardDialogVisible: false })
+    discardTrace()
   }
 
   saveTrace = () => {
@@ -197,7 +219,7 @@ class Header extends React.Component {
         <RecordHeader
           paused={currentTraceStatus === 'paused'}
           distance={currentTraceLength.toFixed(2)}
-          onStopBtnPress={() => { this.setState({ dialogVisible: true }) }}
+          onStopBtnPress={this.onStopBtnPress}
           onPauseBtnPress={this.onPauseBtnPress}
         />
       )
@@ -217,6 +239,8 @@ class Header extends React.Component {
           { showRecordingHeader }
         </HeaderWrapper>
         <ConfirmDialog title='Stop recording and save?' description='Stop GPS logging and save the current track' visible={this.state.dialogVisible} cancel={this.cancelDialog} continue={this.saveTrace} />
+        <ConfirmDialog title='Invalid trace' description='The current trace is invalid and cannot be saved. Do you want to discard this trace?' visible={this.state.discardDialogVisible} continueLabel='Discard' cancel={this.cancelDiscardDialog} continue={this.continueDiscardTrace} />
+
       </Container>
     )
   }
@@ -226,13 +250,15 @@ const mapStateToProps = state => ({
   isConnected: state.network.isConnected,
   isRecording: showRecordingHeader(state),
   currentTraceStatus: getCurrentTraceStatus(state),
-  currentTraceLength: getCurrentTraceLength(state)
+  currentTraceLength: getCurrentTraceLength(state),
+  currentTrace: state.traces.currentTrace
 })
 
 const mapDispatchToProps = {
   unsetNotification,
   pauseTrace,
-  unpauseTrace
+  unpauseTrace,
+  discardTrace
 }
 
 export default connect(
