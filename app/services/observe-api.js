@@ -1,6 +1,6 @@
 import { store } from '../utils/store'
 import Config from 'react-native-config'
-import { ObserveError, ObserveAPIError } from '../utils/errors'
+import { ObserveAPIError } from '../utils/errors'
 import qs from 'qs'
 import { getTraceGeoJSON } from '../utils/traces'
 import { logoutUser } from '../actions/observeApi'
@@ -18,7 +18,7 @@ export async function callAPI (dispatch, path, method = 'GET', data) {
   let url = `${Config.OBSERVE_API_URL}${path}`
   const token = store.getState().observeApi.token
   if (!token) {
-    throw new ObserveError('Not logged in to Observe API') // FIXME: create error class
+    throw new ObserveAPIError('Waiting for authorization', 403) // FIXME: create error class
   }
   let fetchOpts = {
     headers: {
@@ -38,10 +38,8 @@ export async function callAPI (dispatch, path, method = 'GET', data) {
   }
 
   try {
-    console.log('opts', url, fetchOpts)
     const response = await fetch(url, fetchOpts)
     const data = await response.json()
-    console.log('response data', data, response.status)
     if (response.status === 401) { // token is expired or invalid, logout user
       dispatch(logoutUser())
     }

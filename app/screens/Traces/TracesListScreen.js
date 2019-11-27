@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import Header from '../../components/Header'
 import Container from '../../components/Container'
 import TracesList from '../../components/TracesList'
+import { uploadPendingTraces } from '../../actions/traces'
 
 class TracesListScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -17,12 +18,12 @@ class TracesListScreen extends React.Component {
   }
 
   render () {
-    const { navigation, traces } = this.props
+    const { navigation, traces, uploadPendingTraces } = this.props
     traces.traces.sort((a, b) => b.timestamp > a.timestamp ? 1 : -1)
     const headerActions = [
       {
         name: 'upload-2',
-        onPress: () => { console.log('upload') }
+        onPress: () => { uploadPendingTraces() }
       },
       {
         name: 'trash-bin',
@@ -50,6 +51,8 @@ const mapStateToProps = state => ({
   traces: state.traces
 })
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+  uploadPendingTraces
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(TracesListScreen)

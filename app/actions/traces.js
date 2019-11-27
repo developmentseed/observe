@@ -39,7 +39,10 @@ export function endTrace (description = '') {
 
 export function uploadPendingTraces () {
   return async (dispatch, getState) => {
-    console.log('called upload pending traces')
+    const isConnected = getState().network.isConnected
+    if (!isConnected) {
+      return
+    }
     const { traces } = getState().traces
     const pendingTraces = traces.filter(t => t.status === 'pending')
     for (let trace of pendingTraces) {

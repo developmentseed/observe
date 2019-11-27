@@ -54,6 +54,7 @@ export default function (state = initialState, action) {
       const traceId = getRandomId()
       const newTrace = {
         id: traceId,
+        apiId: null,
         status: 'pending',
         errors: [],
         geojson: {
@@ -66,7 +67,6 @@ export default function (state = initialState, action) {
         }
       }
 
-      console.log('new trace', newTrace)
       return {
         ...state,
         currentTrace: null,
@@ -122,7 +122,7 @@ export default function (state = initialState, action) {
       const traces = _cloneDeep(state.traces)
       const index = _findIndex(state.traces, t => t.id === action.oldId)
       traces[index].status = 'uploaded'
-      traces[index].id = action.newId
+      traces[index].apiId = action.newId
       traces[index].geojson.properties.id = action.newId
       return {
         ...state,
