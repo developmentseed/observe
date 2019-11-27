@@ -91,6 +91,7 @@ const Container = styled.View`
 const MainBody = styled.View`
   flex: 1;
   position: relative;
+  background-color: white;
 `
 const MainHeader = styled(Header)`
 
