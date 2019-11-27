@@ -18,7 +18,7 @@ export async function callAPI (dispatch, path, method = 'GET', data) {
   let url = `${Config.OBSERVE_API_URL}${path}`
   const token = store.getState().observeApi.token
   if (!token) {
-    throw new ObserveError('Not logged in to Observe API') // FIXME: create error class
+    throw new ObserveAPIError('Waiting for authorization', 403) // FIXME: create error class
   }
   let fetchOpts = {
     headers: {
