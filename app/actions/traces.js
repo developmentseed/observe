@@ -114,3 +114,33 @@ export function editTrace (trace, description) {
     description
   }
 }
+
+export function deletingTrace (id) {
+  return {
+    type: types.DELETING_TRACE,
+    id
+  }
+}
+
+// export function deletePendingTraces () {
+//   return async (dispatch, getState) => {
+//     const { deletedTraces } = getState().traces
+//     dispatch(deletingTrace(id))
+//     try {
+//       const response = await api.deleteTrace(dispatch, id)
+//       dispatch(deletedTrace(id))
+//     } catch (error) {
+//       console.log('delete trace failed', error)
+//     }
+//     }
+
+//   }
+// }
+
+export function deleteTrace (trace) {
+  console.log('delete action', trace)
+  return {
+    type: types.DELETE_TRACE,
+    trace
+  }
+}

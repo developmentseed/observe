@@ -13,7 +13,8 @@ const initialState = {
   watcher: null,
   paused: false,
   saving: false,
-  traces: []
+  traces: [],
+  deletedTraceIds: []
 }
 
 export default function (state = initialState, action) {
@@ -150,6 +151,26 @@ export default function (state = initialState, action) {
       return {
         ...state,
         traces
+      }
+    }
+
+    case types.DELETE_TRACE: {
+      console.log('reducer', action)
+      let traces = _cloneDeep(state.traces)
+      traces = traces.filter(trace => trace.id !== action.trace.id)
+      if (action.trace.apiId) {
+        let deletedTraceIds = state.traces
+        deletedTraceIds.push(action.id)
+        return {
+          ...state,
+          traces,
+          deletedTraceIds
+        }
+      } else {
+        return {
+          ...state,
+          traces
+        }
       }
     }
   }

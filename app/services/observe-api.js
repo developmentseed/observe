@@ -64,3 +64,8 @@ export async function uploadTrace (dispatch, trace) {
   const data = await callAPI(dispatch, '/traces', 'POST', { 'tracejson': traceGeoJSON })
   return data.properties.id
 }
+
+export async function deleteTrace (dispatch, traceId) {
+  const data = await callAPI(dispatch, '/traces', 'DELETE', { 'id': traceId })
+  return data
+}
