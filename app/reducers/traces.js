@@ -23,7 +23,8 @@ export default function (state = initialState, action) {
       const newTrace = getNewTrace()
       return {
         ...state,
-        currentTrace: newTrace
+        currentTrace: newTrace,
+        paused: false
       }
     }
     case types.TRACE_PAUSE: {
@@ -155,12 +156,11 @@ export default function (state = initialState, action) {
     }
 
     case types.DELETE_TRACE: {
-      console.log('reducer', action)
       let traces = _cloneDeep(state.traces)
       traces = traces.filter(trace => trace.id !== action.trace.id)
       if (action.trace.apiId) {
-        let deletedTraceIds = state.traces
-        deletedTraceIds.push(action.id)
+        let deletedTraceIds = state.deletedTraceIds
+        deletedTraceIds.push(action.trace.apiId)
         return {
           ...state,
           traces,
@@ -171,6 +171,15 @@ export default function (state = initialState, action) {
           ...state,
           traces
         }
+      }
+    }
+
+    case types.DELETED_TRACE: {
+      let deletedTraceIds = _cloneDeep(state.deletedTraceIds)
+      deletedTraceIds.filter(id => id !== action.traceId)
+      return {
+        ...state,
+        deletedTraceIds
       }
     }
   }

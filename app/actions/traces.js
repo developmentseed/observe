@@ -122,25 +122,44 @@ export function deletingTrace (id) {
   }
 }
 
-// export function deletePendingTraces () {
-//   return async (dispatch, getState) => {
-//     const { deletedTraces } = getState().traces
-//     dispatch(deletingTrace(id))
-//     try {
-//       const response = await api.deleteTrace(dispatch, id)
-//       dispatch(deletedTrace(id))
-//     } catch (error) {
-//       console.log('delete trace failed', error)
-//     }
-//     }
-
-//   }
-// }
+export function deletePendingTraces () {
+  return async (dispatch, getState) => {
+    const { deletedTraceIds } = getState().traces
+    if (!deletedTraceIds.length) return
+    for (let traceId of deletedTraceIds) {
+      dispatch(deletingTrace(traceId))
+      try {
+        await api.deleteTrace(dispatch, traceId)
+        dispatch(deletedTrace(traceId))
+      } catch (error) {
+        console.log('delete trace failed', error)
+        dispatch(deleteTraceFailed(traceId))
+      }
+    }
+  }
+}
 
 export function deleteTrace (trace) {
-  console.log('delete action', trace)
+  return (dispatch) => {
+    dispatch({
+      type: types.DELETE_TRACE,
+      trace
+    })
+
+    dispatch(deletePendingTraces())
+  }
+}
+
+export function deletedTrace (traceId) {
   return {
-    type: types.DELETE_TRACE,
-    trace
+    type: types.DELETED_TRACE,
+    traceId
+  }
+}
+
+export function deleteTraceFailed (traceId) {
+  return {
+    type: types.DELETE_TRACE_FAILED,
+    traceId
   }
 }

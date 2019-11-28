@@ -38,6 +38,7 @@ export async function callAPI (dispatch, path, method = 'GET', data) {
   }
 
   try {
+    console.log('### url', url)
     const response = await fetch(url, fetchOpts)
     const data = await response.json()
     if (response.status === 401) { // token is expired or invalid, logout user
@@ -66,6 +67,6 @@ export async function uploadTrace (dispatch, trace) {
 }
 
 export async function deleteTrace (dispatch, traceId) {
-  const data = await callAPI(dispatch, '/traces', 'DELETE', { 'id': traceId })
+  const data = await callAPI(dispatch, '/traces/' + traceId, 'DELETE')
   return data
 }

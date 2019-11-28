@@ -113,7 +113,6 @@ class TraceDetailScreen extends React.Component {
     const traceId = navigation.getParam('trace')
     const trace = this.getTrace(traceId)
     this.cancelDialog()
-    console.log('deleting', trace)
     deleteTrace(trace)
     navigation.navigate('TracesListScreen')
   }
