@@ -163,3 +163,9 @@ export function deleteTraceFailed (traceId) {
     traceId
   }
 }
+
+export function clearUploadedTraces () {
+  return {
+    type: types.CLEAR_UPLOADED_TRACES
+  }
+}

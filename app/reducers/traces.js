@@ -182,6 +182,15 @@ export default function (state = initialState, action) {
         deletedTraceIds
       }
     }
+
+    case types.CLEAR_UPLOADED_TRACES: {
+      let traces = _cloneDeep(state.traces)
+      traces = traces.filter(trace => trace.status !== 'uploaded')
+      return {
+        ...state,
+        traces
+      }
+    }
   }
   return state
 }
