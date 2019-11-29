@@ -68,6 +68,25 @@ class PhotosItem extends React.PureComponent {
     return <Icon name={iconName} size={16} color={color} />
   }
 
+  getStatusText () {
+    const { item } = this.props
+    switch (item.status) {
+      case 'uploading':
+        return 'Uploading'
+      case 'uploaded':
+        return 'Uploaded'
+      case 'pending':
+        if (item.errors.length === 0) {
+          return 'Waiting for network...'
+        }
+
+        if (item.errors.length > 0) {
+          const error = item.errors[item.errors.length - 1]
+          return error.message
+        }
+    }
+  }
+
   _onPress = () => this.props.onPress && this.props.onPress(this.props.item)
 
   render () {
@@ -88,7 +107,7 @@ class PhotosItem extends React.PureComponent {
             <Image source={{ uri: `file://${item.path}` }} />
             <TextContainer>
               <TitleText>{formatDate(item.location.timestamp)}</TitleText>
-              <SubtitleText>{item.description}</SubtitleText>
+              <SubtitleText>{this.getStatusText()}</SubtitleText>
             </TextContainer>
           </Container>
         </ItemContainer>

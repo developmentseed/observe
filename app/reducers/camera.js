@@ -1,4 +1,6 @@
 import * as types from '../actions/actionTypes'
+import _findIndex from 'lodash.findindex'
+import _cloneDeep from 'lodash.clonedeep'
 
 export const initialState = {
   photos: []
@@ -36,6 +38,17 @@ export default function (state = initialState, action) {
     case types.DELETED_PHOTO: {
       let photos = [...state.photos]
       photos = photos.filter(photo => photo.id !== action.photo)
+      return {
+        ...state,
+        photos
+      }
+    }
+
+    case types.UPLOAD_PHOTO_FAILED: {
+      const photos = _cloneDeep(state.photos)
+      const index = _findIndex(state.photos, p => p.id === action.photo.id)
+      photos[index].status = 'pending'
+      photos[index].errors.push(action.error)
       return {
         ...state,
         photos
