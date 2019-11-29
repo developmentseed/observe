@@ -176,7 +176,7 @@ export default function (state = initialState, action) {
 
     case types.DELETED_TRACE: {
       let deletedTraceIds = _cloneDeep(state.deletedTraceIds)
-      deletedTraceIds.filter(id => id !== action.traceId)
+      deletedTraceIds = deletedTraceIds.filter(id => id !== action.traceId)
       return {
         ...state,
         deletedTraceIds
@@ -189,6 +189,18 @@ export default function (state = initialState, action) {
       return {
         ...state,
         traces
+      }
+    }
+
+    case types.DELETE_TRACE_FAILED: {
+      if (action.error.status === 404) {
+        // this delete can't be retried so we remove the id from deletedTraceIds
+        let deletedTraceIds = _cloneDeep(state.deletedTraceIds)
+        deletedTraceIds = deletedTraceIds.filter(id => id !== action.traceId)
+        return {
+          ...state,
+          deletedTraceIds
+        }
       }
     }
   }
