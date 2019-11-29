@@ -41,7 +41,10 @@ describe('test save photo action', () => {
             description: 'test photo',
             path: '/photos/observe-hauptbanhof.jpg',
             location: mockLocation,
-            pending: true
+            status: 'pending',
+            errors: [],
+            featureId: null,
+            base64: '/9j/4AAQSkZJRgABAQAASABIAAD/4QBYRXhpZgAATU0AKgAAAA'
           }
     })
   })

@@ -31,9 +31,9 @@ export function savePhoto (uri, location, description, featureId) {
         'id': id,
         'path': path,
         'location': location,
-        'description': description,
+        'description': description || null,
         'status': 'pending',
-        'featureId': featureId,
+        'featureId': featureId || null,
         'errors': [],
         'base64': manipulatedImage.base64
       }
