@@ -308,7 +308,6 @@ export async function getFeatureInChangeset (changesetId) {
   let created = null
   let featureId = null
   const changeset = await getChangeset(changesetId)
-  console.log(changeset)
   if (changeset.osmChange.hasOwnProperty('create')) {
     created = changeset.osmChange.create
     const createdEntities = Object.keys(created)
