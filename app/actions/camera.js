@@ -93,7 +93,10 @@ export function deletePhoto (photo) {
 export function uploadPendingPhotos () {
   return async (dispatch, getState) => {
     const { photos } = getState().photos
-    const pendingPhotos = photos.filter(photo => photo.status === 'pending')
+    const pendingPhotos = photos.filter(photo => {
+      // filter pending and photos that are associated with uploaded features
+      return (photo.status === 'pending' && (photo.featureId === null || photo.featureId.search('observe-') === -1))
+    })
     for (let photo of pendingPhotos) {
       dispatch(uploadingPhoto(photo))
       try {

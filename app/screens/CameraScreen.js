@@ -68,7 +68,16 @@ class CameraScreen extends React.Component {
     feature: null
   }
 
-  async componentWillMount () {
+  async componentDidMount () {
+    this.props.navigation.addListener('willFocus', payload => {
+      this.willFocus()
+    })
+    this.props.navigation.addListener('willBlur', payload => {
+      this.willBlur()
+    })
+  }
+
+  async willFocus () {
     const { status } = await Permissions.askAsync(Permissions.CAMERA)
     const { navigation } = this.props
     const { state: { params: { feature } } } = navigation
@@ -78,6 +87,15 @@ class CameraScreen extends React.Component {
       location: null,
       description: null,
       feature: feature
+    })
+  }
+
+  willBlur () {
+    this.setState({
+      image: null,
+      location: null,
+      description: null,
+      feature: null
     })
   }
 
