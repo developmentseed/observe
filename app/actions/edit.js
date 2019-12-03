@@ -4,7 +4,8 @@ import { featureToTiles } from '../utils/bbox'
 import { setNotification } from './notification'
 import { fetchDataForTile, setSelectedFeatures } from './map'
 import { getAllRetriable } from '../utils/edit-utils'
-
+import { getPhotosForFeature } from '../utils/photos'
+import { getFeatureInChangeset } from '../services/osm-api'
 /**
  * Retries all retriable edits in the current state
  */
@@ -96,11 +97,27 @@ export function purgeAllEdits () {
 }
 
 export function editUploaded (edit, changesetId) {
-  return {
-    type: types.EDIT_UPLOADED,
-    edit,
-    changesetId,
-    timestamp: Number(new Date())
+  return async (dispatch, getState) => {
+    dispatch({
+      type: types.EDIT_UPLOADED,
+      edit,
+      changesetId,
+      timestamp: Number(new Date())
+    })
+
+    // check if there are any photos associated with this edit
+    if (edit.type === 'create') {
+      const photos = getState().photos.photos
+      const associatedPhotos = getPhotosForFeature(photos, edit.id)
+      if (associatedPhotos.length) {
+        // get feature id
+        const featureId = await getFeatureInChangeset(changesetId)
+        console.log('feature id for this photo', featureId)
+        // fire action to update each photo feature id
+      } else {
+        // no photos associated. nothing to do
+      }
+    }
   }
 }
 

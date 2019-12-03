@@ -76,7 +76,7 @@ export async function uploadPhoto (dispatch, photo) {
     'createdAt': new Date(photo.location.timestamp).toISOString(),
     'file': photo.base64,
     'heading': photo.location.coords.heading >= 0 ? photo.location.coords.heading : null,
-    'description': photo.description,
+    'description': photo.description || '',
     'lon': photo.location.coords.longitude,
     'lat': photo.location.coords.latitude,
     'osmElement': photo.featureId
