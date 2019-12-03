@@ -58,11 +58,12 @@ export function savedPhoto (photo) {
   }
 }
 
-export function editPhoto (photo, description) {
+export function editPhoto (photo, description, featureId) {
   return {
     type: types.EDIT_PHOTO,
     photo,
-    description
+    description,
+    featureId
   }
 }
 

@@ -76,6 +76,10 @@ class PhotosItem extends React.PureComponent {
       case 'uploaded':
         return 'Uploaded'
       case 'pending':
+        if (item.errors.length === 0 && item.featureId.search('observe') > -1) {
+          return 'Waiting to upload associated feature...'
+        }
+
         if (item.errors.length === 0) {
           return 'Waiting for network...'
         }

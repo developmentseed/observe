@@ -113,6 +113,6 @@ test('get feature in changeset', async () => {
   fetch.once(xmlData, { status: 200 })
   return getFeatureInChangeset(changesetId)
     .then(d => {
-      expect(d).toBe(4319440399)
+      expect(d).toBe('node/4319440399')
     })
 })

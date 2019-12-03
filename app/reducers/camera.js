@@ -28,6 +28,7 @@ export default function (state = initialState, action) {
       let photos = [...state.photos]
       photos = photos.filter(photo => photo.id !== action.photo.id)
       editedPhoto.description = action.description
+      editedPhoto.featureId = action.featureId
       photos.push(editedPhoto)
       return {
         ...state,

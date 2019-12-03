@@ -316,10 +316,10 @@ export async function getFeatureInChangeset (changesetId) {
       const way = created.filter(c => {
         return Object.keys(c) === 'way'
       })
-      featureId = way[0]['$'].id
+      featureId = `way/${way[0]['$'].id}`
     } else {
-      featureId = created[0]['node'][0]['$'].id
+      featureId = `node/${created[0]['node'][0]['$'].id}`
     }
   }
-  return parseInt(featureId)
+  return featureId
 }

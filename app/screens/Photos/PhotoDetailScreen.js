@@ -91,7 +91,7 @@ class PhotoDetailScreen extends React.Component {
         onPress: () => {
           const editing = !this.state.editing
           if (photo.description !== this.state.description) {
-            editPhoto(photo, this.state.description)
+            editPhoto(photo, this.state.description, photo.featureId)
           }
           this.setState({
             editing: editing

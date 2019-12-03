@@ -6,6 +6,7 @@ import { fetchDataForTile, setSelectedFeatures } from './map'
 import { getAllRetriable } from '../utils/edit-utils'
 import { getPhotosForFeature } from '../utils/photos'
 import { getFeatureInChangeset } from '../services/osm-api'
+import { editPhoto } from '../actions/camera'
 /**
  * Retries all retriable edits in the current state
  */
@@ -112,8 +113,10 @@ export function editUploaded (edit, changesetId) {
       if (associatedPhotos.length) {
         // get feature id
         const featureId = await getFeatureInChangeset(changesetId)
-        console.log('feature id for this photo', featureId)
         // fire action to update each photo feature id
+        for (let photo of associatedPhotos) {
+          dispatch(editPhoto(photo, photo.description, featureId))
+        }
       } else {
         // no photos associated. nothing to do
       }
