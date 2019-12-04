@@ -88,6 +88,7 @@ export function deletePhoto (photo) {
       type: types.DELETED_PHOTO,
       photo
     })
+    dispatch(deletePendingPhotos())
   }
 }
 
@@ -131,5 +132,28 @@ export function uploadPhotoFailed (photo, error) {
     type: types.UPLOAD_PHOTO_FAILED,
     photo,
     error
+  }
+}
+
+export function deletePendingPhotos () {
+  return async (dispatch, getState) => {
+    const { deletedPhotoIds } = getState().photos
+    if (!deletedPhotoIds.length) return
+    for (let photoId of deletedPhotoIds) {
+      try {
+        await api.deletePhoto(dispatch, photoId)
+        dispatch({
+          type: types.DELETED_PENDING_PHOTO,
+          photoId
+        })
+      } catch (error) {
+        console.log('delete photo failed', error)
+        dispatch({
+          type: types.DELETE_PENDING_PHOTO_FAILED,
+          photoId,
+          error
+        })
+      }
+    }
   }
 }

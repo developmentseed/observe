@@ -3,7 +3,8 @@ import _findIndex from 'lodash.findindex'
 import _cloneDeep from 'lodash.clonedeep'
 
 export const initialState = {
-  photos: []
+  photos: [],
+  deletedPhotoIds: []
 }
 
 export default function (state = initialState, action) {
@@ -39,9 +40,14 @@ export default function (state = initialState, action) {
     case types.DELETED_PHOTO: {
       let photos = [...state.photos]
       photos = photos.filter(photo => photo.id !== action.photo)
+      let deletedPhotoIds = _cloneDeep(photos.deletedPhotoIds)
+      if (action.photo.hasOwnProperty('apiId')) {
+        deletedPhotoIds.push(action.photo.apiId)
+      }
       return {
         ...state,
-        photos
+        photos,
+        deletedPhotoIds
       }
     }
 
@@ -53,6 +59,26 @@ export default function (state = initialState, action) {
       return {
         ...state,
         photos
+      }
+    }
+
+    case types.DELETED_PENDING_PHOTO: {
+      let deletedPhotoIds = _cloneDeep(state.deletedPhotoIds)
+      deletedPhotoIds = deletedPhotoIds.filter(id => id !== action.photoId)
+      return {
+        ...state,
+        deletedPhotoIds
+      }
+    }
+
+    case types.DELETE_PENDING_PHOTO_FAILED: {
+      if (action.error.status === 404) {
+        let deletedPhotoIds = _cloneDeep(state.deletedPhotoIds)
+        deletedPhotoIds = deletedPhotoIds.filter(id => id !== action.photoId)
+        return {
+          ...state,
+          deletedPhotoIds
+        }
       }
     }
   }

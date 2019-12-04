@@ -84,3 +84,8 @@ export async function uploadPhoto (dispatch, photo) {
   const data = await callAPI(dispatch, '/photos', 'POST', payload)
   return data
 }
+
+export async function deletePhoto (dispatch, photoId) {
+  const data = await callAPI(dispatch, '/photos/' + photoId, 'DELETE')
+  return data
+}
