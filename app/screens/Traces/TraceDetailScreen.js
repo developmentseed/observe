@@ -12,7 +12,7 @@ import { NavigationEvents } from 'react-navigation'
 import { getTraceLength, getTraceBounds } from '../../utils/traces'
 import formatDate from '../../utils/format-date'
 import { colors } from '../../style/variables'
-import { editTrace } from '../../actions/traces'
+import { editTrace, deleteTrace } from '../../actions/traces'
 import MapboxGL from '@react-native-mapbox-gl/maps'
 import Config from 'react-native-config'
 import style from '../../style/map'
@@ -109,9 +109,11 @@ class TraceDetailScreen extends React.Component {
   }
 
   confirmDelete = async () => {
-    const { navigation } = this.props
+    const { navigation, deleteTrace } = this.props
+    const traceId = navigation.getParam('trace')
+    const trace = this.getTrace(traceId)
     this.cancelDialog()
-    // FIXME: wire up trace delete actions
+    deleteTrace(trace)
     navigation.navigate('TracesListScreen')
   }
 
@@ -120,6 +122,7 @@ class TraceDetailScreen extends React.Component {
     const previousScreen = navigation.getParam('previousScreen') || 'TracesListScreen'
     const traceId = navigation.getParam('trace')
     const trace = this.getTrace(traceId)
+    if (!trace) return null // if the trace is removed and is no longer in the state
     const length = getTraceLength(trace.geojson).toFixed(2)
     const bounds = getTraceBounds(trace.geojson)
     const timestamp = trace.geojson.properties.timestamps[0]
@@ -167,8 +170,7 @@ class TraceDetailScreen extends React.Component {
     // set traces to visible, because by default it's set to none
     style.traces.traces.visibility = 'visible'
 
-    if (trace) {
-      return (
+    return (
         <>
           <NavigationEvents
             onWillFocus={this.onWillFocus}
@@ -218,10 +220,7 @@ class TraceDetailScreen extends React.Component {
             <ConfirmDialog visible={this.state.dialogVisible} title='Delete this trace?' description='This cannot be undone' cancel={this.cancelDialog} continue={this.confirmDelete} />
           </Container>
         </>
-      )
-    } else {
-      return null
-    }
+    )
   }
 }
 
@@ -232,7 +231,8 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-  editTrace
+  editTrace,
+  deleteTrace
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TraceDetailScreen)

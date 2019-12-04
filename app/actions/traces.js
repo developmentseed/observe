@@ -114,3 +114,58 @@ export function editTrace (trace, description) {
     description
   }
 }
+
+export function deletingTrace (id) {
+  return {
+    type: types.DELETING_TRACE,
+    id
+  }
+}
+
+export function deletePendingTraces () {
+  return async (dispatch, getState) => {
+    const { deletedTraceIds } = getState().traces
+    if (!deletedTraceIds.length) return
+    for (let traceId of deletedTraceIds) {
+      dispatch(deletingTrace(traceId))
+      try {
+        await api.deleteTrace(dispatch, traceId)
+        dispatch(deletedTrace(traceId))
+      } catch (error) {
+        console.log('delete trace failed', error)
+        dispatch(deleteTraceFailed(traceId))
+      }
+    }
+  }
+}
+
+export function deleteTrace (trace) {
+  return (dispatch) => {
+    dispatch({
+      type: types.DELETE_TRACE,
+      trace
+    })
+
+    dispatch(deletePendingTraces())
+  }
+}
+
+export function deletedTrace (traceId) {
+  return {
+    type: types.DELETED_TRACE,
+    traceId
+  }
+}
+
+export function deleteTraceFailed (traceId) {
+  return {
+    type: types.DELETE_TRACE_FAILED,
+    traceId
+  }
+}
+
+export function clearUploadedTraces () {
+  return {
+    type: types.CLEAR_UPLOADED_TRACES
+  }
+}

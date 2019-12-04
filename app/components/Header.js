@@ -212,7 +212,6 @@ class Header extends React.Component {
     if (!isConnected) {
       style.borderTopWidth = 2
     }
-
     let showRecordingHeader = null
     if (isRecording) {
       showRecordingHeader = (
