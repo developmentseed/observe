@@ -82,7 +82,7 @@ export async function uploadPhoto (dispatch, photo) {
     'osmElement': photo.featureId
   }
   const data = await callAPI(dispatch, '/photos', 'POST', payload)
-  return data
+  return data.id
 }
 
 export async function deletePhoto (dispatch, photoId) {

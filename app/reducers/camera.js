@@ -62,6 +62,17 @@ export default function (state = initialState, action) {
       }
     }
 
+    case types.UPLOADED_PHOTO: {
+      const photos = _cloneDeep(state.photos)
+      const index = _findIndex(state.photos, p => p.id === action.oldId)
+      photos[index].status = 'uploaded'
+      photos[index].apiId = action.newId
+      return {
+        ...state,
+        photos
+      }
+    }
+
     case types.DELETED_PENDING_PHOTO: {
       let deletedPhotoIds = _cloneDeep(state.deletedPhotoIds)
       deletedPhotoIds = deletedPhotoIds.filter(id => id !== action.photoId)
