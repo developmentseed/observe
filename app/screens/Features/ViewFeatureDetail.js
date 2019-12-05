@@ -99,7 +99,6 @@ class ViewFeatureDetail extends React.Component {
     const { navigation, photos } = this.props
     const { state: { params: { feature } } } = navigation
     const { preset } = this.state
-
     const featurePhotos = getPhotosForFeature(photos, feature.id)
     const title = feature.properties.name || feature.id
     const fields = getFeatureFields(feature)

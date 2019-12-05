@@ -73,7 +73,8 @@ class PhotoDetailScreen extends React.Component {
 
   confirmDelete = async () => {
     const { navigation, deletePhoto } = this.props
-    const photo = navigation.getParam('photo')
+    const photoId = navigation.getParam('photo')
+    const photo = this.getPhoto(photoId)
     this.cancelDialog()
     navigation.navigate('PhotosListScreen')
     deletePhoto(photo)

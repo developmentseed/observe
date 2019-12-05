@@ -74,7 +74,7 @@ export function deletePhoto (photo) {
       photo: photo
     })
 
-    const path = `${RNFetchBlob.fs.dirs.DocumentDir}/photos/${photo}.jpg`
+    const path = `${RNFetchBlob.fs.dirs.DocumentDir}/photos/${photo.id}.jpg`
     try {
       await RNFetchBlob.fs.unlink(path)
     } catch (err) {

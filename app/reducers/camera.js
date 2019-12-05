@@ -1,6 +1,7 @@
 import * as types from '../actions/actionTypes'
 import _findIndex from 'lodash.findindex'
 import _cloneDeep from 'lodash.clonedeep'
+import { deletePendingPhotos } from '../actions/camera'
 
 export const initialState = {
   photos: [],
@@ -39,15 +40,27 @@ export default function (state = initialState, action) {
 
     case types.DELETED_PHOTO: {
       let photos = [...state.photos]
-      photos = photos.filter(photo => photo.id !== action.photo)
-      let deletedPhotoIds = _cloneDeep(photos.deletedPhotoIds)
+      photos = photos.filter(photo => photo.id !== action.photo.id)
+      let deletedPhotoIds = _cloneDeep(state.deletedPhotoIds)
       if (action.photo.hasOwnProperty('apiId')) {
         deletedPhotoIds.push(action.photo.apiId)
       }
+      console.log('deleted photos', deletedPhotoIds, action)
       return {
         ...state,
         photos,
         deletedPhotoIds
+      }
+    }
+
+    case types.UPLOADING_PHOTO: {
+      const photos = _cloneDeep(state.photos)
+      const index = _findIndex(state.photos, p => p.id === action.photo.id)
+      photos[index].status = 'uploading'
+      photos[index].errors.push(action.error)
+      return {
+        ...state,
+        photos
       }
     }
 

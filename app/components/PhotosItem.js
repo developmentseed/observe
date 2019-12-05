@@ -60,7 +60,7 @@ class PhotosItem extends React.PureComponent {
     const { item } = this.props
     let iconName
     let color = colors.primary
-    if (item.pending) {
+    if (item.status === 'pending') {
       iconName = 'clock'
     } else {
       iconName = 'circle-tick'
