@@ -79,6 +79,17 @@ export default function (state = initialState, action) {
           ...state,
           deletedPhotoIds
         }
+      } else {
+        break
+      }
+    }
+
+    case types.CLEAR_UPLOADED_PHOTOS: {
+      let photos = _cloneDeep(state.photos)
+      photos = photos.filter(photo => photo.status !== 'uploaded')
+      return {
+        ...state,
+        photos
       }
     }
   }

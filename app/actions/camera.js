@@ -157,3 +157,9 @@ export function deletePendingPhotos () {
     }
   }
 }
+
+export function clearUploadedPhotos () {
+  return {
+    type: types.CLEAR_UPLOADED_PHOTOS
+  }
+}
