@@ -1,7 +1,6 @@
 import * as types from '../actions/actionTypes'
 import _findIndex from 'lodash.findindex'
 import _cloneDeep from 'lodash.clonedeep'
-import { deletePendingPhotos } from '../actions/camera'
 
 export const initialState = {
   photos: [],
@@ -45,7 +44,6 @@ export default function (state = initialState, action) {
       if (action.photo.hasOwnProperty('apiId')) {
         deletedPhotoIds.push(action.photo.apiId)
       }
-      console.log('deleted photos', deletedPhotoIds, action)
       return {
         ...state,
         photos,
