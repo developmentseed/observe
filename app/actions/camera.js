@@ -29,6 +29,7 @@ export function savePhoto (uri, location, description, featureId) {
 
       const photo = {
         'id': id,
+        'apiId': null,
         'path': path,
         'location': location,
         'description': description || null,

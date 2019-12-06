@@ -4,7 +4,8 @@ import _cloneDeep from 'lodash.clonedeep'
 
 export const initialState = {
   photos: [],
-  deletedPhotoIds: []
+  deletedPhotoIds: [],
+  editedPhotos: []
 }
 
 export default function (state = initialState, action) {
@@ -26,14 +27,26 @@ export default function (state = initialState, action) {
 
     case types.EDIT_PHOTO: {
       let editedPhoto = { ...action.photo }
+      let editedPhotos = [...state.editedPhotos]
       let photos = [...state.photos]
       photos = photos.filter(photo => photo.id !== action.photo.id)
       editedPhoto.description = action.description
       editedPhoto.featureId = action.featureId
       photos.push(editedPhoto)
+      // if photo has apiId, add it to editedPhotos to submit to the API
+      if (editedPhoto.apiId) {
+        // check if there's an edit that's pending
+        const index = _findIndex(editedPhotos, p => p.id === editedPhoto.id)
+        if (index > -1) {
+          editedPhotos[index] = editedPhoto
+        } else {
+          editedPhotos.push(editedPhoto)
+        }
+      }
       return {
         ...state,
-        photos
+        photos,
+        editedPhotos
       }
     }
 

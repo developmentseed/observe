@@ -8,6 +8,7 @@
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import { savePhoto } from '../../app/actions/camera'
+import { getMockPhoto } from '../test-utils'
 
 const middlewares = [thunk]
 const mockStore = configureStore(middlewares)
@@ -28,6 +29,9 @@ describe('test save photo action', () => {
       timestamp: 1571221845199.04
     }
     await savePhoto('uri', mockLocation, 'test photo')(store.dispatch)
+    const photo = getMockPhoto({
+      'description': 'test photo'
+    })
     const actions = store.getActions()
     expect(actions[0]).toEqual({
       type: 'SAVING_PHOTO',
@@ -35,17 +39,7 @@ describe('test save photo action', () => {
     })
     expect(actions[1]).toEqual({
       type: 'SAVED_PHOTO',
-      photo:
-          {
-            id: 'observe-hauptbanhof',
-            description: 'test photo',
-            path: '/photos/observe-hauptbanhof.jpg',
-            location: mockLocation,
-            status: 'pending',
-            errors: [],
-            featureId: null,
-            base64: '/9j/4AAQSkZJRgABAQAASABIAAD/4QBYRXhpZgAATU0AKgAAAA'
-          }
+      photo
     })
   })
 })
