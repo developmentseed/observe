@@ -172,10 +172,14 @@ export function uploadPendingEdits () {
     for (let photo of editedPhotos) {
       try {
         await api.editPhoto(dispatch, photo.apiId, photo.description)
+        dispatch({
+          type: types.UPLOADED_PENDING_PHOTO_EDIT,
+          photo
+        })
       } catch (error) {
         console.log('edit photo error', error)
         dispatch({
-          type: types.EDIT_PHOTO_FAILED,
+          type: types.UPLOAD_PENDING_PHOTO_EDIT_FAILED,
           photo,
           error
         })

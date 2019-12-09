@@ -127,6 +127,28 @@ export default function (state = initialState, action) {
         photos
       }
     }
+
+    case types.UPLOADED_PENDING_PHOTO_EDIT: {
+      let editedPhotos = _cloneDeep(state.editedPhotos)
+      editedPhotos = editedPhotos.filter(p => p.apiId === action.photo.apiId)
+      return {
+        ...state,
+        editedPhotos
+      }
+    }
+
+    case types.UPLOAD_PENDING_PHOTO_EDIT_FAILED: {
+      if (action.error.status === 404) {
+        let editedPhotos = _cloneDeep(state.editedPhotos)
+        editedPhotos = editedPhotos.filter(photo => photo.apiId !== action.photo.apiId)
+        return {
+          ...state,
+          editedPhotos
+        }
+      } else {
+        break
+      }
+    }
   }
   return state
 }
