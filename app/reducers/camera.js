@@ -30,11 +30,8 @@ export default function (state = initialState, action) {
       let editedPhotos = [...state.editedPhotos]
       let photos = [...state.photos]
       photos = photos.filter(photo => photo.id !== action.photo.id)
-      editedPhoto.description = action.description
-      editedPhoto.featureId = action.featureId
-      photos.push(editedPhoto)
       // if photo has apiId, add it to editedPhotos to submit to the API
-      if (editedPhoto.apiId) {
+      if (editedPhoto.apiId && (editedPhoto.description !== action.description)) {
         // check if there's an edit that's pending
         const index = _findIndex(editedPhotos, p => p.id === editedPhoto.id)
         if (index > -1) {
@@ -43,6 +40,9 @@ export default function (state = initialState, action) {
           editedPhotos.push(editedPhoto)
         }
       }
+      editedPhoto.description = action.description
+      editedPhoto.featureId = action.featureId
+      photos.push(editedPhoto)
       return {
         ...state,
         photos,

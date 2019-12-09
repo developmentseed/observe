@@ -164,3 +164,22 @@ export function clearUploadedPhotos () {
     type: types.CLEAR_UPLOADED_PHOTOS
   }
 }
+
+export function uploadPendingEdits () {
+  return async (dispatch, getState) => {
+    const { editedPhotos } = getState().photos
+    if (!editedPhotos.length) return
+    for (let photo of editedPhotos) {
+      try {
+        await api.editPhoto(dispatch, photo.apiId, photo.description)
+      } catch (error) {
+        console.log('edit photo error', error)
+        dispatch({
+          type: types.EDIT_PHOTO_FAILED,
+          photo,
+          error
+        })
+      }
+    }
+  }
+}
