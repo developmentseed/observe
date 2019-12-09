@@ -73,7 +73,8 @@ class PhotoDetailScreen extends React.Component {
 
   confirmDelete = async () => {
     const { navigation, deletePhoto } = this.props
-    const photo = navigation.getParam('photo')
+    const photoId = navigation.getParam('photo')
+    const photo = this.getPhoto(photoId)
     this.cancelDialog()
     navigation.navigate('PhotosListScreen')
     deletePhoto(photo)
@@ -91,7 +92,7 @@ class PhotoDetailScreen extends React.Component {
         onPress: () => {
           const editing = !this.state.editing
           if (photo.description !== this.state.description) {
-            editPhoto(photo, this.state.description)
+            editPhoto(photo, this.state.description, photo.featureId)
           }
           this.setState({
             editing: editing

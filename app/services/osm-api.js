@@ -102,7 +102,7 @@ export async function getUserDetails () {
       throw new AuthError(undefined, data)
     } else {
       const jsonData = await xml2jsonPromise(data)
-      return jsonData
+      return reshapeUserJSON(jsonData)
     }
   } catch (err) {
     console.log(err)
@@ -116,7 +116,7 @@ function xml2jsonPromise (data) {
       if (err) {
         reject(err)
       } else {
-        resolve(reshapeUserJSON(json))
+        resolve(json)
       }
     })
   })
@@ -290,4 +290,36 @@ export async function getMemberNodes (featureId, version) {
   } catch (error) {
     throw error
   }
+}
+
+export async function getChangeset (changesetId) {
+  const url = `${Config.API_URL}/api/0.6/changeset/${changesetId}/download`
+  try {
+    const response = await fetch(url)
+    const data = await response.text()
+    const json = await xml2jsonPromise(data)
+    return json
+  } catch (e) {
+    console.log('error', e)
+  }
+}
+
+export async function getFeatureInChangeset (changesetId) {
+  let created = null
+  let featureId = null
+  const changeset = await getChangeset(changesetId)
+  if (changeset.osmChange.hasOwnProperty('create')) {
+    created = changeset.osmChange.create
+    const createdEntities = Object.keys(created)
+    if (createdEntities.length > 1) {
+      // if there are more than one created entity, it's a way. return the way id
+      const way = created.filter(c => {
+        return Object.keys(c) === 'way'
+      })
+      featureId = `way/${way[0]['$'].id}`
+    } else {
+      featureId = `node/${created[0]['node'][0]['$'].id}`
+    }
+  }
+  return featureId
 }

@@ -60,12 +60,35 @@ class PhotosItem extends React.PureComponent {
     const { item } = this.props
     let iconName
     let color = colors.primary
-    if (item.pending) {
+    if (item.status === 'pending') {
       iconName = 'clock'
     } else {
       iconName = 'circle-tick'
     }
     return <Icon name={iconName} size={16} color={color} />
+  }
+
+  getStatusText () {
+    const { item } = this.props
+    switch (item.status) {
+      case 'uploading':
+        return 'Uploading'
+      case 'uploaded':
+        return 'Uploaded'
+      case 'pending':
+        if (item.errors.length === 0 && item.featureId && item.featureId.search('observe') > -1) {
+          return 'Waiting to upload associated feature...'
+        }
+
+        if (item.errors.length === 0) {
+          return 'Waiting for network...'
+        }
+
+        if (item.errors.length > 0) {
+          const error = item.errors[item.errors.length - 1]
+          return error.message
+        }
+    }
   }
 
   _onPress = () => this.props.onPress && this.props.onPress(this.props.item)
@@ -88,7 +111,7 @@ class PhotosItem extends React.PureComponent {
             <Image source={{ uri: `file://${item.path}` }} />
             <TextContainer>
               <TitleText>{formatDate(item.location.timestamp)}</TitleText>
-              <SubtitleText>{item.description}</SubtitleText>
+              <SubtitleText>{this.getStatusText()}</SubtitleText>
             </TextContainer>
           </Container>
         </ItemContainer>

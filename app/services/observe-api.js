@@ -44,7 +44,7 @@ export async function callAPI (dispatch, path, method = 'GET', data) {
     if (response.status === 401) { // token is expired or invalid, logout user
       dispatch(logoutUser())
     }
-    if (response.status > 400) {
+    if (response.status >= 400) {
       throw new ObserveAPIError(data.message, response.status)
     } else {
       return data
@@ -68,5 +68,24 @@ export async function uploadTrace (dispatch, trace) {
 
 export async function deleteTrace (dispatch, traceId) {
   const data = await callAPI(dispatch, '/traces/' + traceId, 'DELETE')
+  return data
+}
+
+export async function uploadPhoto (dispatch, photo) {
+  const payload = {
+    'createdAt': new Date(photo.location.timestamp).toISOString(),
+    'file': photo.base64,
+    'heading': photo.location.coords.heading >= 0 ? photo.location.coords.heading : null,
+    'description': photo.description || '',
+    'lon': photo.location.coords.longitude,
+    'lat': photo.location.coords.latitude,
+    'osmElement': photo.featureId
+  }
+  const data = await callAPI(dispatch, '/photos', 'POST', payload)
+  return data.id
+}
+
+export async function deletePhoto (dispatch, photoId) {
+  const data = await callAPI(dispatch, '/photos/' + photoId, 'DELETE')
   return data
 }

@@ -1,7 +1,10 @@
 import * as types from '../actions/actionTypes'
+import _findIndex from 'lodash.findindex'
+import _cloneDeep from 'lodash.clonedeep'
 
 export const initialState = {
-  photos: []
+  photos: [],
+  deletedPhotoIds: []
 }
 
 export default function (state = initialState, action) {
@@ -26,6 +29,7 @@ export default function (state = initialState, action) {
       let photos = [...state.photos]
       photos = photos.filter(photo => photo.id !== action.photo.id)
       editedPhoto.description = action.description
+      editedPhoto.featureId = action.featureId
       photos.push(editedPhoto)
       return {
         ...state,
@@ -35,7 +39,76 @@ export default function (state = initialState, action) {
 
     case types.DELETED_PHOTO: {
       let photos = [...state.photos]
-      photos = photos.filter(photo => photo.id !== action.photo)
+      photos = photos.filter(photo => photo.id !== action.photo.id)
+      let deletedPhotoIds = _cloneDeep(state.deletedPhotoIds)
+      if (action.photo.hasOwnProperty('apiId')) {
+        deletedPhotoIds.push(action.photo.apiId)
+      }
+      return {
+        ...state,
+        photos,
+        deletedPhotoIds
+      }
+    }
+
+    case types.UPLOADING_PHOTO: {
+      const photos = _cloneDeep(state.photos)
+      const index = _findIndex(state.photos, p => p.id === action.photo.id)
+      photos[index].status = 'uploading'
+      photos[index].errors.push(action.error)
+      return {
+        ...state,
+        photos
+      }
+    }
+
+    case types.UPLOAD_PHOTO_FAILED: {
+      const photos = _cloneDeep(state.photos)
+      const index = _findIndex(state.photos, p => p.id === action.photo.id)
+      photos[index].status = 'pending'
+      photos[index].errors.push(action.error)
+      return {
+        ...state,
+        photos
+      }
+    }
+
+    case types.UPLOADED_PHOTO: {
+      const photos = _cloneDeep(state.photos)
+      const index = _findIndex(state.photos, p => p.id === action.oldId)
+      photos[index].status = 'uploaded'
+      photos[index].apiId = action.newId
+      return {
+        ...state,
+        photos
+      }
+    }
+
+    case types.DELETED_PENDING_PHOTO: {
+      let deletedPhotoIds = _cloneDeep(state.deletedPhotoIds)
+      deletedPhotoIds = deletedPhotoIds.filter(id => id !== action.photoId)
+      return {
+        ...state,
+        deletedPhotoIds
+      }
+    }
+
+    case types.DELETE_PENDING_PHOTO_FAILED: {
+      if (action.error.status === 404) {
+        let deletedPhotoIds = _cloneDeep(state.deletedPhotoIds)
+        deletedPhotoIds = deletedPhotoIds.filter(id => id !== action.photoId)
+        return {
+          ...state,
+          deletedPhotoIds
+        }
+      } else {
+        break
+      }
+    }
+
+    case types.CLEAR_UPLOADED_PHOTOS: {
+      let photos = _cloneDeep(state.photos)
+      photos = photos.filter(photo => photo.status !== 'uploaded')
       return {
         ...state,
         photos

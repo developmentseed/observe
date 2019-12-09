@@ -3,7 +3,15 @@
 /* global __dirname */
 /* global expect */
 
-import { getDataForBbox, getFeature, createChangeset, getMemberNodes, saveDataForTile } from '../../app/services/osm-api'
+import {
+  getDataForBbox,
+  getFeature,
+  createChangeset,
+  getMemberNodes,
+  saveDataForTile,
+  getChangeset,
+  getFeatureInChangeset
+} from '../../app/services/osm-api'
 import path from 'path'
 import fs from 'fs'
 
@@ -84,5 +92,27 @@ test('save data for tile', async () => {
   saveDataForTile('0320100322313221')
     .then(d => {
       expect(d).toBe(7000)
+    })
+})
+
+test('get a changeset', async () => {
+  const changesetId = 163389
+  const xmlData = fs.readFileSync(path.join(__dirname, '../fixtures/osm-changeset-download-response.xml'), 'utf-8')
+  fetch.resetMocks()
+  fetch.once(xmlData, { status: 200 })
+  getChangeset(changesetId)
+    .then(d => {
+      expect(d).toMatchSnapshot()
+    })
+})
+
+test('get feature in changeset', async () => {
+  const changesetId = 163389
+  const xmlData = fs.readFileSync(path.join(__dirname, '../fixtures/osm-changeset-download-response.xml'), 'utf-8')
+  fetch.resetMocks()
+  fetch.once(xmlData, { status: 200 })
+  return getFeatureInChangeset(changesetId)
+    .then(d => {
+      expect(d).toBe('node/4319440399')
     })
 })
