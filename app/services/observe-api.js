@@ -92,7 +92,6 @@ export async function deletePhoto (dispatch, photoId) {
 
 export async function editPhoto (dispatch, photoId, description) {
   const payload = {
-    'id': photoId,
     'description': description
   }
   const response = await callAPI(dispatch, '/photos/' + photoId, 'PATCH', payload)
