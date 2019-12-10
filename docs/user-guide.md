@@ -8,6 +8,9 @@
 5. Editing an existing feature
 6. Offline mapping
 7. Managing your edits
+8. Taking photos
+9. Taking photos associated to map features
+10. Recording GPS traces
 
 
 ## 1. Introduction
@@ -168,3 +171,28 @@ Edits made by the user through Observe are managed via the Your Contributions sc
 - You can pause the recording for as long as needed or discard the trace if you wish to
 
 ![record-trace](https://user-images.githubusercontent.com/371666/70527045-f5106180-1b70-11ea-8029-ab5a31cde1b1.gif)
+
+# Observe Dashboard v0.1
+
+The Observe Dashboard will show all photos and traces uploaded by users of the Observe Mobile.
+
+## Working with Photos
+
+![image](https://user-images.githubusercontent.com/371666/70527352-bc24bc80-1b71-11ea-8d89-2e3e420864f7.png)
+_List of photos uploaded from Observe Mobile_
+
+### Filters
+Users can filter photos using username, date range, associated map feature type, or map feature ID.
+
+![image](https://user-images.githubusercontent.com/371666/70527613-55ec6980-1b72-11ea-9d8f-cacecd5a2a32.png)
+_Applying filters_
+
+### View details and other actions
+The photo detail page will show the ID, description and other metadata. Users can download or edit the photo, and also view the associated feature if there is any.
+
+![image](https://user-images.githubusercontent.com/371666/70530870-d19de480-1b79-11ea-92d7-9967879b04b3.png)
+
+
+## Working with Traces
+### Filters
+### View details and other actions
