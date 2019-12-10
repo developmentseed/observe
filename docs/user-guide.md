@@ -1,4 +1,4 @@
-# Observe v0.1 User Guide
+# Observe v0.2-rc User Guide
 
 ## Outline
 1. Introduction
@@ -143,3 +143,28 @@ Edits made by the user through Observe are managed via the Your Contributions sc
 
 ![](https://paper-attachments.dropbox.com/s_F93699907F08C9A5CFEA336B060601FC1F56081D6CDCD065E76BFC67A1561305_1555329050742_resized-contributions-error.png)
 
+### Take a photo
+- To take a photo at any time while using Observe, press the camera button on the main screen.
+- Then take a picture and enter an optional description
+- If authenticated with the Observe API, photos will be automatically uploaded. Otherwise, you can retry uploading from the Your Photos screen
+
+![take-photo](https://user-images.githubusercontent.com/371666/70525686-e4aab780-1b6d-11ea-8a75-e43155d5367e.gif)
+
+### Take the photo of a feature
+
+- Observe allows the user to take a picture associated with a map feature
+- To take a photo of a feature, select the feature from the map, and then press on the camera icon
+- Add a description, and press the tick icon to save
+- Once uploaded to the Observe API, these photos can be viewed and downloaded through the Dashboard for further editing
+
+![take-photo-feature](https://user-images.githubusercontent.com/371666/70525815-30f5f780-1b6e-11ea-9ed5-9294a787d00e.gif)
+
+
+### Recording a GPS Track
+
+- To record a GPS Track, press the record button on the main screen
+- This will start recording points as you move
+- Once done, press stop to save
+- You can pause the recording for as long as needed or discard the trace if you wish to
+
+![record-trace](https://user-images.githubusercontent.com/371666/70527045-f5106180-1b70-11ea-8029-ab5a31cde1b1.gif)
