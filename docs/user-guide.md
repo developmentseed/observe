@@ -8,9 +8,10 @@
 5. Editing an existing feature
 6. Offline mapping
 7. Managing your edits
-8. Taking photos
-9. Taking photos associated to map features
-10. Recording GPS traces
+8. Authenticating with Observe API
+9. Taking photos
+10. Taking photos associated to map features
+11. Recording GPS traces
 
 
 ## 1. Introduction
@@ -145,6 +146,13 @@ Edits made by the user through Observe are managed via the Your Contributions sc
 - In case Observe fails to upload a changeset with an error that cannot be retried, a detailed log of the error is displayed for reporting. You can decide whether to force a retry of the upload, or safely discard it.
 
 ![](https://paper-attachments.dropbox.com/s_F93699907F08C9A5CFEA336B060601FC1F56081D6CDCD065E76BFC67A1561305_1555329050742_resized-contributions-error.png)
+
+### Logging into the Observe API
+Observe API (which is optional to use Observe Mobile) uses the same authentication system as Observe Mobile. However, the user will have to authenticate from the Account screen to upload photos and traces.
+
+![Screenshot_1575989165](https://user-images.githubusercontent.com/371666/70539879-4aa53800-1b8a-11ea-8286-1c06a38f5a67.png)
+
+
 
 ### Take a photo
 - To take a photo at any time while using Observe, press the camera button on the main screen.
