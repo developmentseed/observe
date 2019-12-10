@@ -194,5 +194,15 @@ The photo detail page will show the ID, description and other metadata. Users ca
 
 
 ## Working with Traces
+![image](https://user-images.githubusercontent.com/371666/70531117-496c0f00-1b7a-11ea-8964-864c94e5446a.png)
+_List of traces uploaded from Observe Mobile_
+
 ### Filters
+Users can filter traces using username, date, or length.
+![image](https://user-images.githubusercontent.com/371666/70531230-7cae9e00-1b7a-11ea-8ead-a0dba32f7e71.png)
+
+
 ### View details and other actions
+The trace detail page will show a map of the trace and related metadata. Users can also open the trace directly in JOSM ([via Remotecontrol](https://wiki.openstreetmap.org/wiki/JOSM/RemoteControl)).
+
+![image](https://user-images.githubusercontent.com/371666/70531260-8f28d780-1b7a-11ea-912f-d8fb94733f64.png)
