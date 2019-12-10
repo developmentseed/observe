@@ -42,7 +42,7 @@ Read about the changes to this project in [CHANGELOG.md](CHANGELOG.md). The form
 
 ## History
 
-Observe is a project that was conceptualized a few years ago in collaboration with [Digital Democracy](https://www.digital-democracy.org/) and [GFDRR](https://www.gfdrr.org/en). Back then react-native wasn't in a good place for building something production ready. A lot of what you see in Observe currently, would not have been possible without their support.
+Observe is a project that was conceptualized in 2016 in collaboration with [Digital Democracy](https://www.digital-democracy.org/) and [GFDRR](https://www.gfdrr.org/en). Back then react-native wasn't in a good place for building something production ready. A lot of what you see in Observe currently, would not have been possible without their support.
 
 ## Authors
 People who have made substantial contributions to Observe so far are:
