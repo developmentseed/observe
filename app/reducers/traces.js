@@ -14,7 +14,8 @@ const initialState = {
   paused: false,
   saving: false,
   traces: [],
-  deletedTraceIds: []
+  deletedTraceIds: [],
+  editedTraces: []
 }
 
 export default function (state = initialState, action) {
@@ -146,12 +147,22 @@ export default function (state = initialState, action) {
     case types.EDIT_TRACE: {
       let editedTrace = { ...action.trace }
       let traces = _cloneDeep(state.traces)
+      let editedTraces = _cloneDeep(state.editedTraces)
       traces = traces.filter(trace => trace.id !== action.trace.id)
+      if (editedTrace.apiId && editedTrace.geojson.properties.description !== action.description) {
+        const index = _findIndex(editedTraces, t => t.id === editedTraces.id)
+        if (index > -1) {
+          editedTraces[index] = editedTrace
+        } else {
+          editedTraces.push(editedTrace)
+        }
+      }
       editedTrace.geojson.properties.description = action.description
       traces.push(editedTrace)
       return {
         ...state,
-        traces
+        traces,
+        editedTraces
       }
     }
 
@@ -201,6 +212,30 @@ export default function (state = initialState, action) {
           ...state,
           deletedTraceIds
         }
+      } else {
+        break
+      }
+    }
+
+    case types.UPLOADED_PENDING_TRACE_EDIT: {
+      let editedTraces = _cloneDeep(state.editedTraces)
+      editedTraces = editedTraces.filter(t => t.id === action.trace.id)
+      return {
+        ...state,
+        editedTraces
+      }
+    }
+
+    case types.UPLOAD_PENDING_TRACE_EDIT_FAILED: {
+      if (action.error.status === 404) {
+        let editedTraces = _cloneDeep(state.editedTraces)
+        editedTraces = editedTraces.filter(t => t.id === action.trace.id)
+        return {
+          ...state,
+          editedTraces
+        }
+      } else {
+        break
       }
     }
   }

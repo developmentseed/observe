@@ -97,3 +97,11 @@ export async function editPhoto (dispatch, photoId, description) {
   const response = await callAPI(dispatch, '/photos/' + photoId, 'PATCH', payload)
   return response
 }
+
+export async function editTrace (dispatch, traceId, description) {
+  const payload = {
+    'description': description
+  }
+  const response = await callAPI(dispatch, '/traces/' + traceId, 'PATCH', payload)
+  return response
+}
