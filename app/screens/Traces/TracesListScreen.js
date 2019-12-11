@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import Header from '../../components/Header'
 import Container from '../../components/Container'
 import TracesList from '../../components/TracesList'
-import { uploadPendingTraces, clearUploadedTraces } from '../../actions/traces'
+import { uploadPendingTraces, clearUploadedTraces, uploadPendingEdits } from '../../actions/traces'
 
 class TracesListScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -18,12 +18,15 @@ class TracesListScreen extends React.Component {
   }
 
   render () {
-    const { navigation, traces, uploadPendingTraces, clearUploadedTraces } = this.props
+    const { navigation, traces, uploadPendingTraces, clearUploadedTraces, uploadPendingEdits } = this.props
     traces.traces.sort((a, b) => b.geojson.properties.timestamps[0] > a.geojson.properties.timestamps[0] ? 1 : -1)
     const headerActions = [
       {
         name: 'upload-2',
-        onPress: () => { uploadPendingTraces() }
+        onPress: () => {
+          uploadPendingTraces()
+          uploadPendingEdits()
+        }
       },
       {
         name: 'trash-bin',
@@ -53,7 +56,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   uploadPendingTraces,
-  clearUploadedTraces
+  clearUploadedTraces,
+  uploadPendingEdits
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TracesListScreen)

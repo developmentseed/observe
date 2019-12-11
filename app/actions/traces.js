@@ -169,3 +169,27 @@ export function clearUploadedTraces () {
     type: types.CLEAR_UPLOADED_TRACES
   }
 }
+
+export function uploadPendingEdits () {
+  console.log('uploading pending traces...')
+  return async (dispatch, getState) => {
+    const { editedTraces } = getState().traces
+    if (!editedTraces.length) return
+    for (let trace of editedTraces) {
+      try {
+        await api.editTrace(dispatch, trace.apiId, trace.geojson.properties.description)
+        dispatch({
+          type: types.UPLOADED_PENDING_TRACE_EDIT,
+          trace
+        })
+      } catch (error) {
+        console.log('edit trace error', error)
+        dispatch({
+          type: types.UPLOAD_PENDING_TRACE_EDIT_FAILED,
+          trace,
+          error
+        })
+      }
+    }
+  }
+}

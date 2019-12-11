@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import Header from '../../components/Header'
 import Container from '../../components/Container'
 import PhotosList from '../../components/PhotosList'
-import { uploadPendingPhotos, clearUploadedPhotos } from '../../actions/camera'
+import { uploadPendingPhotos, clearUploadedPhotos, uploadPendingEdits } from '../../actions/camera'
 
 class PhotosListScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -18,11 +18,14 @@ class PhotosListScreen extends React.Component {
   }
 
   render () {
-    const { navigation, photos, uploadPendingPhotos, clearUploadedPhotos } = this.props
+    const { navigation, photos, uploadPendingPhotos, clearUploadedPhotos, uploadPendingEdits } = this.props
     const headerActions = [
       {
         name: 'upload-2',
-        onPress: () => { uploadPendingPhotos() }
+        onPress: () => {
+          uploadPendingPhotos()
+          uploadPendingEdits()
+        }
       },
       {
         name: 'trash-bin',
@@ -52,7 +55,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   uploadPendingPhotos,
-  clearUploadedPhotos
+  clearUploadedPhotos,
+  uploadPendingEdits
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PhotosListScreen)

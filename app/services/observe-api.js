@@ -89,3 +89,19 @@ export async function deletePhoto (dispatch, photoId) {
   const data = await callAPI(dispatch, '/photos/' + photoId, 'DELETE')
   return data
 }
+
+export async function editPhoto (dispatch, photoId, description) {
+  const payload = {
+    'description': description
+  }
+  const response = await callAPI(dispatch, '/photos/' + photoId, 'PATCH', payload)
+  return response
+}
+
+export async function editTrace (dispatch, traceId, description) {
+  const payload = {
+    'description': description
+  }
+  const response = await callAPI(dispatch, '/traces/' + traceId, 'PATCH', payload)
+  return response
+}

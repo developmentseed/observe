@@ -29,6 +29,7 @@ export function savePhoto (uri, location, description, featureId) {
 
       const photo = {
         'id': id,
+        'apiId': null,
         'path': path,
         'location': location,
         'description': description || null,
@@ -161,5 +162,28 @@ export function deletePendingPhotos () {
 export function clearUploadedPhotos () {
   return {
     type: types.CLEAR_UPLOADED_PHOTOS
+  }
+}
+
+export function uploadPendingEdits () {
+  return async (dispatch, getState) => {
+    const { editedPhotos } = getState().photos
+    if (!editedPhotos.length) return
+    for (let photo of editedPhotos) {
+      try {
+        await api.editPhoto(dispatch, photo.apiId, photo.description)
+        dispatch({
+          type: types.UPLOADED_PENDING_PHOTO_EDIT,
+          photo
+        })
+      } catch (error) {
+        console.log('edit photo error', error)
+        dispatch({
+          type: types.UPLOAD_PENDING_PHOTO_EDIT_FAILED,
+          photo,
+          error
+        })
+      }
+    }
   }
 }
