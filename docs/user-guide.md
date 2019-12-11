@@ -1,4 +1,4 @@
-# Observe v0.1 User Guide
+# Observe v0.2-rc User Guide
 
 ## Outline
 1. Introduction
@@ -8,6 +8,10 @@
 5. Editing an existing feature
 6. Offline mapping
 7. Managing your edits
+8. Authenticating with Observe API
+9. Taking photos
+10. Taking photos associated to map features
+11. Recording GPS traces
 
 
 ## 1. Introduction
@@ -143,3 +147,70 @@ Edits made by the user through Observe are managed via the Your Contributions sc
 
 ![](https://paper-attachments.dropbox.com/s_F93699907F08C9A5CFEA336B060601FC1F56081D6CDCD065E76BFC67A1561305_1555329050742_resized-contributions-error.png)
 
+### Logging into the Observe API
+Observe API (which is optional to use Observe Mobile) uses the same authentication system as Observe Mobile. However, the user will have to authenticate from the Account screen to upload photos and traces.
+
+![Screenshot_1575989165](https://user-images.githubusercontent.com/371666/70539879-4aa53800-1b8a-11ea-8286-1c06a38f5a67.png)
+
+
+
+### Take a photo
+- To take a photo at any time while using Observe, press the camera button on the main screen.
+- Then take a picture and enter an optional description
+- If authenticated with the Observe API, photos will be automatically uploaded. Otherwise, you can retry uploading from the Your Photos screen
+
+![take-photo](https://user-images.githubusercontent.com/371666/70525686-e4aab780-1b6d-11ea-8a75-e43155d5367e.gif)
+
+### Take the photo of a feature
+
+- Observe allows the user to take a picture associated with a map feature
+- To take a photo of a feature, select the feature from the map, and then press on the camera icon
+- Add a description, and press the tick icon to save
+- Once uploaded to the Observe API, these photos can be viewed and downloaded through the Dashboard for further editing
+
+![take-photo-feature](https://user-images.githubusercontent.com/371666/70525815-30f5f780-1b6e-11ea-9ed5-9294a787d00e.gif)
+
+
+### Recording a GPS Track
+
+- To record a GPS Track, press the record button on the main screen
+- This will start recording points as you move
+- Once done, press stop to save
+- You can pause the recording for as long as needed or discard the trace if you wish to
+
+![record-trace](https://user-images.githubusercontent.com/371666/70527045-f5106180-1b70-11ea-8029-ab5a31cde1b1.gif)
+
+# Observe Dashboard v0.1
+
+The Observe Dashboard will show all photos and traces uploaded by users of the Observe Mobile.
+
+## Working with Photos
+
+![image](https://user-images.githubusercontent.com/371666/70527352-bc24bc80-1b71-11ea-8d89-2e3e420864f7.png)
+_List of photos uploaded from Observe Mobile_
+
+### Filters
+Users can filter photos using username, date range, associated map feature type, or map feature ID.
+
+![image](https://user-images.githubusercontent.com/371666/70527613-55ec6980-1b72-11ea-9d8f-cacecd5a2a32.png)
+_Applying filters_
+
+### View details and other actions
+The photo detail page will show the ID, description and other metadata. Users can download or edit the photo, and also view the associated feature if there is any.
+
+![image](https://user-images.githubusercontent.com/371666/70530870-d19de480-1b79-11ea-92d7-9967879b04b3.png)
+
+
+## Working with Traces
+![image](https://user-images.githubusercontent.com/371666/70531117-496c0f00-1b7a-11ea-8964-864c94e5446a.png)
+_List of traces uploaded from Observe Mobile_
+
+### Filters
+Users can filter traces using username, date, or length.
+![image](https://user-images.githubusercontent.com/371666/70531230-7cae9e00-1b7a-11ea-8ead-a0dba32f7e71.png)
+
+
+### View details and other actions
+The trace detail page will show a map of the trace and related metadata. Users can also open the trace directly in JOSM ([via Remotecontrol](https://wiki.openstreetmap.org/wiki/JOSM/RemoteControl)).
+
+![image](https://user-images.githubusercontent.com/371666/70531260-8f28d780-1b7a-11ea-912f-d8fb94733f64.png)
