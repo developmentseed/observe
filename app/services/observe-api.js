@@ -74,7 +74,7 @@ export async function deleteTrace (dispatch, traceId) {
 export async function uploadPhoto (dispatch, photo) {
   const payload = {
     'createdAt': new Date(photo.location.timestamp).toISOString(),
-    'file': photo.base64,
+    'file': photo.base64.replace(/(?:\r\n|\r|\n)/g, ''),
     'heading': photo.location.coords.heading >= 0 ? photo.location.coords.heading : null,
     'description': photo.description || '',
     'lon': photo.location.coords.longitude,
