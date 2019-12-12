@@ -591,7 +591,9 @@ class Explore extends React.Component {
                     regionDidChangeDebounceTime={10}
                     onPress={this.onPress}
                   >
-                    <MapboxGL.Camera zoomLevel={12}
+                    <MapboxGL.Camera
+                      zoomLevel={12}
+                      maxZoomLevel={19}
                       defaultSettings={{
                         centerCoordinate: [0, 0],
                         zoomLevel: 12
