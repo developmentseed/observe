@@ -114,7 +114,7 @@ android {
         applicationId "com.developmentseed.observe"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode versionMajor * 10000 + versionMinor * 100 + versionPatch
+        versionCode versionMajor * 10000 + versionMinor * 100
         versionName "${versionMajor}.${versionMinor}.${versionPatch}"
         setProperty("archivesBaseName", "observe" + "-v" + versionName)
 
