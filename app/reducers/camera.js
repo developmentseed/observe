@@ -13,7 +13,6 @@ export default function (state = initialState, action) {
     case types.SAVED_PHOTO: {
       let photos = [...state.photos]
       photos.push(action.photo)
-      console.log('saved', photos)
       return {
         ...state,
         photos

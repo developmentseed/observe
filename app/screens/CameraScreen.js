@@ -101,9 +101,8 @@ class CameraScreen extends React.Component {
 
   async snap () {
     if (this.camera) {
-      let { uri, width, height } = await this.camera.takePictureAsync()
+      let { uri } = await this.camera.takePictureAsync()
       const location = await Location.getCurrentPositionAsync({})
-      console.log(uri, width, height, location)
       this.setState({
         image: uri,
         location: location

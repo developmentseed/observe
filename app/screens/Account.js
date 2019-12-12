@@ -165,7 +165,6 @@ class Account extends React.Component {
 
   renderObserveApiDetails () {
     const { observeApi } = this.props
-    console.log('observeApi', observeApi)
     if (!observeApi) {
       return (
         <AccountView>
