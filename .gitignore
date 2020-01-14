@@ -21,6 +21,11 @@ DerivedData
 *.ipa
 *.xcuserstate
 project.xcworkspace
+!**/*.xcodeproj
+!**/*.pbxproj
+!**/*.xcworkspacedata
+!**/*.xcsettings
+!**/*.xcscheme
 
 # Android/IntelliJ
 #
@@ -61,3 +66,9 @@ tmp
 .tmp
 app/assets/osm.json
 app/assets/satellite.json
+
+xcshareddata
+
+# CocoaPods
+/ios/Pods/*
+!/ios/Pods/Manifest.lock

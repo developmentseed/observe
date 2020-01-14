@@ -28,8 +28,15 @@ import getFields from '../../utils/get-fields'
 import { getParentPreset } from '../../utils/get-parent-preset'
 import getPresetByTags from '../../utils/get-preset-by-tags'
 import { colors } from '../../style/variables'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { getPhotosForFeature } from '../../utils/photos'
+import PhotoGrid from '../../components/PhotoGrid'
 
 const FieldsList = styled.FlatList`
+`
+
+const ScrollView = styled.ScrollView`
+  background-color: white
 `
 
 class EditFeatureDetail extends React.Component {
@@ -442,15 +449,18 @@ class EditFeatureDetail extends React.Component {
 
   render () {
     const { preset } = this.state
-    const { navigation } = this.props
+    const { navigation, photos } = this.props
     const { state: { params: { feature } } } = navigation
     const title = feature.properties.name || feature.id
+    const featurePhotos = getPhotosForFeature(photos, feature.id)
+
     let headerActions = []
 
     if (this.hasFeatureChanged()) {
       headerActions.push({
         name: 'tick',
         onPress: () => {
+          Keyboard.dismiss()
           this.setState({ dialogVisible: true })
         }
       })
@@ -458,23 +468,45 @@ class EditFeatureDetail extends React.Component {
 
     return (
       <Container>
-        <Header
-          back
-          title={title}
-          navigation={navigation}
-          actions={headerActions}
-        />
-        <FeatureDetailHeader
-          preset={preset}
-          feature={feature}
-          navigation={navigation}
-        />
-        <PageWrapper>
-          {this.renderFields()}
-          {this.renderAddField()}
-        </PageWrapper>
-        <TagEditor ref={(ref) => (this._tageditor = ref)} properties={this.createTagEditorProperties()} onUpdate={this.onTagEditorUpdate} />
-        <SaveEditDialog visible={this.state.dialogVisible} cancel={this.cancelEditDialog} save={this.saveEditDialog} />
+        <ScrollView
+          keyboardShouldPersistTaps='handled'
+          stickyHeaderIndices={[0]}
+          bounces={false}
+        >
+          <Header
+            back
+            title={title}
+            navigation={navigation}
+            actions={headerActions}
+          />
+          <FeatureDetailHeader
+            preset={preset}
+            feature={feature}
+            navigation={navigation}
+          />
+          <KeyboardAwareScrollView
+            style={{ backgroundColor: '#fff' }}
+            resetScrollToCoords={{ x: 0, y: 0 }}
+            scrollEnabled
+            extraScrollHeight={150}
+            enableOnAndroid
+            keyboardShouldPersistTaps='handled'
+          >
+            <PageWrapper
+            >
+              {this.renderFields()}
+              {this.renderAddField()}
+            </PageWrapper>
+            <TagEditor ref={(ref) => (this._tageditor = ref)} properties={this.createTagEditorProperties()} onUpdate={this.onTagEditorUpdate} />
+            <PhotoGrid
+              data={featurePhotos}
+              previousScreen='EditFeatureDetail'
+              feature={feature}
+              navigation={navigation}
+            />
+          </KeyboardAwareScrollView>
+          <SaveEditDialog visible={this.state.dialogVisible} cancel={this.cancelEditDialog} save={this.saveEditDialog} />
+        </ScrollView>
       </Container>
     )
   }
@@ -484,7 +516,8 @@ const mapStateToProps = state => {
   return {
     allFields: objToArray(state.presets.fields),
     allTags: state.presets.tags,
-    presets: state.presets.presets
+    presets: state.presets.presets,
+    photos: state.photos.photos
   }
 }
 

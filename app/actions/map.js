@@ -1,6 +1,6 @@
 import Config from 'react-native-config'
 import DOMParser from 'xmldom'
-import MapboxGL from '@mapbox/react-native-mapbox-gl'
+import MapboxGL from '@react-native-mapbox-gl/maps'
 import PQueue from 'p-queue'
 import RNFetchBlob from 'rn-fetch-blob'
 import forge from 'node-forge'
@@ -10,7 +10,7 @@ import sizeof from 'object-sizeof'
 import * as types from './actionTypes'
 import { setNotification } from './notification'
 import { getOfflineResources, getOfflineResourceStatus, getPendingEviction } from '../selectors'
-import { saveDataForTile } from '../services/api'
+import { saveDataForTile } from '../services/osm-api'
 import { bboxToTiles } from '../utils/bbox'
 import cache from '../utils/data-cache'
 import { filterRelations } from '../utils/filter-xml'
@@ -61,7 +61,6 @@ export function deletePack (pack) {
 
     try {
       await MapboxGL.offlineManager.deletePack(pack)
-
       dispatch({
         type: types.DELETED_PACK,
         pack
@@ -698,6 +697,13 @@ export function setSelectedFeatures (features) {
   }
 }
 
+export function setSelectedPhotos (photos) {
+  return {
+    type: types.SET_SELECTED_PHOTOS,
+    photos: photos
+  }
+}
+
 export function startAddPoint () {
   return {
     type: types.START_ADD_POINT
@@ -770,6 +776,13 @@ export function setBasemap (baseLayer) {
   return {
     type: types.SET_BASEMAP,
     baseLayer
+  }
+}
+
+export function toggleOverlay (layer) {
+  return {
+    type: types.TOGGLE_OVERLAY,
+    layer
   }
 }
 

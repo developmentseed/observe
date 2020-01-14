@@ -11,6 +11,9 @@ import PresetReducer from './presets'
 import AccountReducer from './account'
 import EditReducer from './edit'
 import NotificationReducer from './notification'
+import CameraReducer from './camera'
+import TracesReducer from './traces'
+import ObserveAPIReducer from './observeApi'
 
 const authorizationPersistConfig = {
   key: 'authorization',
@@ -34,6 +37,31 @@ const editPersistConfig = {
   ]
 }
 
+const tracesPersistConfig = {
+  key: 'traces',
+  storage,
+  whitelist: [
+    'currentTrace',
+    'traces'
+  ]
+}
+
+const observeApiPersistConfig = {
+  key: 'observeApi',
+  storage,
+  whitelist: [
+    'token'
+  ]
+}
+
+const photosPersistConfig = {
+  key: 'photos',
+  storage,
+  whitelist: [
+    'photos'
+  ]
+}
+
 const rootReducer = combineReducers({
   about: AboutReducer,
   authorization: persistReducer(authorizationPersistConfig, AuthorizationReducer),
@@ -42,7 +70,10 @@ const rootReducer = combineReducers({
   account: AccountReducer,
   edit: persistReducer(editPersistConfig, EditReducer),
   network,
-  notification: NotificationReducer
+  notification: NotificationReducer,
+  traces: persistReducer(tracesPersistConfig, TracesReducer),
+  observeApi: persistReducer(observeApiPersistConfig, ObserveAPIReducer),
+  photos: persistReducer(photosPersistConfig, CameraReducer)
 })
 
 export default rootReducer

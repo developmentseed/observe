@@ -1,0 +1,217 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test trace sync actions should start trace correctly 1`] = `
+Array [
+  Object {
+    "type": "TRACE_START",
+  },
+  Object {
+    "data": Object {
+      "remove": [MockFunction],
+    },
+    "type": "TRACE_SET_SUBSCRIPTION",
+  },
+  Object {
+    "data": Object {
+      "latitude": 0,
+      "longitude": 0,
+      "timestamp": 0,
+    },
+    "type": "TRACE_POINT_CAPTURED",
+  },
+  Object {
+    "data": Object {
+      "latitude": 1,
+      "longitude": 1,
+      "timestamp": 1,
+    },
+    "type": "TRACE_POINT_CAPTURED",
+  },
+  Object {
+    "data": Object {
+      "latitude": 2,
+      "longitude": 2,
+      "timestamp": 2,
+    },
+    "type": "TRACE_POINT_CAPTURED",
+  },
+  Object {
+    "data": Object {
+      "latitude": 3,
+      "longitude": 3,
+      "timestamp": 3,
+    },
+    "type": "TRACE_POINT_CAPTURED",
+  },
+]
+`;
+
+exports[`trace upload / async actions should add error to the trace for an error response 1`] = `
+Array [
+  Object {
+    "id": "id-1",
+    "type": "TRACE_UPLOAD_STARTED",
+  },
+  Object {
+    "error": [Error: Unknown error],
+    "id": "id-1",
+    "type": "TRACE_UPLOAD_FAILED",
+  },
+]
+`;
+
+exports[`trace upload / async actions should add error to the trace for an error response 2`] = `
+Array [
+  Array [
+    "http://localhost:3000/traces",
+    Object {
+      "body": "{\\"tracejson\\":{\\"type\\":\\"Feature\\",\\"properties\\":{\\"timestamps\\":[1,11,21],\\"description\\":\\"\\"},\\"geometry\\":{\\"type\\":\\"LineString\\",\\"coordinates\\":[[1,1],[2,0],[3,-1]]}}}",
+      "headers": Object {
+        "Authorization": "abcd",
+        "Content-Type": "application/json",
+      },
+      "method": "POST",
+    },
+  ],
+]
+`;
+
+exports[`trace upload / async actions should not upload non-pending traces 1`] = `
+Array [
+  Object {
+    "id": "id-1",
+    "type": "TRACE_UPLOAD_STARTED",
+  },
+  Object {
+    "newId": "fakeid-1",
+    "oldId": "id-1",
+    "type": "TRACE_UPLOADED",
+  },
+]
+`;
+
+exports[`trace upload / async actions should not upload non-pending traces 2`] = `
+Array [
+  Array [
+    "http://localhost:3000/traces",
+    Object {
+      "body": "{\\"tracejson\\":{\\"type\\":\\"Feature\\",\\"properties\\":{\\"timestamps\\":[1,11,21],\\"description\\":\\"\\"},\\"geometry\\":{\\"type\\":\\"LineString\\",\\"coordinates\\":[[1,1],[2,0],[3,-1]]}}}",
+      "headers": Object {
+        "Authorization": "abcd",
+        "Content-Type": "application/json",
+      },
+      "method": "POST",
+    },
+  ],
+]
+`;
+
+exports[`trace upload / async actions should not upload uploading traces 1`] = `
+Array [
+  Object {
+    "id": "id-2",
+    "type": "TRACE_UPLOAD_STARTED",
+  },
+  Object {
+    "newId": "fakeid-2",
+    "oldId": "id-2",
+    "type": "TRACE_UPLOADED",
+  },
+]
+`;
+
+exports[`trace upload / async actions should not upload uploading traces 2`] = `
+Array [
+  Array [
+    "http://localhost:3000/traces",
+    Object {
+      "body": "{\\"tracejson\\":{\\"type\\":\\"Feature\\",\\"properties\\":{\\"timestamps\\":[2,12,22],\\"description\\":\\"\\"},\\"geometry\\":{\\"type\\":\\"LineString\\",\\"coordinates\\":[[2,2],[3,1],[4,0]]}}}",
+      "headers": Object {
+        "Authorization": "abcd",
+        "Content-Type": "application/json",
+      },
+      "method": "POST",
+    },
+  ],
+]
+`;
+
+exports[`trace upload / async actions should upload a single trace 1`] = `
+Array [
+  Object {
+    "id": "id-1",
+    "type": "TRACE_UPLOAD_STARTED",
+  },
+  Object {
+    "newId": "fakeid",
+    "oldId": "id-1",
+    "type": "TRACE_UPLOADED",
+  },
+]
+`;
+
+exports[`trace upload / async actions should upload a single trace 2`] = `
+Array [
+  Array [
+    "http://localhost:3000/traces",
+    Object {
+      "body": "{\\"tracejson\\":{\\"type\\":\\"Feature\\",\\"properties\\":{\\"timestamps\\":[1,11,21],\\"description\\":\\"\\"},\\"geometry\\":{\\"type\\":\\"LineString\\",\\"coordinates\\":[[1,1],[2,0],[3,-1]]}}}",
+      "headers": Object {
+        "Authorization": "abcd",
+        "Content-Type": "application/json",
+      },
+      "method": "POST",
+    },
+  ],
+]
+`;
+
+exports[`trace upload / async actions should upload multiple pending traces 1`] = `
+Array [
+  Object {
+    "id": "id-1",
+    "type": "TRACE_UPLOAD_STARTED",
+  },
+  Object {
+    "newId": "fakeid-1",
+    "oldId": "id-1",
+    "type": "TRACE_UPLOADED",
+  },
+  Object {
+    "id": "id-2",
+    "type": "TRACE_UPLOAD_STARTED",
+  },
+  Object {
+    "newId": "fakeid-2",
+    "oldId": "id-2",
+    "type": "TRACE_UPLOADED",
+  },
+]
+`;
+
+exports[`trace upload / async actions should upload multiple pending traces 2`] = `
+Array [
+  Array [
+    "http://localhost:3000/traces",
+    Object {
+      "body": "{\\"tracejson\\":{\\"type\\":\\"Feature\\",\\"properties\\":{\\"timestamps\\":[1,11,21],\\"description\\":\\"\\"},\\"geometry\\":{\\"type\\":\\"LineString\\",\\"coordinates\\":[[1,1],[2,0],[3,-1]]}}}",
+      "headers": Object {
+        "Authorization": "abcd",
+        "Content-Type": "application/json",
+      },
+      "method": "POST",
+    },
+  ],
+  Array [
+    "http://localhost:3000/traces",
+    Object {
+      "body": "{\\"tracejson\\":{\\"type\\":\\"Feature\\",\\"properties\\":{\\"timestamps\\":[2,12,22],\\"description\\":\\"\\"},\\"geometry\\":{\\"type\\":\\"LineString\\",\\"coordinates\\":[[2,2],[3,1],[4,0]]}}}",
+      "headers": Object {
+        "Authorization": "abcd",
+        "Content-Type": "application/json",
+      },
+      "method": "POST",
+    },
+  ],
+]
+`;

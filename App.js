@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
-import { AppState } from 'react-native'
 import Config from 'react-native-config'
 import { Provider } from 'react-redux'
 
-import { createStackNavigator, createDrawerNavigator, createAppContainer } from 'react-navigation'
+import { createAppContainer } from 'react-navigation'
+import { createDrawerNavigator } from 'react-navigation-drawer'
+import { createStackNavigator } from 'react-navigation-stack'
+
 import { PersistGate } from 'redux-persist/integration/react'
 
 import { store, persistor } from './app/utils/store'
@@ -18,12 +20,19 @@ import ViewFeatureDetail from './app/screens/Features/ViewFeatureDetail'
 import AddFeatureDetail from './app/screens/Features/AddFeatureDetail'
 import EditFeatureDetail from './app/screens/Features/EditFeatureDetail'
 import SelectFeatureType from './app/screens/Features/SelectFeatureType'
+import PhotosListScreen from './app/screens/Photos/PhotosListScreen'
+import PhotoDetailScreen from './app/screens/Photos/PhotoDetailScreen'
+import TracesListScreen from './app/screens/Traces/TracesListScreen'
+import TraceDetailScreen from './app/screens/Traces/TraceDetailScreen'
 
 import AuthorizationManager from './app/components/AuthorizationManager'
 import Drawer from './app/components/Drawer'
 import Notification from './app/components/Notification'
 import UploadManager from './app/components/UploadManager'
-import { preAuth } from './app/services/auth'
+import ObserveAPIAuthManager from './app/components/ObserveAPIAuthManager'
+import CameraScreen from './app/screens/CameraScreen'
+import SaveTrace from './app/screens/SaveTrace'
+
 import { ReduxNetworkProvider } from 'react-native-offline'
 import Icon from './app/components/Collecticons'
 import { colors } from './app/style/variables'
@@ -62,6 +71,38 @@ const UserContributionsNavigator = createStackNavigator({
   }
 })
 
+const PhotosListNavigator = createStackNavigator({
+  PhotosListScreen: { screen: PhotosListScreen }
+}, {
+  initialRouteName: 'PhotosListScreen',
+  headerMode: 'none',
+  navigationOptions: {
+    title: 'Your Photos',
+    drawerIcon: () => (
+      <Icon
+        name='picture'
+        style={{ fontSize: 16, color: colors.primary }}
+      />
+    )
+  }
+})
+
+const TracesListNavigator = createStackNavigator({
+  TracesListScreen: { screen: TracesListScreen }
+}, {
+  initialRouteName: 'TracesListScreen',
+  headerMode: 'none',
+  navigationOptions: {
+    title: 'Your Traces',
+    drawerIcon: () => (
+      <Icon
+        name='road'
+        style={{ fontSize: 16, color: colors.primary }}
+      />
+    )
+  }
+})
+
 // This is convenient when iterating on screens, as the active screen will
 // reload when code changes. However, it breaks some uses of react-navigation
 // params, so it's disabled by default
@@ -75,12 +116,18 @@ const AppNavigator = createDrawerNavigator({
     screen: UserContributionsNavigator
   },
   OfflineMaps: { screen: OfflineMapsNavigator },
+  PhotosListScreen: { screen: PhotosListNavigator },
+  TracesListScreen: { screen: TracesListNavigator },
   Account: { screen: Account },
   Settings: { screen: Settings },
   ViewFeatureDetail: { screen: ViewFeatureDetail },
   AddFeatureDetail: { screen: AddFeatureDetail },
   EditFeatureDetail: { screen: EditFeatureDetail },
-  SelectFeatureType: { screen: SelectFeatureType }
+  SelectFeatureType: { screen: SelectFeatureType },
+  PhotoDetailScreen: { screen: PhotoDetailScreen },
+  CameraScreen: { screen: CameraScreen },
+  SaveTrace: { screen: SaveTrace },
+  TraceDetailScreen: { screen: TraceDetailScreen }
 }, {
   initialRouteName: 'Explore',
   contentComponent: Drawer,
@@ -117,23 +164,7 @@ const AppNavigator = createDrawerNavigator({
 
 const AppContainer = createAppContainer(AppNavigator)
 
-// FIXME: we should pass a <Loading /> component to loading= on the PersistGate to show while app state is being loaded
-// from persistent store
 export default class App extends Component {
-  _handleAppStateChange (nextState) {
-    if (nextState === 'active') {
-      preAuth()
-    }
-  }
-
-  componentWillMount () {
-    AppState.addEventListener('change', this._handleAppStateChange)
-  }
-
-  componentWillUnmount () {
-    AppState.removeEventListener('change', this._handleAppStateChange)
-  }
-
   render () {
     return (
       <Provider store={store}>
@@ -142,6 +173,7 @@ export default class App extends Component {
             <AppContainer persistenceKey={persistenceKey} />
             <Notification />
             <AuthorizationManager />
+            <ObserveAPIAuthManager />
             <UploadManager />
           </ReduxNetworkProvider>
         </PersistGate>

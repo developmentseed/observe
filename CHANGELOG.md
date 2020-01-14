@@ -12,7 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Changed
 - Update packages with high-level security updates needed ([pull request](https://github.com/developmentseed/observe/pull/38))
-- Update react-native and @mapbox/react-native-mapbox-gl  ([pull request](https://github.com/developmentseed/observe/pull/47))
+- Update react-native and @react-native-mapbox-gl/maps  ([pull request](https://github.com/developmentseed/observe/pull/47))
 - Use [ObserveIcon font](https://github.com/developmentseed/observe-icon-font) in place of png files in ui ([pull request](https://github.com/developmentseed/observe/pull/59))
 - Use a `getPresetByTags` function for matching a feature's tags to a preset ([pull request](https://github.com/developmentseed/observe/pull/59))
 - Update global text and field styles to better match mockups ([pull request](https://github.com/developmentseed/observe/pull/58))

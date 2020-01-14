@@ -1,19 +1,15 @@
-/* eslint-disable no-dupe-keys */
-import MapboxGL from '@mapbox/react-native-mapbox-gl'
+const thinLineWidth = [
+  'interpolate', ['linear'],
+  ['zoom'],
+  16, 3,
+  20, 6
+]
 
-const thinLineWidth = MapboxGL.StyleSheet.camera(
-  {
-    16: 3,
-    20: 6
-  }, MapboxGL.InterpolationMode.Interval
-)
-
-const standardLineWidth = MapboxGL.StyleSheet.camera(
-  {
-    16: 5,
-    20: 8
-  }, MapboxGL.InterpolationMode.Interval
-)
+const standardLineWidth = [
+  'interpolate', ['linear'], ['zoom'],
+  16, 4,
+  20, 8
+]
 
 const nodes = {
   circleRadius: 12,
@@ -22,64 +18,72 @@ const nodes = {
 }
 
 const lineHighlight = {
-  lineWidth: MapboxGL.StyleSheet.camera(
-    {
-      16: 6,
-      20: 9
-    }
-  ),
+  lineWidth: [
+    'interpolate', ['linear'],
+    ['zoom'],
+    16, 6,
+    20, 9
+  ],
   lineColor: 'grey'
 }
 
 const editedLines = {
-  lineWidth: MapboxGL.StyleSheet.camera(
-    {
-      16: 6,
-      20: 9
-    }
-  ),
+  lineWidth: [
+    'interpolate', ['linear'],
+    ['zoom'],
+    16, 6,
+    20, 9
+  ],
   lineColor: 'blue'
+}
+
+const traces = {
+  lineWidth: [
+    'interpolate', ['linear'],
+    ['zoom'],
+    16, 1,
+    20, 3
+  ],
+  lineColor: 'red',
+  visibility: 'none'
 }
 
 const highways = {
   lineWidth: standardLineWidth,
-  lineColor: MapboxGL.StyleSheet.source(
-    [
-      ['primary', '#F99806'],
-      ['primary_link', '#F99806'],
-      ['secondary', '#F3F312'],
-      ['secondary_link', '#F3F312'],
-      ['tertiary', '#FFF9B3'],
-      ['tertiary_link', '#FFF9B3'],
-      ['motorway', '#58a9ed'],
-      ['trunk', '#8cd05f'],
-      ['unclassified', '#dca'],
-      ['residential', '#fff'],
-      ['service', '#fff'],
-      ['road', '#9e9e9e'],
-      ['track', '#eaeaea'],
-      ['path', '#988']
-    ],
-    'highway',
-    MapboxGL.InterpolationMode.Categorical
-  )
+  lineColor: [
+    'match',
+    ['get', 'highway'],
+    'primary', '#F99806',
+    'primary_link', '#F99806',
+    'secondary', '#F3F312',
+    'secondary_link', '#F3F312',
+    'tertiary', '#FFF9B3',
+    'tertiary_link', '#FFF9B3',
+    'motorway', '#58a9ed',
+    'trunk', '#8cd05f',
+    'unclassified', '#dca',
+    'residential', '#fff',
+    'service', '#fff',
+    'road', '#9e9e9e',
+    'track', '#eaeaea',
+    'path', '#988',
+    '#eaeaea'
+  ]
 }
 
 const highwaysLower = {
   lineWidth: thinLineWidth,
-  lineColor: MapboxGL.StyleSheet.source(
-    [
-      ['foot', '#988'],
-      ['footway', '#988'],
-      ['hiking', '#988'],
-      ['living_street', '#988'],
-      ['cycleway', '#58a9ed'],
-      ['steps', '#81d25c']
-    ],
-    'highway',
-    MapboxGL.InterpolationMode.Categorical
-  ),
-  lineDasharray: [2, 0, 0, 2]
+  lineDasharray: [2, 0, 0, 2],
+  lineColor: [
+    'step',
+    ['get', 'highway'],
+    'foot', '#988',
+    'footway', '#988',
+    'hiking', '#988',
+    'living_street', '#988',
+    'cycleway', '#58a9ed',
+    'steps', '#81d25c'
+  ]
 }
 
 const railwayLine = {
@@ -110,26 +114,23 @@ const leisure = {
 }
 
 const polygons = {
-  fillColor: MapboxGL.StyleSheet.source(
-    [
-      ['*', 'red']
-    ],
-    'building',
-    MapboxGL.InterpolationMode.Identity
-  ),
-  fillOpacity: 0.6
+  fillOpacity: 0.6,
+  fillColor: [
+    'step',
+    ['get', 'building'],
+    'red'
+  ]
 }
 
 const lineSelect = {
-  lineWidth: MapboxGL.StyleSheet.camera(
-    {
-      10: 6,
-      20: 10
-    }
-  ),
   lineColor: 'red',
-  lineOpacity: 0.7
-
+  lineOpacity: 0.7,
+  lineWidth: [
+    'interpolate', ['linear'],
+    ['zoom'],
+    10, 6,
+    20, 10
+  ]
 }
 
 const iconHalo = {
@@ -158,29 +159,64 @@ const iconHaloSelected = {
 }
 
 const icons = {
-  iconImage: '{icon}',
+  iconImage: ['get', 'icon'],
   iconAllowOverlap: false,
   iconIgnorePlacement: false,
   iconSize: 0.8
 }
 
-const style = MapboxGL.StyleSheet.create({
-  nodes: nodes,
-  highways: highways,
-  highwaysLower: highwaysLower,
-  railwayLine: railwayLine,
-  waterLine: waterLine,
-  lineHighlight: lineHighlight,
-  lineSelect: lineSelect,
-  polygons: polygons,
-  buildings: buildings,
-  leisure: leisure,
-  iconHalo: iconHalo,
-  iconHaloSelected: iconHaloSelected,
-  icons: icons,
-  iconEditedHalo: iconEditedHalo,
-  editedPolygons: editedPolygons,
-  editedLines: editedLines
-})
+const photoIcon = {
+  iconImage: 'maki_attraction',
+  iconAllowOverlap: false,
+  iconIgnorePlacement: false,
+  iconSize: 0.8,
+  visibility: 'none'
+}
 
-export default style
+const photoIconHalo = {
+  circleRadius: 12,
+  circleColor: 'blue',
+  circleOpacity: 0.6,
+  circleStrokeColor: 'white',
+  circleStrokeWidth: 0.5,
+  visibility: 'none'
+}
+
+const photoIconSelected = {
+  circleRadius: 15,
+  circleColor: 'brown',
+  circleOpacity: 0.6,
+  circleStrokeColor: 'blue',
+  circleStrokeWidth: 2,
+  circleStrokeOpacity: 0.6,
+  visibility: 'none'
+}
+
+export default {
+  osm: {
+    nodes,
+    highways,
+    highwaysLower,
+    railwayLine,
+    waterLine,
+    lineHighlight,
+    lineSelect,
+    polygons,
+    buildings,
+    leisure,
+    iconHalo,
+    iconHaloSelected,
+    icons,
+    iconEditedHalo,
+    editedPolygons,
+    editedLines
+  },
+  traces: {
+    traces
+  },
+  photos: {
+    photoIcon,
+    photoIconHalo,
+    photoIconSelected
+  }
+}

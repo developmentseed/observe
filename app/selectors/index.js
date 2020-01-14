@@ -7,6 +7,9 @@ import { featureCollection } from '@turf/helpers'
 
 import { addIconUrl } from '../utils/add-icon-url'
 import { bboxToTiles } from '../utils/bbox'
+import {
+  getTraceLength
+} from '../utils/traces'
 import cache from '../utils/data-cache'
 import { filterTags } from '../utils/filter-tags'
 
@@ -148,3 +151,89 @@ export const getOfflineResourceStatus = createSelector(
 )
 
 export const getPendingEviction = state => state.map.pendingEviction
+
+export const getIsTracing = state => !!state.traces.currentTrace
+
+export const getCurrentTraceGeoJSON = state => {
+  if (state.traces.currentTrace && state.traces.currentTrace.geometry.coordinates.length > 2) {
+    return {
+      'type': 'FeatureCollection',
+      'features': [ state.traces.currentTrace ]
+    }
+  } else {
+    return {
+      'type': 'FeatureCollection',
+      'features': []
+    }
+  }
+}
+
+export const getCurrentTraceLength = state => {
+  const currentTrace = state.traces.currentTrace
+  if (!currentTrace || currentTrace.geometry.coordinates.length < 2) return 0
+  return getTraceLength(currentTrace)
+}
+
+/**
+ *
+ * @param {Object} state
+ * @returns {String} - one of 'recording', 'paused', 'none'
+ */
+export const getCurrentTraceStatus = state => {
+  const { currentTrace, paused } = state.traces
+  if (!currentTrace) return 'none'
+  if (paused) return 'paused'
+  return 'recording'
+}
+
+export const showRecordingHeader = state => {
+  const { currentTrace, saving } = state.traces
+  if (saving) return false
+  if (currentTrace) return true
+}
+
+export const getTracesGeojson = state => {
+  const traces = state.traces.traces
+  const tracesGeojson = {
+    'type': 'FeatureCollection',
+    'features': []
+  }
+  traces.map(trace => {
+    return tracesGeojson.features.push(trace.geojson)
+  })
+
+  return tracesGeojson
+}
+
+export const getPhotosGeojson = state => {
+  const photos = state.photos.photos
+  const photosGeojson = {
+    'type': 'FeatureCollection',
+    'features': []
+  }
+
+  if (photos.length > 0) {
+    photos.map(photo => {
+      const photoGeojson = {
+        'type': 'Feature',
+        'geometry': {
+          'type': 'Point',
+          'coordinates': [
+            photo.location.coords.longitude,
+            photo.location.coords.latitude
+          ]
+        },
+        'properties': {
+          'id': photo.id,
+          'type': 'photo',
+          'description': photo.description,
+          'path': photo.path,
+          'timestamp': photo.location.timestamp
+        }
+      }
+      return photosGeojson.features.push(photoGeojson)
+    })
+  }
+
+  return photosGeojson
+}

@@ -1,6 +1,7 @@
 import React from 'react'
 import { ScrollView, Platform } from 'react-native'
-import { DrawerItems, SafeAreaView } from 'react-navigation'
+import { SafeAreaView } from 'react-navigation'
+import { DrawerNavigatorItems as DrawerItems } from 'react-navigation-drawer'
 import styled from 'styled-components/native'
 import { colors } from '../style/variables'
 
@@ -29,7 +30,7 @@ export default function Drawer (props) {
   const { items } = props
 
   const topnav = items.filter((item) => {
-    return ['Explore', 'OfflineMaps', 'UserContributions'].includes(item.key)
+    return ['Explore', 'OfflineMaps', 'UserContributions', 'PhotosListScreen', 'TracesListScreen'].includes(item.key)
   })
 
   const bottomnav = items.filter((item) => {

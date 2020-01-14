@@ -14,6 +14,7 @@ const FieldWrapper = styled.View`
   margin-top: 16;
   flex: 1;
   flex-direction: row;
+  flex-shrink: 0;
 `
 
 const LabelWrapper = styled.View`
@@ -386,6 +387,35 @@ export class ReadOnlyField extends Component {
 
           <InputWrapper>
             <TextInput value={value} editable={false} />
+          </InputWrapper>
+        </FieldWrapper>
+      </View>
+    )
+  }
+}
+
+export class DescriptionInputField extends Component {
+  render () {
+    const { onValueChange, value, focus } = this.props
+
+    return (
+      <View ref={x => (this._root = x)} style={{ flex: 1 }}>
+        <FieldWrapper style={{ borderColor: colors.primary }}>
+          <LabelWrapper>
+            <Label style={{ color: colors.primary, letterSpacing: 0.4 }}>Description</Label>
+          </LabelWrapper>
+
+          <InputWrapper>
+            <TextInput
+              autoFocus={focus}
+              autoCapitalize='none'
+              autoCorrect
+              onChangeText={(value) => onValueChange(value)}
+              placeholder=''
+              placeholderTextColor={colors.baseMuted}
+              underlineColorAndroid='transparent'
+              value={value}
+            />
           </InputWrapper>
         </FieldWrapper>
       </View>

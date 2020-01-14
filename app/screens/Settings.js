@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components/native'
-
-import { purgeCache, purgeStore } from '../actions/about'
+import { purgeCache, purgeStore, purgeCookies } from '../actions/about'
 import { purgeAllEdits } from '../actions/edit'
+import { logoutUser } from '../actions/observeApi'
 import Icon from '../components/Collecticons'
 import Header from '../components/Header'
 import PageWrapper from '../components/PageWrapper'
@@ -74,6 +74,20 @@ class Settings extends React.Component {
               color={colors.primary}
             />
           </ButtonWrapper>
+          <ButtonWrapper>
+            <Button
+              onPress={this.props.logoutUser}
+              title='Clear Observe API Token'
+              color={colors.primary}
+            />
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <Button
+              onPress={this.props.purgeCookies}
+              title='Delete Cookies'
+              color={colors.primary}
+            />
+          </ButtonWrapper>
           <Text>
             Observe-{version}
           </Text>
@@ -83,12 +97,16 @@ class Settings extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({})
+const mapStateToProps = state => ({
+  currentTrace: state.traces.currentTrace
+})
 
 const mapDispatchToProps = {
   purgeCache,
   purgeStore,
-  purgeAllEdits
+  purgeCookies,
+  purgeAllEdits,
+  logoutUser
 }
 
 export default connect(

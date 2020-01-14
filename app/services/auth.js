@@ -90,7 +90,11 @@ export async function preAuth () {
       return true
     }
 
-    await Linking.openURL(Config.PREAUTH_URL)
+    try {
+      await Linking.openURL(Config.PREAUTH_URL)
+    } catch (err) {
+      console.log('error checking PREAUTH_URL', err)
+    }
 
     // TODO MobileSafari on iOS currently doesn't redirect when preauth is
     // involved (perhaps due to the way the redirect is presented?)

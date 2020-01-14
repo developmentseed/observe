@@ -2,6 +2,9 @@ import fromEntries from 'fromentries'
 import Config from 'react-native-config'
 
 import * as types from '../actions/actionTypes'
+import _uniqBy from 'lodash.uniqby'
+import style from '../style/map'
+import _cloneDeep from 'lodash.clonedeep'
 
 export const initialState = {
   activeTileRequests: [], // quadkeys of all pending tile requests
@@ -9,12 +12,19 @@ export const initialState = {
   selectedFeature: false, // GeoJSON feature that is currently selected, or false
   mode: 'explore', // mode can be 'explore', 'add' or 'edit'
   baseLayer: null,
+  overlays: {
+    osm: true,
+    photos: false,
+    traces: false
+  },
   offlineResources: {},
   lru: [],
   // should be used as a set, but needs to be persisted in order to clean up
   // between app activations
   pendingEviction: [],
-  serialNumber: 0
+  serialNumber: 0,
+  style: style,
+  selectedPhotos: false
 }
 
 const TILE_CACHE_SIZE = Config.TILE_CACHE_SIZE || 10000
@@ -227,6 +237,7 @@ export default function (state = initialState, action) {
 
     case types.SET_SELECTED_FEATURES:
       let features = action.features
+      features = _uniqBy(features, 'id')
       return {
         ...state,
         selectedFeatures: features
@@ -480,12 +491,38 @@ export default function (state = initialState, action) {
         baseLayer: action.baseLayer
       }
 
+    case types.TOGGLE_OVERLAY:
+      let overlays = { ...state.overlays }
+      overlays[action.layer] = !overlays[action.layer]
+      let updatedStyle = _cloneDeep(state.style)
+      updatedStyle.traces.traces.visibility = overlays['traces'] ? 'visible' : 'none'
+      Object.keys(updatedStyle['osm']).forEach(key => {
+        updatedStyle.osm[key].visibility = overlays['osm'] ? 'visible' : 'none'
+      })
+
+      Object.keys(updatedStyle['photos']).forEach(key => {
+        updatedStyle.photos[key].visibility = overlays['photos'] ? 'visible' : 'none'
+      })
+
+      return {
+        ...state,
+        overlays,
+        style: updatedStyle
+      }
+
     case types.NEW_DATA_AVAILABLE: {
       const { serialNumber } = state
 
       return {
         ...state,
         serialNumber: serialNumber + 1
+      }
+    }
+
+    case types.SET_SELECTED_PHOTOS: {
+      return {
+        ...state,
+        selectedPhotos: action.photos
       }
     }
   }

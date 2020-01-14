@@ -17,7 +17,7 @@ import {
   modifyEditToCreate,
   modifyEditVersion
 } from '../../actions/edit'
-import { getFeature } from '../../services/api'
+import { getFeature } from '../../services/osm-api'
 import Config from 'react-native-config'
 import getTaginfo from '../../utils/get-taginfo'
 import Icon from '../../components/Collecticons'

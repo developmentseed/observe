@@ -1,5 +1,5 @@
 import { Platform } from 'react-native'
-import MapboxGL from '@mapbox/react-native-mapbox-gl'
+import MapboxGL from '@react-native-mapbox-gl/maps'
 import Config from 'react-native-config'
 
 let styleURL = Config.MAPBOX_STYLE_URL || MapboxGL.StyleURL.Street

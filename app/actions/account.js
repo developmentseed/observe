@@ -1,5 +1,5 @@
 import * as types from './actionTypes'
-import { getUserDetails } from '../services/api'
+import { getUserDetails } from '../services/osm-api'
 import { authorize, clearCredentials } from '../services/auth'
 import { setNotification } from './notification'
 
@@ -68,7 +68,6 @@ export function initiateAuthorization () {
         message: 'You have signed in'
       }))
     } catch (err) {
-      console.log('Authorization failed:', err)
       dispatch(setNotification({
         level: 'error',
         message: 'There was an error signing in'
