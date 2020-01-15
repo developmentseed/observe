@@ -10,8 +10,8 @@
 Cross-platform, offline, field mapping tool for OpenStreetMap
 
 ## Download
-* [Android](https://tsfr.io/observe-android)
-* [Request to install on iOS](https://tsfr.io/observe-ios)
+* [v0.2.0-alpha](https://github.com/developmentseed/observe/releases/tag/v0.2.0-alpha)
+* [v0.1.8](https://github.com/developmentseed/observe/releases/tag/v0.1.8)
 
 ## Documentation
 
