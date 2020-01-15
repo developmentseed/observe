@@ -397,6 +397,76 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		8A176F2123CE39A800065B19 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 26DAE23C227CAF5C00DFF1AB /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A225ED83E33DC48D25B9FF35BA50CCD0;
+			remoteInfo = EXAppLoaderProvider;
+		};
+		8A176F2323CE39A800065B19 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 26DAE23C227CAF5C00DFF1AB /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3616ADC35D520F64895EB19FCD3E1682;
+			remoteInfo = EXCamera;
+		};
+		8A176F2523CE39A800065B19 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 26DAE23C227CAF5C00DFF1AB /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 220361FF3B2778F8F38C2C4DCC5B49FD;
+			remoteInfo = EXConstants;
+		};
+		8A176F2723CE39A800065B19 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 26DAE23C227CAF5C00DFF1AB /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = ED1E3FC0DC90F4A787472917BFB6B235;
+			remoteInfo = EXFileSystem;
+		};
+		8A176F2923CE39A800065B19 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 26DAE23C227CAF5C00DFF1AB /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1FFB534971916741FA5961F0615FAC42;
+			remoteInfo = EXImageManipulator;
+		};
+		8A176F2B23CE39A800065B19 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 26DAE23C227CAF5C00DFF1AB /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A37C597C68757F22BB31CFF6F920A258;
+			remoteInfo = EXLocation;
+		};
+		8A176F2D23CE39A800065B19 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 26DAE23C227CAF5C00DFF1AB /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 72E494917AC5EC2582197F07061A28B0;
+			remoteInfo = EXPermissions;
+		};
+		8A176F2F23CE39A800065B19 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 26DAE23C227CAF5C00DFF1AB /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 83A8CC3246A95431ACEA83C7C742228B;
+			remoteInfo = "react-native-netinfo";
+		};
+		8A176F3123CE39A800065B19 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 26DAE23C227CAF5C00DFF1AB /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AF72FD600DE7E2D330BA50F877993E05;
+			remoteInfo = UMCore;
+		};
+		8A176F3323CE39A800065B19 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 26DAE23C227CAF5C00DFF1AB /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3B640835BAA914DD267B5E780D8CFEC7;
+			remoteInfo = UMReactNativeAdapter;
+		};
 		8A1D02FE2344CB5700BE92A6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 26DAE23C227CAF5C00DFF1AB /* Pods.xcodeproj */;
@@ -924,6 +994,13 @@
 			children = (
 				26DAE243227CAF5C00DFF1AB /* DCTAuth.framework */,
 				8A841D8D23448FEB00EC5960 /* DoubleConversion.framework */,
+				8A176F2223CE39A800065B19 /* EXAppLoaderProvider.framework */,
+				8A176F2423CE39A800065B19 /* EXCamera.framework */,
+				8A176F2623CE39A800065B19 /* EXConstants.framework */,
+				8A176F2823CE39A800065B19 /* EXFileSystem.framework */,
+				8A176F2A23CE39A800065B19 /* EXImageManipulator.framework */,
+				8A176F2C23CE39A800065B19 /* EXLocation.framework */,
+				8A176F2E23CE39A800065B19 /* EXPermissions.framework */,
 				8A841D8F23448FEB00EC5960 /* FBReactNativeSpec.framework */,
 				8A841D9123448FEB00EC5960 /* folly.framework */,
 				8A841D9323448FEB00EC5960 /* glog.framework */,
@@ -942,6 +1019,7 @@
 				8A841DA923448FEB00EC5960 /* react_native_cookies.framework */,
 				2645E75A2345237300E9C45B /* react_native_geolocation.framework */,
 				8A841DAB23448FEB00EC5960 /* react_native_mapbox_gl.framework */,
+				8A176F3023CE39A800065B19 /* react_native_netinfo.framework */,
 				8A841DAD23448FEB00EC5960 /* RCTActionSheet.framework */,
 				8A841DAF23448FEB00EC5960 /* RCTAnimation.framework */,
 				8A841DB123448FEB00EC5960 /* RCTBlob.framework */,
@@ -957,6 +1035,8 @@
 				8A841DC123448FEB00EC5960 /* RNGestureHandler.framework */,
 				8A841DC323448FEB00EC5960 /* RNKeychain.framework */,
 				8A841DC523448FEB00EC5960 /* RNVectorIcons.framework */,
+				8A176F3223CE39A800065B19 /* UMCore.framework */,
+				8A176F3423CE39A800065B19 /* UMReactNativeAdapter.framework */,
 				8A841DC723448FEB00EC5960 /* yoga.framework */,
 			);
 			name = Products;
@@ -1661,6 +1741,76 @@
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		8A176F2223CE39A800065B19 /* EXAppLoaderProvider.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = EXAppLoaderProvider.framework;
+			remoteRef = 8A176F2123CE39A800065B19 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8A176F2423CE39A800065B19 /* EXCamera.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = EXCamera.framework;
+			remoteRef = 8A176F2323CE39A800065B19 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8A176F2623CE39A800065B19 /* EXConstants.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = EXConstants.framework;
+			remoteRef = 8A176F2523CE39A800065B19 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8A176F2823CE39A800065B19 /* EXFileSystem.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = EXFileSystem.framework;
+			remoteRef = 8A176F2723CE39A800065B19 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8A176F2A23CE39A800065B19 /* EXImageManipulator.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = EXImageManipulator.framework;
+			remoteRef = 8A176F2923CE39A800065B19 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8A176F2C23CE39A800065B19 /* EXLocation.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = EXLocation.framework;
+			remoteRef = 8A176F2B23CE39A800065B19 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8A176F2E23CE39A800065B19 /* EXPermissions.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = EXPermissions.framework;
+			remoteRef = 8A176F2D23CE39A800065B19 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8A176F3023CE39A800065B19 /* react_native_netinfo.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = react_native_netinfo.framework;
+			remoteRef = 8A176F2F23CE39A800065B19 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8A176F3223CE39A800065B19 /* UMCore.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = UMCore.framework;
+			remoteRef = 8A176F3123CE39A800065B19 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8A176F3423CE39A800065B19 /* UMReactNativeAdapter.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = UMReactNativeAdapter.framework;
+			remoteRef = 8A176F3323CE39A800065B19 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		8A1D02FF2344CB5700BE92A6 /* RCTPushNotification.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -1967,7 +2117,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\n";
+			shellScript = "
+";
 		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2318,7 +2469,7 @@
 				CODE_SIGN_ENTITLEMENTS = Observe/Observe.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 12;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = PBYVPMRQ9F;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2357,7 +2508,7 @@
 				CODE_SIGN_ENTITLEMENTS = Observe/Observe.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = PBYVPMRQ9F;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
