@@ -218,7 +218,7 @@ PODS:
   - React-jsinspector (0.61.1)
   - react-native-config (0.11.7):
     - React
-  - react-native-cookies (3.2.0):
+  - react-native-cookies (3.3.0):
     - React
   - react-native-geolocation (1.4.2):
     - React
@@ -314,7 +314,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-config (from `../node_modules/react-native-config`)
-  - react-native-cookies (from `../node_modules/react-native-cookies/ios`)
+  - react-native-cookies (from `../node_modules/react-native-cookies`)
   - "react-native-geolocation (from `../node_modules/@react-native-community/geolocation`)"
   - "react-native-mapbox-gl (from `../node_modules/@react-native-mapbox-gl/maps`)"
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
@@ -407,7 +407,7 @@ EXTERNAL SOURCES:
   react-native-config:
     :path: "../node_modules/react-native-config"
   react-native-cookies:
-    :path: "../node_modules/react-native-cookies/ios"
+    :path: "../node_modules/react-native-cookies"
   react-native-geolocation:
     :path: "../node_modules/@react-native-community/geolocation"
   react-native-mapbox-gl:
@@ -513,7 +513,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: ee45274419eb95614bbbadb98e20684c5f29996e
   React-jsinspector: 574d597112f9ea3d1b717f6fb62aef764c70dd6f
   react-native-config: 55548054279d92e0e4566ea15a8b9b81028ec342
-  react-native-cookies: 854d59c4135c70b92a02ca4930e68e4e2eb58150
+  react-native-cookies: db5a2f47a61c401b7285c09b86ab4c11330dd0c1
   react-native-geolocation: a7b94614afbd5fd8350e0233a2025c8228fc8041
   react-native-mapbox-gl: fcd88e2bf0ddea552b0209cc2770a5ac2b9c9910
   react-native-netinfo: 397dc351976ee5640fabca2452c23813895be2e5
