@@ -369,6 +369,7 @@ class Explore extends React.Component {
       mode,
       currentTraceStatus,
       currentTrace,
+      isConnected,
       requiresPreauth,
       tracesGeojson,
       style,
@@ -575,7 +576,7 @@ class Explore extends React.Component {
           />
           <MainBody>
             {
-              requiresPreauth
+              (requiresPreauth && isConnected)
                 ? this.renderAuthPrompt()
                 : (
                   <StyledMap
