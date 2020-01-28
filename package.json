@@ -1,6 +1,6 @@
 {
   "name": "Observe",
-  "version": "0.2.0-alpha",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "build-docs": "documentation build App.js -f md -o docs/API.md",
