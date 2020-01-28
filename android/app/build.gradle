@@ -119,13 +119,8 @@ android {
     }
 
     def Properties versionProps = new Properties()
-
     versionProps.load(new FileInputStream(versionPropsFile))
-
-    def code = versionProps['VERSION_CODE'].toInteger() + 1
-
-    versionProps['VERSION_CODE']=code.toString()
-    versionProps.store(versionPropsFile.newWriter(), null)
+    def code = versionProps['VERSION_CODE'].toInteger()
 
     defaultConfig {
         applicationId "com.developmentseed.observe"
@@ -133,7 +128,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode code
         versionName "${versionMajor}.${versionMinor}.${versionPatch}"
-        setProperty("archivesBaseName", "observe" + "-v" + versionName)
+        setProperty("archivesBaseName", "observe" + "-v" + versionName + "-build-" + code)
     }
 
     splits {
