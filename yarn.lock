@@ -7210,9 +7210,9 @@ osmium@^0.5.7:
     nan "^2.10.0"
     node-pre-gyp "^0.10.2"
 
-"osmtogeojson@https://github.com/geohacker/osmtogeojson.git":
+"osmtogeojson@https://github.com/batpad/osmtogeojson.git#fork-relations":
   version "3.0.0-beta.3"
-  resolved "https://github.com/geohacker/osmtogeojson.git#a228fa384f779999bd94ab6e30e12ae90009f7a6"
+  resolved "https://github.com/batpad/osmtogeojson.git#f1cbcc0c7b582b886c69d91d5c728602453d4547"
   dependencies:
     JSONStream "0.8.0"
     concat-stream "~1.0.1"

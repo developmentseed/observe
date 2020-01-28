@@ -751,11 +751,14 @@ export function updateVisibleBounds (visibleBounds, zoom) {
             if (await RNFetchBlob.fs.exists(filename)) {
               const data = await RNFetchBlob.fs.readFile(filename, 'utf8')
               const xmlData = XML_PARSER.parseFromString(data, 'text/xml')
-              const geoJSON = osmtogeojson(filterRelations(xmlData), {
+              const jsonData = osmtogeojson((xmlData), {
                 flatProperties: true,
-                wayRefs: true
+                wayRefs: true,
+                allNodes: false,
+                mapRelations: true
               })
-              cache.set(tile, geoJSON)
+              console.log(jsonData)
+              cache.set(tile, jsonData.geojson)
               dispatch({
                 type: types.NEW_DATA_AVAILABLE
               })
