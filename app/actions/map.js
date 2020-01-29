@@ -11,6 +11,7 @@ import * as types from './actionTypes'
 import { setNotification } from './notification'
 import { getOfflineResources, getOfflineResourceStatus, getPendingEviction } from '../selectors'
 import { saveDataForTile } from '../services/osm-api'
+import nodecache from '../services/nodecache'
 import { bboxToTiles } from '../utils/bbox'
 import cache from '../utils/data-cache'
 import { filterRelations } from '../utils/filter-xml'
@@ -759,6 +760,7 @@ export function updateVisibleBounds (visibleBounds, zoom) {
               })
               console.log(jsonData)
               cache.set(tile, jsonData.geojson)
+              nodecache.addNodes(jsonData.nodes)
               dispatch({
                 type: types.NEW_DATA_AVAILABLE
               })
