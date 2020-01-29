@@ -6,15 +6,20 @@ import AsyncStorage from '@react-native-community/async-storage'
  */
 export async function addNodes(nodes) {
   const items = nodes.map(n => [
-    n.id,
-    {
+    `node/${n.id}`,
+    JSON.stringify({
       lat: n.lat,
       lng: n.lng
-    }
+    })
   ])
+   // console.log('node ids', nodes.map(n => n.id))
   return await AsyncStorage.multiSet(items)
 }
 
 export async function getNodes(nodeIds) {
-  return await AsyncStorage.multiGet(nodeIds)
+  const nodes = await AsyncStorage.multiGet(nodeIds)
+  return nodes.reduce((memo, val) => {
+    memo[val[0]] = JSON.parse(val[1])
+    return memo
+  }, {})
 }
