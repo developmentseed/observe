@@ -760,7 +760,7 @@ export function updateVisibleBounds (visibleBounds, zoom) {
               })
               // console.log(jsonData)
               cache.set(tile, jsonData.geojson)
-              await addNodes(jsonData.nodes)
+              await addNodes(tile, jsonData.nodes)
 
               /*
               FIXME: uncomment to test getting nodes from cache.
