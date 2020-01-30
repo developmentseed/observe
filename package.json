@@ -1,6 +1,6 @@
 {
   "name": "Observe",
-  "version": "0.2.0-alpha",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "build-docs": "documentation build App.js -f md -o docs/API.md",
@@ -12,7 +12,8 @@
     "test": "jest && devseed-standard",
     "build-presets": "yarn install --production=false && node build-presets.js && node field-options.js",
     "build-styles": "export $(cat .env | grep '^[^#;]' | xargs) && envsubst '${OSM_TILE_URL}' < app/assets/osm.json.template > app/assets/osm.json && envsubst '${SATELLITE_TILE_URL} ${SATELLITE_TILE_SIZE}' < app/assets/satellite.json.template > app/assets/satellite.json",
-    "version": "./version-ios.sh"
+    "version": "./version.sh",
+    "build-version": "./build-version.sh"
   },
   "dependencies": {
     "@mapbox/tile-cover": "^3.0.2",

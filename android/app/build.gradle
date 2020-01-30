@@ -107,18 +107,30 @@ if (rootProject.file("keystore.properties").exists()) {
 def jscFlavor = 'org.webkit:android-jsc:+'
 def enableHermes = project.ext.react.get("enableHermes", false);
 
+
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
+
+    def versionPropsFile = file('version.properties')
+
+    if (!versionPropsFile.canRead()) {
+        throw new GradleException("Could not read version.properties!")
+    }
+
+    def Properties versionProps = new Properties()
+    versionProps.load(new FileInputStream(versionPropsFile))
+    def code = versionProps['VERSION_CODE'].toInteger()
 
     defaultConfig {
         applicationId "com.developmentseed.observe"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode versionMajor * 10000 + versionMinor * 100
+        versionCode code
         versionName "${versionMajor}.${versionMinor}.${versionPatch}"
-        setProperty("archivesBaseName", "observe" + "-v" + versionName)
-
+        setProperty("archivesBaseName", "observe" + "-v" + versionName + "-build-" + code)
     }
+
     splits {
         abi {
             reset()
