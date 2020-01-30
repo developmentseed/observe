@@ -14,13 +14,12 @@ export async function addNodes (tile, nodes) {
       lng: n.lng
     })
   ])
-  // console.log('node ids', nodes.map(n => n.id))
-  const nodesInTile = nodes.map(n => [
-    tile,
-    `node/${n.id}`
-  ])
+  const nodeIds = nodes.map(n => {
+    return `node/${n.id}`
+  })
+
   await AsyncStorage.multiSet(items)
-  await AsyncStorage.multiSet(nodesInTile)
+  await AsyncStorage.setItem(tile, nodeIds)
 }
 
 export async function getNodes (nodeIds) {
@@ -29,4 +28,9 @@ export async function getNodes (nodeIds) {
     memo[val[0]] = JSON.parse(val[1])
     return memo
   }, {})
+}
+
+export async function getNodesForTile (tile) {
+  const nodeIds = await AsyncStorage.getItem(tile)
+  return nodeIds
 }

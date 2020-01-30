@@ -25,3 +25,15 @@ Object {
   },
 }
 `;
+
+exports[`get nodes for a tile 1`] = `
+Array [
+  "node/8548730",
+  "node/8548853",
+  "node/8548854",
+  "node/8548856",
+  "node/8548857",
+  "node/8548858",
+  "node/8548859",
+]
+`;
