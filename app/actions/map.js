@@ -758,17 +758,8 @@ export function updateVisibleBounds (visibleBounds, zoom) {
                 allNodes: false,
                 mapRelations: true
               })
-              // console.log(jsonData)
               cache.set(tile, jsonData.geojson)
               await addNodes(tile, jsonData.nodes)
-
-              /*
-              FIXME: uncomment to test getting nodes from cache.
-
-              const ids = jsonData.nodes.map(n => n.id)
-              const gottenNodes = await getNodes(ids)
-              console.log('gotten nodes', gottenNodes)
-              */
               dispatch({
                 type: types.NEW_DATA_AVAILABLE
               })
