@@ -6,12 +6,11 @@ import AsyncStorage from '@react-native-community/async-storage'
  * @param {String} tile - tile these nodes fall in
  */
 export async function addNodes (tile, nodes) {
-  console.log('nodes to set', nodes)
   const items = nodes.map(n => [
     `node/${n.id}`,
     JSON.stringify({
-      lat: n.lat,
-      lng: n.lng
+      'lat': n.lat,
+      'lon': n.lon
     })
   ])
   const nodeIds = nodes.map(n => {
@@ -19,7 +18,7 @@ export async function addNodes (tile, nodes) {
   })
 
   await AsyncStorage.multiSet(items)
-  await AsyncStorage.setItem(tile, nodeIds)
+  await AsyncStorage.setItem(tile, JSON.stringify(nodeIds))
 }
 
 export async function getNodes (nodeIds) {
@@ -32,5 +31,5 @@ export async function getNodes (nodeIds) {
 
 export async function getNodesForTile (tile) {
   const nodeIds = await AsyncStorage.getItem(tile)
-  return nodeIds
+  return JSON.parse(nodeIds)
 }

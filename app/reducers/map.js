@@ -5,6 +5,7 @@ import * as types from '../actions/actionTypes'
 import _uniqBy from 'lodash.uniqby'
 import style from '../style/map'
 import _cloneDeep from 'lodash.clonedeep'
+import { nodesGeojson } from '../utils/nodes-to-geojson'
 
 export const initialState = {
   activeTileRequests: [], // quadkeys of all pending tile requests
@@ -24,7 +25,8 @@ export const initialState = {
   pendingEviction: [],
   serialNumber: 0,
   style: style,
-  selectedPhotos: false
+  selectedPhotos: false,
+  nodes: {}
 }
 
 const TILE_CACHE_SIZE = Config.TILE_CACHE_SIZE || 10000
@@ -241,6 +243,18 @@ export default function (state = initialState, action) {
       return {
         ...state,
         selectedFeatures: features
+      }
+
+    case types.SET_SELECTED_WAY:
+      let feature = action.feature
+      const nodeIds = feature.properties.ndrefs.map(n => {
+        return `node/${n}`
+      })
+
+      const nodes = nodesGeojson(nodeIds)
+
+      return {
+        ...state
       }
 
     case types.START_ADD_POINT:
