@@ -700,7 +700,6 @@ export function setSelectedFeatures (features) {
     })
     features.forEach(async f => {
       if (f.geometry.type !== 'Point') {
-        console.log(f)
         const nodeIds = f.properties.ndrefs.map(n => {
           return `node/${n}`
         })

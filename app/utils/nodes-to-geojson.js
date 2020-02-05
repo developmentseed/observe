@@ -2,7 +2,6 @@ import { getNodes } from '../services/nodecache'
 
 export async function nodesGeojson (nodeIds) {
   const nodes = await getNodes(nodeIds)
-  console.log('fetched nodes', nodes)
   const geojson = {
     'type': 'FeatureCollection',
     'features': []
@@ -13,8 +12,9 @@ export async function nodesGeojson (nodeIds) {
       'type': 'Feature',
       'geometry': {
         'type': 'Point',
-        'coordinates': [nodes[id].lon, nodes[id].lat]
-      }
+        'coordinates': [parseFloat(nodes[id].lon), parseFloat(nodes[id].lat)]
+      },
+      'properties': {}
     }
     geojson.features.push(feature)
   })

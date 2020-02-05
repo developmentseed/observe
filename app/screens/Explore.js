@@ -380,7 +380,6 @@ class Explore extends React.Component {
     let selectedFeatureIds = null
     let selectedPhotoIds = null
 
-    console.log('nodesGeojson', nodesGeojson)
     if (selectedFeatures && selectedFeatures.length) {
       selectedFeatureIds = {
         'nodes': ['match', ['get', 'id'], [], true, false],
