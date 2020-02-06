@@ -6,6 +6,7 @@ import ObserveIcon from './ObserveIcon'
 import { colors } from '../style/variables'
 import getDefaultPreset from '../utils/get-default-preset'
 import getPresetByTags from '../utils/get-preset-by-tags'
+import { modes } from '../utils/map-modes'
 
 const Header = styled.View`
   padding-top: 16;
@@ -94,7 +95,7 @@ export default class FeatureDetailHeader extends React.Component {
               geometryType === 'Point' && (
                 <Button
                   onPress={() => {
-                    navigation.navigate('Explore', { feature, mode: 'edit' })
+                    navigation.navigate('Explore', { feature, mode: modes.EDIT_POINT })
                   }}
                 >
                   <Coordinates>
