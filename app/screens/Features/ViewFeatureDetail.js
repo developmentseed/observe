@@ -18,6 +18,7 @@ import { deleteFeature, uploadEdits } from '../../actions/edit'
 import { colors } from '../../style/variables'
 import PhotoGrid from '../../components/PhotoGrid'
 import { getPhotosForFeature } from '../../utils/photos'
+import { modes } from '../../utils/map-modes'
 
 const FieldsList = styled.SectionList`
 `
@@ -121,7 +122,7 @@ class ViewFeatureDetail extends React.Component {
 
       this.props.deleteFeature(feature, comment)
       this.props.uploadEdits([feature.id])
-      navigation.navigate('Explore', { message: 'Your edit is being processed.', mode: 'explore' })
+      navigation.navigate('Explore', { message: 'Your edit is being processed.', mode: modes.EXPLORE })
     }
 
     const headerActions = [

@@ -5,12 +5,13 @@ import * as types from '../actions/actionTypes'
 import _uniqBy from 'lodash.uniqby'
 import style from '../style/map'
 import _cloneDeep from 'lodash.clonedeep'
+import { modes } from '../utils/map-modes'
 
 export const initialState = {
   activeTileRequests: [], // quadkeys of all pending tile requests
   fetchedTiles: {}, // Object with mapping of tiles to their respective GeoJSON FeatureCollections
   selectedFeature: false, // GeoJSON feature that is currently selected, or false
-  mode: 'explore', // mode can be 'explore', 'add' or 'edit'
+  mode: modes.EXPLORE, // see app/utils/map-modes.js for all modes
   baseLayer: null,
   overlays: {
     osm: true,
@@ -255,7 +256,7 @@ export default function (state = initialState, action) {
     case types.START_ADD_POINT:
       return {
         ...state,
-        mode: 'add'
+        mode: modes.ADD_POINT
       }
 
     // Currently, back on map is only triggered when the user is not in Explore mode.
@@ -264,7 +265,7 @@ export default function (state = initialState, action) {
     case types.MAP_BACK_PRESS:
       return {
         ...state,
-        mode: 'explore'
+        mode: modes.EXPLORE
       }
 
     case types.SET_MAP_MODE:

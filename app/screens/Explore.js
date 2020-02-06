@@ -70,9 +70,12 @@ import Icon from '../components/Collecticons'
 import { colors } from '../style/variables'
 import { CameraButton } from '../components/CameraButton'
 import { RecordButton } from '../components/RecordButton'
+import { WayButton } from '../components/WayButton'
 
 import icons from '../assets/icons'
 import { authorize } from '../services/auth'
+
+import { modes, modeTitles } from '../utils/map-modes'
 
 let osmStyleURL = Config.MAPBOX_STYLE_URL || MapboxGL.StyleURL.Street
 let satelliteStyleURL = Config.MAPBOX_SATELLITE_STYLE_URL || MapboxGL.StyleURL.Satellite
@@ -295,7 +298,7 @@ class Explore extends React.Component {
 
   onBackButtonPress = () => {
     const { mode } = this.props
-    if (mode === 'explore') { // let default back handling happen when in Explore mode
+    if (mode === modes.EXPLORE) { // let default back handling happen when in Explore mode
       return false
     }
     this.props.mapBackPress()
@@ -316,12 +319,19 @@ class Explore extends React.Component {
 
   getBackButton = () => {
     const { navigation, mode } = this.props
+    const useBackButtonPress = (
+      mode === modes.ADD_POINT ||
+      mode === modes.EDIT_POINT ||
+      mode === modes.ADD_WAY ||
+      mode === modes.EDIT_WAY
+    )
+
     switch (true) {
       case navigation.getParam('back'):
         return navigation.getParam('back')
-      case mode === 'add' || mode === 'edit':
+      case useBackButtonPress:
         return this.onBackButtonPress
-      case mode === 'bbox':
+      case mode === modes.OFFLINE_MAPS:
         return 'OfflineMaps'
       default:
         return false
@@ -330,18 +340,9 @@ class Explore extends React.Component {
 
   getTitle = () => {
     const { navigation, mode } = this.props
-    switch (true) {
-      case navigation.getParam('title'):
-        return navigation.getParam('title')
-      case mode === 'add':
-        return 'Add Point'
-      case mode === 'edit':
-        return 'Edit Point'
-      case mode === 'bbox':
-        return 'Select Bounds'
-      default:
-        return 'Observe'
-    }
+    const title = navigation.getParam('title') || modeTitles[mode]
+    if (!title) return 'Observe'
+    return title
   }
 
   onRecordPress = () => {
@@ -368,6 +369,37 @@ class Explore extends React.Component {
         await this.props.loadUserDetails()
         this.locateUser()
       }} />
+    )
+  }
+
+  renderOverlay () {
+    const { navigation, geojson, mode } = this.props
+
+    if (mode === modes.OFFLINE_TILES) {
+      return null
+    }
+
+    if (mode === modes.ADD_POINT || mode === modes.EDIT_POINT) {
+      return <AddPointOverlay
+        onAddConfirmPress={this.onAddConfirmPress}
+      />
+    }
+
+    if (mode === modes.ADD_WAY || mode === modes.EDIT_WAY) {
+      // TODO: implement WayOverlay.js
+      return null
+    }
+
+    // if not in explicit mode, render default MapOverlay
+    return (
+      <>
+        <MapOverlay
+          features={geojson.features}
+          onAddButtonPress={this.onAddButtonPress}
+          navigation={navigation}
+        />
+        <ActionButton icon='plus' onPress={() => this.onAddButtonPress()} />
+      </>
     )
   }
 
@@ -421,36 +453,6 @@ class Explore extends React.Component {
         this.getFeatureType(feature) === 'node' ? filteredFeatureIds.nodes[2].push(feature.id) : filteredFeatureIds.ways[2].push(feature.id)
         return filteredFeatureIds
       }, filteredFeatureIds)
-    }
-
-    let overlay
-    switch (mode) {
-      case 'add':
-        overlay = (<AddPointOverlay
-          onAddConfirmPress={this.onAddConfirmPress}
-        />)
-        break
-
-      case 'edit':
-        overlay = (<AddPointOverlay
-          onAddConfirmPress={this.onEditConfirmPress}
-        />)
-        break
-
-      case 'bbox':
-        break
-
-      default:
-        overlay = (
-          <>
-            <MapOverlay
-              features={geojson.features}
-              onAddButtonPress={this.onAddButtonPress}
-              navigation={navigation}
-            />
-            <ActionButton icon='plus' onPress={() => this.onAddButtonPress()} />
-          </>
-        )
     }
 
     let styleURL
@@ -569,13 +571,13 @@ class Explore extends React.Component {
               // reset params once this screen has been used in bbox mode
               navigation.setParams({
                 back: null,
-                mode: 'explore',
+                mode: modes.EXPLORE,
                 title: null,
                 actions: null
               })
 
               // reset map mode
-              this.props.setMapMode('explore')
+              this.props.setMapMode(modes.EXPLORE)
             }
           }}
         />
@@ -656,11 +658,12 @@ class Explore extends React.Component {
             { showLoadingIndicator }
             <LocateUserButton onPress={() => this.locateUser()} />
             <BasemapModal onChange={this.props.setBasemap} />
+            <WayButton onPress={() => { this.props.setMapMode(modes.ADD_WAY) }} />
             <CameraButton onPress={() => navigation.navigate('CameraScreen', { previousScreen: 'Explore', feature: null })} />
             <RecordButton status={currentTraceStatus} onPress={() => this.onRecordPress()} />
             {mode !== 'bbox' && this.renderZoomToEdit()}
           </MainBody>
-          { overlay }
+          { this.renderOverlay() }
         </Container>
       </AndroidBackHandler>
     )

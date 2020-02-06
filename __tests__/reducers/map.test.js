@@ -5,12 +5,13 @@
 import reducer from '../../app/reducers/map'
 import { featureCollection } from '@turf/helpers'
 import { getFeature } from '../test-utils'
+import { modes } from '../../app/utils/map-modes'
 
 function getInitialState () {
   return {
     activeTileRequests: new Set(),
     fetchedTiles: {},
-    mode: 'explore',
+    mode: modes.EXPLORE,
     visibleBounds: [[-180, -90, 180, 90]]
   }
 }
@@ -55,7 +56,7 @@ describe('map reducer', () => {
   it('should set mode to explore on MAP_BACK_PRESS', () => {
     const mockState = {
       ...getInitialState(),
-      mode: 'add'
+      mode: modes.ADD_POINT
     }
     const action = {
       type: 'MAP_BACK_PRESS'
