@@ -64,7 +64,8 @@ import {
   getCurrentTraceLength,
   getCurrentTraceStatus,
   getTracesGeojson,
-  getPhotosGeojson
+  getPhotosGeojson,
+  getVisibleTiles
 } from '../selectors'
 import BasemapModal from '../components/BasemapModal'
 import Icon from '../components/Collecticons'
@@ -440,7 +441,8 @@ class Explore extends React.Component {
       style,
       photosGeojson,
       selectedPhotos,
-      nodesGeojson
+      nodesGeojson,
+      visibleTiles
     } = this.props
     let selectedFeatureIds = null
     let selectedPhotoIds = null
@@ -715,7 +717,8 @@ const mapStateToProps = (state) => {
     style: state.map.style,
     photosGeojson: getPhotosGeojson(state),
     selectedPhotos: state.map.selectedPhotos,
-    nodesGeojson: state.map.nodes
+    nodesGeojson: state.map.nodes,
+    visibleTiles: getVisibleTiles(state)
   }
 }
 
