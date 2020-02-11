@@ -14,6 +14,7 @@ import NotificationReducer from './notification'
 import CameraReducer from './camera'
 import TracesReducer from './traces'
 import ObserveAPIReducer from './observeApi'
+import CurrentWayEditReducer from './currentWayEdit'
 
 const authorizationPersistConfig = {
   key: 'authorization',
@@ -69,6 +70,7 @@ const rootReducer = combineReducers({
   presets: PresetReducer,
   account: AccountReducer,
   edit: persistReducer(editPersistConfig, EditReducer),
+  currentWayEdit: CurrentWayEditReducer,
   network,
   notification: NotificationReducer,
   traces: persistReducer(tracesPersistConfig, TracesReducer),
