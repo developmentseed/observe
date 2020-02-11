@@ -33,3 +33,12 @@ export async function getNodesForTile (tile) {
   const nodeIds = await AsyncStorage.getItem(tile)
   return JSON.parse(nodeIds)
 }
+
+export async function getNodesForTiles (tiles) {
+  const nodeIds = await AsyncStorage.multiGet(tiles)
+  return nodeIds.reduce(async (memo, val) => {
+    const newMemo = await Promise.resolve(memo)
+    newMemo[val[0]] = await getNodes(JSON.parse(val[1]))
+    return Promise.resolve({ ...newMemo })
+  }, Promise.resolve({}))
+}
