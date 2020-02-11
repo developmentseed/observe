@@ -21,6 +21,11 @@ export async function addNodes (tile, nodes) {
   await AsyncStorage.setItem(tile, JSON.stringify(nodeIds))
 }
 
+/**
+ * Returns node geometry for an array of node ids
+ * @param {Array<Object>} nodeIds - array of node ids
+ * @return {<Object>}
+ */
 export async function getNodes (nodeIds) {
   const nodes = await AsyncStorage.multiGet(nodeIds)
   return nodes.reduce((memo, val) => {
@@ -29,11 +34,21 @@ export async function getNodes (nodeIds) {
   }, {})
 }
 
+/**
+ * Get node ids for a tile
+ * @param {string} tile - tile id
+ * @return {<Object>}
+ */
 export async function getNodesForTile (tile) {
   const nodeIds = await AsyncStorage.getItem(tile)
   return JSON.parse(nodeIds)
 }
 
+/**
+ * Get node geometries for an array of tile ids
+ * @param {Array<Object>} tiles
+ * @return {<Object>}
+ */
 export async function getNodesForTiles (tiles) {
   const nodeIds = await AsyncStorage.multiGet(tiles)
   return nodeIds.reduce(async (memo, val) => {

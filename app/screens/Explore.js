@@ -441,8 +441,7 @@ class Explore extends React.Component {
       style,
       photosGeojson,
       selectedPhotos,
-      nodesGeojson,
-      visibleTiles
+      nodesGeojson
     } = this.props
     let selectedFeatureIds = null
     let selectedPhotoIds = null
