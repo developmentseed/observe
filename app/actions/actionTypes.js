@@ -120,3 +120,7 @@ export const CLEAR_UPLOADED_TRACES = 'CLEAR_UPLOAD_TRACES'
 
 export const SET_OBSERVE_API_TOKEN = 'SET_OBSERVE_API_TOKEN'
 export const OBSERVE_API_LOGOUT = 'OBSERVE_API_LOGOUT'
+
+// Actions for way editing
+
+export const WAY_EDIT_ENTER = 'WAY_EDIT_ENTER'
