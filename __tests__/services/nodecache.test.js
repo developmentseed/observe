@@ -6,7 +6,8 @@
 import {
   addNodes,
   getNodes,
-  getNodesForTile
+  getNodesForTile,
+  getNodesForTiles
 } from '../../app/services/nodecache'
 
 import nodes from '../fixtures/nodes.json'
@@ -27,4 +28,13 @@ test('get nodes for a tile', async () => {
 
   const nodeIds = await getNodesForTile(tile)
   expect(nodeIds).toMatchSnapshot()
+})
+
+test('get nodes for an array of tiles', async () => {
+  const tiles = ['0320100322313212', '0320100322313213']
+  await addNodes(tiles[0], nodes)
+  await addNodes(tiles[1], nodes)
+
+  const tileNodes = await getNodesForTiles(tiles)
+  expect(tileNodes).toMatchSnapshot()
 })
