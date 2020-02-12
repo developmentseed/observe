@@ -1,4 +1,10 @@
 import React, { Component } from 'react'
+
+//if (process.env.NODE_ENV === 'development') {
+  const whyDidYouRender = require('@welldone-software/why-did-you-render');
+  whyDidYouRender(React);
+//}
+
 import Config from 'react-native-config'
 import { Provider } from 'react-redux'
 
@@ -36,6 +42,8 @@ import SaveTrace from './app/screens/SaveTrace'
 import { ReduxNetworkProvider } from 'react-native-offline'
 import Icon from './app/components/Collecticons'
 import { colors } from './app/style/variables'
+
+
 
 const OfflineMapsNavigator = createStackNavigator({
   OfflineAreaList: { screen: OfflineAreaList },
