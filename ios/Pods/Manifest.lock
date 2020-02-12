@@ -265,6 +265,8 @@ PODS:
     - ReactCommon/jscallinvoker (= 0.61.1)
   - rn-fetch-blob (0.11.2):
     - React-Core
+  - RNCAsyncStorage (1.7.1):
+    - React
   - RNGestureHandler (1.5.0):
     - React
   - RNKeychain (4.0.1):
@@ -331,6 +333,7 @@ DEPENDENCIES:
   - ReactCommon/jscallinvoker (from `../node_modules/react-native/ReactCommon`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - rn-fetch-blob (from `../node_modules/rn-fetch-blob`)
+  - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
@@ -438,6 +441,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   rn-fetch-blob:
     :path: "../node_modules/rn-fetch-blob"
+  RNCAsyncStorage:
+    :path: "../node_modules/@react-native-community/async-storage"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNKeychain:
@@ -529,6 +534,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: 8be61459e3749d1fb02cf414edd05b3007622882
   ReactCommon: 4fba5be89efdf0b5720e0adb3d8d7edf6e532db0
   rn-fetch-blob: f525a73a78df9ed5d35e67ea65e79d53c15255bc
+  RNCAsyncStorage: 44395cb9c7c1523104c2b499eb426ef7aff82bca
   RNGestureHandler: a4ddde1ffc6e590c8127b8b7eabfdade45475c74
   RNKeychain: 45dbd50d1ac4bd42c3740f76ffb135abf05746d0
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
@@ -546,6 +552,6 @@ SPEC CHECKSUMS:
   UMTaskManagerInterface: 1e70fe58b872355f0ecb44fb81bb1a16484047f0
   Yoga: d8c572ddec8d05b7dba08e4e5f1924004a177078
 
-PODFILE CHECKSUM: 9e446903b654133c1453950b93b755f5596d63d8
+PODFILE CHECKSUM: a32fc1a290898a7b7a9b34cefeadaf08ed6674ac
 
 COCOAPODS: 1.8.1
