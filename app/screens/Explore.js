@@ -374,8 +374,7 @@ class Explore extends React.Component {
       tracesGeojson,
       style,
       photosGeojson,
-      selectedPhotos,
-      nodesGeojson
+      selectedPhotos
     } = this.props
     let selectedFeatureIds = null
     let selectedPhotoIds = null
@@ -634,9 +633,6 @@ class Explore extends React.Component {
                       <MapboxGL.CircleLayer id='photosHalo' style={style.photos.photoIconHalo} minZoomLevel={16} />
                       <MapboxGL.SymbolLayer id='photos' style={style.photos.photoIcon} minZoomLevel={16} />
                     </MapboxGL.ShapeSource>
-                    <MapboxGL.ShapeSource id='nodesGeojsonSource' shape={nodesGeojson}>
-                      <MapboxGL.CircleLayer id='nodes' style={style.osm.nodes} minZoomLevel={16} />
-                    </MapboxGL.ShapeSource>
                   </StyledMap>
                 )
             }
@@ -680,8 +676,7 @@ const mapStateToProps = (state) => {
     overlays: state.map.overlays,
     style: state.map.style,
     photosGeojson: getPhotosGeojson(state),
-    selectedPhotos: state.map.selectedPhotos,
-    nodesGeojson: state.map.nodes
+    selectedPhotos: state.map.selectedPhotos
   }
 }
 

@@ -1,6 +1,5 @@
 /* global jest */
 import * as ReactNative from 'react-native'
-import mockAsyncStorage from '@react-native-community/async-storage/jest/async-storage-mock'
 
 function keyMirror (keys) {
   let obj = {}
@@ -287,5 +286,3 @@ jest.mock('../../app/utils/get-random-id', () => {
     return 'observe-hauptbanhof'
   })
 })
-
-jest.mock('@react-native-community/async-storage', () => mockAsyncStorage)
