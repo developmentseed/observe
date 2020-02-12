@@ -24,8 +24,7 @@ export const initialState = {
   pendingEviction: [],
   serialNumber: 0,
   style: style,
-  selectedPhotos: false,
-  nodes: {}
+  selectedPhotos: false
 }
 
 const TILE_CACHE_SIZE = Config.TILE_CACHE_SIZE || 10000
@@ -242,14 +241,6 @@ export default function (state = initialState, action) {
       return {
         ...state,
         selectedFeatures: features
-      }
-
-    case types.SET_SELECTED_WAY:
-      let geojson = action.geojson
-      console.log('# geojson', geojson)
-      return {
-        ...state,
-        nodes: geojson
       }
 
     case types.START_ADD_POINT:
