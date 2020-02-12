@@ -67,7 +67,8 @@ import Icon from '../components/Collecticons'
 import { colors } from '../style/variables'
 import { CameraButton } from '../components/CameraButton'
 import { RecordButton } from '../components/RecordButton'
-import { WayButton } from '../components/WayButton'
+import { AddWayButton } from '../components/AddWayButton'
+import { AddPointButton } from '../components/AddPointButton'
 
 import icons from '../assets/icons'
 import { authorize } from '../services/auth'
@@ -124,7 +125,8 @@ class Explore extends React.Component {
     this.state = {
       androidPermissionGranted: false,
       isMapLoaded: false,
-      userTrackingMode: MapboxGL.UserTrackingModes.Follow
+      userTrackingMode: MapboxGL.UserTrackingModes.Follow,
+      addButtonExpanded: false
     }
   }
 
@@ -320,7 +322,7 @@ class Explore extends React.Component {
         return navigation.getParam('back')
       case useBackButtonPress:
         return this.onBackButtonPress
-      case mode === modes.OFFLINE_MAPS:
+      case mode === modes.OFFLINE_TILES:
         return 'OfflineMaps'
       default:
         return false
@@ -361,8 +363,17 @@ class Explore extends React.Component {
     )
   }
 
+  toggleAddButtonExpanded () {
+    const { addButtonExpanded } = this.state
+
+    this.setState({
+      addButtonExpanded: !addButtonExpanded
+    })
+  }
+
   renderOverlay () {
-    const { navigation, geojson, mode } = this.props
+    const { addButtonExpanded } = this.state
+    const { navigation, geojson, mode, currentTraceStatus } = this.props
 
     if (mode === modes.OFFLINE_TILES) {
       return null
@@ -379,6 +390,7 @@ class Explore extends React.Component {
       return null
     }
 
+    console.log('addButtonExpanded', addButtonExpanded)
     // if not in explicit mode, render default MapOverlay
     return (
       <>
@@ -387,7 +399,15 @@ class Explore extends React.Component {
           onAddButtonPress={this.onAddButtonPress}
           navigation={navigation}
         />
-        <ActionButton icon='plus' onPress={() => this.onAddButtonPress()} />
+        { addButtonExpanded && (
+          <>
+            <CameraButton onPress={() => navigation.navigate('CameraScreen', { previousScreen: 'Explore', feature: null })} />
+            <RecordButton status={currentTraceStatus} onPress={() => this.onRecordPress()} />
+            <AddWayButton onPress={() => { this.props.setMapMode(modes.ADD_WAY) }} />
+            <AddPointButton onPress={() => { this.onAddButtonPress() }} />
+          </>
+        )}
+        <ActionButton icon={addButtonExpanded ? 'xmark' : 'plus'} onPress={() => { this.toggleAddButtonExpanded() }} />
       </>
     )
   }
@@ -399,7 +419,6 @@ class Explore extends React.Component {
       selectedFeatures,
       editsGeojson,
       mode,
-      currentTraceStatus,
       currentTrace,
       isConnected,
       requiresPreauth,
@@ -642,10 +661,7 @@ class Explore extends React.Component {
             { showLoadingIndicator }
             <LocateUserButton onPress={() => this.locateUser()} />
             <BasemapModal onChange={this.props.setBasemap} />
-            <WayButton onPress={() => { this.props.setMapMode(modes.ADD_WAY) }} />
-            <CameraButton onPress={() => navigation.navigate('CameraScreen', { previousScreen: 'Explore', feature: null })} />
-            <RecordButton status={currentTraceStatus} onPress={() => this.onRecordPress()} />
-            {mode !== 'bbox' && this.renderZoomToEdit()}
+            {mode !== modes.OFFLINE_TILES && this.renderZoomToEdit()}
           </MainBody>
           { this.renderOverlay() }
         </Container>

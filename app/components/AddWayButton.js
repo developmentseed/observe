@@ -13,7 +13,7 @@ const Button = styled.TouchableHighlight`
   height: 48;
   background-color: ${colors.primary};
   right: 16;
-  bottom: 188;
+  bottom: 136;
   justify-content: center;
   align-items: center;
   shadow-color: ${colors.baseAlpha};
@@ -22,7 +22,7 @@ const Button = styled.TouchableHighlight`
   elevation: 1;
 `
 
-export class WayButton extends React.Component {
+export class AddWayButton extends React.Component {
   render () {
     // TODO: use a more appropriate icon rather than a share icon, but hey it looks close to right
     return (

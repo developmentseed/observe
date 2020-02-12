@@ -56,7 +56,7 @@ class OfflineAreaList extends React.Component {
       // specify the screen to go back to when the back button is tapped
       back: 'OfflineAreaList',
       // tell the Explore screen what mode we're in
-      mode: modes.OFFLINE_MAPS,
+      mode: modes.OFFLINE_TILES,
       // provide a custom title for the Explore screen
       title: 'Download area',
       // provide some header actions for our use

@@ -13,7 +13,7 @@ const Button = styled.TouchableHighlight`
   height: 48;
   background-color: ${colors.primary};
   right: 16;
-  bottom: 132;
+  bottom: 248;
   justify-content: center;
   align-items: center;
   shadow-color: ${colors.baseAlpha};
