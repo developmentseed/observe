@@ -50,7 +50,7 @@ describe('map reducer', () => {
       type: 'START_ADD_POINT'
     }
     const newState = reducer(mockState, action)
-    expect(newState.mode).toEqual('add')
+    expect(newState.mode).toEqual(modes.ADD_POINT)
   })
 
   it('should set mode to explore on MAP_BACK_PRESS', () => {
@@ -62,6 +62,6 @@ describe('map reducer', () => {
       type: 'MAP_BACK_PRESS'
     }
     const newState = reducer(mockState, action)
-    expect(newState.mode).toEqual('explore')
+    expect(newState.mode).toEqual(modes.EXPLORE)
   })
 })
