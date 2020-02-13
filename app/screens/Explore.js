@@ -8,6 +8,7 @@ import Config from 'react-native-config'
 import { NavigationEvents } from 'react-navigation'
 import _partition from 'lodash.partition'
 import _difference from 'lodash.difference'
+import _isEqual from'lodash.isequal'
 
 import {
   loadUserDetails
@@ -243,10 +244,17 @@ class Explore extends React.Component {
 
   async loadFeaturesAtPoint (rect) {
     try {
+      // console.time('query')
       const { features } = await this.mapRef.queryRenderedFeaturesInRect(rect, null, this.state.clickableLayers)
+      // console.timeEnd('query')
       const [ photos, osmFeatures ] = _partition(features, (f) => { return f.properties.type === 'photo' })
-      this.props.setSelectedFeatures(osmFeatures)
-      this.props.setSelectedPhotos(photos)
+      const { selectedPhotos, selectedFeatures } = this.props
+      if (!_isEqual(osmFeatures, selectedFeatures)) {
+        this.props.setSelectedFeatures(osmFeatures)
+      }
+      if (!_isEqual(photos, selectedPhotos)) {
+        this.props.setSelectedPhotos(photos)
+      }
     } catch (err) {
       console.log('failed getting features', err)
     }
@@ -598,7 +606,6 @@ class Explore extends React.Component {
                     onDidFinishRenderingMapFully={this.onDidFinishRenderingMapFully}
                     onWillStartLoadingMap={this.onWillStartLoadingMap}
                     onDidFailLoadingMap={this.onDidFailLoadingMap}
-                    onRegionIsChanging={this.onRegionIsChanging}
                     onRegionDidChange={this.onRegionDidChange}
                     regionDidChangeDebounceTime={10}
                     onPress={this.onPress}
