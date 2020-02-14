@@ -599,8 +599,6 @@ class Explore extends React.Component {
                 : (
                   <StyledMap
                     styleURL={styleURL}
-                    showUserLocation
-                    userTrackingMode={MapboxGL.UserTrackingModes.Follow}
                     ref={(ref) => { this.mapRef = ref }}
                     onDidFinishRenderingMapFully={this.onDidFinishRenderingMapFully}
                     onWillStartLoadingMap={this.onWillStartLoadingMap}
@@ -616,9 +614,15 @@ class Explore extends React.Component {
                         centerCoordinate: [0, 0],
                         zoomLevel: 12
                       }}
+                      followUserLocation
+                      followUserMode={MapboxGL.UserTrackingModes.Follow}
+                      animationDuration={0}
+                      animationMode={'moveTo'}
                       ref={(ref) => { this.cameraRef = ref }}
                     />
-                    <MapboxGL.UserLocation />
+                    <MapboxGL.UserLocation
+                      minDisplacement={5}
+                    />
                     <MapboxGL.Images images={icons} />
                     <MapboxGL.ShapeSource id='geojsonSource' shape={geojson}>
                       <MapboxGL.LineLayer id='roadsHighlight' filter={filters.allRoads} style={style.osm.lineHighlight} minZoomLevel={16} />
