@@ -614,8 +614,6 @@ class Explore extends React.Component {
                         centerCoordinate: [0, 0],
                         zoomLevel: 12
                       }}
-                      followUserLocation
-                      followUserMode={MapboxGL.UserTrackingModes.Follow}
                       animationDuration={0}
                       animationMode={'moveTo'}
                       ref={(ref) => { this.cameraRef = ref }}
