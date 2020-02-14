@@ -45,8 +45,6 @@ import { ReduxNetworkProvider } from 'react-native-offline'
 import Icon from './app/components/Collecticons'
 import { colors } from './app/style/variables'
 
-
-
 const OfflineMapsNavigator = createStackNavigator({
   OfflineAreaList: { screen: OfflineAreaList },
   ViewOfflineAreaDetail: { screen: ViewOfflineAreaDetail }

@@ -8,7 +8,7 @@ import Config from 'react-native-config'
 import { NavigationEvents } from 'react-navigation'
 import _partition from 'lodash.partition'
 import _difference from 'lodash.difference'
-import _isEqual from'lodash.isequal'
+import _isEqual from 'lodash.isequal'
 
 import {
   loadUserDetails
@@ -106,7 +106,6 @@ const StyledMap = styled(MapboxGL.MapView)`
 `
 
 class Explore extends React.Component {
-
   static whyDidYouRender = true
 
   static navigationOptions = ({ navigation }) => {
