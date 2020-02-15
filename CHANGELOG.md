@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v0.2.1](https://github.com/developmentseed/observe/compare/v0.2.0-alpha...HEAD)
+
+### Changed
+- Check if offline when deciding whether to show preauth prompt [`#165`](https://github.com/developmentseed/observe/pull/165)
+- Revise ios version script to use agvtool, keep android version code in sync with ios build version [`#169`](https://github.com/developmentseed/observe/pull/169)
+- Add [`170`](https://github.com/developmentseed/observe/pull/170) and revert [`176`](https://github.com/developmentseed/observe/pull/176) nodecache functionality
+- Set threshold for user location updates and turn off animations [`#180`](https://github.com/developmentseed/observe/pull/180)
+
+### Added
+- Add babel-plugin-transform-remove-console [`#179`](https://github.com/developmentseed/observe/pull/179)
+
+### Fixed
+- Update download instructions in the readme [`#162`](https://github.com/developmentseed/observe/pull/162)
+
 ## [v0.2.0-alpha](https://github.com/developmentseed/observe/compare/v0.1.8...HEAD)
 
 ### Changed
