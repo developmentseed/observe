@@ -18,6 +18,7 @@
   "dependencies": {
     "@mapbox/tile-cover": "^3.0.2",
     "@mapbox/tilebelt": "^1.0.1",
+    "@react-native-community/async-storage": "^1.7.1",
     "@react-native-community/cli": "^2.9.0",
     "@react-native-community/netinfo": "^4.3.1",
     "@react-native-mapbox-gl/maps": "^7.0.8",

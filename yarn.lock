@@ -1238,6 +1238,11 @@
   resolved "https://registry.yarnpkg.com/@mapbox/tilebelt/-/tilebelt-1.0.1.tgz#d57a1c4a5445e928dad720a828389a0a69db8818"
   integrity sha1-1XocSlRF6Sja1yCoKDiaCmnbiBg=
 
+"@react-native-community/async-storage@^1.7.1":
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/@react-native-community/async-storage/-/async-storage-1.7.1.tgz#ef2104d865de61ad91bba66613e57e689ff4e6a1"
+  integrity sha512-/oX/x+EU4xNaqIaC/epVKzO8XghzImPA7l8cLz3USEFmtFiXFjBbTeeIFjjEm/u4/cv38Wi1xMEa10PHIWygRg==
+
 "@react-native-community/cli-platform-android@^2.9.0":
   version "2.9.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-android/-/cli-platform-android-2.9.0.tgz#28831e61ce565a2c7d1905852fce1eecfd33cb5e"
@@ -7224,7 +7229,7 @@ osmium@^0.5.7:
 
 "osmtogeojson@https://github.com/geohacker/osmtogeojson.git":
   version "3.0.0-beta.3"
-  resolved "https://github.com/geohacker/osmtogeojson.git#a228fa384f779999bd94ab6e30e12ae90009f7a6"
+  resolved "https://github.com/geohacker/osmtogeojson.git#290ecc8379da573603e8243c5b328efb37dfb212"
   dependencies:
     JSONStream "0.8.0"
     concat-stream "~1.0.1"
