@@ -4,7 +4,21 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [v0.2.0-alpha](https://github.com/developmentseed/observe/compare/v0.1.8...HEAD)
+## [v0.2.1] - 2020-02-14
+
+### Changed
+- Check if offline when deciding whether to show preauth prompt [`#165`](https://github.com/developmentseed/observe/pull/165)
+- Revise ios version script to use agvtool, keep android version code in sync with ios build version [`#169`](https://github.com/developmentseed/observe/pull/169)
+- Add [`170`](https://github.com/developmentseed/observe/pull/170) and revert [`176`](https://github.com/developmentseed/observe/pull/176) nodecache functionality
+- Set threshold for user location updates and turn off animations [`#180`](https://github.com/developmentseed/observe/pull/180)
+
+### Added
+- Add babel-plugin-transform-remove-console [`#179`](https://github.com/developmentseed/observe/pull/179)
+
+### Fixed
+- Update download instructions in the readme [`#162`](https://github.com/developmentseed/observe/pull/162)
+
+## [v0.2.0-alpha] - 2020-01-14
 
 ### Changed
 - Revise documentation [`#152`](https://github.com/developmentseed/observe/pull/152)
@@ -63,6 +77,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Added
 - First public release
 
-[Unreleased]: https://github.com/developmentseed/observe/compare/v0.1.8...HEAD
+[Unreleased]: https://github.com/developmentseed/observe/compare/v0.2.1...HEAD
+[v0.2.1]: https://github.com/developmentseed/observe/compare/v0.2.0-alpha...v0.2.1
+[v0.2.0-alpha]: https://github.com/developmentseed/observe/compare/v0.1.8...v0.2.0-alpha
 [v0.1.8]: https://github.com/developmentseed/observe/compare/v0.1.7...v0.1.8
 [v0.1.7]: https://github.com/developmentseed/observe/compare/b7522e25f369fa9051e1b02cde40135ffacc755b...v0.1.7
