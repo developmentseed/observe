@@ -191,11 +191,6 @@ class Explore extends React.Component {
     console.log('onDidFailLoadingMap', err)
   }
 
-  // onRegionIsChanging = async evt => {
-  //   // update the redux state with the bbox
-  //   this.props.updateVisibleBounds(await this.mapRef.getVisibleBounds(), await this.mapRef.getZoom())
-  // }
-
   _fetchData (visibleBounds, zoomLevel) {
     // fetch new data only if zoom is greater than 16
     if (zoomLevel >= 16) {
@@ -243,9 +238,7 @@ class Explore extends React.Component {
 
   async loadFeaturesAtPoint (rect) {
     try {
-      // console.time('query')
       const { features } = await this.mapRef.queryRenderedFeaturesInRect(rect, null, this.state.clickableLayers)
-      // console.timeEnd('query')
       const [ photos, osmFeatures ] = _partition(features, (f) => { return f.properties.type === 'photo' })
       const { selectedPhotos, selectedFeatures } = this.props
       if (!_isEqual(osmFeatures, selectedFeatures)) {
