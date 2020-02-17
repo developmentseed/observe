@@ -1,6 +1,6 @@
 {
   "name": "Observe",
-  "version": "0.2.0-alpha",
+  "version": "0.2.1",
   "private": true,
   "scripts": {
     "build-docs": "documentation build App.js -f md -o docs/API.md",
@@ -12,7 +12,8 @@
     "test": "jest && devseed-standard",
     "build-presets": "yarn install --production=false && node build-presets.js && node field-options.js",
     "build-styles": "export $(cat .env | grep '^[^#;]' | xargs) && envsubst '${OSM_TILE_URL}' < app/assets/osm.json.template > app/assets/osm.json && envsubst '${SATELLITE_TILE_URL} ${SATELLITE_TILE_SIZE}' < app/assets/satellite.json.template > app/assets/satellite.json",
-    "version": "./version-ios.sh"
+    "version": "./version.sh",
+    "build-version": "./build-version.sh"
   },
   "dependencies": {
     "@mapbox/tile-cover": "^3.0.2",
@@ -101,8 +102,10 @@
   "devDependencies": {
     "@babel/core": "^7.5.0",
     "@babel/runtime": "^7.5.0",
+    "@welldone-software/why-did-you-render": "^4.0.3",
     "babel-eslint": "^10.0.1",
     "babel-jest": "24.1.0",
+    "babel-plugin-transform-remove-console": "^6.9.4",
     "colors": "^1.3.3",
     "devseed-standard": "^1.1.0",
     "documentation": "^9.1.1",

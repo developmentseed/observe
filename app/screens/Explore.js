@@ -7,6 +7,8 @@ import { AndroidBackHandler } from 'react-navigation-backhandler'
 import Config from 'react-native-config'
 import { NavigationEvents } from 'react-navigation'
 import _partition from 'lodash.partition'
+import _difference from 'lodash.difference'
+import _isEqual from 'lodash.isequal'
 
 import {
   loadUserDetails
@@ -40,6 +42,7 @@ import {
   endTrace
 } from '../actions/traces'
 
+import { bboxToTiles } from '../utils/bbox'
 import Header from '../components/Header'
 import MapOverlay from '../components/MapOverlay'
 import AddPointOverlay from '../components/AddPointOverlay'
@@ -103,6 +106,8 @@ const StyledMap = styled(MapboxGL.MapView)`
 `
 
 class Explore extends React.Component {
+  static whyDidYouRender = true
+
   static navigationOptions = ({ navigation }) => {
     return {
       drawerLabel: 'Explore',
@@ -186,11 +191,6 @@ class Explore extends React.Component {
     console.log('onDidFailLoadingMap', err)
   }
 
-  onRegionIsChanging = async evt => {
-    // update the redux state with the bbox
-    this.props.updateVisibleBounds(await this.mapRef.getVisibleBounds(), await this.mapRef.getZoom())
-  }
-
   _fetchData (visibleBounds, zoomLevel) {
     // fetch new data only if zoom is greater than 16
     if (zoomLevel >= 16) {
@@ -200,6 +200,12 @@ class Explore extends React.Component {
 
   onRegionDidChange = evt => {
     const { properties: { visibleBounds, zoomLevel } } = evt
+    const oldBounds = this.props.visibleBounds
+    if (oldBounds && oldBounds.length) {
+      const oldTiles = bboxToTiles(oldBounds)
+      const currentTiles = bboxToTiles(visibleBounds)
+      if (_difference(oldTiles, currentTiles).length === 0) return
+    }
     this.props.updateVisibleBounds(visibleBounds, zoomLevel)
   }
 
@@ -234,8 +240,13 @@ class Explore extends React.Component {
     try {
       const { features } = await this.mapRef.queryRenderedFeaturesInRect(rect, null, this.state.clickableLayers)
       const [ photos, osmFeatures ] = _partition(features, (f) => { return f.properties.type === 'photo' })
-      this.props.setSelectedFeatures(osmFeatures)
-      this.props.setSelectedPhotos(photos)
+      const { selectedPhotos, selectedFeatures } = this.props
+      if (!_isEqual(osmFeatures, selectedFeatures)) {
+        this.props.setSelectedFeatures(osmFeatures)
+      }
+      if (!_isEqual(photos, selectedPhotos)) {
+        this.props.setSelectedPhotos(photos)
+      }
     } catch (err) {
       console.log('failed getting features', err)
     }
@@ -369,6 +380,7 @@ class Explore extends React.Component {
       mode,
       currentTraceStatus,
       currentTrace,
+      isConnected,
       requiresPreauth,
       tracesGeojson,
       style,
@@ -575,18 +587,15 @@ class Explore extends React.Component {
           />
           <MainBody>
             {
-              requiresPreauth
+              (requiresPreauth && isConnected)
                 ? this.renderAuthPrompt()
                 : (
                   <StyledMap
                     styleURL={styleURL}
-                    showUserLocation
-                    userTrackingMode={MapboxGL.UserTrackingModes.Follow}
                     ref={(ref) => { this.mapRef = ref }}
                     onDidFinishRenderingMapFully={this.onDidFinishRenderingMapFully}
                     onWillStartLoadingMap={this.onWillStartLoadingMap}
                     onDidFailLoadingMap={this.onDidFailLoadingMap}
-                    onRegionIsChanging={this.onRegionIsChanging}
                     onRegionDidChange={this.onRegionDidChange}
                     regionDidChangeDebounceTime={10}
                     onPress={this.onPress}
@@ -598,9 +607,13 @@ class Explore extends React.Component {
                         centerCoordinate: [0, 0],
                         zoomLevel: 12
                       }}
+                      animationDuration={0}
+                      animationMode={'moveTo'}
                       ref={(ref) => { this.cameraRef = ref }}
                     />
-                    <MapboxGL.UserLocation />
+                    <MapboxGL.UserLocation
+                      minDisplacement={5}
+                    />
                     <MapboxGL.Images images={icons} />
                     <MapboxGL.ShapeSource id='geojsonSource' shape={geojson}>
                       <MapboxGL.LineLayer id='roadsHighlight' filter={filters.allRoads} style={style.osm.lineHighlight} minZoomLevel={16} />

@@ -1,4 +1,12 @@
 import React, { Component } from 'react'
+
+// NOTE: Comment out following lines to enable `why-did-you-render`
+
+// if (process.env.NODE_ENV === 'dev') {
+//   const whyDidYouRender = require('@welldone-software/why-did-you-render');
+//   whyDidYouRender(React);
+// }
+
 import Config from 'react-native-config'
 import { Provider } from 'react-redux'
 
