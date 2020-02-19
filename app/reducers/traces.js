@@ -127,6 +127,7 @@ export default function (state = initialState, action) {
       traces[index].status = 'uploaded'
       traces[index].apiId = action.newId
       traces[index].geojson.properties.id = action.newId
+      traces[index].uploadedAt = action.uploadedAt
       return {
         ...state,
         traces

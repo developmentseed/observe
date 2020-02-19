@@ -90,6 +90,7 @@ export default function (state = initialState, action) {
       const index = _findIndex(state.photos, p => p.id === action.oldId)
       photos[index].status = 'uploaded'
       photos[index].apiId = action.newId
+      photos[index].uploadedAt = action.uploadedAt
       return {
         ...state,
         photos
