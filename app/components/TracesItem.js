@@ -68,7 +68,7 @@ class TracesItem extends React.PureComponent {
       case 'uploading':
         return 'Uploading...'
       case 'uploaded':
-        return 'Uploaded'
+        return `Uploaded at ${formatDate(item.uploadedAt)}`
       case 'pending':
         if (item.errors.length === 0) {
           return 'Waiting for network...'
