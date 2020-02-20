@@ -19,6 +19,7 @@ class PhotosListScreen extends React.Component {
 
   render () {
     const { navigation, photos, uploadPendingPhotos, clearUploadedPhotos, uploadPendingEdits } = this.props
+    photos.photos.sort((a, b) => b.location.timestamp > a.location.timestamp ? 1 : -1)
     const headerActions = [
       {
         name: 'upload-2',
