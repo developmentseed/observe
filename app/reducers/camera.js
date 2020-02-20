@@ -31,6 +31,7 @@ export default function (state = initialState, action) {
       photos = photos.filter(photo => photo.id !== action.photo.id)
       // if photo has apiId, add it to editedPhotos to submit to the API
       if (editedPhoto.apiId && (editedPhoto.description !== action.description)) {
+        editedPhoto.status = 'pending edit'
         // check if there's an edit that's pending
         const index = _findIndex(editedPhotos, p => p.id === editedPhoto.id)
         if (index > -1) {
@@ -129,11 +130,15 @@ export default function (state = initialState, action) {
     }
 
     case types.UPLOADED_PENDING_PHOTO_EDIT: {
+      const photos = _cloneDeep(state.photos)
+      const index = _findIndex(state.photos, p => p.apiId === action.photo.apiId)
       let editedPhotos = _cloneDeep(state.editedPhotos)
+      photos[index].status = 'uploaded'
       editedPhotos = editedPhotos.filter(p => p.apiId === action.photo.apiId)
       return {
         ...state,
-        editedPhotos
+        editedPhotos,
+        photos
       }
     }
 
