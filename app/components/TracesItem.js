@@ -79,6 +79,8 @@ class TracesItem extends React.PureComponent {
           return error.message
         }
         break
+      case 'pending edit':
+        return 'Waiting to upload changes...'
       default:
         return 'An unknown error has occured'
     }

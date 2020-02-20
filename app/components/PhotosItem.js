@@ -88,6 +88,9 @@ class PhotosItem extends React.PureComponent {
           const error = item.errors[item.errors.length - 1]
           return error.message
         }
+        break
+      case 'pending edit':
+        return 'Waiting to upload changes...'
     }
   }
 
