@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components/native'
-import { Platform, View, Animated } from 'react-native'
+import { Platform, TouchableHighlight, Animated } from 'react-native'
 import MapboxGL from '@react-native-mapbox-gl/maps'
 import { AndroidBackHandler } from 'react-navigation-backhandler'
 import Config from 'react-native-config'
@@ -125,12 +125,11 @@ const MenuButton = styled.TouchableHighlight`
   shadow-opacity: 0.7;
   shadow-offset: 0px 0px;
 `
+const AnimatedTouchable = Animated.createAnimatedComponent(TouchableHighlight)
 
-const ModeButton = styled.TouchableHighlight`
+const ModeButton = styled(AnimatedTouchable)`
   position: absolute;
   border-radius: 100;
-  bottom: -56;
-  right: -24;
   width: 48;
   height: 48;
   margin-bottom: 8;
@@ -146,10 +145,7 @@ const ModeButton = styled.TouchableHighlight`
 const Label = styled(Animated.Text)`
   color: white;
   position: absolute;
-  display: flex;
-  flex: 1;
   right: 0;
-  bottom: -2;
   text-align: right;
   font-size: 14;
   width: 100;
@@ -478,7 +474,7 @@ class Explore extends React.Component {
         {
           translateY: this.animation.interpolate({
             inputRange: [0, 1],
-            outputRange: [0, -56]
+            outputRange: [0, -60]
           })
         }
       ]
@@ -491,7 +487,7 @@ class Explore extends React.Component {
         {
           translateY: this.animation.interpolate({
             inputRange: [0, 1],
-            outputRange: [0, -112]
+            outputRange: [0, -116]
           })
         }
       ]
@@ -504,7 +500,7 @@ class Explore extends React.Component {
         {
           translateY: this.animation.interpolate({
             inputRange: [0, 1],
-            outputRange: [0, -168]
+            outputRange: [0, -172]
           })
         }
       ]
@@ -517,7 +513,7 @@ class Explore extends React.Component {
         {
           translateY: this.animation.interpolate({
             inputRange: [0, 1],
-            outputRange: [0, -224]
+            outputRange: [0, -228]
           })
         }
       ]
@@ -529,7 +525,7 @@ class Explore extends React.Component {
         {
           translateX: this.animation.interpolate({
             inputRange: [0, 1],
-            outputRange: [0, -40]
+            outputRange: [0, -52]
           })
         }
       ]
@@ -543,38 +539,30 @@ class Explore extends React.Component {
           navigation={navigation}
         />
         <MegaMenu>
-          <Animated.View style={[CameraButtonPosition]}>
-            <ModeButton underlayColor={colors.base} onPress={() => navigation.navigate('CameraScreen', { previousScreen: 'Explore', feature: null })}>
-              <View>
-                <Label style={[LabelPosition]}>Take Photo</Label>
-                <Icon name='camera' size={20} color='#FFFFFF' />
-              </View>
-            </ModeButton>
-          </Animated.View>
-          <Animated.View style={[RecordButtonPosition]}>
-            <ModeButton underlayColor={colors.base} status={currentTraceStatus} onPress={() => this.onRecordPress()}>
-              <View>
-                <Label style={[LabelPosition]}>Record Track</Label>
-                <Icon name='circle-play' size={20} color='#FFFFFF' />
-              </View>
-            </ModeButton>
-          </Animated.View>
-          <Animated.View style={[WayButtonPosition]}>
-            <ModeButton underlayColor={colors.base} onPress={() => { this.props.setMapMode(modes.ADD_WAY) }}>
-              <View>
-                <Label style={[LabelPosition]}>Add Way</Label>
-                <Icon name='share-2' size={20} color='#FFFFFF' />
-              </View>
-            </ModeButton>
-          </Animated.View>
-          <Animated.View style={[PointButtonPosition]}>
-            <ModeButton underlayColor={colors.base} onPress={() => { this.onAddButtonPress() }}>
-              <View>
-                <Label style={[LabelPosition]}>Add Point</Label>
-                <Icon name='marker' size={20} color='#FFFFFF' />
-              </View>
-            </ModeButton>
-          </Animated.View>
+          <ModeButton style={[CameraButtonPosition]} underlayColor={colors.base} onPress={() => navigation.navigate('CameraScreen', { previousScreen: 'Explore', feature: null })}>
+            <>
+              <Label style={[LabelPosition]}>Take Photo</Label>
+              <Icon name='camera' size={20} color='#FFFFFF' />
+            </>
+          </ModeButton>
+          <ModeButton style={[RecordButtonPosition]} underlayColor={colors.base} status={currentTraceStatus} onPress={() => this.onRecordPress()}>
+            <>
+              <Label style={[LabelPosition]}>Record Track</Label>
+              <Icon name='circle-play' size={20} color='#FFFFFF' />
+            </>
+          </ModeButton>
+          <ModeButton style={[WayButtonPosition]} underlayColor={colors.base} onPress={() => { this.props.setMapMode(modes.ADD_WAY) }}>
+            <>
+              <Label style={[LabelPosition]}>Add Way</Label>
+              <Icon name='share-2' size={20} color='#FFFFFF' />
+            </>
+          </ModeButton>
+          <ModeButton style={[PointButtonPosition]} underlayColor={colors.base} onPress={() => { this.onAddButtonPress() }}>
+            <>
+              <Label style={[LabelPosition]}>Add Point</Label>
+              <Icon name='marker' size={20} color='#FFFFFF' />
+            </>
+          </ModeButton>
           <MenuButton underlayColor={colors.base} onPress={this.toggleMenuOpen}>
             <Animated.View style={[rotation]}>
               <Icon name='plus' size={20} color='#FFFFFF' />
