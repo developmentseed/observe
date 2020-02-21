@@ -771,6 +771,7 @@ class Explore extends React.Component {
                     onRegionDidChange={this.onRegionDidChange}
                     regionDidChangeDebounceTime={10}
                     onPress={this.onPress}
+                    attributionPosition={{ 'bottom': 40, 'left': 8 }}
                   >
                     <MapboxGL.Camera
                       zoomLevel={12}
