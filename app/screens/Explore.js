@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components/native'
-import { Platform } from 'react-native'
+import { Platform, TouchableHighlight, Animated } from 'react-native'
 import MapboxGL from '@react-native-mapbox-gl/maps'
 import { AndroidBackHandler } from 'react-navigation-backhandler'
 import Config from 'react-native-config'
@@ -65,14 +65,13 @@ import {
   getPhotosGeojson
 } from '../selectors'
 import BasemapModal from '../components/BasemapModal'
-import ActionButton from '../components/ActionButton'
 import Icon from '../components/Collecticons'
 import { colors } from '../style/variables'
-import { CameraButton } from '../components/CameraButton'
-import { RecordButton } from '../components/RecordButton'
 
 import icons from '../assets/icons'
 import { authorize } from '../services/auth'
+
+import { modes, modeTitles } from '../utils/map-modes'
 
 let osmStyleURL = Config.MAPBOX_STYLE_URL || MapboxGL.StyleURL.Street
 let satelliteStyleURL = Config.MAPBOX_SATELLITE_STYLE_URL || MapboxGL.StyleURL.Satellite
@@ -105,6 +104,56 @@ const StyledMap = styled(MapboxGL.MapView)`
   width: 100%;
 `
 
+const MegaMenu = styled.View`
+  flex: 1;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  bottom: 16;
+  right: 16;
+`
+
+const MenuButton = styled.TouchableHighlight`
+  border-radius: 100;
+  width: 56;
+  height: 56;
+  background-color: ${colors.primary};
+  justify-content: center;
+  align-items: center;
+  elevation: 2;
+  shadow-color: ${colors.base};
+  shadow-opacity: 0.7;
+  shadow-offset: 0px 0px;
+`
+const AnimatedTouchable = Animated.createAnimatedComponent(TouchableHighlight)
+
+const ModeButton = styled(AnimatedTouchable)`
+  position: absolute;
+  border-radius: 100;
+  width: 48;
+  height: 48;
+  margin-bottom: 8;
+  background-color: ${colors.primary};
+  justify-content: center;
+  align-items: center;
+  shadow-color: ${colors.baseAlpha};
+  shadow-opacity: 0.7;
+  shadow-offset: 0px 0px;
+  elevation: 2;
+`
+
+const Label = styled(Animated.Text)`
+  color: white;
+  position: absolute;
+  right: 0;
+  text-align: right;
+  font-size: 14;
+  width: 100;
+  padding: 2px 4px;
+  border-radius: 4;
+  background-color: ${colors.baseMed};
+`
+
 class Explore extends React.Component {
   static whyDidYouRender = true
 
@@ -129,6 +178,8 @@ class Explore extends React.Component {
       userTrackingMode: MapboxGL.UserTrackingModes.Follow
     }
   }
+
+  animation = new Animated.Value(0)
 
   shouldComponentUpdate (nextProps) {
     return nextProps.navigation.isFocused()
@@ -295,7 +346,7 @@ class Explore extends React.Component {
 
   onBackButtonPress = () => {
     const { mode } = this.props
-    if (mode === 'explore') { // let default back handling happen when in Explore mode
+    if (mode === modes.EXPLORE) { // let default back handling happen when in Explore mode
       return false
     }
     this.props.mapBackPress()
@@ -316,12 +367,19 @@ class Explore extends React.Component {
 
   getBackButton = () => {
     const { navigation, mode } = this.props
+    const useBackButtonPress = (
+      mode === modes.ADD_POINT ||
+      mode === modes.EDIT_POINT ||
+      mode === modes.ADD_WAY ||
+      mode === modes.EDIT_WAY
+    )
+
     switch (true) {
       case navigation.getParam('back'):
         return navigation.getParam('back')
-      case mode === 'add' || mode === 'edit':
+      case useBackButtonPress:
         return this.onBackButtonPress
-      case mode === 'bbox':
+      case mode === modes.OFFLINE_TILES:
         return 'OfflineMaps'
       default:
         return false
@@ -330,18 +388,9 @@ class Explore extends React.Component {
 
   getTitle = () => {
     const { navigation, mode } = this.props
-    switch (true) {
-      case navigation.getParam('title'):
-        return navigation.getParam('title')
-      case mode === 'add':
-        return 'Add Point'
-      case mode === 'edit':
-        return 'Edit Point'
-      case mode === 'bbox':
-        return 'Select Bounds'
-      default:
-        return 'Observe'
-    }
+    const title = navigation.getParam('title') || modeTitles[mode]
+    if (!title) return 'Observe'
+    return title
   }
 
   onRecordPress = () => {
@@ -371,6 +420,159 @@ class Explore extends React.Component {
     )
   }
 
+  toggleMenuOpen = () => {
+    const toValue = this.open ? 0 : 1
+
+    Animated.spring(this.animation, {
+      toValue,
+      friction: 7
+    }).start()
+
+    this.open = !this.open
+  }
+
+  renderOverlay () {
+    const { navigation, geojson, mode, currentTraceStatus } = this.props
+
+    if (mode === modes.OFFLINE_TILES) {
+      return null
+    }
+
+    if (mode === modes.ADD_POINT || mode === modes.EDIT_POINT) {
+      return <AddPointOverlay
+        onAddConfirmPress={this.onAddConfirmPress}
+      />
+    }
+
+    if (mode === modes.ADD_WAY || mode === modes.EDIT_WAY) {
+      // TODO: implement WayOverlay.js
+      return null
+    }
+
+    // if not in explicit mode, render default MapOverlay
+
+    const rotation = {
+      transform: [
+        {
+          rotate: this.animation.interpolate({
+            inputRange: [0, 1],
+            outputRange: ['0deg', '45deg']
+          })
+        }
+      ]
+    }
+
+    const opacityInterpolation = this.animation.interpolate({
+      inputRange: [0, 0.75, 1],
+      outputRange: [0, 0, 1]
+    })
+
+    const PointButtonPosition = {
+      opacity: opacityInterpolation,
+      transform: [
+        { scale: this.animation },
+        {
+          translateY: this.animation.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, -60]
+          })
+        }
+      ]
+    }
+
+    const WayButtonPosition = {
+      opacity: opacityInterpolation,
+      transform: [
+        { scale: this.animation },
+        {
+          translateY: this.animation.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, -116]
+          })
+        }
+      ]
+    }
+
+    const RecordButtonPosition = {
+      opacity: opacityInterpolation,
+      transform: [
+        { scale: this.animation },
+        {
+          translateY: this.animation.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, -172]
+          })
+        }
+      ]
+    }
+
+    const CameraButtonPosition = {
+      opacity: opacityInterpolation,
+      transform: [
+        { scale: this.animation },
+        {
+          translateY: this.animation.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, -228]
+          })
+        }
+      ]
+    }
+
+    const LabelPosition = {
+      opacity: opacityInterpolation,
+      transform: [
+        {
+          translateX: this.animation.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, -52]
+          })
+        }
+      ]
+    }
+
+    return (
+      <>
+        <MapOverlay
+          features={geojson.features}
+          onAddButtonPress={this.onAddButtonPress}
+          navigation={navigation}
+        />
+        <MegaMenu>
+          <ModeButton style={[CameraButtonPosition]} underlayColor={colors.base} onPress={() => navigation.navigate('CameraScreen', { previousScreen: 'Explore', feature: null })}>
+            <>
+              <Label style={[LabelPosition]}>Take Photo</Label>
+              <Icon name='camera' size={20} color='#FFFFFF' />
+            </>
+          </ModeButton>
+          <ModeButton style={[RecordButtonPosition]} underlayColor={colors.base} status={currentTraceStatus} onPress={() => this.onRecordPress()}>
+            <>
+              <Label style={[LabelPosition]}>Record Track</Label>
+              <Icon name='circle-play' size={20} color='#FFFFFF' />
+            </>
+          </ModeButton>
+          <ModeButton style={[WayButtonPosition]} underlayColor={colors.base} onPress={() => { this.props.setMapMode(modes.ADD_WAY) }}>
+            <>
+              <Label style={[LabelPosition]}>Add Way</Label>
+              <Icon name='share-2' size={20} color='#FFFFFF' />
+            </>
+          </ModeButton>
+          <ModeButton style={[PointButtonPosition]} underlayColor={colors.base} onPress={() => { this.onAddButtonPress() }}>
+            <>
+              <Label style={[LabelPosition]}>Add Point</Label>
+              <Icon name='marker' size={20} color='#FFFFFF' />
+            </>
+          </ModeButton>
+          <MenuButton underlayColor={colors.base} onPress={this.toggleMenuOpen}>
+            <Animated.View style={[rotation]}>
+              <Icon name='plus' size={20} color='#FFFFFF' />
+            </Animated.View>
+          </MenuButton>
+        </MegaMenu>
+      </>
+    )
+  }
+
   render () {
     const {
       navigation,
@@ -378,7 +580,6 @@ class Explore extends React.Component {
       selectedFeatures,
       editsGeojson,
       mode,
-      currentTraceStatus,
       currentTrace,
       isConnected,
       requiresPreauth,
@@ -421,36 +622,6 @@ class Explore extends React.Component {
         this.getFeatureType(feature) === 'node' ? filteredFeatureIds.nodes[2].push(feature.id) : filteredFeatureIds.ways[2].push(feature.id)
         return filteredFeatureIds
       }, filteredFeatureIds)
-    }
-
-    let overlay
-    switch (mode) {
-      case 'add':
-        overlay = (<AddPointOverlay
-          onAddConfirmPress={this.onAddConfirmPress}
-        />)
-        break
-
-      case 'edit':
-        overlay = (<AddPointOverlay
-          onAddConfirmPress={this.onEditConfirmPress}
-        />)
-        break
-
-      case 'bbox':
-        break
-
-      default:
-        overlay = (
-          <>
-            <MapOverlay
-              features={geojson.features}
-              onAddButtonPress={this.onAddButtonPress}
-              navigation={navigation}
-            />
-            <ActionButton icon='plus' onPress={() => this.onAddButtonPress()} />
-          </>
-        )
     }
 
     let styleURL
@@ -569,13 +740,13 @@ class Explore extends React.Component {
               // reset params once this screen has been used in bbox mode
               navigation.setParams({
                 back: null,
-                mode: 'explore',
+                mode: modes.EXPLORE,
                 title: null,
                 actions: null
               })
 
               // reset map mode
-              this.props.setMapMode('explore')
+              this.props.setMapMode(modes.EXPLORE)
             }
           }}
         />
@@ -656,11 +827,9 @@ class Explore extends React.Component {
             { showLoadingIndicator }
             <LocateUserButton onPress={() => this.locateUser()} />
             <BasemapModal onChange={this.props.setBasemap} />
-            <CameraButton onPress={() => navigation.navigate('CameraScreen', { previousScreen: 'Explore', feature: null })} />
-            <RecordButton status={currentTraceStatus} onPress={() => this.onRecordPress()} />
-            {mode !== 'bbox' && this.renderZoomToEdit()}
+            {mode !== modes.OFFLINE_TILES && this.renderZoomToEdit()}
           </MainBody>
-          { overlay }
+          { this.renderOverlay() }
         </Container>
       </AndroidBackHandler>
     )
