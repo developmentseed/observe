@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components/native'
-import { Platform } from 'react-native'
+import { Platform, View, Animated } from 'react-native'
 import MapboxGL from '@react-native-mapbox-gl/maps'
 import { AndroidBackHandler } from 'react-navigation-backhandler'
 import Config from 'react-native-config'
@@ -65,13 +65,8 @@ import {
   getPhotosGeojson
 } from '../selectors'
 import BasemapModal from '../components/BasemapModal'
-import ActionButton from '../components/ActionButton'
 import Icon from '../components/Collecticons'
 import { colors } from '../style/variables'
-import { CameraButton } from '../components/CameraButton'
-import { RecordButton } from '../components/RecordButton'
-import { AddWayButton } from '../components/AddWayButton'
-import { AddPointButton } from '../components/AddPointButton'
 
 import icons from '../assets/icons'
 import { authorize } from '../services/auth'
@@ -109,6 +104,60 @@ const StyledMap = styled(MapboxGL.MapView)`
   width: 100%;
 `
 
+const MegaMenu = styled.View`
+  flex: 1;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  bottom: 16;
+  right: 16;
+`
+
+const MenuButton = styled.TouchableHighlight`
+  border-radius: 100;
+  width: 56;
+  height: 56;
+  background-color: ${colors.primary};
+  justify-content: center;
+  align-items: center;
+  elevation: 2;
+  shadow-color: ${colors.base};
+  shadow-opacity: 0.7;
+  shadow-offset: 0px 0px;
+`
+
+const ModeButton = styled.TouchableHighlight`
+  position: absolute;
+  border-radius: 100;
+  bottom: -56;
+  right: -24;
+  width: 48;
+  height: 48;
+  margin-bottom: 8;
+  background-color: ${colors.primary};
+  justify-content: center;
+  align-items: center;
+  shadow-color: ${colors.baseAlpha};
+  shadow-opacity: 0.7;
+  shadow-offset: 0px 0px;
+  elevation: 2;
+`
+
+const Label = styled(Animated.Text)`
+  color: white;
+  position: absolute;
+  display: flex;
+  flex: 1;
+  right: 0;
+  bottom: -2;
+  text-align: right;
+  font-size: 14;
+  width: 100;
+  padding: 2px 4px;
+  border-radius: 4;
+  background-color: ${colors.baseMed};
+`
+
 class Explore extends React.Component {
   static whyDidYouRender = true
 
@@ -130,10 +179,11 @@ class Explore extends React.Component {
     this.state = {
       androidPermissionGranted: false,
       isMapLoaded: false,
-      userTrackingMode: MapboxGL.UserTrackingModes.Follow,
-      addButtonExpanded: false
+      userTrackingMode: MapboxGL.UserTrackingModes.Follow
     }
   }
+
+  animation = new Animated.Value(0)
 
   shouldComponentUpdate (nextProps) {
     return nextProps.navigation.isFocused()
@@ -374,16 +424,18 @@ class Explore extends React.Component {
     )
   }
 
-  toggleAddButtonExpanded () {
-    const { addButtonExpanded } = this.state
+  toggleMenuOpen = () => {
+    const toValue = this.open ? 0 : 1
 
-    this.setState({
-      addButtonExpanded: !addButtonExpanded
-    })
+    Animated.spring(this.animation, {
+      toValue,
+      friction: 7
+    }).start()
+
+    this.open = !this.open
   }
 
   renderOverlay () {
-    const { addButtonExpanded } = this.state
     const { navigation, geojson, mode, currentTraceStatus } = this.props
 
     if (mode === modes.OFFLINE_TILES) {
@@ -401,8 +453,88 @@ class Explore extends React.Component {
       return null
     }
 
-    console.log('addButtonExpanded', addButtonExpanded)
     // if not in explicit mode, render default MapOverlay
+
+    const rotation = {
+      transform: [
+        {
+          rotate: this.animation.interpolate({
+            inputRange: [0, 1],
+            outputRange: ['0deg', '45deg']
+          })
+        }
+      ]
+    }
+
+    const opacityInterpolation = this.animation.interpolate({
+      inputRange: [0, 0.75, 1],
+      outputRange: [0, 0, 1]
+    })
+
+    const PointButtonPosition = {
+      opacity: opacityInterpolation,
+      transform: [
+        { scale: this.animation },
+        {
+          translateY: this.animation.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, -56]
+          })
+        }
+      ]
+    }
+
+    const WayButtonPosition = {
+      opacity: opacityInterpolation,
+      transform: [
+        { scale: this.animation },
+        {
+          translateY: this.animation.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, -112]
+          })
+        }
+      ]
+    }
+
+    const RecordButtonPosition = {
+      opacity: opacityInterpolation,
+      transform: [
+        { scale: this.animation },
+        {
+          translateY: this.animation.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, -168]
+          })
+        }
+      ]
+    }
+
+    const CameraButtonPosition = {
+      opacity: opacityInterpolation,
+      transform: [
+        { scale: this.animation },
+        {
+          translateY: this.animation.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, -224]
+          })
+        }
+      ]
+    }
+
+    const LabelPosition = {
+      opacity: opacityInterpolation,
+      transform: [
+        {
+          translateX: this.animation.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, -40]
+          })
+        }
+      ]
+    }
+
     return (
       <>
         <MapOverlay
@@ -410,15 +542,45 @@ class Explore extends React.Component {
           onAddButtonPress={this.onAddButtonPress}
           navigation={navigation}
         />
-        { addButtonExpanded && (
-          <>
-            <CameraButton onPress={() => navigation.navigate('CameraScreen', { previousScreen: 'Explore', feature: null })} />
-            <RecordButton status={currentTraceStatus} onPress={() => this.onRecordPress()} />
-            <AddWayButton onPress={() => { this.props.setMapMode(modes.ADD_WAY) }} />
-            <AddPointButton onPress={() => { this.onAddButtonPress() }} />
-          </>
-        )}
-        <ActionButton icon={addButtonExpanded ? 'xmark' : 'plus'} onPress={() => { this.toggleAddButtonExpanded() }} />
+        <MegaMenu>
+          <Animated.View style={[CameraButtonPosition]}>
+            <ModeButton underlayColor={colors.base} onPress={() => navigation.navigate('CameraScreen', { previousScreen: 'Explore', feature: null })}>
+              <View>
+                <Label style={[LabelPosition]}>Take Photo</Label>
+                <Icon name='camera' size={20} color='#FFFFFF' />
+              </View>
+            </ModeButton>
+          </Animated.View>
+          <Animated.View style={[RecordButtonPosition]}>
+            <ModeButton underlayColor={colors.base} status={currentTraceStatus} onPress={() => this.onRecordPress()}>
+              <View>
+                <Label style={[LabelPosition]}>Record Track</Label>
+                <Icon name='circle-play' size={20} color='#FFFFFF' />
+              </View>
+            </ModeButton>
+          </Animated.View>
+          <Animated.View style={[WayButtonPosition]}>
+            <ModeButton underlayColor={colors.base} onPress={() => { this.props.setMapMode(modes.ADD_WAY) }}>
+              <View>
+                <Label style={[LabelPosition]}>Add Way</Label>
+                <Icon name='share-2' size={20} color='#FFFFFF' />
+              </View>
+            </ModeButton>
+          </Animated.View>
+          <Animated.View style={[PointButtonPosition]}>
+            <ModeButton underlayColor={colors.base} onPress={() => { this.onAddButtonPress() }}>
+              <View>
+                <Label style={[LabelPosition]}>Add Point</Label>
+                <Icon name='marker' size={20} color='#FFFFFF' />
+              </View>
+            </ModeButton>
+          </Animated.View>
+          <MenuButton underlayColor={colors.base} onPress={this.toggleMenuOpen}>
+            <Animated.View style={[rotation]}>
+              <Icon name='plus' size={20} color='#FFFFFF' />
+            </Animated.View>
+          </MenuButton>
+        </MegaMenu>
       </>
     )
   }
