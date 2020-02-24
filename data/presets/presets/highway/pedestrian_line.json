@@ -11,6 +11,8 @@
     ],
     "moreFields": [
         "covered",
+        "incline",
+        "maxweight_bridge",
         "smoothness"
     ],
     "geometry": [

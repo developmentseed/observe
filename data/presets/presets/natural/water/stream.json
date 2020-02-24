@@ -1,5 +1,5 @@
 {
-    "icon": "maki-water",
+    "icon": "iD-waterway-stream",
     "fields": [
         "{natural/water}"
     ],
@@ -41,5 +41,5 @@
         "tributary",
         "watercourse"
     ],
-    "name": "Stream"
+    "name": "Stream Area"
 }

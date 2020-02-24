@@ -4,8 +4,13 @@
         "name",
         "operator",
         "address",
+        "plant/source",
+        "plant/method",
         "plant/output/electricity",
         "start_date"
+    ],
+    "moreFields": [
+        "gnis/feature_id"
     ],
     "geometry": [
         "area"
@@ -14,10 +19,6 @@
         "power": "plant"
     },
     "addTags": {
-        "power": "plant",
-        "landuse": "industrial"
-    },
-    "removeTags": {
         "power": "plant",
         "landuse": "industrial"
     },

@@ -1,0 +1,28 @@
+{
+    "icon": "fas-beer",
+    "fields": [
+        "name",
+        "address",
+        "opening_hours",
+        "outdoor_seating",
+        "brewery"
+    ],
+    "moreFields": [
+        "{amenity/bar}",
+        "building_area",
+        "cuisine"
+    ],
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "tags": {
+        "amenity": "biergarten"
+    },
+    "terms": [
+        "beer",
+        "bier",
+        "booze"
+    ],
+    "name": "Biergarten"
+}

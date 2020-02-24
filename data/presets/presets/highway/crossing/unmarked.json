@@ -1,26 +1,24 @@
 {
+    "icon": "temaki-pedestrian",
     "fields": [
         "crossing",
-        "kerb",
-        "tactile_paving"
+        "tactile_paving",
+        "crossing/island"
     ],
     "geometry": [
         "vertex"
     ],
+    "tags": {
+        "highway": "crossing",
+        "crossing": "unmarked"
+    },
     "addTags": {
         "highway": "crossing",
         "crossing": "unmarked"
     },
-    "removeTags": {
-        "highway": "crossing",
-        "crossing": "unmarked"
-    },
-    "tags": {
-        "highway": "crossing"
-    },
     "reference": {
-        "key": "highway",
-        "value": "crossing"
+        "key": "crossing",
+        "value": "unmarked"
     },
     "terms": [],
     "name": "Unmarked Crossing"
