@@ -1,8 +1,12 @@
 {
-    "icon": "maki-alcohol-shop",
+    "icon": "fas-wine-bottle",
     "fields": [
         "{shop}",
         "drive_through"
+    ],
+    "moreFields": [
+        "{shop}",
+        "min_age"
     ],
     "geometry": [
         "point",

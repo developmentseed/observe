@@ -1,4 +1,13 @@
 {
+    "icon": "temaki-pedestrian",
+    "fields": [
+        "name",
+        "access",
+        "seasonal"
+    ],
+    "moreFields": [
+        "gnis/feature_id"
+    ],
     "geometry": [
         "vertex"
     ],
