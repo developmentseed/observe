@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components/native'
-import { Platform, Animated } from 'react-native'
+import { Platform } from 'react-native'
 import MapboxGL from '@react-native-mapbox-gl/maps'
 import { AndroidBackHandler } from 'react-navigation-backhandler'
 import Config from 'react-native-config'
@@ -129,8 +129,6 @@ class Explore extends React.Component {
       userTrackingMode: MapboxGL.UserTrackingModes.Follow
     }
   }
-
-  animation = new Animated.Value(0)
 
   shouldComponentUpdate (nextProps) {
     return nextProps.navigation.isFocused()
@@ -371,17 +369,6 @@ class Explore extends React.Component {
     )
   }
 
-  toggleMenuOpen = () => {
-    const toValue = this.open ? 0 : 1
-
-    Animated.spring(this.animation, {
-      toValue,
-      friction: 7
-    }).start()
-
-    this.open = !this.open
-  }
-
   renderOverlay () {
     const { navigation, geojson, mode, currentTraceStatus } = this.props
 
@@ -414,7 +401,6 @@ class Explore extends React.Component {
           onRecordPress={() => this.onRecordPress()}
           onWayPress={() => { this.props.setMapMode(modes.ADD_WAY) }}
           onPointPress={() => { this.onAddButtonPress() }}
-          onMenuPress={this.toggleMenuOpen}
           recordStatus={currentTraceStatus}
         />
       </>
