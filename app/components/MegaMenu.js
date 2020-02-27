@@ -56,6 +56,19 @@ const Label = styled(Animated.Text)`
 `
 
 class MegaMenu extends React.Component {
+  animation = new Animated.Value(0)
+
+  toggleMenuOpen = () => {
+    const toValue = this.open ? 0 : 1
+
+    Animated.spring(this.animation, {
+      toValue,
+      friction: 7
+    }).start()
+
+    this.open = !this.open
+  }
+
   render () {
     const rotation = {
       transform: [
@@ -138,7 +151,7 @@ class MegaMenu extends React.Component {
     }
     return (
       <MenuWrapper>
-        <ModeButton style={[CameraButtonPosition]} underlayColor={colors.base} onPress={this.props.cameraOnPress}>
+        <ModeButton style={[CameraButtonPosition]} underlayColor={colors.base} onPress={this.props.onCameraPress}>
             <>
               <Label style={[LabelPosition]}>Take Photo</Label>
               <Icon name='camera' size={20} color='#FFFFFF' />
@@ -162,7 +175,7 @@ class MegaMenu extends React.Component {
               <Icon name='marker' size={20} color='#FFFFFF' />
             </>
         </ModeButton>
-        <MenuButton underlayColor={colors.base} onPress={this.props.toggleMenuOpen}>
+        <MenuButton underlayColor={colors.base} onPress={this.toggleMenuOpen}>
           <Animated.View style={[rotation]}>
             <Icon name='plus' size={20} color='#FFFFFF' />
           </Animated.View>
