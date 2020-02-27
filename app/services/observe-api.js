@@ -62,7 +62,7 @@ export async function getProfile (dispatch) {
 export async function uploadTrace (dispatch, trace) {
   const traceGeoJSON = getTraceGeoJSON(trace)
   const data = await callAPI(dispatch, '/traces', 'POST', { 'tracejson': traceGeoJSON })
-  return data.properties.id
+  return data
 }
 
 export async function deleteTrace (dispatch, traceId) {
@@ -81,7 +81,7 @@ export async function uploadPhoto (dispatch, photo) {
     'osmElement': photo.featureId
   }
   const data = await callAPI(dispatch, '/photos', 'POST', payload)
-  return data.id
+  return data
 }
 
 export async function deletePhoto (dispatch, photoId) {
