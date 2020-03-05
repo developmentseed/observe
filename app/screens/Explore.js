@@ -52,6 +52,7 @@ import ZoomToEdit from '../components/ZoomToEdit'
 import getRandomId from '../utils/get-random-id'
 import LocateUserButton from '../components/LocateUserButton'
 import AuthMessage from '../components/AuthMessage'
+import WayEditingOverlay from '../components/WayEditingOverlay'
 import getUserLocation from '../utils/get-user-location'
 import {
   getVisibleBounds,
@@ -383,8 +384,7 @@ class Explore extends React.Component {
     }
 
     if (mode === modes.ADD_WAY || mode === modes.EDIT_WAY) {
-      // TODO: implement WayOverlay.js
-      return null
+      return <WayEditingOverlay />
     }
 
     // if not in explicit mode, render default MapOverlay
