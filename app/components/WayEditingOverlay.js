@@ -44,15 +44,39 @@ const ActionButton = styled(AnimatedTouchable)`
 
 class WayEditingOverlay extends React.Component {
   render () {
+    const {
+      onDeleteNodePress,
+      onUndoPress,
+      onGoBackPress,
+      onAddNodePress,
+      onGoForwardPress,
+      onRedoPress,
+      onMoveNodePress
+    } = this.props
+
     return (
       <MenuWrapper>
-        <ActionButton><Text>🗑</Text></ActionButton>
-        <ActionButton><Text>⃔</Text></ActionButton>
-        <ActionButton><Text>‹</Text></ActionButton>
-        <AddNodeButton><Text>+</Text></AddNodeButton>
-        <ActionButton><Text>›</Text></ActionButton>
-        <ActionButton><Text>⃕</Text></ActionButton>
-        <ActionButton><Text>✣</Text></ActionButton>
+        <ActionButton onPress={onDeleteNodePress}>
+          <Text>🗑</Text>
+        </ActionButton>
+        <ActionButton onPress={onUndoPress}>
+          <Text>⃔</Text>
+        </ActionButton>
+        <ActionButton onPress={onGoBackPress}>
+          <Text>‹</Text>
+        </ActionButton>
+        <AddNodeButton onPress={onAddNodePress}>
+          <Text>+</Text>
+        </AddNodeButton>
+        <ActionButton onPress={onGoForwardPress}>
+          <Text>›</Text>
+        </ActionButton>
+        <ActionButton onPress={onRedoPress}>
+          <Text>⃕</Text>
+        </ActionButton>
+        <ActionButton onPress={onMoveNodePress}>
+          <Text>✣</Text>
+        </ActionButton>
       </MenuWrapper>
     )
   }
