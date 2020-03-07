@@ -384,7 +384,29 @@ class Explore extends React.Component {
     }
 
     if (mode === modes.ADD_WAY || mode === modes.EDIT_WAY) {
-      return <WayEditingOverlay />
+      return <WayEditingOverlay
+        onDeleteNodePress={() => {
+          console.log('onDeleteNodePress')
+        }}
+        onUndoPress={() => {
+          console.log('onUndoPress')
+        }}
+        onGoBackPress={() => {
+          console.log('onGoBackPress')
+        }}
+        onAddNodePress={() => {
+          console.log('onAddNodePress')
+        }}
+        onGoForwardPress={() => {
+          console.log('onGoForwardPress')
+        }}
+        onRedoPress={() => {
+          console.log('onRedoPress')
+        }}
+        onMoveNodePress={() => {
+          console.log('onMoveNodePress')
+        }}
+      />
     }
 
     // if not in explicit mode, render default MapOverlay
