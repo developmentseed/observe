@@ -57,25 +57,19 @@ class WayEditingOverlay extends React.Component {
     return (
       <MenuWrapper>
         <ActionButton onPress={onDeleteNodePress}>
-          <Text>🗑</Text>
+          <Icon name='trash-bin' size={20} color='#6579FC' />
         </ActionButton>
         <ActionButton onPress={onUndoPress}>
-          <Text>⃔</Text>
-        </ActionButton>
-        <ActionButton onPress={onGoBackPress}>
-          <Text>‹</Text>
+          <Icon name='arrow-semi-spin-ccw' size={20} color='#6579FC' />
         </ActionButton>
         <AddNodeButton onPress={onAddNodePress}>
-          <Text>+</Text>
+          <Icon name='plus' size={20} color='#6579FC' />
         </AddNodeButton>
-        <ActionButton onPress={onGoForwardPress}>
-          <Text>›</Text>
-        </ActionButton>
         <ActionButton onPress={onRedoPress}>
-          <Text>⃕</Text>
+          <Icon name='arrow-semi-spin-cw' size={20} color='#6579FC' />
         </ActionButton>
         <ActionButton onPress={onMoveNodePress}>
-          <Text>✣</Text>
+          <Icon name='arrow-move' size={20} color='#6579FC' />
         </ActionButton>
       </MenuWrapper>
     )
