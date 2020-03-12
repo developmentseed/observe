@@ -391,14 +391,8 @@ class Explore extends React.Component {
         onUndoPress={() => {
           console.log('onUndoPress')
         }}
-        onGoBackPress={() => {
-          console.log('onGoBackPress')
-        }}
         onAddNodePress={() => {
           console.log('onAddNodePress')
-        }}
-        onGoForwardPress={() => {
-          console.log('onGoForwardPress')
         }}
         onRedoPress={() => {
           console.log('onRedoPress')

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/native'
-import { TouchableHighlight, Animated, Text } from 'react-native'
+import { TouchableHighlight, Animated } from 'react-native'
 
 import { colors } from '../style/variables'
 import Icon from './Collecticons'
@@ -47,9 +47,7 @@ class WayEditingOverlay extends React.Component {
     const {
       onDeleteNodePress,
       onUndoPress,
-      onGoBackPress,
       onAddNodePress,
-      onGoForwardPress,
       onRedoPress,
       onMoveNodePress
     } = this.props
