@@ -400,6 +400,9 @@ class Explore extends React.Component {
         onMoveNodePress={() => {
           console.log('onMoveNodePress')
         }}
+        onCompleteWayPress={() => {
+          console.log('onCompleteWayPress')
+        }}
       />
     }
 
