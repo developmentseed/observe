@@ -13,9 +13,15 @@ const MenuWrapper = styled.View`
   background-color: white;
   bottom: 0;
   width: 100%;
-  padding-left: 10;
-  padding-right: 10;
-  padding-bottom: 15;
+  padding-left: 16;
+  padding-right: 16;
+  padding-bottom: 16;
+  padding-top: 8;
+  elevation: 1;
+  shadowOffset: { width: 5, height: -5 };
+  shadowColor: ${colors.baseMuted};
+  shadowOpacity: 0.5;
+  shadowRadius: 10;
 `
 
 const AddNodeButton = styled.TouchableHighlight`
@@ -25,11 +31,12 @@ const AddNodeButton = styled.TouchableHighlight`
   background-color: white;
   justify-content: center;
   align-items: center;
-  elevation: 2;
-  shadow-color: ${colors.base};
-  shadow-opacity: 0.7;
+  elevation: 3;
+  shadow-color: ${colors.primary};
+  shadow-opacity: 0.4;
   shadow-offset: 0px 0px;
-  margin-top: -10;
+  shadowRadius: 3;
+  margin-top: -16;
 `
 
 const AnimatedTouchable = Animated.createAnimatedComponent(TouchableHighlight)
@@ -37,9 +44,9 @@ const AnimatedTouchable = Animated.createAnimatedComponent(TouchableHighlight)
 const ActionButton = styled(AnimatedTouchable)`
   width: 48;
   height: 48;
-  margin-bottom: 8;
   justify-content: center;
   align-items: center;
+  border-radius: 100;
 `
 
 const CompleteWayButton = styled.TouchableHighlight`
@@ -71,24 +78,24 @@ class WayEditingOverlay extends React.Component {
 
     return (
       <>
-        <CompleteWayButton onPress={onCompleteWayPress}>
+        <CompleteWayButton onPress={onCompleteWayPress} underlayColor={colors.base}>
           <Icon name='tick' size={20} color='#FFFFFF' />
         </CompleteWayButton>
         <MenuWrapper>
-          <ActionButton onPress={onDeleteNodePress}>
-            <Icon name='trash-bin' size={20} color='#6579FC' />
+          <ActionButton onPress={onDeleteNodePress} underlayColor='#E4E6F2'>
+            <Icon name='trash-bin' size={24} color={colors.primary} />
           </ActionButton>
-          <ActionButton onPress={onUndoPress}>
-            <Icon name='arrow-semi-spin-ccw' size={20} color='#6579FC' />
+          <ActionButton onPress={onUndoPress} underlayColor='#E4E6F2'>
+            <Icon name='arrow-semi-spin-ccw' size={24} color={colors.primary} />
           </ActionButton>
-          <AddNodeButton onPress={onAddNodePress}>
-            <Icon name='plus' size={20} color='#6579FC' />
+          <AddNodeButton onPress={onAddNodePress} underlayColor='#E4E6F2'>
+            <Icon name='plus' size={24} color={colors.primary} />
           </AddNodeButton>
-          <ActionButton onPress={onRedoPress}>
-            <Icon name='arrow-semi-spin-cw' size={20} color='#6579FC' />
+          <ActionButton onPress={onRedoPress} underlayColor='#E4E6F2'>
+            <Icon name='arrow-semi-spin-cw' size={24} color={colors.primary} />
           </ActionButton>
-          <ActionButton onPress={onMoveNodePress}>
-            <Icon name='arrow-move' size={20} color='#6579FC' />
+          <ActionButton onPress={onMoveNodePress} underlayColor='#E4E6F2'>
+            <Icon name='arrow-move' size={24} color={colors.primary} />
           </ActionButton>
         </MenuWrapper>
       </>
