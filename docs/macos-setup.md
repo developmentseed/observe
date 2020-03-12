@@ -78,6 +78,7 @@ Follow the instructions under the tab "Building Projects with Native Code" for i
 ### Run the project in a simulator
 
 ```
+react-native start
 react-native run-ios
 ```
 
