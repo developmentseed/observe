@@ -3,7 +3,7 @@
 ## Prepare TTF
 
 We use Development Seed's Collecticons across Observe. To update with a new set of Collecticons, follow these steps:
-1. Download the archive of SVG icons from http://collecticons.io
+1. Update the version of collecticons-lib
 2. Go to https://icomoon.io/app
 3. Create a new set, and upload all the collecticons SVGs
 4. Click 'Generate Font'
