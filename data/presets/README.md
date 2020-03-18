@@ -6,6 +6,10 @@ Observe presets and field types are based on the iD editor. They are defined in 
 
 New presets can be added to the `data/presets/presets` directory by following the guidelines below. Once you add or remove a preset, run `yarn build-presets` to update `app/presets/presets.json`, `app/presets/fields.json`, and `app/presets/categories.json`
 
+## Icons
+
+Observe uses icons from Maki, Temaki and Fontawesome just like iD. To update and prepare these run the `update-icons.sh` script. After this, new icons should be added to `icons.js`.
+
 #### Preset Files
 
 Presets are defined in JSON files located under `data/presets/presets`.  They're organized in a
