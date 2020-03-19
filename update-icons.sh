@@ -13,7 +13,9 @@ find . -name '*-11.svg' | xargs sed -i -e "s/<path /<path fill='#FFF' /"
 echo 'Convert svgs to 64x64 png'
 find . -name '*-11.svg' | xargs -n 1 basename |
 while read file; do
-  cat $file | convert-svg-to-png --height 64 --width 64 --filename "maki-${file%-11.svg}.png"
+  filename="maki-${file%-11.svg}.png"
+  filename=${filename//-/_}
+  cat $file | convert-svg-to-png --height 64 --width 64 --filename "/tmp/$filename"
 done
 
 echo 'Clone temaki'
@@ -27,7 +29,9 @@ echo 'Convert svgs to pngs'
 
 find . -name '*.svg' | xargs -n 1 basename |
 while read file; do
-  cat $file | convert-svg-to-png --height 64 --width 64 --filename "temaki-${file%.svg}.png"
+  filename="temaki-${file%.svg}.png"
+  filename=${filename//-/_}
+  cat $file | convert-svg-to-png --height 64 --width 64 --filename $filename
 done
 
 echo 'Prepare fontawesome'
@@ -40,7 +44,9 @@ find . -name '*.svg' | xargs sed -i -e "s/<path /<path fill='#FFF' /"
 echo 'Convert svgs to 64x64 png'
 find . -name '*.svg' | xargs -n 1 basename |
 while read file; do
-  cat $file | convert-svg-to-png --height 64 --width 64 --filename "${file%.svg}.png"
+  filename="${file%.svg}.png"
+  filename=${filename//-/_}
+  cat $file | convert-svg-to-png --height 64 --width 64 --filename $filename
 done
 
 echo 'Copy icons to Observe...'
@@ -66,3 +72,4 @@ rm -rf /tmp/fas_observe
 rm -rf /tmp/maki
 rm -rf /tmp/temaki
 rm -rf /tmp/iD
+
