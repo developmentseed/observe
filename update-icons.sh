@@ -15,7 +15,7 @@ find . -name '*-11.svg' | xargs -n 1 basename |
 while read file; do
   filename="maki-${file%-11.svg}.png"
   filename=${filename//-/_}
-  cat $file | convert-svg-to-png --height 64 --width 64 --filename "/tmp/$filename"
+  cat $file | convert-svg-to-png --height 64 --width 64 --filename $filename
 done
 
 echo 'Clone temaki'
@@ -73,3 +73,5 @@ rm -rf /tmp/maki
 rm -rf /tmp/temaki
 rm -rf /tmp/iD
 
+# update links
+. scripts/link-icons.sh
