@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 
 ASSETS_DIR=${PWD}/app/assets
+
 IOS_DIR=${PWD}/ios/Observe/Images.xcassets
 IOS_TEMP=${PWD}/ios/Observe/Images.xcassets-temp
+IOS_ICONS_PATH=../../../app/assets
+
 ANDROID_DIR=${PWD}/android/app/src/main/res/drawable-xxhdpi
+ANDROID_ICONS_PATH=../../../../../../app/assets
 
 ICON_DIRS="${ASSETS_DIR}/fontawesome/*.png
 ${ASSETS_DIR}/maki/*.png
@@ -25,12 +29,15 @@ mkdir $ANDROID_DIR
 
 for file in $ICON_DIRS
 do
-  echo "Linking $file"
+  FILENAME=`basename $file`
+  echo "Linking $FILENAME"
 
   # android
+  ANDROID_FILEPATH=${ANDROID_ICONS_PATH}/${FILENAME}
   ln -s $file $ANDROID_DIR
 
   # ios
+  IOS_FILEPATH=${IOS_ICONS_PATH}/${FILENAME}
   FILENAME=`basename $file`
   IMAGESET_DIRNAME=`basename $file .png`
   IMAGESET_PATH=${IOS_DIR}/${IMAGESET_DIRNAME}.imageset
