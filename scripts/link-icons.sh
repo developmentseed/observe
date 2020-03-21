@@ -4,7 +4,7 @@ ASSETS_DIR=${PWD}/app/assets
 
 IOS_DIR=${PWD}/ios/Observe/Images.xcassets
 IOS_TEMP=${PWD}/ios/Observe/Images.xcassets-temp
-IOS_ICONS_PATH=../../../app/assets
+IOS_ICONS_PATH=../../../../app/assets
 
 ANDROID_DIR=${PWD}/android/app/src/main/res/drawable-xxhdpi
 ANDROID_ICONS_PATH=../../../../../../app/assets
@@ -30,14 +30,15 @@ mkdir $ANDROID_DIR
 for file in $ICON_DIRS
 do
   FILENAME=`basename $file`
-  echo "Linking $FILENAME"
+  PARENT_DIR=`basename $(dirname $file)`
+  echo "Linking $PARENT_DIR/$FILENAME"
 
   # android
-  ANDROID_FILEPATH=${ANDROID_ICONS_PATH}/${FILENAME}
-  ln -s $file $ANDROID_DIR
+  ANDROID_FILEPATH=${ANDROID_ICONS_PATH}/${PARENT_DIR}/${FILENAME}
+  ln -s $ANDROID_FILEPATH $ANDROID_DIR
 
   # ios
-  IOS_FILEPATH=${IOS_ICONS_PATH}/${FILENAME}
+  IOS_FILEPATH=${IOS_ICONS_PATH}/${PARENT_DIR}/${FILENAME}
   FILENAME=`basename $file`
   IMAGESET_DIRNAME=`basename $file .png`
   IMAGESET_PATH=${IOS_DIR}/${IMAGESET_DIRNAME}.imageset
@@ -45,7 +46,7 @@ do
 
   mkdir $IMAGESET_PATH
   node ./scripts/create-ios-icon-contents.js $CONTENTS_FILEPATH $FILENAME
-  ln -s $file $IMAGESET_PATH
+  ln -s $IOS_FILEPATH $IMAGESET_PATH
 done
 
 # remove temp
