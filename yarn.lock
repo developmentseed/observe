@@ -2736,6 +2736,11 @@ collapse-white-space@^1.0.0, collapse-white-space@^1.0.2:
   resolved "https://registry.yarnpkg.com/collapse-white-space/-/collapse-white-space-1.0.5.tgz#c2495b699ab1ed380d29a1091e01063e75dbbe3a"
   integrity sha512-703bOOmytCYAX9cXYqoikYIx6twmFCXsnzRQheBcTG3nzKYBR4P/+wkYeH+Mvj7qUz8zZDtdyzbxfnEi/kYzRQ==
 
+collecticons-lib@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/collecticons-lib/-/collecticons-lib-2.2.0.tgz#030ccbd5548f9524322f07c2db2fffc546f8abff"
+  integrity sha512-CZMlA74WOxOF0aqaZa3XLhV+mrY0mueNHf4FgBxGikRT/tp3/iEwISx+B709uZ51g27HHJDNvk/cfO5V1aa7kA==
+
 collection-visit@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/collection-visit/-/collection-visit-1.0.0.tgz#4bc0373c164bc3291b4d368c829cf1a80a59dca0"

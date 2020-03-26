@@ -1,9 +1,7 @@
 import React from 'react'
-import { Dimensions } from 'react-native'
 import styled from 'styled-components/native'
-
+import { Dimensions } from 'react-native'
 import Icon from './Collecticons'
-
 import { colors } from '../style/variables'
 
 const win = Dimensions.get('window')
@@ -11,23 +9,25 @@ const win = Dimensions.get('window')
 const Button = styled.TouchableHighlight`
   position: absolute;
   border-radius: ${Math.round(win.width + win.height) / 2};
-  width: 56;
-  height: 56;
+  width: 48;
+  height: 48;
   background-color: ${colors.primary};
   right: 16;
-  bottom: 16;
+  bottom: 136;
   justify-content: center;
   align-items: center;
-  shadow-color: grey;
+  shadow-color: ${colors.baseAlpha};
   shadow-opacity: 0.7;
   shadow-offset: 0px 0px;
+  elevation: 1;
 `
 
-export default class AddButton extends React.Component {
+export class AddWayButton extends React.Component {
   render () {
+    // TODO: use a more appropriate icon rather than a share icon, but hey it looks close to right
     return (
       <Button underlayColor='#333' onPress={this.props.onPress}>
-        <Icon name={this.props.icon} size={16} color='white' />
+        <Icon name='share-2' size={20} color='#FFFFFF' />
       </Button>
     )
   }

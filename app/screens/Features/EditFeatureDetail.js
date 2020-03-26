@@ -31,6 +31,7 @@ import { colors } from '../../style/variables'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { getPhotosForFeature } from '../../utils/photos'
 import PhotoGrid from '../../components/PhotoGrid'
+import { modes } from '../../utils/map-modes'
 
 const FieldsList = styled.FlatList`
 `
@@ -187,7 +188,7 @@ class EditFeatureDetail extends React.Component {
     this.props.editFeature(feature, newFeature, changesetComment)
     this.props.uploadEdits([feature.id])
 
-    navigation.navigate('Explore', { message: 'Your edit is being processed.', mode: 'explore' })
+    navigation.navigate('Explore', { message: 'Your edit is being processed.', mode: modes.EXPLORE })
   }
 
   getNewFeature () {

@@ -25,6 +25,7 @@ import TagEditor from '../../components/TagEditor'
 import { getParentPreset } from '../../utils/get-parent-preset'
 import { colors } from '../../style/variables'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { modes } from '../../utils/map-modes'
 
 const FieldsList = styled.FlatList`
 `
@@ -154,7 +155,7 @@ class EditFeatureDetail extends React.Component {
 
     // call action to attempt to upload the edit
     this.props.uploadEdits([feature.id])
-    navigation.navigate('Explore', { message: 'Your edit is being processed.', mode: 'explore' })
+    navigation.navigate('Explore', { message: 'Your edit is being processed.', mode: modes.EXPLORE })
   }
 
   isFeatureEmpty () {
