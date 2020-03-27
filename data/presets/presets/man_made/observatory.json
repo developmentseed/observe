@@ -1,0 +1,28 @@
+{
+    "fields": [
+        "name",
+        "operator",
+        "address",
+        "access_simple",
+        "building_area"
+    ],
+    "moreFields": [
+        "email",
+        "fax",
+        "gnis/feature_id",
+        "phone",
+        "website"
+    ],
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "terms": [
+        "astronomical",
+        "meteorological"
+    ],
+    "tags": {
+        "man_made": "observatory"
+    },
+    "name": "Observatory"
+}

@@ -9,6 +9,8 @@
     ],
     "moreFields": [
         "covered",
+        "fishing",
+        "gnis/feature_id",
         "salt"
     ],
     "geometry": [

@@ -1,24 +1,30 @@
 {
-    "icon": "maki-school",
+    "icon": "temaki-school",
     "fields": [
         "name",
         "operator",
+        "operator/type",
         "address",
         "religion",
         "denomination",
         "website"
     ],
     "moreFields": [
-        "internet_access",
-        "internet_access/ssid",
-        "phone",
+        "charge_fee",
         "email",
         "fax",
+        "fee",
+        "gnis/feature_id",
+        "internet_access",
+        "internet_access/ssid",
+        "level",
+        "phone",
+        "polling_station",
         "wheelchair"
     ],
     "geometry": [
-        "point",
-        "area"
+        "area",
+        "point"
     ],
     "terms": [
         "academy",

@@ -1,5 +1,5 @@
 {
-    "icon": "maki-car",
+    "icon": "temaki-junk_car",
     "fields": [
         "name",
         "operator",
@@ -14,10 +14,6 @@
         "industrial": "scrap_yard"
     },
     "addTags": {
-        "landuse": "industrial",
-        "industrial": "scrap_yard"
-    },
-    "removeTags": {
         "landuse": "industrial",
         "industrial": "scrap_yard"
     },

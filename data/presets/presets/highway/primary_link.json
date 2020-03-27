@@ -11,19 +11,25 @@
         "access"
     ],
     "moreFields": [
+        "charge_toll",
         "covered",
         "cycleway",
         "destination/symbol_oneway",
-        "junction/ref_oneway",
+        "flood_prone",
+        "incline",
         "junction_line",
+        "junction/ref_oneway",
         "lit",
         "maxheight",
         "maxspeed/advisory",
+        "maxweight_bridge",
         "name",
         "oneway/bicycle",
         "ref_road_number",
         "smoothness",
-        "toll"
+        "toll",
+        "trolley_wire",
+        "width"
     ],
     "geometry": [
         "line"

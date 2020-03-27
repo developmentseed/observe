@@ -5,7 +5,9 @@
         "vertex"
     ],
     "fields": [
-        "name"
+        "name",
+        "level",
+        "wheelchair"
     ],
     "tags": {
         "railway": "subway_entrance"

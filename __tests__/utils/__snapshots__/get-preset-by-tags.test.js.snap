@@ -3,30 +3,20 @@
 exports[`get preset by tags 1`] = `
 Object {
   "fields": Array [
-    "name",
-    "building",
-    "levels",
-    "height",
-    "address",
+    "{building}",
   ],
   "geometry": Array [
     "point",
-    "area",
   ],
   "icon": "maki-home",
   "matchScore": 0.6,
   "moreFields": Array [
-    "architect",
-    "building/material",
-    "layer",
-    "roof/colour",
-    "smoking",
-    "wheelchair",
+    "{building}",
   ],
   "name": "Building",
+  "searchable": false,
   "tags": Object {
     "building": "*",
   },
-  "terms": Array [],
 }
 `;
