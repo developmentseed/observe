@@ -2,6 +2,7 @@
     "icon": "temaki-light_rail",
     "fields": [
         "name",
+        "operator",
         "structure",
         "gauge",
         "electrified",
@@ -11,6 +12,7 @@
     "moreFields": [
         "covered",
         "frequency_electrified",
+        "incline",
         "maxspeed",
         "voltage_electrified"
     ],

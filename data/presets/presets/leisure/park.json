@@ -1,5 +1,5 @@
 {
-    "icon": "maki-park",
+    "icon": "temaki-tree_and_bench",
     "fields": [
         "name",
         "operator",
@@ -8,15 +8,16 @@
     ],
     "moreFields": [
         "dog",
-        "smoking",
-        "website",
-        "phone",
         "email",
-        "fax"
+        "fax",
+        "gnis/feature_id",
+        "phone",
+        "smoking",
+        "website"
     ],
     "geometry": [
-        "point",
-        "area"
+        "area",
+        "point"
     ],
     "terms": [
         "esplanade",

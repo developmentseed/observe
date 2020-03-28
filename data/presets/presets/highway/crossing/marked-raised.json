@@ -1,14 +1,19 @@
 {
-    "icon": "temaki-pedestrian",
+    "icon": "temaki-pedestrian_crosswalk",
     "fields": [
         "crossing",
-        "kerb",
-        "tactile_paving"
+        "tactile_paving",
+        "crossing/island"
     ],
     "geometry": [
         "vertex"
     ],
     "tags": {
+        "highway": "crossing",
+        "crossing": "marked",
+        "traffic_calming": "table"
+    },
+    "addTags": {
         "highway": "crossing",
         "crossing": "marked",
         "traffic_calming": "table"

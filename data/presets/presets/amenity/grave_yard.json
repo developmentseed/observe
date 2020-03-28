@@ -5,10 +5,11 @@
         "address"
     ],
     "moreFields": [
-        "website",
-        "phone",
         "email",
-        "fax"
+        "fax",
+        "gnis/feature_id",
+        "phone",
+        "website"
     ],
     "geometry": [
         "point",
@@ -17,5 +18,16 @@
     "tags": {
         "amenity": "grave_yard"
     },
+    "terms": [
+        "burial ground",
+        "cemetary",
+        "cemetery",
+        "churchyard",
+        "columbarium",
+        "grave yard",
+        "graveyard",
+        "mausoleum",
+        "tomb"
+    ],
     "name": "Graveyard"
 }

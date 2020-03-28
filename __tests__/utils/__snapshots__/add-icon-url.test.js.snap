@@ -196,7 +196,7 @@ Array [
     "id": "node/597072518",
     "properties": Object {
       "changeset": "52882927",
-      "icon": "maki_marker",
+      "icon": "maki_triangle_stroked",
       "id": "node/597072518",
       "is_in": "Bengaluru",
       "name": "MacIvor Town",
@@ -243,7 +243,7 @@ Array [
     "properties": Object {
       "amenity": "pharmacy",
       "changeset": "9429472",
-      "icon": "maki_marker",
+      "icon": "maki_pharmacy",
       "id": "node/1449018888",
       "name": "Residency Pharmacy",
       "timestamp": "2011-09-29T18:38:45Z",
@@ -265,7 +265,7 @@ Array [
     "properties": Object {
       "amenity": "bar",
       "changeset": "67663479",
-      "icon": "maki_marker",
+      "icon": "maki_bar",
       "id": "node/1474007532",
       "name": "Bangalore Club",
       "name:kn": "ಬೆಂಗಳೂರು ಕ್ಲಬ್",
@@ -337,7 +337,7 @@ Array [
     "properties": Object {
       "amenity": "fuel",
       "changeset": "12609941",
-      "icon": "maki_marker",
+      "icon": "maki_fuel",
       "id": "node/1851629517",
       "timestamp": "2012-08-04T14:43:06Z",
       "uid": "781420",
@@ -669,7 +669,7 @@ Array [
     "properties": Object {
       "amenity": "clinic",
       "changeset": "60798521",
-      "icon": "maki_marker",
+      "icon": "maki_doctor",
       "id": "node/3862550432",
       "level": "2",
       "name": "Dr. Patel's Homeopathy Clinic",
@@ -768,7 +768,7 @@ Array [
     "properties": Object {
       "addr:postcode": "560025",
       "changeset": "67865759",
-      "icon": "maki_shop",
+      "icon": "fas_plug",
       "id": "node/4866328821",
       "name": "The Bose Service Centre",
       "name:en": "The Bose Service Centre",
@@ -795,7 +795,7 @@ Array [
     "id": "node/4307623411",
     "properties": Object {
       "changeset": "40802522",
-      "icon": "maki_marker",
+      "icon": "maki_lodging",
       "id": "node/4307623411",
       "name": "Thomas manor",
       "timestamp": "2016-07-17T17:20:30Z",
@@ -818,7 +818,7 @@ Array [
     "properties": Object {
       "barrier": "gate",
       "changeset": "41873613",
-      "icon": "maki_marker",
+      "icon": "temaki_gate",
       "id": "node/4381063051",
       "timestamp": "2016-09-02T17:33:40Z",
       "uid": "1306",
@@ -839,7 +839,7 @@ Array [
     "properties": Object {
       "amenity": "fountain",
       "changeset": "41873613",
-      "icon": "maki_marker",
+      "icon": "temaki_fountain",
       "id": "node/4381065701",
       "timestamp": "2016-09-02T17:33:40Z",
       "uid": "1306",
@@ -860,7 +860,7 @@ Array [
     "properties": Object {
       "amenity": "theatre",
       "changeset": "42072301",
-      "icon": "maki_marker",
+      "icon": "maki_theatre",
       "id": "node/4395689916",
       "name": "Montgomery Hall",
       "name:en": "Montgomery Hall",
@@ -887,7 +887,7 @@ Array [
       "addr:street": "2nd Floor, Rich Homes, Richmond Road, Shanthala Nagar, Ashok Nagar, Shanthala Nagar, Ashok Nagar",
       "amenity": "pharmacy",
       "changeset": "42877055",
-      "icon": "maki_marker",
+      "icon": "maki_pharmacy",
       "id": "node/4446442047",
       "name": "Bangalore Fetal Medicine Centre",
       "phone": "080 2221 0540",
@@ -1110,7 +1110,7 @@ Array [
       "addr:street": "Richmond Road",
       "amenity": "coworking_space",
       "changeset": "44226459",
-      "icon": "maki_marker",
+      "icon": "maki_commercial",
       "id": "node/4542473044",
       "name": "Jaaga Startup",
       "opening_hours": "9:00-18:30",
@@ -1183,7 +1183,7 @@ Array [
     "properties": Object {
       "amenity": "school",
       "changeset": "53789840",
-      "icon": "maki_school",
+      "icon": "temaki_school",
       "id": "node/4843123825",
       "name": "Logic Option",
       "name:en": "Logic option",
@@ -1228,7 +1228,7 @@ Array [
     "id": "node/4846789721",
     "properties": Object {
       "changeset": "48578400",
-      "icon": "maki_marker",
+      "icon": "fas_concierge_bell",
       "id": "node/4846789721",
       "name": "Prestige Poseidon",
       "name:en": "Prestige Poseidon",
@@ -1299,7 +1299,7 @@ Array [
       "addr:city": "Bengaluru",
       "amenity": "bar",
       "changeset": "53375761",
-      "icon": "maki_marker",
+      "icon": "maki_bar",
       "id": "node/5200633856",
       "name": "Sanctum Pub",
       "operator": "Elixir Hospitality",
@@ -1344,7 +1344,7 @@ Array [
     "id": "node/5229454409",
     "properties": Object {
       "changeset": "53789840",
-      "icon": "maki_shop",
+      "icon": "fas_plug",
       "id": "node/5229454409",
       "name": "Philips Light Lounge",
       "shop": "electronics",
@@ -1392,7 +1392,7 @@ Array [
       "addr:street": "Lalbagh Road",
       "amenity": "pharmacy",
       "changeset": "53789840",
-      "icon": "maki_marker",
+      "icon": "maki_pharmacy",
       "id": "node/4446962739",
       "name": "Central Lab",
       "phone": "+9180 222 37370",
@@ -1458,7 +1458,7 @@ Array [
     "properties": Object {
       "amenity": "dentist",
       "changeset": "56227913",
-      "icon": "maki_marker",
+      "icon": "maki_dentist",
       "id": "node/5402224036",
       "timestamp": "2018-02-09T21:10:14Z",
       "uid": "239546",

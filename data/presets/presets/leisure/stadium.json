@@ -2,14 +2,16 @@
     "icon": "maki-pitch",
     "fields": [
         "name",
+        "operator",
         "sport",
         "address"
     ],
     "moreFields": [
-        "website",
-        "phone",
         "email",
-        "fax"    
+        "fax",
+        "gnis/feature_id",
+        "phone",
+        "website"
     ],
     "geometry": [
         "point",

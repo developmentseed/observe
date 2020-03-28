@@ -3,23 +3,25 @@
     "fields": [
         "name",
         "operator",
+        "operator/type",
         "healthcare/speciality",
         "address",
         "emergency"
     ],
     "moreFields": [
+        "email",
+        "fax",
+        "gnis/feature_id",
         "internet_access",
         "internet_access/fee",
         "internet_access/ssid",
-        "website",
         "phone",
-        "email",
-        "fax",
+        "website",
         "wheelchair"
     ],
     "geometry": [
-        "point",
-        "area"
+        "area",
+        "point"
     ],
     "terms": [
         "clinic",
@@ -38,10 +40,6 @@
         "amenity": "hospital"
     },
     "addTags": {
-        "amenity": "hospital",
-        "healthcare": "hospital"
-    },
-    "removeTags": {
         "amenity": "hospital",
         "healthcare": "hospital"
     },

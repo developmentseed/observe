@@ -9,11 +9,13 @@
         "horse_scale"
     ],
     "moreFields": [
-        "wheelchair",
-        "lit",
-        "smoothness",
         "covered",
-        "dog"
+        "dog",
+        "lit",
+        "maxweight_bridge",
+        "smoothness",
+        "stroller",
+        "wheelchair"
     ],
     "icon": "maki-horse-riding",
     "geometry": [

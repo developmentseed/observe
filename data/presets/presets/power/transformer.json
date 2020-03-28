@@ -1,5 +1,5 @@
 {
-    "icon": "temaki-power",
+    "icon": "temaki-power_transformer",
     "fields": [
         "ref",
         "operator",
@@ -11,6 +11,7 @@
     ],
     "moreFields": [
         "frequency",
+        "manufacturer",
         "voltage/primary",
         "voltage/secondary",
         "voltage/tertiary",
@@ -19,8 +20,7 @@
     ],
     "geometry": [
         "point",
-        "vertex",
-        "area"
+        "vertex"
     ],
     "tags": {
         "power": "transformer"

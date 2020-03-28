@@ -10,14 +10,28 @@
     ],
     "moreFields": [
         "address",
-        "website",
-        "phone",
         "email",
-        "fax"
+        "fax",
+        "phone",
+        "website"
     ],
     "tags": {
         "landuse": "religious"
     },
-    "terms": [],
+    "terms": [
+        "christian",
+        "churchyard",
+        "hindu",
+        "jewish",
+        "mosque",
+        "muslim",
+        "place of worship",
+        "shinto",
+        "sikh",
+        "taoist",
+        "temple",
+        "shrine",
+        "synagogue"
+    ],
     "name": "Religious Area"
 }

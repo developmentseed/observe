@@ -1,19 +1,14 @@
 {
     "icon": "maki-volleyball",
     "geometry": [
-        "point",
-        "area"
+        "area",
+        "point"
     ],
     "tags": {
         "leisure": "pitch",
         "sport": "beachvolleyball"
     },
     "addTags": {
-        "leisure": "pitch",
-        "sport": "beachvolleyball",
-        "surface": "sand"
-    },
-    "removeTags": {
         "leisure": "pitch",
         "sport": "beachvolleyball",
         "surface": "sand"

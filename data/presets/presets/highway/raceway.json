@@ -1,5 +1,5 @@
 {
-    "icon": "iD-highway-unclassified",
+    "icon": "fas-flag-checkered",
     "fields": [
         "name",
         "oneway",
@@ -11,7 +11,6 @@
         "structure"
     ],
     "geometry": [
-        "point",
         "line",
         "area"
     ],
@@ -31,5 +30,5 @@
         "race*",
         "track"
     ],
-    "name": "Racetrack (Motorsport)"
+    "name": "Motorsport Racetrack"
 }
