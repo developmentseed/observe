@@ -43,9 +43,23 @@ const Edit = styled.Text`
   font-size: 14;
 `
 
+const geometryTypeToEditMode = {
+  'Point': modes.EDIT_POINT,
+  'LineString': modes.EDIT_WAY,
+  'Polygon': modes.EDIT_WAY
+}
+
 export default class FeatureDetailHeader extends React.Component {
   state = {
     dialogVisible: false
+  }
+
+  onEditPress () {
+    const { feature, navigation } = this.props
+    const geometryType = feature.geometry.type
+    const mode = geometryTypeToEditMode[geometryType]
+
+    navigation.navigate('Explore', { feature, mode })
   }
 
   render () {
@@ -56,9 +70,6 @@ export default class FeatureDetailHeader extends React.Component {
     if (!preset) {
       preset = getPresetByTags(feature.properties) || getDefaultPreset(feature.geometry.type)
     }
-
-    const geometryType = feature.geometry.type
-    const coordinates = feature.geometry.coordinates
 
     const cancelDialog = () => {
       this.setState({ dialogVisible: false })
@@ -91,20 +102,21 @@ export default class FeatureDetailHeader extends React.Component {
           }
           <View>
             <PresetName>{preset.name}</PresetName>
-            {
-              geometryType === 'Point' && (
-                <Button
-                  onPress={() => {
-                    navigation.navigate('Explore', { feature, mode: modes.EDIT_POINT })
-                  }}
-                >
-                  <Coordinates>
-                    {coordinates[0].toFixed(3)}, {coordinates[1].toFixed(3)}
-                    <Edit> Edit coordinates</Edit>
-                  </Coordinates>
-                </Button>
-              )
-            }
+            <Button
+              onPress={() => {
+                this.onEditPress()
+              }}
+            >
+              <Coordinates>
+                {
+                /**
+                  TODO: bring back point coordinates
+                  or provide another way to get the raw coordinates
+                **/
+                }
+                <Edit>Edit coordinates</Edit>
+              </Coordinates>
+            </Button>
           </View>
         </Header>
         <ConfirmDialog visible={this.state.dialogVisible} cancel={cancelDialog} continue={changePreset} />

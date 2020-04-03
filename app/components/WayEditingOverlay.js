@@ -1,6 +1,14 @@
 import React from 'react'
 import styled from 'styled-components/native'
 import { TouchableHighlight, Animated } from 'react-native'
+import { connect } from 'react-redux'
+
+import {
+  editWayEnter,
+  addWayNode,
+  moveWayNode,
+  deleteWayNode
+} from '../actions/currentWayEdit'
 
 import { colors } from '../style/variables'
 import Icon from './Collecticons'
@@ -66,6 +74,10 @@ const CompleteWayButton = styled.TouchableHighlight`
 `
 
 class WayEditingOverlay extends React.Component {
+  onComponentDidMount () {
+    this.props.editWayEnter()
+  }
+
   render () {
     const {
       onDeleteNodePress,
@@ -103,4 +115,22 @@ class WayEditingOverlay extends React.Component {
   }
 }
 
-export default WayEditingOverlay
+const mapStateToProps = (state) => {
+  const { currentWayEdit } = state
+
+  return {
+    currentWayEdit
+  }
+}
+
+const mapDispatchToProps = {
+  editWayEnter,
+  addWayNode,
+  moveWayNode,
+  deleteWayNode
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(WayEditingOverlay)

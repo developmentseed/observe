@@ -385,6 +385,8 @@ class Explore extends React.Component {
 
     if (mode === modes.ADD_WAY || mode === modes.EDIT_WAY) {
       return <WayEditingOverlay
+        mode={mode}
+        editWayEnter={this.props.editWayEnter}
         onDeleteNodePress={() => {
           console.log('onDeleteNodePress')
         }}
