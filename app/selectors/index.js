@@ -239,5 +239,9 @@ export const getPhotosGeojson = state => {
 }
 
 export const getVisibleTiles = state => {
-  return bboxToTiles(state.map.visibleBounds)
+  if (state.map.visibleBounds) {
+    return bboxToTiles(state.map.visibleBounds)
+  } else {
+    return []
+  }
 }
