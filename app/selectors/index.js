@@ -237,3 +237,11 @@ export const getPhotosGeojson = state => {
 
   return photosGeojson
 }
+
+export const getVisibleTiles = state => {
+  if (state.map.visibleBounds) {
+    return bboxToTiles(state.map.visibleBounds)
+  } else {
+    return []
+  }
+}

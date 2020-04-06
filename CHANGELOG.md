@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v0.2.2] - 2020-02-21
+
+### Changed
+- Show pending edit upload status for photos and traces [`#186`](https://github.com/developmentseed/observe/pull/186)
+
+### Added
+- Store uploadedAt timestamp for traces and photos [`#184`](https://github.com/developmentseed/observe/pull/184)
+
+### Fixed
+- Make photo list sort consistent [`#185`](https://github.com/developmentseed/observe/pull/185)
+
+
 ## [v0.2.1] - 2020-02-14
 
 ### Changed

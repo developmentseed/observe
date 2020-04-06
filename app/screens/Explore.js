@@ -64,7 +64,8 @@ import {
   getCurrentTraceLength,
   getCurrentTraceStatus,
   getTracesGeojson,
-  getPhotosGeojson
+  getPhotosGeojson,
+  getVisibleTiles
 } from '../selectors'
 import BasemapModal from '../components/BasemapModal'
 import Icon from '../components/Collecticons'
@@ -717,7 +718,8 @@ const mapStateToProps = (state) => {
     style: state.map.style,
     photosGeojson: getPhotosGeojson(state),
     selectedPhotos: state.map.selectedPhotos,
-    nodesGeojson: state.map.nodes
+    nodesGeojson: state.map.nodes,
+    visibleTiles: getVisibleTiles(state)
   }
 }
 
