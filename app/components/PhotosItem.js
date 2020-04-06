@@ -74,7 +74,7 @@ class PhotosItem extends React.PureComponent {
       case 'uploading':
         return 'Uploading'
       case 'uploaded':
-        return 'Uploaded'
+        return `Uploaded at ${formatDate(item.uploadedAt)}`
       case 'pending':
         if (item.errors.length === 0 && item.featureId && item.featureId.search('observe') > -1) {
           return 'Waiting to upload associated feature...'
@@ -88,6 +88,9 @@ class PhotosItem extends React.PureComponent {
           const error = item.errors[item.errors.length - 1]
           return error.message
         }
+        break
+      case 'pending edit':
+        return 'Waiting to upload changes...'
     }
   }
 

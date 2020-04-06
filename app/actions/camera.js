@@ -104,8 +104,8 @@ export function uploadPendingPhotos () {
       dispatch(uploadingPhoto(photo))
       try {
         // FIXME: make sure the api method is returning the newId
-        const newId = await api.uploadPhoto(dispatch, photo)
-        dispatch(uploadedPhoto(photo.id, newId))
+        const { id, uploadedAt } = await api.uploadPhoto(dispatch, photo)
+        dispatch(uploadedPhoto(photo.id, id, uploadedAt))
       } catch (e) {
         dispatch(uploadPhotoFailed(photo, e))
       }
@@ -120,11 +120,12 @@ export function uploadingPhoto (photo) {
   }
 }
 
-export function uploadedPhoto (oldId, newId) {
+export function uploadedPhoto (oldId, newId, uploadedAt) {
   return {
     type: types.UPLOADED_PHOTO,
     oldId,
-    newId
+    newId,
+    uploadedAt
   }
 }
 
