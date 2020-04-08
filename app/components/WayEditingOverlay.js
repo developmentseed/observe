@@ -3,6 +3,8 @@ import styled from 'styled-components/native'
 import { TouchableHighlight, Animated } from 'react-native'
 import { connect } from 'react-redux'
 
+import getRandomId from '../utils/get-random-id'
+
 import {
   editWayEnter,
   addWayNode,
@@ -12,6 +14,16 @@ import {
 
 import { colors } from '../style/variables'
 import Icon from './Collecticons'
+
+import CrossHairOverlay from './CrosshairOverlay'
+
+const Container = styled.View`
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+`
 
 const MenuWrapper = styled.View`
   flex: 1;
@@ -78,39 +90,71 @@ class WayEditingOverlay extends React.Component {
     this.props.editWayEnter()
   }
 
-  render () {
-    const {
-      onDeleteNodePress,
-      onUndoPress,
-      onAddNodePress,
-      onRedoPress,
-      onMoveNodePress,
-      onCompleteWayPress
-    } = this.props
+  renderCrosshair () {
 
+  }
+
+  onDeleteNodePress () {
+
+  }
+
+  onUndoPress () {
+
+  }
+
+  async onAddNodePress () {
+    const center = await this.props.getMapCenter()
+    this.props.addWayNode(center)
+  }
+
+  onRedoPress () {
+
+  }
+
+  onMoveNodePress () {
+
+  }
+
+  onCompleteWayPress () {
+    const feature = {
+      type: 'Feature',
+      id: `node/${getRandomId()}`,
+      geometry: {
+        type: 'LineString',
+        coordinates: this.props.currentWayEdit.present.way.nodes
+      }
+    }
+
+    this.props.navigation.navigate('SelectFeatureType', { feature })
+  }
+
+  render () {
     return (
-      <>
-        <CompleteWayButton onPress={onCompleteWayPress} underlayColor={colors.base}>
+      <Container pointerEvents={Platform.OS === 'ios' ? 'box-none' : 'auto'}>
+        <CrossHairOverlay />
+
+        <CompleteWayButton onPress={() => this.onCompleteWayPress()} underlayColor={colors.base}>
           <Icon name='tick' size={20} color='#FFFFFF' />
         </CompleteWayButton>
+
         <MenuWrapper>
-          <ActionButton onPress={onDeleteNodePress} underlayColor='#E4E6F2'>
+          <ActionButton onPress={() => this.onDeleteNodePress()} underlayColor='#E4E6F2'>
             <Icon name='trash-bin' size={24} color={colors.primary} />
           </ActionButton>
-          <ActionButton onPress={onUndoPress} underlayColor='#E4E6F2'>
+          <ActionButton onPress={() => this.onUndoPress()} underlayColor='#E4E6F2'>
             <Icon name='arrow-semi-spin-ccw' size={24} color={colors.primary} />
           </ActionButton>
-          <AddNodeButton onPress={onAddNodePress} underlayColor='#E4E6F2'>
+          <AddNodeButton onPress={() => this.onAddNodePress()} underlayColor='#E4E6F2'>
             <Icon name='plus' size={24} color={colors.primary} />
           </AddNodeButton>
-          <ActionButton onPress={onRedoPress} underlayColor='#E4E6F2'>
+          <ActionButton onPress={() => this.onRedoPress()} underlayColor='#E4E6F2'>
             <Icon name='arrow-semi-spin-cw' size={24} color={colors.primary} />
           </ActionButton>
-          <ActionButton onPress={onMoveNodePress} underlayColor='#E4E6F2'>
+          <ActionButton onPress={() => this.onMoveNodePress()} underlayColor='#E4E6F2'>
             <Icon name='arrow-move' size={24} color={colors.primary} />
           </ActionButton>
         </MenuWrapper>
-      </>
+      </Container>
     )
   }
 }

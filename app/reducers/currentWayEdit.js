@@ -3,13 +3,11 @@ import undoable from 'redux-undo'
 import * as types from '../actions/actionTypes'
 
 const initialState = {
-  past: [],
-  present: {
+  mode: null,
+  way: {
     id: null, // id of way being edited
-    nodes: [],
-    actions: []
-  },
-  future: []
+    nodes: []
+  }
 }
 
 function currentWayEdit (state = initialState, action) {
@@ -19,19 +17,45 @@ function currentWayEdit (state = initialState, action) {
       const way = action.way
       // populate nodes
       console.log('way', way)
-      return state
+      return {
+        mode: state.mode,
+        way: { ...way }
+      }
     }
 
     case types.WAY_EDIT_MOVE_NODE: {
-      return state
+      return {
+        mode: state.mode,
+        way: { ...way }
+      }
     }
 
     case types.WAY_EDIT_ADD_NODE: {
-      return state
+      const { node } = action
+      const { way } = state
+
+      way.nodes.push(node)
+
+      console.log('way', way)
+      return {
+        mode: state.mode,
+        way: { ...way }
+      }
     }
 
     case types.WAY_EDIT_DELETE_NODE: {
-      return state
+      return {
+        mode: state.mode,
+        way: { ...way }
+      }
+    }
+
+    case types.WAY_EDIT_MODE_ADD: {
+      console.log('state', state)
+      return {
+        mode: 'add',
+        way: state.way
+      }
     }
   }
 

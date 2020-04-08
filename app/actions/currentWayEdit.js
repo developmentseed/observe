@@ -1,5 +1,11 @@
 import * as types from './actionTypes'
 
+export function setWayEditingMode (mode) {
+  return {
+    type: types.WAY_EDIT_MODE_ADD
+  }
+}
+
 export function editWayEnter (way) {
   return {
     type: types.WAY_EDIT_ENTER,
