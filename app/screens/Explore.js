@@ -371,6 +371,10 @@ class Explore extends React.Component {
     )
   }
 
+  async getMapCenter () {
+    return this.mapRef.getCenter()
+  }
+
   renderOverlay () {
     const { navigation, geojson, mode, currentTraceStatus } = this.props
 
@@ -387,24 +391,9 @@ class Explore extends React.Component {
     if (mode === modes.ADD_WAY || mode === modes.EDIT_WAY) {
       return <WayEditingOverlay
         mode={mode}
-        editWayEnter={this.props.editWayEnter}
-        onDeleteNodePress={() => {
-          console.log('onDeleteNodePress')
-        }}
-        onUndoPress={() => {
-          console.log('onUndoPress')
-        }}
-        onAddNodePress={() => {
-          console.log('onAddNodePress')
-        }}
-        onRedoPress={() => {
-          console.log('onRedoPress')
-        }}
-        onMoveNodePress={() => {
-          console.log('onMoveNodePress')
-        }}
-        onCompleteWayPress={() => {
-          console.log('onCompleteWayPress')
+        navigation={navigation}
+        getMapCenter={async () => {
+          return this.getMapCenter()
         }}
       />
     }
@@ -443,7 +432,8 @@ class Explore extends React.Component {
       style,
       photosGeojson,
       selectedPhotos,
-      nodesGeojson
+      nodesGeojson,
+      currentWayEdit
     } = this.props
     let selectedFeatureIds = null
     let selectedPhotoIds = null
@@ -676,6 +666,10 @@ class Explore extends React.Component {
                     <MapboxGL.ShapeSource id='nodesGeojsonSource' shape={nodesGeojson}>
                       <MapboxGL.CircleLayer id='nodes' style={style.osm.nodes} minZoomLevel={16} />
                     </MapboxGL.ShapeSource>
+                    { console.log(currentWayEdit.features[0])}
+                    <MapboxGL.ShapeSource id='currentWayEdit' shape={currentWayEdit}>
+                      <MapboxGL.LineLayer id='currentWayLine' style={style.osm.editedLines} minZoomLevel={16} />
+                    </MapboxGL.ShapeSource>
                   </StyledMap>
                 )
             }
@@ -719,7 +713,20 @@ const mapStateToProps = (state) => {
     photosGeojson: getPhotosGeojson(state),
     selectedPhotos: state.map.selectedPhotos,
     nodesGeojson: state.map.nodes,
-    visibleTiles: getVisibleTiles(state)
+    visibleTiles: getVisibleTiles(state),
+    currentWayEdit: ({
+      type: 'FeatureCollection',
+      properties: {},
+      features: [
+        {
+          type: 'Feature',
+          geometry: {
+            type: 'LineString',
+            coordinates: state.currentWayEdit.present.way.nodes
+          }
+        }
+      ]
+    })
   }
 }
 
