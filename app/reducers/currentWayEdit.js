@@ -1,4 +1,4 @@
-import undoable from 'redux-undo'
+import undoable from 'redux-undo/lib/index'
 
 import * as types from '../actions/actionTypes'
 
@@ -11,6 +11,7 @@ const initialState = {
 }
 
 function currentWayEdit (state = initialState, action) {
+  console.log('action', action.type, state)
   switch (action.type) {
     // receive a `way` and populate the currentWayEdit object
     case types.WAY_EDIT_ENTER: {
@@ -34,7 +35,7 @@ function currentWayEdit (state = initialState, action) {
       const { node } = action
       const { way } = state
 
-      way.nodes.push(node)
+      way.nodes = [...way.nodes, node]
 
       console.log('way', way)
       return {

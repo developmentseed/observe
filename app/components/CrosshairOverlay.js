@@ -7,8 +7,8 @@ const Container = styled.View`
   position: absolute;
   left: 50%;
   top: 50%;
-  margin-top: 28;
-  margin-left: -15;
+  margin-top: 17;
+  margin-left: -16;
 `
 
 const Crosshair = styled.Text``
