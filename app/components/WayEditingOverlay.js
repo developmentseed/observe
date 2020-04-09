@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components/native'
 import { TouchableHighlight, Animated } from 'react-native'
 import { connect } from 'react-redux'
+import { ActionCreators } from 'redux-undo'
 
 import getRandomId from '../utils/get-random-id'
 
@@ -99,7 +100,7 @@ class WayEditingOverlay extends React.Component {
   }
 
   onUndoPress () {
-
+    this.props.undo()
   }
 
   async onAddNodePress () {
@@ -108,7 +109,7 @@ class WayEditingOverlay extends React.Component {
   }
 
   onRedoPress () {
-
+    this.props.redo()
   }
 
   onMoveNodePress () {
@@ -161,7 +162,15 @@ class WayEditingOverlay extends React.Component {
 
 const mapStateToProps = (state) => {
   const { currentWayEdit } = state
-
+  console.log('past', currentWayEdit.past.length)
+  currentWayEdit.past.forEach((snapshot, i) => {
+    console.log('past way', i, 'nodes', snapshot.way.nodes.length)
+  })
+  console.log('future', currentWayEdit.future.length)
+  currentWayEdit.future.forEach((snapshot, i) => {
+    console.log('future way', i, 'nodes', snapshot.way.nodes.length)
+  })
+  console.log('present nodes', currentWayEdit.present.way.nodes.length)
   return {
     currentWayEdit
   }
@@ -171,7 +180,9 @@ const mapDispatchToProps = {
   editWayEnter,
   addWayNode,
   moveWayNode,
-  deleteWayNode
+  deleteWayNode,
+  undo: ActionCreators.undo,
+  redo: ActionCreators.redo
 }
 
 export default connect(
