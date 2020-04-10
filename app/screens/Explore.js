@@ -622,7 +622,6 @@ class Explore extends React.Component {
                       zoomLevel={12}
                       maxZoomLevel={19}
                       defaultSettings={{
-                        centerCoordinate: [0, 0],
                         zoomLevel: 12
                       }}
                       animationDuration={0}
@@ -689,6 +688,22 @@ class Explore extends React.Component {
 const mapStateToProps = (state) => {
   const { userDetails } = state.account
 
+  const currentWayEdit = {
+    type: 'FeatureCollection',
+    properties: {},
+    features: []
+  }
+
+  if (state.currentWayEdit.present.way.nodes.length) {
+    currentWayEdit.features.push({
+      type: 'Feature',
+      geometry: {
+        type: 'LineString',
+        coordinates: state.currentWayEdit.present.way.nodes
+      }
+    })
+  }
+
   return {
     geojson: getVisibleFeatures(state),
     isTracing: getIsTracing(state),
@@ -714,19 +729,7 @@ const mapStateToProps = (state) => {
     selectedPhotos: state.map.selectedPhotos,
     nodesGeojson: state.map.nodes,
     visibleTiles: getVisibleTiles(state),
-    currentWayEdit: ({
-      type: 'FeatureCollection',
-      properties: {},
-      features: [
-        {
-          type: 'Feature',
-          geometry: {
-            type: 'LineString',
-            coordinates: state.currentWayEdit.present.way.nodes
-          }
-        }
-      ]
-    })
+    currentWayEdit
   }
 }
 
