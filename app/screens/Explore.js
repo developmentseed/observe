@@ -622,6 +622,7 @@ class Explore extends React.Component {
                       zoomLevel={12}
                       maxZoomLevel={19}
                       defaultSettings={{
+                        centerCoordinate: [0, 0],
                         zoomLevel: 12
                       }}
                       animationDuration={0}
