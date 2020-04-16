@@ -109,3 +109,17 @@ Object {
   },
 }
 `;
+
+exports[`remove nodes for a tile 1`] = `null`;
+
+exports[`remove nodes for a tile 2`] = `
+Object {
+  "node/8548730": null,
+  "node/8548853": null,
+  "node/8548854": null,
+  "node/8548856": null,
+  "node/8548857": null,
+  "node/8548858": null,
+  "node/8548859": null,
+}
+`;
