@@ -61,7 +61,7 @@ export async function getNodesForTiles (tiles) {
 /**
  * Clear the async storage cache entirely
  */
-export async function purgeCache () {
+export async function purgeNodeCache () {
   try {
     await AsyncStorage.clear()
   } catch (error) {
@@ -73,7 +73,7 @@ export async function purgeCache () {
  * Remove nodes of a tile from the cache
  * @param {string} tile - tile id
  */
-export async function clearCacheForTile (tile) {
+export async function clearNodeCacheForTile (tile) {
   const keys = await getNodesForTile(tile)
   try {
     await AsyncStorage.multiRemove(keys)
