@@ -11,7 +11,7 @@ import * as types from './actionTypes'
 import { setNotification } from './notification'
 import { getOfflineResources, getOfflineResourceStatus, getPendingEviction } from '../selectors'
 import { saveDataForTile } from '../services/osm-api'
-import { addNodes } from '../services/nodecache'
+import { addNodes, clearNodeCacheForTile, purgeNodeCache } from '../services/nodecache'
 import { bboxToTiles } from '../utils/bbox'
 import cache from '../utils/data-cache'
 import { nodesGeojson } from '../utils/nodes-to-geojson'
@@ -33,7 +33,10 @@ export function purgeCache () {
       dispatch(deletePacks()),
 
       // delete cached OSM data
-      dispatch(clearData(true))
+      dispatch(clearData(true)),
+
+      // delete the nodecache
+      await purgeNodeCache()
     ])
 
     dispatch({
@@ -806,8 +809,12 @@ export function toggleOverlay (layer) {
 }
 
 export function evictedTile (tile) {
-  return {
-    type: types.EVICTED_TILE,
-    tile
+  return async (dispatch) => {
+    // clear the nodecache for this tile
+    await clearNodeCacheForTile(tile)
+    dispatch({
+      type: types.EVICTED_TILE,
+      tile
+    })
   }
 }

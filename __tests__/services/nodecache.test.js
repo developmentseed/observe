@@ -8,8 +8,8 @@ import {
   getNodes,
   getNodesForTile,
   getNodesForTiles,
-  clearCacheForTile,
-  purgeCache
+  clearNodeCacheForTile,
+  purgeNodeCache
 } from '../../app/services/nodecache'
 
 import nodes from '../fixtures/nodes.json'
@@ -42,7 +42,7 @@ test('get nodes for an array of tiles', async () => {
 })
 
 test('remove nodes for a tile', async () => {
-  await purgeCache()
+  await purgeNodeCache()
 
   const tile = '0320100322313212'
   const nodeIds = [ 'node/8548730',
@@ -54,7 +54,7 @@ test('remove nodes for a tile', async () => {
     'node/8548859' ]
   await addNodes(tile, nodes)
 
-  await clearCacheForTile(tile)
+  await clearNodeCacheForTile(tile)
   const dataForRemovedTile = await getNodesForTile(tile)
 
   const nodesFromCache = await getNodes(nodeIds)
