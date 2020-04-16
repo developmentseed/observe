@@ -57,3 +57,28 @@ export async function getNodesForTiles (tiles) {
     return Promise.resolve({ ...newMemo })
   }, Promise.resolve({}))
 }
+
+/**
+ * Clear the async storage cache entirely
+ */
+export async function purgeCache () {
+  try {
+    await AsyncStorage.clear()
+  } catch (error) {
+    console.error('Failed to purge async storage cache')
+  }
+}
+
+/**
+ * Remove nodes of a tile from the cache
+ * @param {string} tile - tile id
+ */
+export async function clearCacheForTile (tile) {
+  const keys = await getNodesForTile(tile)
+  try {
+    await AsyncStorage.multiRemove(keys)
+    await AsyncStorage.removeItem(tile)
+  } catch (error) {
+    console.error('Failed to remove node', error)
+  }
+}
