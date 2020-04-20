@@ -12,6 +12,8 @@ import ObserveIcon from '../../components/ObserveIcon'
 
 import { colors } from '../../style/variables'
 import { presets as starterPresets } from '../../presets/starter-presets.json'
+import { modeFeatureType } from '../../utils/map-modes'
+import _intersection from 'lodash.intersection'
 
 const win = Dimensions.get('window')
 
@@ -117,6 +119,7 @@ class SelectFeatureType extends React.Component {
   renderPresets () {
     const { presets, searchText } = this.state
 
+    // FIXME: starter presets should also have way presets
     const filteredPresets = this.getFilteredPresets(presets, searchText)
 
     return (
@@ -129,7 +132,7 @@ class SelectFeatureType extends React.Component {
   static getDerivedStateFromProps (props, state) {
     if (state.presets.length !== props.presets.length) {
       state.presets = objToArray(props.presets)
-        .filter((preset) => preset.geometry.includes('point'))
+        .filter((preset) => _intersection(preset.geometry, modeFeatureType[props.mode]).length)
         .sort((a, b) => {
           var nameA = a.name.toLowerCase()
           var nameB = b.name.toLowerCase()
@@ -182,7 +185,8 @@ class SelectFeatureType extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    presets: state.presets.presets
+    presets: state.presets.presets,
+    mode: state.map.mode
   }
 }
 
