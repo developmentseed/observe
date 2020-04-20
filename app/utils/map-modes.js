@@ -15,3 +15,10 @@ export const modeTitles = {
   EXPLORE: 'Explore',
   OFFLINE_TILES: 'Offline Maps'
 }
+
+export const modeFeatureType = {
+  ADD_POINT: [ 'point' ],
+  EDIT_POINT: [ 'point' ],
+  ADD_WAY: [ 'line', 'area' ],
+  EDIT_WAY: [ 'line', 'area' ]
+}

@@ -582,7 +582,7 @@ class Explore extends React.Component {
           onWillFocus={this.onWillFocus}
           onDidFocus={this.onDidFocus}
           onWillBlur={payload => {
-            if (payload.state.params && payload.state.params.mode === 'bbox') {
+            if (payload.state.params && payload.state.params.mode === modes.OFFLINE_TILES) {
               // reset params once this screen has been used in bbox mode
               navigation.setParams({
                 back: null,
