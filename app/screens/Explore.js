@@ -32,6 +32,10 @@ import {
 } from '../actions/edit'
 
 import {
+  setSelectedNode
+} from '../actions/wayEditing'
+
+import {
   setNotification
 } from '../actions/notification'
 
@@ -211,9 +215,17 @@ class Explore extends React.Component {
     this.props.updateVisibleBounds(visibleBounds, zoomLevel)
   }
 
-  onPress = e => {
+  onPress = async (e) => {
+    const { mode } = this.props
+
     const screenBbox = this.getBoundingBox([e.properties.screenPointX, e.properties.screenPointY])
-    this.loadFeaturesAtPoint(screenBbox)
+
+    if (mode === modes.ADD_WAY || mode === modes.EDIT_WAY) {
+      const { features } = await this.mapRef.queryRenderedFeaturesInRect(screenBbox, null, ['nodes'])
+      this.props.setSelectedNode(features[0])
+    } else {
+      this.loadFeaturesAtPoint(screenBbox)
+    }
   }
 
   onUserLocationUpdate = location => {
@@ -663,12 +675,13 @@ class Explore extends React.Component {
                       <MapboxGL.CircleLayer id='photosHalo' style={style.photos.photoIconHalo} minZoomLevel={16} />
                       <MapboxGL.SymbolLayer id='photos' style={style.photos.photoIcon} minZoomLevel={16} />
                     </MapboxGL.ShapeSource>
-                    <MapboxGL.ShapeSource id='nodesGeojsonSource' shape={nodesGeojson}>
-                      <MapboxGL.CircleLayer id='nodes' style={style.osm.nodes} minZoomLevel={16} />
-                    </MapboxGL.ShapeSource>
-                    { console.log(currentWayEdit.features[0])}
                     <MapboxGL.ShapeSource id='currentWayEdit' shape={currentWayEdit}>
                       <MapboxGL.LineLayer id='currentWayLine' style={style.osm.editedLines} minZoomLevel={16} />
+                    </MapboxGL.ShapeSource>
+                    <MapboxGL.ShapeSource id='nodesGeojsonSource' shape={nodesGeojson}>
+                      { // TODO: finish style/filter for selected node in a way that's being edited }
+                      <MapboxGL.CircleLayer id='nodeHaloSelected' style={style.photos.nodeIconSelected} filter={filters.nodeHaloSelected} minZoomLevel={16} />
+                      <MapboxGL.CircleLayer id='nodes' style={style.osm.nodes} minZoomLevel={16} />
                     </MapboxGL.ShapeSource>
                   </StyledMap>
                 )
@@ -695,15 +708,33 @@ const mapStateToProps = (state) => {
     features: []
   }
 
-  if (state.currentWayEdit.present.way.nodes.length) {
+  let nodes
+  if (state.wayEditingHistory.present.way && state.wayEditingHistory.present.way.nodes && state.wayEditingHistory.present.way.nodes.length) {
     currentWayEdit.features.push({
       type: 'Feature',
       geometry: {
         type: 'LineString',
-        coordinates: state.currentWayEdit.present.way.nodes
+        coordinates: state.wayEditingHistory.present.way.nodes
       }
     })
+    nodes = {
+      type: 'FeatureCollection',
+      properties: {},
+      features: state.wayEditingHistory.present.way.nodes.map((node) => {
+        return {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: node
+          }
+        }
+      })
+    }
+  } else {
+    nodes = state.map.nodes
   }
+
+  console.log('where the nodes', nodes && nodes.features)
 
   return {
     geojson: getVisibleFeatures(state),
@@ -728,7 +759,7 @@ const mapStateToProps = (state) => {
     style: state.map.style,
     photosGeojson: getPhotosGeojson(state),
     selectedPhotos: state.map.selectedPhotos,
-    nodesGeojson: state.map.nodes,
+    nodesGeojson: nodes,
     visibleTiles: getVisibleTiles(state),
     currentWayEdit
   }
@@ -751,7 +782,8 @@ const mapDispatchToProps = {
   pauseTrace,
   unpauseTrace,
   loadUserDetails,
-  setSelectedPhotos
+  setSelectedPhotos,
+  setSelectedNode
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Explore)
