@@ -124,6 +124,11 @@ export const OBSERVE_API_LOGOUT = 'OBSERVE_API_LOGOUT'
 // Actions for way editing
 export const WAY_EDIT_ENTER = 'WAY_EDIT_ENTER'
 export const WAY_EDIT_ADD_NODE = 'WAY_EDIT_ADD_NODE'
+export const WAY_SET_SELECTED_NODE = 'WAY_SET_SELECTED_NODE'
 export const WAY_EDIT_MOVE_NODE = 'WAY_EDIT_MOVE_NODE'
 export const WAY_EDIT_DELETE_NODE = 'WAY_EDIT_DELETE_NODE'
 export const WAY_EDIT_MODE_ADD = 'WAY_EDIT_MODE_ADD'
+
+// Undo/Redo functionality
+export const UNDOABLE_UNDO = 'UNDOABLE_UNDO'
+export const UNDOABLE_REDO = 'UNDOABLE_REDO'
