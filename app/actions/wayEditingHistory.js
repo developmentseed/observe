@@ -7,16 +7,17 @@ export function addNode (node) {
   }
 }
 
-export function moveSelectedNode (node) {
+export function moveSelectedNode (id, coordinates) {
   return {
     type: types.WAY_EDIT_MOVE_NODE,
-    node
+    id,
+    coordinates
   }
 }
 
-export function deleteSelectedNode (node) {
+export function deleteSelectedNode (id) {
   return {
     type: types.WAY_EDIT_DELETE_NODE,
-    node
+    id
   }
 }

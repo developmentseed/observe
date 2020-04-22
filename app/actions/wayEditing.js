@@ -6,10 +6,10 @@ export function setWayEditingMode (mode) {
   }
 }
 
-export function setSelectedNode (point) {
+export function setSelectedNode (node) {
   return {
     type: types.WAY_SET_SELECTED_NODE,
-    point
+    node
   }
 }
 

@@ -5,8 +5,30 @@ function wayEditingHistory (state = {}, action) {
   switch (action.type) {
     case types.WAY_EDIT_MOVE_NODE: {
       const { way } = state
+      const { id, coordinates } = action
+
+      const newWay = {
+        nodes: way.nodes.map((feature) => {
+          const newFeature = {
+            id: feature.id,
+            type: feature.type
+          }
+
+          if (id === feature.id) {
+            newFeature.geometry = {
+              type: feature.geometry.type,
+              coordinates
+            }
+          } else {
+            newFeature.geometry = feature.geometry
+          }
+
+          return newFeature
+        })
+      }
+
       return {
-        way: { ...way }
+        way: newWay
       }
     }
 
@@ -32,9 +54,16 @@ function wayEditingHistory (state = {}, action) {
 
     case types.WAY_EDIT_DELETE_NODE: {
       const { way } = state
+      const { id } = action
+
+      const newWay = {
+        nodes: way.nodes.filter((feature) => {
+          return id !== feature.id
+        })
+      }
 
       return {
-        way: { ...way }
+        way: newWay
       }
     }
   }
