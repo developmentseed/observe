@@ -714,27 +714,20 @@ const mapStateToProps = (state) => {
       type: 'Feature',
       geometry: {
         type: 'LineString',
-        coordinates: state.wayEditingHistory.present.way.nodes
+        coordinates: state.wayEditingHistory.present.way.nodes.map((point) => {
+          return point.geometry.coordinates
+        })
       }
     })
+
     nodes = {
       type: 'FeatureCollection',
       properties: {},
-      features: state.wayEditingHistory.present.way.nodes.map((node) => {
-        return {
-          type: 'Feature',
-          geometry: {
-            type: 'Point',
-            coordinates: node
-          }
-        }
-      })
+      features: state.wayEditingHistory.present.way.nodes
     }
   } else {
     nodes = state.map.nodes
   }
-
-  console.log('where the nodes', nodes && nodes.features)
 
   return {
     geojson: getVisibleFeatures(state),
@@ -761,7 +754,8 @@ const mapStateToProps = (state) => {
     selectedPhotos: state.map.selectedPhotos,
     nodesGeojson: nodes,
     visibleTiles: getVisibleTiles(state),
-    currentWayEdit
+    currentWayEdit,
+    selectedNode: state.wayEditing.selectedNode
   }
 }
 

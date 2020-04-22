@@ -96,7 +96,8 @@ class WayEditingOverlay extends React.Component {
   }
 
   onDeleteNodePress () {
-    this.props.deleteSelectedNode()
+    const id = this.props.wayEditing.selectedNode.id
+    this.props.deleteSelectedNode(id)
   }
 
   onUndoPress () {
@@ -105,22 +106,39 @@ class WayEditingOverlay extends React.Component {
 
   async onAddNodePress () {
     const center = await this.props.getMapCenter()
-    this.props.addNode(center)
+    const point = {
+      type: 'Feature',
+      id: getRandomId(),
+      geometry: {
+        type: 'Point',
+        coordinates: center
+      }
+    }
+
+    this.props.addNode(point)
   }
 
   onRedoPress () {
     this.props.redo()
   }
 
-  onMoveNodePress () {
-    this.props.moveSelectedNode()
+  async onMoveNodePress () {
+    const id = this.props.wayEditing.selectedNode.id
+    const center = await this.props.getMapCenter()
+    this.props.moveSelectedNode(id, center)
   }
 
   onCompleteWayPress () {
     if (this.props.wayEditingHistory.present.way) {
+      const nodes = this.props.wayEditingHistory.present.way.nodes.map((point) => {
+        return point.geometry.coordinates
+      })
+
+      console.log('onCompleteWayPress', nodes)
+
       const feature = {
         type: 'Feature',
-        id: `node/${getRandomId()}`,
+        id: `way/${getRandomId()}`,
         geometry: {
           type: 'LineString',
           coordinates: this.props.wayEditingHistory.present.way.nodes

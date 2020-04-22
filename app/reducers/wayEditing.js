@@ -14,6 +14,7 @@ function wayEditing (state = {}, action) {
 
     case types.WAY_SET_SELECTED_NODE: {
       const { node } = action
+      console.log('node', node)
       return {
         selectedNode: node,
         mode: state.mode,
