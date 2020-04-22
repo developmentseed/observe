@@ -445,7 +445,8 @@ class Explore extends React.Component {
       photosGeojson,
       selectedPhotos,
       nodesGeojson,
-      currentWayEdit
+      currentWayEdit,
+      selectedNode
     } = this.props
     let selectedFeatureIds = null
     let selectedPhotoIds = null
@@ -585,7 +586,24 @@ class Explore extends React.Component {
         ],
         selectedFeatureIds && selectedFeatureIds.nodes[2].length ? selectedFeatureIds.nodes : ['==', ['get', 'id'], '']
       ],
-      photosHaloSelected: selectedPhotoIds && selectedPhotoIds.length ? selectedPhotoIds : ['==', ['get', 'id'], '']
+      photosHaloSelected: selectedPhotoIds && selectedPhotoIds.length ? selectedPhotoIds : ['==', ['get', 'id'], ''],
+      nodeHalo: [
+        'all',
+        [
+          '==',
+          ['geometry-type'], 'Point'
+        ],
+        nodesGeojson && nodesGeojson.length ? nodesGeojson : ['match', ['get', 'id'], [''], false, true]
+      ],
+      nodeHaloSelected: [
+        'all',
+        [
+          '==',
+          ['geometry-type'], 'Point'
+        ],
+        selectedNode && selectedNode.id ? [selectedNode.id] : ['==', ['get', 'id'], ''],
+        nodesGeojson && nodesGeojson.length ? nodesGeojson : ['match', ['get', 'id'], [''], false, true]
+      ]
     }
 
     return (
@@ -679,8 +697,8 @@ class Explore extends React.Component {
                       <MapboxGL.LineLayer id='currentWayLine' style={style.osm.editedLines} minZoomLevel={16} />
                     </MapboxGL.ShapeSource>
                     <MapboxGL.ShapeSource id='nodesGeojsonSource' shape={nodesGeojson}>
-                      {/* // TODO: finish style/filter for selected node in a way that's being edited */}
-                      <MapboxGL.CircleLayer id='nodeHaloSelected' style={style.photos.nodeIconSelected} filter={filters.nodeHaloSelected} minZoomLevel={16} />
+                      <MapboxGL.CircleLayer id='nodeHalo' style={style.osm.iconHalo} minZoomLevel={16} filter={filters.nodeHalo} />
+                      <MapboxGL.CircleLayer id='nodeHaloSelected' style={style.osm.iconHaloSelected} minZoomLevel={16} filter={filters.nodeHaloSelected} />
                       <MapboxGL.CircleLayer id='nodes' style={style.osm.nodes} minZoomLevel={16} />
                     </MapboxGL.ShapeSource>
                   </StyledMap>
