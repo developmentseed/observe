@@ -106,12 +106,16 @@ class WayEditingOverlay extends React.Component {
 
   async onAddNodePress () {
     const center = await this.props.getMapCenter()
+    const id = getRandomId()
     const point = {
       type: 'Feature',
-      id: getRandomId(),
+      id: id,
       geometry: {
         type: 'Point',
         coordinates: center
+      },
+      properties: {
+        id: id
       }
     }
 

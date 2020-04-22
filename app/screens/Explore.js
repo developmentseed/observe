@@ -592,8 +592,7 @@ class Explore extends React.Component {
         [
           '==',
           ['geometry-type'], 'Point'
-        ],
-        nodesGeojson && nodesGeojson.length ? nodesGeojson : ['match', ['get', 'id'], [''], false, true]
+        ]
       ],
       nodeHaloSelected: [
         'all',
@@ -601,8 +600,7 @@ class Explore extends React.Component {
           '==',
           ['geometry-type'], 'Point'
         ],
-        selectedNode && selectedNode.id ? [selectedNode.id] : ['==', ['get', 'id'], ''],
-        nodesGeojson && nodesGeojson.length ? nodesGeojson : ['match', ['get', 'id'], [''], false, true]
+        selectedNode && selectedNode.id ? ['match', ['get', 'id'], [selectedNode.id], true, false] : ['==', ['get', 'id'], '']
       ]
     }
 
