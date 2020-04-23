@@ -1,9 +1,34 @@
 import React from 'react'
 import styled from 'styled-components/native'
-import { TouchableHighlight, Animated } from 'react-native'
+import { TouchableHighlight, Animated, Platform } from 'react-native'
+import { connect } from 'react-redux'
+
+import getRandomId from '../utils/get-random-id'
+
+import {
+  editWayEnter
+} from '../actions/wayEditing'
+
+import {
+  addNode,
+  moveSelectedNode,
+  deleteSelectedNode
+} from '../actions/wayEditingHistory'
+
+import { undo, redo } from '../actions/undoable'
 
 import { colors } from '../style/variables'
 import Icon from './Collecticons'
+
+import CrossHairOverlay from './CrosshairOverlay'
+
+const Container = styled.View`
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+`
 
 const MenuWrapper = styled.View`
   flex: 1;
@@ -66,41 +91,118 @@ const CompleteWayButton = styled.TouchableHighlight`
 `
 
 class WayEditingOverlay extends React.Component {
-  render () {
-    const {
-      onDeleteNodePress,
-      onUndoPress,
-      onAddNodePress,
-      onRedoPress,
-      onMoveNodePress,
-      onCompleteWayPress
-    } = this.props
+  onComponentDidMount () {
+    this.props.editWayEnter()
+  }
 
+  onDeleteNodePress () {
+    const id = this.props.wayEditing.selectedNode.id
+    this.props.deleteSelectedNode(id)
+  }
+
+  onUndoPress () {
+    this.props.undo()
+  }
+
+  async onAddNodePress () {
+    const center = await this.props.getMapCenter()
+    const id = getRandomId()
+    const point = {
+      type: 'Feature',
+      id: id,
+      geometry: {
+        type: 'Point',
+        coordinates: center
+      },
+      properties: {
+        id: id
+      }
+    }
+
+    this.props.addNode(point)
+  }
+
+  onRedoPress () {
+    this.props.redo()
+  }
+
+  async onMoveNodePress () {
+    const id = this.props.wayEditing.selectedNode.id
+    const center = await this.props.getMapCenter()
+    this.props.moveSelectedNode(id, center)
+  }
+
+  onCompleteWayPress () {
+    if (this.props.wayEditingHistory.present.way) {
+      const nodes = this.props.wayEditingHistory.present.way.nodes.map((point) => {
+        return point.geometry.coordinates
+      })
+
+      console.log('onCompleteWayPress', nodes)
+
+      const feature = {
+        type: 'Feature',
+        id: `way/${getRandomId()}`,
+        geometry: {
+          type: 'LineString',
+          coordinates: this.props.wayEditingHistory.present.way.nodes
+        }
+      }
+
+      this.props.navigation.navigate('SelectFeatureType', { feature })
+    }
+  }
+
+  render () {
     return (
-      <>
-        <CompleteWayButton onPress={onCompleteWayPress} underlayColor={colors.base}>
+      <Container pointerEvents={Platform.OS === 'ios' ? 'box-none' : 'auto'}>
+        <CrossHairOverlay />
+
+        <CompleteWayButton onPress={() => this.onCompleteWayPress()} underlayColor={colors.base}>
           <Icon name='tick' size={20} color='#FFFFFF' />
         </CompleteWayButton>
+
         <MenuWrapper>
-          <ActionButton onPress={onDeleteNodePress} underlayColor='#E4E6F2'>
+          <ActionButton onPress={() => this.onDeleteNodePress()} underlayColor='#E4E6F2'>
             <Icon name='trash-bin' size={24} color={colors.primary} />
           </ActionButton>
-          <ActionButton onPress={onUndoPress} underlayColor='#E4E6F2'>
+          <ActionButton onPress={() => this.onUndoPress()} underlayColor='#E4E6F2'>
             <Icon name='arrow-semi-spin-ccw' size={24} color={colors.primary} />
           </ActionButton>
-          <AddNodeButton onPress={onAddNodePress} underlayColor='#E4E6F2'>
+          <AddNodeButton onPress={() => this.onAddNodePress()} underlayColor='#E4E6F2'>
             <Icon name='plus' size={24} color={colors.primary} />
           </AddNodeButton>
-          <ActionButton onPress={onRedoPress} underlayColor='#E4E6F2'>
+          <ActionButton onPress={() => this.onRedoPress()} underlayColor='#E4E6F2'>
             <Icon name='arrow-semi-spin-cw' size={24} color={colors.primary} />
           </ActionButton>
-          <ActionButton onPress={onMoveNodePress} underlayColor='#E4E6F2'>
+          <ActionButton onPress={() => this.onMoveNodePress()} underlayColor='#E4E6F2'>
             <Icon name='arrow-move' size={24} color={colors.primary} />
           </ActionButton>
         </MenuWrapper>
-      </>
+      </Container>
     )
   }
 }
 
-export default WayEditingOverlay
+const mapStateToProps = (state) => {
+  const { wayEditing, wayEditingHistory } = state
+
+  return {
+    wayEditing,
+    wayEditingHistory
+  }
+}
+
+const mapDispatchToProps = {
+  editWayEnter,
+  addNode,
+  moveSelectedNode,
+  deleteSelectedNode,
+  undo,
+  redo
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(WayEditingOverlay)

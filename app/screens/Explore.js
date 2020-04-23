@@ -32,6 +32,10 @@ import {
 } from '../actions/edit'
 
 import {
+  setSelectedNode
+} from '../actions/wayEditing'
+
+import {
   setNotification
 } from '../actions/notification'
 
@@ -211,9 +215,17 @@ class Explore extends React.Component {
     this.props.updateVisibleBounds(visibleBounds, zoomLevel)
   }
 
-  onPress = e => {
+  onPress = async (e) => {
+    const { mode } = this.props
+
     const screenBbox = this.getBoundingBox([e.properties.screenPointX, e.properties.screenPointY])
-    this.loadFeaturesAtPoint(screenBbox)
+
+    if (mode === modes.ADD_WAY || mode === modes.EDIT_WAY) {
+      const { features } = await this.mapRef.queryRenderedFeaturesInRect(screenBbox, null, ['nodes'])
+      this.props.setSelectedNode(features[0])
+    } else {
+      this.loadFeaturesAtPoint(screenBbox)
+    }
   }
 
   onUserLocationUpdate = location => {
@@ -371,6 +383,10 @@ class Explore extends React.Component {
     )
   }
 
+  async getMapCenter () {
+    return this.mapRef.getCenter()
+  }
+
   renderOverlay () {
     const { navigation, geojson, mode, currentTraceStatus } = this.props
 
@@ -386,23 +402,10 @@ class Explore extends React.Component {
 
     if (mode === modes.ADD_WAY || mode === modes.EDIT_WAY) {
       return <WayEditingOverlay
-        onDeleteNodePress={() => {
-          console.log('onDeleteNodePress')
-        }}
-        onUndoPress={() => {
-          console.log('onUndoPress')
-        }}
-        onAddNodePress={() => {
-          console.log('onAddNodePress')
-        }}
-        onRedoPress={() => {
-          console.log('onRedoPress')
-        }}
-        onMoveNodePress={() => {
-          console.log('onMoveNodePress')
-        }}
-        onCompleteWayPress={() => {
-          console.log('onCompleteWayPress')
+        mode={mode}
+        navigation={navigation}
+        getMapCenter={async () => {
+          return this.getMapCenter()
         }}
       />
     }
@@ -441,7 +444,9 @@ class Explore extends React.Component {
       style,
       photosGeojson,
       selectedPhotos,
-      nodesGeojson
+      nodesGeojson,
+      currentWayEdit,
+      selectedNode
     } = this.props
     let selectedFeatureIds = null
     let selectedPhotoIds = null
@@ -581,7 +586,22 @@ class Explore extends React.Component {
         ],
         selectedFeatureIds && selectedFeatureIds.nodes[2].length ? selectedFeatureIds.nodes : ['==', ['get', 'id'], '']
       ],
-      photosHaloSelected: selectedPhotoIds && selectedPhotoIds.length ? selectedPhotoIds : ['==', ['get', 'id'], '']
+      photosHaloSelected: selectedPhotoIds && selectedPhotoIds.length ? selectedPhotoIds : ['==', ['get', 'id'], ''],
+      nodeHalo: [
+        'all',
+        [
+          '==',
+          ['geometry-type'], 'Point'
+        ]
+      ],
+      nodeHaloSelected: [
+        'all',
+        [
+          '==',
+          ['geometry-type'], 'Point'
+        ],
+        selectedNode && selectedNode.id ? ['match', ['get', 'id'], [selectedNode.id], true, false] : ['==', ['get', 'id'], '']
+      ]
     }
 
     return (
@@ -671,8 +691,12 @@ class Explore extends React.Component {
                       <MapboxGL.CircleLayer id='photosHalo' style={style.photos.photoIconHalo} minZoomLevel={16} />
                       <MapboxGL.SymbolLayer id='photos' style={style.photos.photoIcon} minZoomLevel={16} />
                     </MapboxGL.ShapeSource>
+                    <MapboxGL.ShapeSource id='currentWayEdit' shape={currentWayEdit}>
+                      <MapboxGL.LineLayer id='currentWayLine' style={style.osm.editedLines} minZoomLevel={16} />
+                    </MapboxGL.ShapeSource>
                     <MapboxGL.ShapeSource id='nodesGeojsonSource' shape={nodesGeojson}>
                       <MapboxGL.CircleLayer id='nodes' style={style.osm.nodes} minZoomLevel={16} />
+                      <MapboxGL.CircleLayer id='nodeHaloSelected' style={style.osm.iconHaloSelected} minZoomLevel={16} filter={filters.nodeHaloSelected} />
                     </MapboxGL.ShapeSource>
                   </StyledMap>
                 )
@@ -692,6 +716,33 @@ class Explore extends React.Component {
 
 const mapStateToProps = (state) => {
   const { userDetails } = state.account
+
+  const currentWayEdit = {
+    type: 'FeatureCollection',
+    properties: {},
+    features: []
+  }
+
+  let nodes
+  if (state.wayEditingHistory.present.way && state.wayEditingHistory.present.way.nodes && state.wayEditingHistory.present.way.nodes.length) {
+    currentWayEdit.features.push({
+      type: 'Feature',
+      geometry: {
+        type: 'LineString',
+        coordinates: state.wayEditingHistory.present.way.nodes.map((point) => {
+          return point.geometry.coordinates
+        })
+      }
+    })
+
+    nodes = {
+      type: 'FeatureCollection',
+      properties: {},
+      features: state.wayEditingHistory.present.way.nodes
+    }
+  } else {
+    nodes = state.map.nodes
+  }
 
   return {
     geojson: getVisibleFeatures(state),
@@ -716,8 +767,10 @@ const mapStateToProps = (state) => {
     style: state.map.style,
     photosGeojson: getPhotosGeojson(state),
     selectedPhotos: state.map.selectedPhotos,
-    nodesGeojson: state.map.nodes,
-    visibleTiles: getVisibleTiles(state)
+    nodesGeojson: nodes,
+    visibleTiles: getVisibleTiles(state),
+    currentWayEdit,
+    selectedNode: state.wayEditing.selectedNode
   }
 }
 
@@ -738,7 +791,8 @@ const mapDispatchToProps = {
   pauseTrace,
   unpauseTrace,
   loadUserDetails,
-  setSelectedPhotos
+  setSelectedPhotos,
+  setSelectedNode
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Explore)
