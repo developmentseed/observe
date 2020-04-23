@@ -6,13 +6,14 @@ import turfDistance from '@turf/distance'
 import { lineString } from '@turf/helpers'
 
 export function findNearest (node, features) {
-  const threshold = 0.2
+  const threshold = 0.02
   const nearestEdges = []
   const nearestNodes = []
   features.features.forEach(feature => {
     if (feature.geometry.type === 'LineString') {
       const distance = turfPointToLineDistance(node, feature, { 'units': 'kilometers' })
       if (distance < threshold) {
+        feature.properties['distance'] = distance
         nearestEdges.push(feature)
       }
     }
