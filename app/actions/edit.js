@@ -7,6 +7,7 @@ import { getAllRetriable } from '../utils/edit-utils'
 import { getPhotosForFeature } from '../utils/photos'
 import { getFeatureInChangeset } from '../services/osm-api'
 import { editPhoto } from '../actions/camera'
+import { clearNodeCacheForTile } from '../services/nodecache'
 /**
  * Retries all retriable edits in the current state
  */
@@ -54,12 +55,16 @@ export function uploadEdits (editIds) {
       }
     }
 
-    // refresh data
-    await Promise.all(
-      Array.from(modifiedTiles).map(tile =>
-        dispatch(fetchDataForTile(tile, false, true))
-      )
-    )
+    // clear modified tiles from the nodecache and refresh data
+    const promises = []
+    const modifiedTilesList = Array.from(modifiedTiles)
+    for (let index = 0; index < modifiedTilesList.length; index++) {
+      const tile = modifiedTilesList[index]
+      promises.push(await clearNodeCacheForTile(tile))
+      promises.push(dispatch(fetchDataForTile(tile, false, true)))
+    }
+
+    await Promise.all(promises)
   }
 
   // skip when offline
