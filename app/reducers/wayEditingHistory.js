@@ -11,7 +11,10 @@ function wayEditingHistory (state = {}, action) {
         nodes: way.nodes.map((feature) => {
           const newFeature = {
             id: feature.id,
-            type: feature.type
+            type: feature.type,
+            properties: {
+              id: feature.id
+            }
           }
 
           if (id === feature.id) {

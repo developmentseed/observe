@@ -695,9 +695,8 @@ class Explore extends React.Component {
                       <MapboxGL.LineLayer id='currentWayLine' style={style.osm.editedLines} minZoomLevel={16} />
                     </MapboxGL.ShapeSource>
                     <MapboxGL.ShapeSource id='nodesGeojsonSource' shape={nodesGeojson}>
-                      <MapboxGL.CircleLayer id='nodeHalo' style={style.osm.iconHalo} minZoomLevel={16} filter={filters.nodeHalo} />
-                      <MapboxGL.CircleLayer id='nodeHaloSelected' style={style.osm.iconHaloSelected} minZoomLevel={16} filter={filters.nodeHaloSelected} />
                       <MapboxGL.CircleLayer id='nodes' style={style.osm.nodes} minZoomLevel={16} />
+                      <MapboxGL.CircleLayer id='nodeHaloSelected' style={style.osm.iconHaloSelected} minZoomLevel={16} filter={filters.nodeHaloSelected} />
                     </MapboxGL.ShapeSource>
                   </StyledMap>
                 )
