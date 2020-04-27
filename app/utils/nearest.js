@@ -3,6 +3,7 @@
  */
 import turfPointToLineDistance from '@turf/point-to-line-distance'
 import turfDistance from '@turf/distance'
+import turfNearestPointOnLine from '@turf/nearest-point-on-line'
 import { lineString } from '@turf/helpers'
 import { nodesGeojson } from '../utils/nodes-to-geojson'
 
@@ -60,6 +61,10 @@ export async function findNearest (node, features) {
     nearestEdges,
     nearestNodes
   }
+}
+
+export function findNearestPoint (node, edge) {
+  return turfNearestPointOnLine(edge, node, { 'units': 'kilometers' })
 }
 
 function getEdge (polygon) {
