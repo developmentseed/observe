@@ -4,8 +4,8 @@
 
 import fs from 'fs'
 import path from 'path'
-import { findNearest } from '../../app/utils/nearest'
-import { findNearestPoint, addNodes } from '../../app/services/nodecache'
+import { findNearestPoint, findNearest } from '../../app/utils/nearest'
+import { addNodes } from '../../app/services/nodecache'
 
 test('find nearest features for a node', async () => {
   const features = JSON.parse(fs.readFileSync(path.join(__dirname, '../fixtures/osm-geojson-dc.geojson'), { 'encoding': 'utf-8' }))
