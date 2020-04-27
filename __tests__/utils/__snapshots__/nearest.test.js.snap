@@ -139,3 +139,21 @@ Object {
   "nearestNodes": Array [],
 }
 `;
+
+exports[`find nearest features for a node 3`] = `
+Object {
+  "geometry": Object {
+    "coordinates": Array [
+      -77.02449962009433,
+      38.90251651820502,
+    ],
+    "type": "Point",
+  },
+  "properties": Object {
+    "dist": 0.0018370373094811034,
+    "index": 2,
+    "location": 0.3092503207620726,
+  },
+  "type": "Feature",
+}
+`;
