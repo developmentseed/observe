@@ -80,6 +80,9 @@ import { authorize } from '../services/auth'
 
 import { modes, modeTitles } from '../utils/map-modes'
 
+import { findNearest } from '../utils/nearest'
+import { point as turfPoint, feature as turfFeature } from '@turf/helpers'
+
 let osmStyleURL = Config.MAPBOX_STYLE_URL || MapboxGL.StyleURL.Street
 let satelliteStyleURL = Config.MAPBOX_SATELLITE_STYLE_URL || MapboxGL.StyleURL.Satellite
 
@@ -204,9 +207,18 @@ class Explore extends React.Component {
     }
   }
 
-  onRegionDidChange = evt => {
+  onRegionDidChange = async (evt) => {
     const { properties: { visibleBounds, zoomLevel } } = evt
     const oldBounds = this.props.visibleBounds
+    const { mode, geojson } = this.props
+    // if in way editing mode, find nearest
+    if (mode === modes.ADD_WAY || mode === modes.EDIT_WAY) {
+      const center = await this.mapRef.getCenter()
+      const centerFeature = turfPoint(center)
+      const nearestFeatures = await findNearest(centerFeature, geojson)
+      console.log(nearestFeatures)
+    }
+
     if (oldBounds && oldBounds.length) {
       const oldTiles = bboxToTiles(oldBounds)
       const currentTiles = bboxToTiles(visibleBounds)

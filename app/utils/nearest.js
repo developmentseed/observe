@@ -46,6 +46,7 @@ export async function findNearest (node, features) {
       edges.forEach(edge => {
         const distance = turfPointToLineDistance(node, edge, { 'units': 'kilometers' })
         if (distance < threshold) {
+          edge.properties.parent_id = feature.properties.id
           edge.properties.distance = distance
           nearestEdges.push(edge)
           const nearbyNodes = getNearbyMemberNodes(node, nodes)
