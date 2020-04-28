@@ -19,6 +19,7 @@ Object {
       },
       "properties": Object {
         "distance": 0.0018479514421559796,
+        "parent_id": "way/4294967474",
       },
       "type": "Feature",
     },
@@ -38,6 +39,7 @@ Object {
       },
       "properties": Object {
         "distance": 0.000225172520188007,
+        "parent_id": "way/4294967474",
       },
       "type": "Feature",
     },
@@ -51,7 +53,9 @@ Object {
         ],
         "type": "Point",
       },
-      "properties": Object {},
+      "properties": Object {
+        "id": "node/4294969104",
+      },
       "type": "Feature",
     },
     Object {
@@ -62,7 +66,9 @@ Object {
         ],
         "type": "Point",
       },
-      "properties": Object {},
+      "properties": Object {
+        "id": "node/4294969105",
+      },
       "type": "Feature",
     },
     Object {
@@ -73,7 +79,9 @@ Object {
         ],
         "type": "Point",
       },
-      "properties": Object {},
+      "properties": Object {
+        "id": "node/4294969104",
+      },
       "type": "Feature",
     },
     Object {
@@ -84,7 +92,9 @@ Object {
         ],
         "type": "Point",
       },
-      "properties": Object {},
+      "properties": Object {
+        "id": "node/4294969105",
+      },
       "type": "Feature",
     },
   ],
