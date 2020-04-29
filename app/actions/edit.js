@@ -7,6 +7,7 @@ import { getAllRetriable } from '../utils/edit-utils'
 import { getPhotosForFeature } from '../utils/photos'
 import { getFeatureInChangeset } from '../services/osm-api'
 import { editPhoto } from '../actions/camera'
+import { EDIT_UPLOADING_STATUS } from '../constants'
 /**
  * Retries all retriable edits in the current state
  */
@@ -36,7 +37,7 @@ export function uploadEdits (editIds) {
       const edit = allEdits.find(e => e.id === editId)
 
       // if the edit no longer exists or is already uploading, do nothing for it
-      if (!edit || edit.status === 'uploading') {
+      if (!edit || edit.status === EDIT_UPLOADING_STATUS) {
         continue
       }
       dispatch(startEditUpload(edit))

@@ -1,5 +1,6 @@
 import * as types from '../actions/actionTypes'
 import editsToGeojson from '../utils/edits-to-geojson'
+import { EDIT_PENDING_STATUS, EDIT_SUCCEEDED_STATUS, EDIT_UPLOADING_STATUS } from '../constants'
 
 const initialState = {
   edits: [], // array of edit actions
@@ -20,7 +21,7 @@ export default function (state = initialState, action) {
         oldFeature: null,
         comment: action.comment,
         id: action.id,
-        status: 'pending',
+        status: EDIT_PENDING_STATUS,
         errors: [],
         timestamp: action.timestamp
       })
@@ -48,7 +49,7 @@ export default function (state = initialState, action) {
           newFeature: action.newFeature,
           comment: action.comment,
           id: action.id,
-          status: 'pending',
+          status: EDIT_PENDING_STATUS,
           errors: [],
           timestamp: action.timestamp
         })
@@ -69,7 +70,7 @@ export default function (state = initialState, action) {
       const existingEditForId = edits.findIndex(e => e.newFeature && e.newFeature.id === action.id)
 
       // pending action exists for this feature id
-      if (existingEditForId !== -1 && edits[existingEditForId].status === 'pending') {
+      if (existingEditForId !== -1 && edits[existingEditForId].status === EDIT_PENDING_STATUS) {
         const currentEdit = edits[existingEditForId]
         if (currentEdit.type === 'create') { // created feature not been uploaded, just remove from queue
           edits = edits.filter(e => e.id !== action.id)
@@ -89,7 +90,7 @@ export default function (state = initialState, action) {
           newFeature: null,
           id: action.id,
           comment: action.comment,
-          status: 'pending',
+          status: EDIT_PENDING_STATUS,
           errors: [],
           timestamp: action.timestamp
         })
@@ -113,7 +114,7 @@ export default function (state = initialState, action) {
 
       // add changesetId to the edit
       uploadedEdit.changesetId = action.changesetId
-      uploadedEdit.status = 'success'
+      uploadedEdit.status = EDIT_SUCCEEDED_STATUS
       uploadedEdit.uploadTimestamp = action.timestamp
 
       // add uploaded edit to uploadedEdits
@@ -131,7 +132,7 @@ export default function (state = initialState, action) {
       const startedIndex = edits.findIndex(edit => edit.id === action.edit.id)
       edits[startedIndex] = {
         ...edits[startedIndex],
-        status: 'uploading'
+        status: EDIT_UPLOADING_STATUS
       }
       return {
         ...state,
@@ -144,7 +145,7 @@ export default function (state = initialState, action) {
       const failedIndex = edits.findIndex(edit => edit.id === action.edit.id)
       edits[failedIndex] = {
         ...edits[failedIndex],
-        status: 'pending',
+        status: EDIT_PENDING_STATUS,
         errors: [...edits[failedIndex].errors]
       }
       edits[failedIndex].errors.push(action.error)

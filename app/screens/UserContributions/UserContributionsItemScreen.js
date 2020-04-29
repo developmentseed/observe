@@ -21,6 +21,11 @@ import { getFeature } from '../../services/osm-api'
 import Config from 'react-native-config'
 import getTaginfo from '../../utils/get-taginfo'
 import Icon from '../../components/Collecticons'
+import {
+  EDIT_PENDING_STATUS,
+  EDIT_SUCCEEDED_STATUS,
+  EDIT_UPLOADING_STATUS
+} from '../../constants'
 
 const Text = styled.Text``
 const ChangesetText = styled.Text`
@@ -78,7 +83,7 @@ class UserContributionsItemScreen extends React.Component {
 
   onFocus () {
     const edit = this.getEdit()
-    if (edit.status === 'pending' && isConflict(edit)) {
+    if (edit.status === EDIT_PENDING_STATUS && isConflict(edit)) {
       this.fetchConflictFeature()
     }
   }
@@ -139,7 +144,7 @@ class UserContributionsItemScreen extends React.Component {
   forceRetryUpload = () => {
     const edit = this.getEdit()
     const { navigation } = this.props
-    this.props.setEditStatus(edit.id, 'pending')
+    this.props.setEditStatus(edit.id, EDIT_PENDING_STATUS)
     this.props.uploadEdits([edit.id])
     navigation.navigate('UserContributions')
   }
@@ -197,13 +202,13 @@ class UserContributionsItemScreen extends React.Component {
   }
 
   getHeaderActions (edit) {
-    if (edit.status === 'success') {
+    if (edit.status === EDIT_SUCCEEDED_STATUS) {
       return this.getUploadedActions()
     }
-    if (edit.status === 'pending' && isConflict(edit)) {
+    if (edit.status === EDIT_PENDING_STATUS && isConflict(edit)) {
       return this.getConflictActions()
     }
-    if (edit.status === 'uploading') {
+    if (edit.status === EDIT_UPLOADING_STATUS) {
       return this.getUploadingActions()
     }
     return this.getPendingActions()
@@ -377,13 +382,13 @@ class UserContributionsItemScreen extends React.Component {
 
   getPage (edit) {
     switch (edit.status) {
-      case 'success':
+      case EDIT_SUCCEEDED_STATUS:
         return this.getUploadedPage(edit)
 
-      case 'uploading':
+      case EDIT_UPLOADING_STATUS:
         return this.getUploadingPage()
 
-      case 'pending':
+      case EDIT_PENDING_STATUS:
       default:
         if (isConflict(edit)) {
           return this.getConflictPage(edit)
