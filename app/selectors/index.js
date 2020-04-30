@@ -245,3 +245,12 @@ export const getVisibleTiles = state => {
     return []
   }
 }
+
+export const getNearestGeojson = state => {
+  if (state.wayEditing.nearestFeatures) {
+    const fc = featureCollection(state.wayEditing.nearestFeatures.nearestEdges.concat(state.wayEditing.nearestFeatures.nearestNodes))
+    return fc
+  } else {
+    return featureCollection()
+  }
+}

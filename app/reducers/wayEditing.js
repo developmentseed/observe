@@ -28,6 +28,13 @@ function wayEditing (state = {}, action) {
         way: state.way
       }
     }
+
+    case types.FIND_NEAREST_FEATURES: {
+      return {
+        ...state,
+        nearestFeatures: action.nearest
+      }
+    }
   }
 
   return state
