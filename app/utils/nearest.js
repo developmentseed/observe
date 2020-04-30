@@ -6,6 +6,7 @@ import turfDistance from '@turf/distance'
 import turfNearestPointOnLine from '@turf/nearest-point-on-line'
 import { lineString } from '@turf/helpers'
 import { nodesGeojson } from '../utils/nodes-to-geojson'
+import _uniqBy from 'lodash.uniqby'
 
 // FIXME: adjust these based on interactions
 const threshold = 0.01
@@ -60,7 +61,7 @@ export async function findNearest (node, features) {
 
   return {
     nearestEdges,
-    nearestNodes
+    nearestNodes: _uniqBy(nearestNodes, 'properties.id')
   }
 }
 

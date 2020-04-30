@@ -32,7 +32,8 @@ import {
 } from '../actions/edit'
 
 import {
-  setSelectedNode
+  setSelectedNode,
+  findNearestFeatures
 } from '../actions/wayEditing'
 
 import {
@@ -69,7 +70,8 @@ import {
   getCurrentTraceStatus,
   getTracesGeojson,
   getPhotosGeojson,
-  getVisibleTiles
+  getVisibleTiles,
+  getNearestGeojson
 } from '../selectors'
 import BasemapModal from '../components/BasemapModal'
 import Icon from '../components/Collecticons'
@@ -80,8 +82,7 @@ import { authorize } from '../services/auth'
 
 import { modes, modeTitles } from '../utils/map-modes'
 
-import { findNearest } from '../utils/nearest'
-import { point as turfPoint, feature as turfFeature } from '@turf/helpers'
+import { point as turfPoint } from '@turf/helpers'
 
 let osmStyleURL = Config.MAPBOX_STYLE_URL || MapboxGL.StyleURL.Street
 let satelliteStyleURL = Config.MAPBOX_SATELLITE_STYLE_URL || MapboxGL.StyleURL.Satellite
@@ -210,13 +211,12 @@ class Explore extends React.Component {
   onRegionDidChange = async (evt) => {
     const { properties: { visibleBounds, zoomLevel } } = evt
     const oldBounds = this.props.visibleBounds
-    const { mode, geojson } = this.props
+    const { mode } = this.props
     // if in way editing mode, find nearest
     if (mode === modes.ADD_WAY || mode === modes.EDIT_WAY) {
       const center = await this.mapRef.getCenter()
-      const centerFeature = turfPoint(center)
-      const nearestFeatures = await findNearest(centerFeature, geojson)
-      console.log(nearestFeatures)
+      const node = turfPoint(center)
+      this.props.findNearestFeatures(node)
     }
 
     if (oldBounds && oldBounds.length) {
@@ -458,7 +458,8 @@ class Explore extends React.Component {
       selectedPhotos,
       nodesGeojson,
       currentWayEdit,
-      selectedNode
+      selectedNode,
+      nearestFeatures
     } = this.props
     let selectedFeatureIds = null
     let selectedPhotoIds = null
@@ -710,6 +711,10 @@ class Explore extends React.Component {
                       <MapboxGL.CircleLayer id='nodes' style={style.osm.nodes} minZoomLevel={16} />
                       <MapboxGL.CircleLayer id='nodeHaloSelected' style={style.osm.iconHaloSelected} minZoomLevel={16} filter={filters.nodeHaloSelected} />
                     </MapboxGL.ShapeSource>
+                    <MapboxGL.ShapeSource id='nearestFeatures' shape={nearestFeatures}>
+                      <MapboxGL.CircleLayer id='nearestNodes' minZoomLevel={16} style={style.osm.nodes} />
+                      <MapboxGL.LineLayer id='nearestEdges' style={style.osm.editedLines} minZoomLevel={16} />
+                    </MapboxGL.ShapeSource>
                   </StyledMap>
                 )
             }
@@ -782,7 +787,8 @@ const mapStateToProps = (state) => {
     nodesGeojson: nodes,
     visibleTiles: getVisibleTiles(state),
     currentWayEdit,
-    selectedNode: state.wayEditing.selectedNode
+    selectedNode: state.wayEditing.selectedNode,
+    nearestFeatures: getNearestGeojson(state)
   }
 }
 
@@ -804,7 +810,8 @@ const mapDispatchToProps = {
   unpauseTrace,
   loadUserDetails,
   setSelectedPhotos,
-  setSelectedNode
+  setSelectedNode,
+  findNearestFeatures
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Explore)

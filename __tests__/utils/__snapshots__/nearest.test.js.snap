@@ -71,32 +71,6 @@ Object {
       },
       "type": "Feature",
     },
-    Object {
-      "geometry": Object {
-        "coordinates": Array [
-          -77.0243478,
-          38.902212,
-        ],
-        "type": "Point",
-      },
-      "properties": Object {
-        "id": "node/4294969104",
-      },
-      "type": "Feature",
-    },
-    Object {
-      "geometry": Object {
-        "coordinates": Array [
-          -77.0243788,
-          38.902298,
-        ],
-        "type": "Point",
-      },
-      "properties": Object {
-        "id": "node/4294969105",
-      },
-      "type": "Feature",
-    },
   ],
 }
 `;
