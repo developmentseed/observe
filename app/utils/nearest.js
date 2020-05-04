@@ -10,8 +10,8 @@ import _uniqBy from 'lodash.uniqby'
 import _sortBy from 'lodash.sortby'
 
 // FIXME: adjust these based on interactions
-const threshold = 0.008
-// const nodeThreshold = 0.006
+const threshold = 0.005
+const nodeThreshold = 0.0005
 
 export async function findNearest (node, features) {
   let nearestFeatures = []
@@ -65,10 +65,12 @@ export async function findNearest (node, features) {
     return null
   }
 
-  if (nearestNode) {
-    return nearestNode
-  } else {
-    return findNearestPoint(node, closestFeature)
+  if (!nearestNode) {
+    nearestNode = findNearestPoint(node, closestFeature)
+  }
+  return {
+    nearestEdge: closestFeature,
+    nearestNode: nearestNode
   }
 }
 
@@ -101,7 +103,7 @@ function getNearbyMemberNodes (point, nodes) {
   nodes.features.forEach(node => {
     const distance = turfDistance(point, node)
     node.properties.distance = distance
-    if (distance < threshold) {
+    if (distance < nodeThreshold) {
       nearbyNodes.push(node)
     }
   })
