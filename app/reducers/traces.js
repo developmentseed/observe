@@ -7,7 +7,7 @@ import {
 import getRandomId from '../utils/get-random-id'
 import _cloneDeep from 'lodash.clonedeep'
 import _findIndex from 'lodash.findindex'
-import { TRACE_PENDING_EDIT_STATUS, TRACE_PENDING_STATUS, TRACE_UPLOADING_STATUS, PHOTO_UPLOADED_STATUS, TRACE_UPLOADED_STATUS } from '../constants'
+import { TRACE_PENDING_EDIT_STATUS, TRACE_PENDING_STATUS, TRACE_UPLOADING_STATUS, TRACE_UPLOADED_STATUS } from '../constants'
 
 const initialState = {
   currentTrace: null,

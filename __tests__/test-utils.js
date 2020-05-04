@@ -1,4 +1,4 @@
-import { PHOTO_PENDING_STATUS, TRACE_PENDING_STATUS } from "../app/constants"
+import { PHOTO_PENDING_STATUS, TRACE_PENDING_STATUS } from '../app/constants'
 
 export function getFeature (
   id,
