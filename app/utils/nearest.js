@@ -7,14 +7,14 @@ import turfNearestPointOnLine from '@turf/nearest-point-on-line'
 import { lineString } from '@turf/helpers'
 import { nodesGeojson } from '../utils/nodes-to-geojson'
 import _uniqBy from 'lodash.uniqby'
+import _sortBy from 'lodash.sortby'
 
 // FIXME: adjust these based on interactions
-const threshold = 0.01
-const nodeThreshold = 0.02
+const threshold = 0.008
+// const nodeThreshold = 0.006
 
 export async function findNearest (node, features) {
-  const nearestEdges = []
-  let nearestNodes = []
+  let nearestFeatures = []
   for (const index in features.features) {
     const feature = features.features[index]
 
@@ -22,46 +22,53 @@ export async function findNearest (node, features) {
       const distance = turfDistance(node, feature, { 'units': 'kilometers' })
       if (distance < threshold) {
         feature.properties.distance = distance
-        nearestNodes.push(feature)
+        nearestFeatures.push(feature)
       }
     }
 
     if (feature.geometry.type === 'LineString') {
-      const nodes = await getNodes(feature)
       const distance = turfPointToLineDistance(node, feature, { 'units': 'kilometers' })
       if (distance < threshold) {
         feature.properties['distance'] = distance
-        nearestEdges.push(feature)
-        // check if there are nearby member nodes
-        const nearbyNodes = getNearbyMemberNodes(node, nodes)
-        if (nearbyNodes.length) {
-          nearestNodes = nearestNodes.concat(nearbyNodes)
-        }
+        nearestFeatures.push(feature)
       }
     }
 
     if (feature.geometry.type === 'Polygon') {
       // get all the edges
       const edges = getEdge(feature)
-      const nodes = await getNodes(feature)
       edges.forEach(edge => {
         const distance = turfPointToLineDistance(node, edge, { 'units': 'kilometers' })
         if (distance < threshold) {
-          edge.properties.parent_id = feature.properties.id
+          edge.properties.parent_feature = feature
           edge.properties.distance = distance
-          nearestEdges.push(edge)
-          const nearbyNodes = getNearbyMemberNodes(node, nodes)
-          if (nearbyNodes.length) {
-            nearestNodes = nearestNodes.concat(nearbyNodes)
-          }
+          nearestFeatures.push(edge)
         }
       })
     }
   }
 
-  return {
-    nearestEdges,
-    nearestNodes: _uniqBy(nearestNodes, 'properties.id')
+  nearestFeatures = _sortBy(nearestFeatures, 'properties.distance')
+
+  // find the closest node or a point
+  const closestFeature = nearestFeatures[0]
+  let nearestNode = null
+  let memberNodes = null
+  if (closestFeature && closestFeature.geometry.type === 'LineString') {
+    if (closestFeature.properties.hasOwnProperty('parent_feature')) {
+      memberNodes = await getNodes(closestFeature.properties.parent_feature)
+    } else {
+      memberNodes = await getNodes(closestFeature)
+    }
+    nearestNode = getNearbyMemberNodes(node, memberNodes)
+  } else {
+    return null
+  }
+
+  if (nearestNode) {
+    return nearestNode
+  } else {
+    return findNearestPoint(node, closestFeature)
   }
 }
 
@@ -90,12 +97,18 @@ async function getNodes (feature) {
 }
 
 function getNearbyMemberNodes (point, nodes) {
-  const nearbyNodes = []
+  let nearbyNodes = []
   nodes.features.forEach(node => {
     const distance = turfDistance(point, node)
-    if (distance < nodeThreshold) {
+    node.properties.distance = distance
+    if (distance < threshold) {
       nearbyNodes.push(node)
     }
   })
-  return nearbyNodes
+  if (nearbyNodes.length) {
+    nearbyNodes = _sortBy(nearbyNodes, 'properties.distance')
+    return nearbyNodes[0]
+  } else {
+    return null
+  }
 }
