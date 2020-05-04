@@ -152,7 +152,12 @@ Object {
 }
 `;
 
-exports[`find nearest features for a node 3`] = `null`;
+exports[`find nearest features for a node 3`] = `
+Object {
+  "nearestEdge": null,
+  "nearestNode": null,
+}
+`;
 
 exports[`find nearest features for a node 4`] = `
 Object {
