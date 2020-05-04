@@ -96465,7 +96465,7 @@
         },
         "comment": "Test",
         "id": "node/1",
-        "status": "pending",
+        "status": "EDIT_PENDING_STATUS",
         "errors": [],
         "timestamp": 1562325975841
       }

@@ -12,6 +12,7 @@ import {
   uploadPendingTraces
 } from '../../app/actions/traces'
 import { getMockTrace } from '../test-utils'
+import { TRACE_UPLOADING_STATUS, TRACE_UPLOADED_STATUS } from '../../app/constants'
 const middlewares = [thunk]
 const mockStore = configureStore(middlewares)
 
@@ -208,7 +209,7 @@ describe('trace upload / async actions', () => {
   it('should not upload non-pending traces', async () => {
     const trace1 = getMockTrace(1)
     const trace2 = getMockTrace(2)
-    trace2.status = 'uploaded'
+    trace2.status = TRACE_UPLOADED_STATUS
     const store = mockStore({
       traces: {
         traces: [
@@ -230,7 +231,7 @@ describe('trace upload / async actions', () => {
 
   it('should not upload uploading traces', async () => {
     const trace1 = getMockTrace(1)
-    trace1.status = 'uploading'
+    trace1.status = TRACE_UPLOADING_STATUS
     const trace2 = getMockTrace(2)
     const store = mockStore({
       traces: {

@@ -1,6 +1,7 @@
 import * as types from './actionTypes'
 import traceService from '../services/trace'
 import * as api from '../services/observe-api'
+import { TRACE_PENDING_STATUS } from '../constants'
 
 export function startTrace () {
   return (dispatch, getState) => {
@@ -44,7 +45,7 @@ export function uploadPendingTraces () {
       return
     }
     const { traces } = getState().traces
-    const pendingTraces = traces.filter(t => t.status === 'pending')
+    const pendingTraces = traces.filter(t => t.status === TRACE_PENDING_STATUS)
     for (let trace of pendingTraces) {
       dispatch(startUploadingTrace(trace.id))
       try {
