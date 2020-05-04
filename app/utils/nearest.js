@@ -6,7 +6,6 @@ import turfDistance from '@turf/distance'
 import turfNearestPointOnLine from '@turf/nearest-point-on-line'
 import { lineString } from '@turf/helpers'
 import { nodesGeojson } from '../utils/nodes-to-geojson'
-import _uniqBy from 'lodash.uniqby'
 import _sortBy from 'lodash.sortby'
 
 // FIXME: adjust these based on interactions
@@ -17,10 +16,9 @@ export async function findNearest (node, features) {
   let nearestFeatures = []
   for (const index in features.features) {
     const feature = features.features[index]
-
     if (feature.geometry.type === 'Point') {
       const distance = turfDistance(node, feature, { 'units': 'kilometers' })
-      if (distance < threshold) {
+      if (distance < nodeThreshold) {
         feature.properties.distance = distance
         nearestFeatures.push(feature)
       }
@@ -52,26 +50,31 @@ export async function findNearest (node, features) {
 
   // find the closest node or a point
   const closestFeature = nearestFeatures[0]
-  let nearestNode = null
   let memberNodes = null
+
+  const results = {
+    nearestEdge: null,
+    nearestNode: null
+  }
+
+  if (closestFeature && closestFeature.geometry.type === 'Point') {
+    results.nearestNode = closestFeature
+  }
+
   if (closestFeature && closestFeature.geometry.type === 'LineString') {
     if (closestFeature.properties.hasOwnProperty('parent_feature')) {
       memberNodes = await getNodes(closestFeature.properties.parent_feature)
     } else {
       memberNodes = await getNodes(closestFeature)
     }
-    nearestNode = getNearbyMemberNodes(node, memberNodes)
-  } else {
-    return null
+    results.nearestEdge = closestFeature
+    results.nearestNode = getNearbyMemberNodes(node, memberNodes)
+    if (!results.nearestNode) {
+      results.nearestNode = findNearestPoint(node, closestFeature)
+    }
   }
 
-  if (!nearestNode) {
-    nearestNode = findNearestPoint(node, closestFeature)
-  }
-  return {
-    nearestEdge: closestFeature,
-    nearestNode: nearestNode
-  }
+  return results
 }
 
 export function findNearestPoint (node, edge) {
