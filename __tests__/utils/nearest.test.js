@@ -50,4 +50,8 @@ test('find nearest features for a node', async () => {
   expect(nearest1).toMatchSnapshot()
   expect(nearest2).toMatchSnapshot()
   expect(nearest3).toMatchSnapshot()
+
+  const edge = nearest2.nearestEdge
+  const snappedPoint = findNearestPoint(node2, edge)
+  expect(snappedPoint).toMatchSnapshot()
 })

@@ -247,10 +247,10 @@ export const getVisibleTiles = state => {
 }
 
 export const getNearestGeojson = state => {
+  let fc = featureCollection()
   if (state.wayEditing.nearestFeatures) {
-    const fc = featureCollection(state.wayEditing.nearestFeatures.nearestEdges.concat(state.wayEditing.nearestFeatures.nearestNodes))
-    return fc
-  } else {
-    return featureCollection()
+    const { nearestEdge, nearestNode } = state.wayEditing.nearestFeatures
+    fc = featureCollection([nearestEdge, nearestNode])
   }
+  return fc
 }

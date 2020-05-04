@@ -2,22 +2,159 @@
 
 exports[`find nearest features for a node 1`] = `
 Object {
-  "geometry": Object {
-    "coordinates": Array [
-      -77.0243788,
-      38.902298,
-    ],
-    "type": "Point",
+  "nearestEdge": Object {
+    "geometry": Object {
+      "coordinates": Array [
+        Array [
+          -77.0243788,
+          38.902298,
+        ],
+        Array [
+          -77.025819,
+          38.9022963,
+        ],
+      ],
+      "type": "LineString",
+    },
+    "properties": Object {
+      "distance": 0.000225172520188007,
+      "parent_feature": Object {
+        "geometry": Object {
+          "coordinates": Array [
+            Array [
+              Array [
+                -77.025819,
+                38.9022963,
+              ],
+              Array [
+                -77.0258367,
+                38.901784,
+              ],
+              Array [
+                -77.0257263,
+                38.9017169,
+              ],
+              Array [
+                -77.0243478,
+                38.902212,
+              ],
+              Array [
+                -77.0243788,
+                38.902298,
+              ],
+              Array [
+                -77.025819,
+                38.9022963,
+              ],
+            ],
+          ],
+          "type": "Polygon",
+        },
+        "id": "way/4294967474",
+        "properties": Object {
+          "building": "yes",
+          "changeset": "17237",
+          "id": "way/4294967474",
+          "ndrefs": Array [
+            "4294969101",
+            "4294969102",
+            "4294969103",
+            "4294969104",
+            "4294969105",
+            "4294969101",
+          ],
+          "timestamp": "2013-01-16T15:30:19Z",
+          "uid": "181",
+          "user": "samlarsen1",
+          "version": "1",
+        },
+        "type": "Feature",
+      },
+    },
+    "type": "Feature",
   },
-  "properties": Object {
-    "distance": 0.0018479514421559796,
-    "id": "node/4294969105",
+  "nearestNode": Object {
+    "geometry": Object {
+      "coordinates": Array [
+        -77.02439999610696,
+        38.90229797498029,
+      ],
+      "type": "Point",
+    },
+    "properties": Object {
+      "dist": 0.00022517248045479096,
+      "index": 0,
+      "location": 0.0018341862152104543,
+    },
+    "type": "Feature",
   },
-  "type": "Feature",
 }
 `;
 
 exports[`find nearest features for a node 2`] = `
+Object {
+  "nearestEdge": Object {
+    "geometry": Object {
+      "coordinates": Array [
+        Array [
+          -77.028073,
+          38.9025312,
+        ],
+        Array [
+          -77.0270204,
+          38.9025427,
+        ],
+        Array [
+          -77.026122,
+          38.9025391,
+        ],
+        Array [
+          -77.0239954,
+          38.9025095,
+        ],
+      ],
+      "type": "LineString",
+    },
+    "id": "way/4294967325",
+    "properties": Object {
+      "changeset": "17292",
+      "distance": 0.0018370829928528922,
+      "highway": "residential",
+      "id": "way/4294967325",
+      "ndrefs": Array [
+        "4294967647",
+        "4294969574",
+        "4294967648",
+        "4294967649",
+      ],
+      "timestamp": "2013-01-18T14:28:15Z",
+      "uid": "15",
+      "user": "TomH",
+      "version": "2",
+    },
+    "type": "Feature",
+  },
+  "nearestNode": Object {
+    "geometry": Object {
+      "coordinates": Array [
+        -77.02449962009433,
+        38.90251651820502,
+      ],
+      "type": "Point",
+    },
+    "properties": Object {
+      "dist": 0.0018370373094811034,
+      "index": 2,
+      "location": 0.3092503207620726,
+    },
+    "type": "Feature",
+  },
+}
+`;
+
+exports[`find nearest features for a node 3`] = `null`;
+
+exports[`find nearest features for a node 4`] = `
 Object {
   "geometry": Object {
     "coordinates": Array [
@@ -34,5 +171,3 @@ Object {
   "type": "Feature",
 }
 `;
-
-exports[`find nearest features for a node 3`] = `null`;
