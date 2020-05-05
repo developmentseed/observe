@@ -717,7 +717,7 @@ export function setSelectedFeatures (features) {
     } else {
       dispatch({
         type: types.SET_SELECTED_WAY,
-        geojson: null
+        geojson: {}
       })
     }
   }
