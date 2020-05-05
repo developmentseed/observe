@@ -3,5 +3,8 @@
   "parser": "babel-eslint",
   "globals": {
     "__DEV__": "readonly"
+  },
+  "rules": {
+    "comma-dangle": 0
   }
 }
