@@ -15,7 +15,8 @@ export async function nodesGeojson (nodeIds) {
         'coordinates': [parseFloat(nodes[id].lon), parseFloat(nodes[id].lat)]
       },
       'properties': {
-        'id': id
+        'id': id,
+        'ways': nodes[id].ways
       }
     }
     geojson.features.push(feature)
