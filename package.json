@@ -13,7 +13,8 @@
     "build-presets": "yarn install --production=false && node build-presets.js && node field-options.js",
     "build-styles": "export $(cat .env | grep '^[^#;]' | xargs) && envsubst '${OSM_TILE_URL}' < app/assets/osm.json.template > app/assets/osm.json && envsubst '${SATELLITE_TILE_URL} ${SATELLITE_TILE_SIZE}' < app/assets/satellite.json.template > app/assets/satellite.json",
     "version": "./version.sh",
-    "build-version": "./build-version.sh"
+    "build-version": "./build-version.sh",
+    "debug": "open 'rndebugger://set-debugger-loc?host=localhost&port=8081'"
   },
   "dependencies": {
     "@mapbox/tile-cover": "^3.0.2",
