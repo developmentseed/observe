@@ -7291,15 +7291,16 @@ osmium@^0.5.7:
     nan "^2.10.0"
     node-pre-gyp "^0.10.2"
 
-"osmtogeojson@https://github.com/geohacker/osmtogeojson.git":
+"osmtogeojson@https://github.com/geohacker/osmtogeojson.git#af17910488131dd04f278c7e1bc04d77c9a8c16d":
   version "3.0.0-beta.3"
-  resolved "https://github.com/geohacker/osmtogeojson.git#290ecc8379da573603e8243c5b328efb37dfb212"
+  resolved "https://github.com/geohacker/osmtogeojson.git#af17910488131dd04f278c7e1bc04d77c9a8c16d"
   dependencies:
     JSONStream "0.8.0"
     concat-stream "~1.0.1"
     geojson-numeric "0.2.0"
     geojson-rewind "0.3.0"
     htmlparser2 "3.5.1"
+    lodash.find "^4.6.0"
     optimist "~0.3.5"
     osm-polygon-features "^0.9.1"
     tiny-osmpbf "^0.1.0"
