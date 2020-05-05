@@ -456,7 +456,7 @@ class Explore extends React.Component {
       style,
       photosGeojson,
       selectedPhotos,
-      nodesGeojson,
+      selectedFeaturesMemberNodes,
       currentWayEdit,
       selectedNode,
       nearestFeatures,
@@ -708,7 +708,7 @@ class Explore extends React.Component {
                     <MapboxGL.ShapeSource id='currentWayEdit' shape={currentWayEdit}>
                       <MapboxGL.LineLayer id='currentWayLine' style={style.osm.editedLines} minZoomLevel={16} />
                     </MapboxGL.ShapeSource>
-                    <MapboxGL.ShapeSource id='nodesGeojsonSource' shape={nodesGeojson}>
+                    <MapboxGL.ShapeSource id='nodesGeojsonSource' shape={selectedFeaturesMemberNodes || {}}>
                       <MapboxGL.CircleLayer id='nodes' style={style.osm.nodes} minZoomLevel={16} />
                       <MapboxGL.CircleLayer id='nodeHaloSelected' style={style.osm.iconHaloSelected} minZoomLevel={16} filter={filters.nodeHaloSelected} />
                     </MapboxGL.ShapeSource>
@@ -745,7 +745,6 @@ const mapStateToProps = (state) => {
     features: []
   }
 
-  let nodes
   if (state.wayEditingHistory.present.way && state.wayEditingHistory.present.way.nodes && state.wayEditingHistory.present.way.nodes.length) {
     currentWayEdit.features.push({
       type: 'Feature',
@@ -756,14 +755,6 @@ const mapStateToProps = (state) => {
         })
       }
     })
-
-    nodes = {
-      type: 'FeatureCollection',
-      properties: {},
-      features: state.wayEditingHistory.present.way.nodes
-    }
-  } else {
-    nodes = state.map.nodes
   }
 
   return {
@@ -774,6 +765,7 @@ const mapStateToProps = (state) => {
     currentTraceStatus: getCurrentTraceStatus(state),
     isConnected: state.network.isConnected,
     selectedFeatures: state.map.selectedFeatures || false,
+    selectedFeaturesMemberNodes: state.map.selectedFeaturesMemberNodes,
     mode: state.map.mode,
     edits: state.edit.edits,
     editsGeojson: state.edit.editsGeojson,
@@ -789,7 +781,6 @@ const mapStateToProps = (state) => {
     style: state.map.style,
     photosGeojson: getPhotosGeojson(state),
     selectedPhotos: state.map.selectedPhotos,
-    nodesGeojson: nodes,
     visibleTiles: getVisibleTiles(state),
     currentWayEdit,
     selectedNode: state.wayEditing.selectedNode,
