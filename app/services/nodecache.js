@@ -10,13 +10,13 @@ export async function addNodes (tile, nodes) {
     `node/${n.id}`,
     JSON.stringify({
       'lat': n.lat,
-      'lon': n.lon
+      'lon': n.lon,
+      'ways': n.ways ? n.ways : null
     })
   ])
   const nodeIds = nodes.map(n => {
     return `node/${n.id}`
   })
-
   await AsyncStorage.multiSet(items)
   await AsyncStorage.setItem(tile, JSON.stringify(nodeIds))
 }
