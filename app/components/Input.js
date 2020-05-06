@@ -155,7 +155,7 @@ export class PickerField extends Field {
       <View ref={x => (this._root = x)} style={{ flex: 1, height: 64 }}>
         <FieldWrapper style={{ borderColor: color, height: 64 }}>
           <LabelWrapper style={{ borderColor: color }}>
-            <Label style={{ color }}>{key}</Label>
+            <Label style={{ color }}>{label || key}</Label>
           </LabelWrapper>
 
           <InputWrapper style={{ flex: 1 }}>
@@ -215,7 +215,7 @@ export class ComboField extends Field {
 
 export class NumberField extends Field {
   render () {
-    const { property, field: { key, placeholder } } = this.props
+    const { property, field: { key, label, placeholder } } = this.props
     const { color } = this.state
     const value = this.state.value || property.value
 
@@ -223,7 +223,7 @@ export class NumberField extends Field {
       <View ref={x => (this._root = x)}>
         <FieldWrapper style={{ borderColor: color }}>
           <LabelWrapper>
-            <Label style={{ color }}>{key}</Label>
+            <Label style={{ color }}>{label || key}</Label>
           </LabelWrapper>
 
           <InputWrapper>
@@ -423,10 +423,91 @@ export class DescriptionInputField extends Component {
   }
 }
 
+export class AccessField extends Field {
+  componentWillMount () {
+    this.setState({ value: {} })
+    this.onValueChange(this.state.value)
+  }
+
+  render () {
+    const { field, feature, onUpdate, onRemoveField } = this.props
+    const { keys, strings: { types, options } } = field
+
+    return (
+      <View ref={x => (this._root = x)}>
+        {_uniq(keys).map((key) => {
+          const label = types[key]
+          const field = { key, label, options }
+
+          return (
+            <View key={key}>
+              <PickerField
+                field={field}
+                property={{ key }}
+                feature={feature}
+                onRemoveField={() => {
+                  onRemoveField(key)
+                }}
+                onUpdate={({ properties }) => {
+                  onUpdate({ properties })
+                  const value = Object.assign(this.state.value || {}, properties)
+                  this.setState({ value })
+                }}
+              />
+            </View>
+          )
+        })}
+      </View>
+    )
+  }
+}
+
+export class CyclewayField extends Field {
+  componentWillMount () {
+    this.setState({ value: {} })
+    this.onValueChange(this.state.value)
+  }
+
+  render () {
+    const { field, feature, onUpdate, onRemoveField } = this.props
+    const { keys, strings: { types, options } } = field
+
+    return (
+      <View ref={x => (this._root = x)}>
+        {_uniq(keys).map((key) => {
+          const label = types[key]
+          const field = { key, label, options }
+
+          return (
+            <View key={key}>
+              <PickerField
+                field={field}
+                property={{ key }}
+                feature={feature}
+                onRemoveField={() => {
+                  onRemoveField(key)
+                }}
+                onUpdate={({ properties }) => {
+                  onUpdate({ properties })
+                  const value = Object.assign(this.state.value || {}, properties)
+                  this.setState({ value })
+                }}
+              />
+            </View>
+          )
+        })}
+      </View>
+    )
+  }
+}
+
 export const getFieldInput = type => {
   if (!type) return TextField
 
   switch (type) {
+    case 'access':
+      return AccessField
+
     case 'check':
       return CheckField
 
@@ -442,6 +523,18 @@ export const getFieldInput = type => {
     case 'multiCombo':
       return ComboField
 
+    case 'networkCombo':
+      return ComboField
+
+    case 'cycleway':
+      return CyclewayField
+
+    case 'radio':
+      return ComboField
+
+    case 'structureRadio':
+      return ComboField
+
     case 'address':
       return AddressField
 
@@ -449,6 +542,9 @@ export const getFieldInput = type => {
       return TextField
 
     case 'number':
+      return NumberField
+
+    case 'maxspeed':
       return NumberField
 
     case 'text':
