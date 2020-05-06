@@ -83,6 +83,7 @@ Object {
     },
     "properties": Object {
       "dist": 0.00022517248045479096,
+      "id": "observe-hauptbanhof",
       "index": 0,
       "location": 0.0018341862152104543,
     },
@@ -144,6 +145,7 @@ Object {
     },
     "properties": Object {
       "dist": 0.0018370373094811034,
+      "id": "observe-hauptbanhof",
       "index": 2,
       "location": 0.3092503207620726,
     },
@@ -170,6 +172,7 @@ Object {
   },
   "properties": Object {
     "dist": 0.0018370373094811034,
+    "id": "observe-hauptbanhof",
     "index": 2,
     "location": 0.3092503207620726,
   },

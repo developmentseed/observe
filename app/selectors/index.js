@@ -12,6 +12,7 @@ import {
 } from '../utils/traces'
 import cache from '../utils/data-cache'
 import { filterTags } from '../utils/filter-tags'
+import _find from 'lodash.find'
 
 export const getVisibleBounds = state => state.map.visibleBounds
 export const getZoom = state => state.map.zoom
@@ -253,4 +254,14 @@ export const getNearestGeojson = state => {
     fc = featureCollection([nearestEdge, nearestNode])
   }
   return fc
+}
+
+export const getFeaturesFromState = (state, featureIds) => {
+  const features = []
+  const geojson = getVisibleFeatures(state)
+  featureIds.forEach(fId => {
+    const feature = _find(geojson.features, ['id', `way/${fId}`])
+    if (feature) features.push(feature)
+  })
+  return features
 }

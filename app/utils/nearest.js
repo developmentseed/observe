@@ -7,6 +7,7 @@ import turfNearestPointOnLine from '@turf/nearest-point-on-line'
 import { lineString } from '@turf/helpers'
 import { nodesGeojson } from '../utils/nodes-to-geojson'
 import _sortBy from 'lodash.sortby'
+import getRandomId from './get-random-id'
 
 // FIXME: adjust these based on interactions
 const threshold = 0.005
@@ -78,7 +79,9 @@ export async function findNearest (node, features) {
 }
 
 export function findNearestPoint (node, edge) {
-  return turfNearestPointOnLine(edge, node, { 'units': 'kilometers' })
+  const point = turfNearestPointOnLine(edge, node, { 'units': 'kilometers' })
+  point.properties.id = getRandomId()
+  return point
 }
 
 function getEdge (polygon) {
