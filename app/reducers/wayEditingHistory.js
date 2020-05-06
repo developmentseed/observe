@@ -1,11 +1,14 @@
 import * as types from '../actions/actionTypes'
 import undoable from './undoable'
 
-function wayEditingHistory (state = {}, action) {
+function wayEditingHistory (state = {
+  way: undefined,
+  modifiedSharedWays: []
+}, action) {
   switch (action.type) {
     case types.WAY_EDIT_MOVE_NODE: {
       const { way } = state
-      const { id, coordinates } = action
+      const { node, coordinates, modifiedSharedWays } = action
 
       const newWay = {
         nodes: way.nodes.map((feature) => {
@@ -17,7 +20,7 @@ function wayEditingHistory (state = {}, action) {
             }
           }
 
-          if (id === feature.id) {
+          if (node.id === feature.id) {
             newFeature.geometry = {
               type: feature.geometry.type,
               coordinates
@@ -31,7 +34,9 @@ function wayEditingHistory (state = {}, action) {
       }
 
       return {
-        way: newWay
+        ...state,
+        way: newWay,
+        modifiedSharedWays: modifiedSharedWays || state.modifiedSharedWays
       }
     }
 
@@ -51,6 +56,7 @@ function wayEditingHistory (state = {}, action) {
       newWay.nodes = [...oldNodes, node]
 
       return {
+        ...state,
         way: newWay
       }
     }
@@ -66,6 +72,7 @@ function wayEditingHistory (state = {}, action) {
       }
 
       return {
+        ...state,
         way: newWay
       }
     }

@@ -107,23 +107,21 @@ class WayEditingOverlay extends React.Component {
   async onAddNodePress () {
     const { wayEditing, getMapCenter } = this.props
     const { nearestFeatures } = wayEditing
-    let node
-    let id
+    let point
     if (nearestFeatures && nearestFeatures.nearestNode) {
-      node = nearestFeatures.nearestNode.geometry.coordinates
-      id = nearestFeatures.nearestNode.properties.id || getRandomId()
+      point = nearestFeatures.nearestNode
     } else {
-      node = await getMapCenter()
-    }
-    const point = {
-      type: 'Feature',
-      id: id,
-      geometry: {
-        type: 'Point',
-        coordinates: node
-      },
-      properties: {
-        id: id
+      const id = getRandomId()
+      point = {
+        type: 'Feature',
+        id: id,
+        geometry: {
+          type: 'Point',
+          coordinates: await getMapCenter()
+        },
+        properties: {
+          id: id
+        }
       }
     }
 
@@ -135,9 +133,8 @@ class WayEditingOverlay extends React.Component {
   }
 
   async onMoveNodePress () {
-    const id = this.props.wayEditing.selectedNode.id
     const center = await this.props.getMapCenter()
-    this.props.moveSelectedNode(id, center)
+    this.props.moveSelectedNode(this.props.wayEditing.selectedNode, center)
   }
 
   onCompleteWayPress () {

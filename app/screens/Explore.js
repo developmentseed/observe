@@ -82,7 +82,7 @@ import { authorize } from '../services/auth'
 
 import { modes, modeTitles } from '../utils/map-modes'
 
-import { point as turfPoint } from '@turf/helpers'
+import { point as turfPoint, featureCollection } from '@turf/helpers'
 
 let osmStyleURL = Config.MAPBOX_STYLE_URL || MapboxGL.StyleURL.Street
 let satelliteStyleURL = Config.MAPBOX_SATELLITE_STYLE_URL || MapboxGL.StyleURL.Satellite
@@ -459,7 +459,8 @@ class Explore extends React.Component {
       nodesGeojson,
       currentWayEdit,
       selectedNode,
-      nearestFeatures
+      nearestFeatures,
+      modifiedSharedWays
     } = this.props
     let selectedFeatureIds = null
     let selectedPhotoIds = null
@@ -715,6 +716,10 @@ class Explore extends React.Component {
                       <MapboxGL.CircleLayer id='nearestNodes' minZoomLevel={16} style={style.osm.nodes} />
                       <MapboxGL.LineLayer id='nearestEdges' style={style.osm.editedLines} minZoomLevel={16} />
                     </MapboxGL.ShapeSource>
+                    <MapboxGL.ShapeSource id='modifiedSharedWays' shape={modifiedSharedWays}>
+                      <MapboxGL.LineLayer id='modifiedLines' style={style.osm.editedLines} minZoomLevel={16} />
+                      <MapboxGL.FillLayer id='modifiedPolygons' style={style.osm.editedPolygons} minZoomLevel={16} />
+                    </MapboxGL.ShapeSource>
                   </StyledMap>
                 )
             }
@@ -788,7 +793,8 @@ const mapStateToProps = (state) => {
     visibleTiles: getVisibleTiles(state),
     currentWayEdit,
     selectedNode: state.wayEditing.selectedNode,
-    nearestFeatures: getNearestGeojson(state)
+    nearestFeatures: getNearestGeojson(state),
+    modifiedSharedWays: featureCollection(state.wayEditingHistory.present.modifiedSharedWays)
   }
 }
 
