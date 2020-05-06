@@ -252,7 +252,6 @@ export default function (state = initialState, action) {
       console.log('# geojson', geojson)
       return {
         ...state,
-        nodes: geojson,
         selectedFeaturesMemberNodes: geojson
       }
 
