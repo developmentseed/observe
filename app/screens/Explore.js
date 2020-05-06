@@ -457,6 +457,7 @@ class Explore extends React.Component {
       photosGeojson,
       selectedPhotos,
       selectedFeaturesMemberNodes,
+      editingWayMemberNodes,
       currentWayEdit,
       selectedNode,
       nearestFeatures,
@@ -708,9 +709,13 @@ class Explore extends React.Component {
                     <MapboxGL.ShapeSource id='currentWayEdit' shape={currentWayEdit}>
                       <MapboxGL.LineLayer id='currentWayLine' style={style.osm.editedLines} minZoomLevel={16} />
                     </MapboxGL.ShapeSource>
-                    <MapboxGL.ShapeSource id='nodesGeojsonSource' shape={selectedFeaturesMemberNodes || {}}>
-                      <MapboxGL.CircleLayer id='nodes' style={style.osm.nodes} minZoomLevel={16} />
-                      <MapboxGL.CircleLayer id='nodeHaloSelected' style={style.osm.iconHaloSelected} minZoomLevel={16} filter={filters.nodeHaloSelected} />
+                    <MapboxGL.ShapeSource id='selectedFeaturesMemberNodesSource' shape={selectedFeaturesMemberNodes || {}}>
+                      <MapboxGL.CircleLayer id='selectedFeaturesMemberNodes' style={style.osm.nodes} minZoomLevel={16} />
+                      <MapboxGL.CircleLayer id='selectedFeaturesMemberNodesHalo' style={style.osm.iconHaloSelected} minZoomLevel={16} filter={filters.nodeHaloSelected} />
+                    </MapboxGL.ShapeSource>
+                    <MapboxGL.ShapeSource id='editingWayMemberNodesSource' shape={editingWayMemberNodes}>
+                      <MapboxGL.CircleLayer id='editingWayMemberNodes' style={style.osm.nodes} minZoomLevel={16} />
+                      <MapboxGL.CircleLayer id='editingWayMemberNodesHalo' style={style.osm.iconHaloSelected} minZoomLevel={16} filter={filters.nodeHaloSelected} />
                     </MapboxGL.ShapeSource>
                     <MapboxGL.ShapeSource id='nearestFeatures' shape={nearestFeatures}>
                       <MapboxGL.CircleLayer id='nearestNodes' minZoomLevel={16} style={style.osm.nodes} />
@@ -745,7 +750,13 @@ const mapStateToProps = (state) => {
     features: []
   }
 
-  if (state.wayEditingHistory.present.way && state.wayEditingHistory.present.way.nodes && state.wayEditingHistory.present.way.nodes.length) {
+  let editingWayMemberNodes = {}
+
+  if (
+    state.wayEditingHistory.present.way &&
+    state.wayEditingHistory.present.way.nodes &&
+    state.wayEditingHistory.present.way.nodes.length
+  ) {
     currentWayEdit.features.push({
       type: 'Feature',
       geometry: {
@@ -755,6 +766,12 @@ const mapStateToProps = (state) => {
         })
       }
     })
+
+    editingWayMemberNodes = {
+      type: 'FeatureCollection',
+      properties: {},
+      features: state.wayEditingHistory.present.way.nodes
+    }
   }
 
   return {
@@ -766,6 +783,7 @@ const mapStateToProps = (state) => {
     isConnected: state.network.isConnected,
     selectedFeatures: state.map.selectedFeatures || false,
     selectedFeaturesMemberNodes: state.map.selectedFeaturesMemberNodes,
+    editingWayMemberNodes,
     mode: state.map.mode,
     edits: state.edit.edits,
     editsGeojson: state.edit.editsGeojson,
