@@ -5,6 +5,7 @@ import styled from 'styled-components/native'
 import Icon from './Collecticons'
 import { colors } from '../style/variables'
 import formatDate from '../utils/format-date'
+import { PHOTO_PENDING_EDIT_STATUS, PHOTO_UPLOADING_STATUS, PHOTO_UPLOADED_STATUS, PHOTO_PENDING_STATUS } from '../constants'
 
 const ItemContainer = styled.TouchableOpacity`
   border-bottom-width: 0.2;
@@ -60,7 +61,7 @@ class PhotosItem extends React.PureComponent {
     const { item } = this.props
     let iconName
     let color = colors.primary
-    if (item.status === 'pending') {
+    if (item.status === PHOTO_PENDING_STATUS) {
       iconName = 'clock'
     } else {
       iconName = 'circle-tick'
@@ -71,11 +72,11 @@ class PhotosItem extends React.PureComponent {
   getStatusText () {
     const { item } = this.props
     switch (item.status) {
-      case 'uploading':
+      case PHOTO_UPLOADING_STATUS:
         return 'Uploading'
-      case 'uploaded':
+      case PHOTO_UPLOADED_STATUS:
         return `Uploaded at ${formatDate(item.uploadedAt)}`
-      case 'pending':
+      case PHOTO_PENDING_STATUS:
         if (item.errors.length === 0 && item.featureId && item.featureId.search('observe') > -1) {
           return 'Waiting to upload associated feature...'
         }
@@ -89,7 +90,7 @@ class PhotosItem extends React.PureComponent {
           return error.message
         }
         break
-      case 'pending edit':
+      case PHOTO_PENDING_EDIT_STATUS:
         return 'Waiting to upload changes...'
     }
   }
