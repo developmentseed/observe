@@ -281,7 +281,7 @@ describe('reducer for edit related actions', () => {
       oldFeature: getFeature('node/1'),
       newFeature: getFeature('node/1'),
       id: 'node/1',
-      status: 'uploading',
+      status: EDIT_UPLOADING_STATUS,
       errors: []
     }
     const mockState = {
