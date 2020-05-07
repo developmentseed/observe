@@ -63,17 +63,18 @@ function wayEditingHistory (state = {
 
     case types.WAY_EDIT_DELETE_NODE: {
       const { way } = state
-      const { id } = action
+      const { node, modifiedSharedWays } = action
 
       const newWay = {
         nodes: way.nodes.filter((feature) => {
-          return id !== feature.id
+          return node.id !== feature.id
         })
       }
 
       return {
         ...state,
-        way: newWay
+        way: newWay,
+        modifiedSharedWays: modifiedSharedWays || state.modifiedSharedWays
       }
     }
   }

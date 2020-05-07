@@ -96,8 +96,7 @@ class WayEditingOverlay extends React.Component {
   }
 
   onDeleteNodePress () {
-    const id = this.props.wayEditing.selectedNode.id
-    this.props.deleteSelectedNode(id)
+    this.props.deleteSelectedNode(this.props.wayEditing.selectedNode)
   }
 
   onUndoPress () {
