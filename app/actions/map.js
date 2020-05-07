@@ -695,7 +695,6 @@ export function setSelectedFeature (feature) {
  * @param {Array<GeoJSON Features>} features
  */
 export function setSelectedFeatures (features) {
-  console.log('setSelectedFeatures action', features)
   return (dispatch) => {
     dispatch({
       type: types.SET_SELECTED_FEATURES,
@@ -717,7 +716,7 @@ export function setSelectedFeatures (features) {
     } else {
       dispatch({
         type: types.SET_SELECTED_WAY,
-        geojson: {}
+        geojson: null
       })
     }
   }

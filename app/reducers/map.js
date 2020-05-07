@@ -248,7 +248,6 @@ export default function (state = initialState, action) {
 
     case types.SET_SELECTED_WAY:
       let geojson = action.geojson
-      console.log('# geojson', geojson)
       return {
         ...state,
         selectedFeaturesMemberNodes: geojson

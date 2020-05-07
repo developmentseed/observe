@@ -714,7 +714,7 @@ class Explore extends React.Component {
                     </MapboxGL.ShapeSource>
                     <MapboxGL.ShapeSource id='editingWayMemberNodesSource' shape={editingWayMemberNodes}>
                       <MapboxGL.CircleLayer id='editingWayMemberNodes' style={style.osm.nodes} minZoomLevel={16} />
-                      <MapboxGL.CircleLayer id='editingWayMemberNodesHalo' style={style.osm.iconHaloSelected} minZoomLevel={16} filter={filters.nodeHaloSelected} />
+                      {/* <MapboxGL.CircleLayer id='editingWayMemberNodesHalo' style={style.osm.iconHaloSelected} minZoomLevel={16} filter={filters.nodeHaloSelected} /> */}
                     </MapboxGL.ShapeSource>
                     <MapboxGL.ShapeSource id='nearestFeatures' shape={nearestFeatures}>
                       <MapboxGL.CircleLayer id='nearestNodes' minZoomLevel={16} style={style.osm.nodes} />
@@ -749,7 +749,7 @@ const mapStateToProps = (state) => {
     features: []
   }
 
-  let editingWayMemberNodes = {}
+  let editingWayMemberNodes = featureCollection([])
 
   if (
     state.wayEditingHistory.present.way &&
@@ -766,11 +766,7 @@ const mapStateToProps = (state) => {
       }
     })
 
-    editingWayMemberNodes = {
-      type: 'FeatureCollection',
-      properties: {},
-      features: state.wayEditingHistory.present.way.nodes
-    }
+    editingWayMemberNodes = featureCollection(state.wayEditingHistory.present.way.nodes)
   }
 
   return {
