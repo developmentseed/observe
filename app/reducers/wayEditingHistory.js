@@ -1,5 +1,6 @@
 import * as types from '../actions/actionTypes'
 import undoable from './undoable'
+import _cloneDeep from 'lodash.clonedeep'
 
 function wayEditingHistory (state = {
   way: undefined,
@@ -12,21 +13,10 @@ function wayEditingHistory (state = {
 
       const newWay = {
         nodes: way.nodes.map((feature) => {
-          const newFeature = {
-            id: feature.id,
-            type: feature.type,
-            properties: {
-              id: feature.id
-            }
-          }
+          const newFeature = _cloneDeep(feature)
 
-          if (node.id === feature.id) {
-            newFeature.geometry = {
-              type: feature.geometry.type,
-              coordinates
-            }
-          } else {
-            newFeature.geometry = feature.geometry
+          if (node.properties.id === feature.properties.id) {
+            newFeature.geometry.coordinates = coordinates
           }
 
           return newFeature
@@ -64,12 +54,10 @@ function wayEditingHistory (state = {
     case types.WAY_EDIT_DELETE_NODE: {
       const { way } = state
       const { node, modifiedSharedWays } = action
-
-      const newWay = {
-        nodes: way.nodes.filter((feature) => {
-          return node.id !== feature.id
-        })
-      }
+      const newWay = _cloneDeep(way)
+      newWay.nodes = newWay.nodes.filter((feature) => {
+        return node.properties.id !== feature.properties.id
+      })
 
       return {
         ...state,

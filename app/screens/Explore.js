@@ -233,7 +233,7 @@ class Explore extends React.Component {
     const screenBbox = this.getBoundingBox([e.properties.screenPointX, e.properties.screenPointY])
 
     if (mode === modes.ADD_WAY || mode === modes.EDIT_WAY) {
-      const { features } = await this.mapRef.queryRenderedFeaturesInRect(screenBbox, null, ['nodes'])
+      const { features } = await this.mapRef.queryRenderedFeaturesInRect(screenBbox, null, ['editingWayMemberNodes'])
       this.props.setSelectedNode(features[0])
     } else {
       this.loadFeaturesAtPoint(screenBbox)
@@ -712,13 +712,13 @@ class Explore extends React.Component {
                     <MapboxGL.ShapeSource id='selectedFeaturesMemberNodesSource' shape={selectedFeaturesMemberNodes}>
                       <MapboxGL.CircleLayer id='selectedFeaturesMemberNodes' style={style.osm.nodes} minZoomLevel={16} />
                     </MapboxGL.ShapeSource>
-                    <MapboxGL.ShapeSource id='editingWayMemberNodesSource' shape={editingWayMemberNodes}>
-                      <MapboxGL.CircleLayer id='editingWayMemberNodes' style={style.osm.nodes} minZoomLevel={16} />
-                      {/* <MapboxGL.CircleLayer id='editingWayMemberNodesHalo' style={style.osm.iconHaloSelected} minZoomLevel={16} filter={filters.nodeHaloSelected} /> */}
-                    </MapboxGL.ShapeSource>
                     <MapboxGL.ShapeSource id='nearestFeatures' shape={nearestFeatures}>
                       <MapboxGL.CircleLayer id='nearestNodes' minZoomLevel={16} style={style.osm.nodes} />
                       <MapboxGL.LineLayer id='nearestEdges' style={style.osm.editedLines} minZoomLevel={16} />
+                    </MapboxGL.ShapeSource>
+                    <MapboxGL.ShapeSource id='editingWayMemberNodesSource' shape={editingWayMemberNodes}>
+                      <MapboxGL.CircleLayer id='editingWayMemberNodes' style={style.osm.nodes} minZoomLevel={16} />
+                      <MapboxGL.CircleLayer id='editingWayMemberNodesHalo' style={style.osm.iconHaloSelected} minZoomLevel={16} filter={filters.nodeHaloSelected} />
                     </MapboxGL.ShapeSource>
                     <MapboxGL.ShapeSource id='modifiedSharedWays' shape={modifiedSharedWays}>
                       <MapboxGL.LineLayer id='modifiedLines' style={style.osm.editedLines} minZoomLevel={16} />
@@ -745,7 +745,6 @@ const mapStateToProps = (state) => {
 
   const currentWayEdit = {
     type: 'FeatureCollection',
-    properties: {},
     features: []
   }
 
@@ -763,7 +762,8 @@ const mapStateToProps = (state) => {
         coordinates: state.wayEditingHistory.present.way.nodes.map((point) => {
           return point.geometry.coordinates
         })
-      }
+      },
+      properties: {}
     })
 
     editingWayMemberNodes = featureCollection(state.wayEditingHistory.present.way.nodes)
