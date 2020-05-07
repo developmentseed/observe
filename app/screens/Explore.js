@@ -82,7 +82,7 @@ import { authorize } from '../services/auth'
 
 import { modes, modeTitles } from '../utils/map-modes'
 
-import { point as turfPoint } from '@turf/helpers'
+import { point as turfPoint, featureCollection } from '@turf/helpers'
 
 let osmStyleURL = Config.MAPBOX_STYLE_URL || MapboxGL.StyleURL.Street
 let satelliteStyleURL = Config.MAPBOX_SATELLITE_STYLE_URL || MapboxGL.StyleURL.Satellite
@@ -708,9 +708,8 @@ class Explore extends React.Component {
                     <MapboxGL.ShapeSource id='currentWayEdit' shape={currentWayEdit}>
                       <MapboxGL.LineLayer id='currentWayLine' style={style.osm.editedLines} minZoomLevel={16} />
                     </MapboxGL.ShapeSource>
-                    <MapboxGL.ShapeSource id='selectedFeaturesMemberNodesSource' shape={selectedFeaturesMemberNodes || {}}>
+                    <MapboxGL.ShapeSource id='selectedFeaturesMemberNodesSource' shape={selectedFeaturesMemberNodes}>
                       <MapboxGL.CircleLayer id='selectedFeaturesMemberNodes' style={style.osm.nodes} minZoomLevel={16} />
-                      <MapboxGL.CircleLayer id='selectedFeaturesMemberNodesHalo' style={style.osm.iconHaloSelected} minZoomLevel={16} filter={filters.nodeHaloSelected} />
                     </MapboxGL.ShapeSource>
                     <MapboxGL.ShapeSource id='editingWayMemberNodesSource' shape={editingWayMemberNodes}>
                       <MapboxGL.CircleLayer id='editingWayMemberNodes' style={style.osm.nodes} minZoomLevel={16} />
@@ -777,7 +776,7 @@ const mapStateToProps = (state) => {
     currentTraceStatus: getCurrentTraceStatus(state),
     isConnected: state.network.isConnected,
     selectedFeatures: state.map.selectedFeatures || false,
-    selectedFeaturesMemberNodes: state.map.selectedFeaturesMemberNodes,
+    selectedFeaturesMemberNodes: state.map.selectedFeaturesMemberNodes || featureCollection([]),
     editingWayMemberNodes,
     mode: state.map.mode,
     edits: state.edit.edits,

@@ -243,8 +243,7 @@ export default function (state = initialState, action) {
       features = _uniqBy(features, 'id')
       return {
         ...state,
-        selectedFeatures: features,
-        selectedFeaturesMemberNodes: features
+        selectedFeatures: features
       }
 
     case types.SET_SELECTED_WAY:
