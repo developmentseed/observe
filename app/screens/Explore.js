@@ -709,9 +709,8 @@ class Explore extends React.Component {
                     <MapboxGL.ShapeSource id='currentWayEdit' shape={currentWayEdit}>
                       <MapboxGL.LineLayer id='currentWayLine' style={style.osm.editedLines} minZoomLevel={16} />
                     </MapboxGL.ShapeSource>
-                    <MapboxGL.ShapeSource id='selectedFeaturesMemberNodesSource' shape={selectedFeaturesMemberNodes || {}}>
+                    <MapboxGL.ShapeSource id='selectedFeaturesMemberNodesSource' shape={selectedFeaturesMemberNodes}>
                       <MapboxGL.CircleLayer id='selectedFeaturesMemberNodes' style={style.osm.nodes} minZoomLevel={16} />
-                      <MapboxGL.CircleLayer id='selectedFeaturesMemberNodesHalo' style={style.osm.iconHaloSelected} minZoomLevel={16} filter={filters.nodeHaloSelected} />
                     </MapboxGL.ShapeSource>
                     <MapboxGL.ShapeSource id='editingWayMemberNodesSource' shape={editingWayMemberNodes}>
                       <MapboxGL.CircleLayer id='editingWayMemberNodes' style={style.osm.nodes} minZoomLevel={16} />
@@ -782,7 +781,7 @@ const mapStateToProps = (state) => {
     currentTraceStatus: getCurrentTraceStatus(state),
     isConnected: state.network.isConnected,
     selectedFeatures: state.map.selectedFeatures || false,
-    selectedFeaturesMemberNodes: state.map.selectedFeaturesMemberNodes,
+    selectedFeaturesMemberNodes: state.map.selectedFeaturesMemberNodes || featureCollection([]),
     editingWayMemberNodes,
     mode: state.map.mode,
     edits: state.edit.edits,
