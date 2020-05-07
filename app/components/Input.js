@@ -49,6 +49,17 @@ const FieldDeleteWrapper = styled.TouchableHighlight`
   background-color: white;
 `
 
+const FieldGroup = styled.View`
+  padding-left: 10;
+  padding-right: 10;
+  padding-top: 10;
+  padding-bottom: 10;
+  border-width: 1;
+  border-color: ${colors.baseMuted};
+  border-radius: 4;
+  margin-top: 16;
+`
+
 class Field extends Component {
   state = { color: colors.baseMuted }
 
@@ -137,6 +148,7 @@ export class PickerField extends Field {
     const { property, field: { key, label }, field } = this.props
     const { color } = this.state
     const options = field.options || (field.strings && field.strings.options)
+
     let pickerOptions
     if (Array.isArray(options)) {
       pickerOptions = options.map((option) => {
@@ -147,10 +159,13 @@ export class PickerField extends Field {
         return { label: options[k], value: k, key: k }
       })
     }
-    const value = this.state.value || property.value || (options && options[0])
+
+    const value = this.state.value || property.value
+
     if (!options) {
-      return (null)
+      return null
     }
+
     return (
       <View ref={x => (this._root = x)} style={{ flex: 1, height: 64 }}>
         <FieldWrapper style={{ borderColor: color, height: 64 }}>
@@ -433,11 +448,21 @@ export class AccessField extends Field {
     const { field, feature, onUpdate, onRemoveField } = this.props
     const { keys, strings: { types, options } } = field
 
+    const optionsArray = Object.keys(options).map((key) => {
+      const option = options[key]
+      return `${option.title} - ${option.description}`
+    })
+
     return (
-      <View ref={x => (this._root = x)}>
+      <FieldGroup ref={x => (this._root = x)}>
+        <LabelWrapper>
+          <Label>
+            Access
+          </Label>
+        </LabelWrapper>
         {_uniq(keys).map((key) => {
           const label = types[key]
-          const field = { key, label, options }
+          const field = { key, label, options: optionsArray }
 
           return (
             <View key={key}>
@@ -457,7 +482,7 @@ export class AccessField extends Field {
             </View>
           )
         })}
-      </View>
+      </FieldGroup>
     )
   }
 }
@@ -533,6 +558,9 @@ export const getFieldInput = type => {
       return ComboField
 
     case 'structureRadio':
+      return ComboField
+
+    case 'onewayCheck':
       return ComboField
 
     case 'address':
