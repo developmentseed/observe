@@ -4,11 +4,11 @@ function wayEditing (state = {}, action) {
   switch (action.type) {
     // receive a `way` and populate the currentWayEdit object
     case types.WAY_EDIT_ENTER: {
-      const way = action.way
-
+      const { feature, way } = action
       return {
         mode: state.mode,
-        way: { ...way }
+        way,
+        feature
       }
     }
 

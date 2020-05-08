@@ -91,8 +91,9 @@ const CompleteWayButton = styled.TouchableHighlight`
 `
 
 class WayEditingOverlay extends React.Component {
-  onComponentDidMount () {
-    this.props.editWayEnter()
+  componentDidMount () {
+    const editingFeature = this.props.navigation.getParam('feature')
+    this.props.editWayEnter(editingFeature)
   }
 
   onDeleteNodePress () {
