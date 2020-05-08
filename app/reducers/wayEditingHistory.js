@@ -7,6 +7,14 @@ function wayEditingHistory (state = {
   modifiedSharedWays: []
 }, action) {
   switch (action.type) {
+    case types.WAY_EDIT_ENTER: {
+      const { way } = action
+      return {
+        ...state,
+        way
+      }
+    }
+
     case types.WAY_EDIT_MOVE_NODE: {
       const { way } = state
       const { node, coordinates, modifiedSharedWays } = action

@@ -26,9 +26,13 @@ export function editWayEnter (feature) {
 
   // Get nodes from line/polygon to allow node selection
   const nodes = nodesCoordinates.map((coords, i) => {
+    const id = `node/${ndrefs[i]}`
     return {
-      id: `node/${ndrefs[i]}`,
+      id,
       type: 'Feature',
+      properties: {
+        id
+      },
       geometry: {
         type: 'Point',
         coordinates: coords
