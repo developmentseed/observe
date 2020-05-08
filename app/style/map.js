@@ -1,3 +1,7 @@
+/*
+ * OSM FEATURES
+ */
+
 const thinLineWidth = [
   'interpolate', ['linear'],
   ['zoom'],
@@ -35,17 +39,6 @@ const editedLines = {
     20, 9
   ],
   lineColor: 'blue'
-}
-
-const traces = {
-  lineWidth: [
-    'interpolate', ['linear'],
-    ['zoom'],
-    16, 1,
-    20, 3
-  ],
-  lineColor: 'red',
-  visibility: 'none'
 }
 
 const highways = {
@@ -164,6 +157,25 @@ const icons = {
   iconIgnorePlacement: false,
   iconSize: 0.8
 }
+
+/*
+ * TRACES
+ */
+
+const traces = {
+  lineWidth: [
+    'interpolate', ['linear'],
+    ['zoom'],
+    16, 1,
+    20, 3
+  ],
+  lineColor: 'red',
+  visibility: 'none'
+}
+
+/*
+ * PHOTOS
+ */
 
 const photoIcon = {
   iconImage: 'maki_attraction',
