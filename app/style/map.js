@@ -126,6 +126,25 @@ const lineSelect = {
   ]
 }
 
+/*
+ * EDITING FEATURES
+ */
+
+const editingNodes = {
+  circleColor: 'red',
+  circleRadius: 9,
+  circleOpacity: 1
+}
+
+const editingLines = {
+  lineWidth: thinLineWidth,
+  lineColor: 'red'
+}
+
+/*
+ * ICONS
+ */
+
 const iconHalo = {
   circleRadius: 12,
   circleColor: 'brown',
@@ -222,6 +241,17 @@ export default {
     iconEditedHalo,
     editedPolygons,
     editedLines
+  },
+  editingWay: {
+    nodes: editingNodes,
+    lines: editingLines
+  },
+  nearestFeatures: {
+    nodes: editingNodes,
+    lines: {
+      ...editingLines,
+      lineColor: 'pink'
+    }
   },
   traces: {
     traces
