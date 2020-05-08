@@ -240,17 +240,17 @@ export default {
     icons,
     iconEditedHalo,
     editedPolygons,
-    editedLines
-  },
-  editingWay: {
-    nodes: editingNodes,
-    lines: editingLines
-  },
-  nearestFeatures: {
-    nodes: editingNodes,
-    lines: {
-      ...editingLines,
-      lineColor: 'pink'
+    editedLines,
+    editingWay: {
+      nodes: editingNodes,
+      lines: editingLines
+    },
+    nearestFeatures: {
+      nodes: editingNodes,
+      lines: {
+        ...editingLines,
+        lineColor: 'pink'
+      }
     }
   },
   traces: {

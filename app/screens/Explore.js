@@ -707,17 +707,17 @@ class Explore extends React.Component {
                       <MapboxGL.SymbolLayer id='photos' style={style.photos.photoIcon} minZoomLevel={16} />
                     </MapboxGL.ShapeSource>
                     <MapboxGL.ShapeSource id='currentWayEdit' shape={currentWayEdit}>
-                      <MapboxGL.LineLayer id='currentWayLine' style={style.editingWay.lines} minZoomLevel={16} />
+                      <MapboxGL.LineLayer id='currentWayLine' style={style.osm.editingWay.lines} minZoomLevel={16} />
                     </MapboxGL.ShapeSource>
                     <MapboxGL.ShapeSource id='selectedFeaturesMemberNodesSource' shape={selectedFeaturesMemberNodes}>
                       <MapboxGL.CircleLayer id='selectedFeaturesMemberNodes' style={style.osm.nodes} minZoomLevel={16} />
                     </MapboxGL.ShapeSource>
                     <MapboxGL.ShapeSource id='nearestFeatures' shape={nearestFeatures}>
-                      <MapboxGL.LineLayer id='nearestEdges' style={style.nearestFeatures.lines} minZoomLevel={16} />
-                      <MapboxGL.CircleLayer id='nearestNodes' minZoomLevel={16} style={style.nearestFeatures.nodes} />
+                      <MapboxGL.LineLayer id='nearestEdges' style={style.osm.nearestFeatures.lines} minZoomLevel={16} />
+                      <MapboxGL.CircleLayer id='nearestNodes' minZoomLevel={16} style={style.osm.nearestFeatures.nodes} />
                     </MapboxGL.ShapeSource>
                     <MapboxGL.ShapeSource id='editingWayMemberNodesSource' shape={editingWayMemberNodes}>
-                      <MapboxGL.CircleLayer id='editingWayMemberNodes' style={style.editingWay.nodes} minZoomLevel={16} />
+                      <MapboxGL.CircleLayer id='editingWayMemberNodes' style={style.osm.editingWay.nodes} minZoomLevel={16} />
                       <MapboxGL.CircleLayer id='editingWayMemberNodesHalo' style={style.osm.iconHaloSelected} minZoomLevel={16} filter={filters.nodeHaloSelected} />
                     </MapboxGL.ShapeSource>
                     <MapboxGL.ShapeSource id='modifiedSharedWays' shape={modifiedSharedWays}>
