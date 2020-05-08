@@ -713,8 +713,8 @@ class Explore extends React.Component {
                       <MapboxGL.CircleLayer id='selectedFeaturesMemberNodes' style={style.osm.nodes} minZoomLevel={16} />
                     </MapboxGL.ShapeSource>
                     <MapboxGL.ShapeSource id='nearestFeatures' shape={nearestFeatures}>
-                      <MapboxGL.LineLayer id='nearestEdges' style={style.osm.nearestFeatures.lines} minZoomLevel={16} />
-                      <MapboxGL.CircleLayer id='nearestNodes' minZoomLevel={16} style={style.osm.nearestFeatures.nodes} />
+                      <MapboxGL.LineLayer id='nearestEdges' style={style.osm.editingWay.nearestFeatures.lines} minZoomLevel={16} />
+                      <MapboxGL.CircleLayer id='nearestNodes' minZoomLevel={16} style={style.osm.editingWay.nearestFeatures.nodes} />
                     </MapboxGL.ShapeSource>
                     <MapboxGL.ShapeSource id='editingWayMemberNodesSource' shape={editingWayMemberNodes}>
                       <MapboxGL.CircleLayer id='editingWayMemberNodes' style={style.osm.editingWay.nodes} minZoomLevel={16} />
