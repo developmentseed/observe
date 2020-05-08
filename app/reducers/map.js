@@ -11,6 +11,7 @@ export const initialState = {
   activeTileRequests: [], // quadkeys of all pending tile requests
   fetchedTiles: {}, // Object with mapping of tiles to their respective GeoJSON FeatureCollections
   selectedFeature: false, // GeoJSON feature that is currently selected, or false
+  selectedFeaturesMemberNodes: false,
   mode: modes.EXPLORE, // see app/utils/map-modes.js for all modes
   baseLayer: null,
   overlays: {
@@ -247,10 +248,9 @@ export default function (state = initialState, action) {
 
     case types.SET_SELECTED_WAY:
       let geojson = action.geojson
-      console.log('# geojson', geojson)
       return {
         ...state,
-        nodes: geojson
+        selectedFeaturesMemberNodes: geojson
       }
 
     case types.START_ADD_POINT:

@@ -695,24 +695,30 @@ export function setSelectedFeature (feature) {
  * @param {Array<GeoJSON Features>} features
  */
 export function setSelectedFeatures (features) {
-  console.log('setSelectedFeatures action', features)
   return (dispatch) => {
     dispatch({
       type: types.SET_SELECTED_FEATURES,
       features: features
     })
-    features.forEach(async f => {
-      if (f.geometry.type !== 'Point') {
-        const nodeIds = f.properties.ndrefs.map(n => {
-          return `node/${n}`
-        })
-        const geojson = await nodesGeojson(nodeIds)
-        dispatch({
-          type: types.SET_SELECTED_WAY,
-          geojson: geojson
-        })
-      }
-    })
+    if (features.length) {
+      features.forEach(async f => {
+        if (f.geometry.type !== 'Point') {
+          const nodeIds = f.properties.ndrefs.map(n => {
+            return `node/${n}`
+          })
+          const geojson = await nodesGeojson(nodeIds)
+          dispatch({
+            type: types.SET_SELECTED_WAY,
+            geojson: geojson
+          })
+        }
+      })
+    } else {
+      dispatch({
+        type: types.SET_SELECTED_WAY,
+        geojson: null
+      })
+    }
   }
 }
 

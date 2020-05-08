@@ -32,7 +32,8 @@ import {
 } from '../actions/edit'
 
 import {
-  setSelectedNode
+  setSelectedNode,
+  findNearestFeatures
 } from '../actions/wayEditing'
 
 import {
@@ -69,7 +70,8 @@ import {
   getCurrentTraceStatus,
   getTracesGeojson,
   getPhotosGeojson,
-  getVisibleTiles
+  getVisibleTiles,
+  getNearestGeojson
 } from '../selectors'
 import BasemapModal from '../components/BasemapModal'
 import Icon from '../components/Collecticons'
@@ -79,6 +81,8 @@ import icons from '../assets/icons'
 import { authorize } from '../services/auth'
 
 import { modes, modeTitles } from '../utils/map-modes'
+
+import { point as turfPoint, featureCollection } from '@turf/helpers'
 
 let osmStyleURL = Config.MAPBOX_STYLE_URL || MapboxGL.StyleURL.Street
 let satelliteStyleURL = Config.MAPBOX_SATELLITE_STYLE_URL || MapboxGL.StyleURL.Satellite
@@ -204,9 +208,17 @@ class Explore extends React.Component {
     }
   }
 
-  onRegionDidChange = evt => {
+  onRegionDidChange = async (evt) => {
     const { properties: { visibleBounds, zoomLevel } } = evt
     const oldBounds = this.props.visibleBounds
+    const { mode } = this.props
+    // if in way editing mode, find nearest
+    if (mode === modes.ADD_WAY || mode === modes.EDIT_WAY) {
+      const center = await this.mapRef.getCenter()
+      const node = turfPoint(center)
+      this.props.findNearestFeatures(node)
+    }
+
     if (oldBounds && oldBounds.length) {
       const oldTiles = bboxToTiles(oldBounds)
       const currentTiles = bboxToTiles(visibleBounds)
@@ -221,7 +233,7 @@ class Explore extends React.Component {
     const screenBbox = this.getBoundingBox([e.properties.screenPointX, e.properties.screenPointY])
 
     if (mode === modes.ADD_WAY || mode === modes.EDIT_WAY) {
-      const { features } = await this.mapRef.queryRenderedFeaturesInRect(screenBbox, null, ['nodes'])
+      const { features } = await this.mapRef.queryRenderedFeaturesInRect(screenBbox, null, ['editingWayMemberNodes'])
       this.props.setSelectedNode(features[0])
     } else {
       this.loadFeaturesAtPoint(screenBbox)
@@ -444,9 +456,12 @@ class Explore extends React.Component {
       style,
       photosGeojson,
       selectedPhotos,
-      nodesGeojson,
+      selectedFeaturesMemberNodes,
+      editingWayMemberNodes,
       currentWayEdit,
-      selectedNode
+      selectedNode,
+      nearestFeatures,
+      modifiedSharedWays
     } = this.props
     let selectedFeatureIds = null
     let selectedPhotoIds = null
@@ -694,9 +709,20 @@ class Explore extends React.Component {
                     <MapboxGL.ShapeSource id='currentWayEdit' shape={currentWayEdit}>
                       <MapboxGL.LineLayer id='currentWayLine' style={style.osm.editedLines} minZoomLevel={16} />
                     </MapboxGL.ShapeSource>
-                    <MapboxGL.ShapeSource id='nodesGeojsonSource' shape={nodesGeojson}>
-                      <MapboxGL.CircleLayer id='nodes' style={style.osm.nodes} minZoomLevel={16} />
-                      <MapboxGL.CircleLayer id='nodeHaloSelected' style={style.osm.iconHaloSelected} minZoomLevel={16} filter={filters.nodeHaloSelected} />
+                    <MapboxGL.ShapeSource id='selectedFeaturesMemberNodesSource' shape={selectedFeaturesMemberNodes}>
+                      <MapboxGL.CircleLayer id='selectedFeaturesMemberNodes' style={style.osm.nodes} minZoomLevel={16} />
+                    </MapboxGL.ShapeSource>
+                    <MapboxGL.ShapeSource id='nearestFeatures' shape={nearestFeatures}>
+                      <MapboxGL.CircleLayer id='nearestNodes' minZoomLevel={16} style={style.osm.nodes} />
+                      <MapboxGL.LineLayer id='nearestEdges' style={style.osm.editedLines} minZoomLevel={16} />
+                    </MapboxGL.ShapeSource>
+                    <MapboxGL.ShapeSource id='editingWayMemberNodesSource' shape={editingWayMemberNodes}>
+                      <MapboxGL.CircleLayer id='editingWayMemberNodes' style={style.osm.nodes} minZoomLevel={16} />
+                      <MapboxGL.CircleLayer id='editingWayMemberNodesHalo' style={style.osm.iconHaloSelected} minZoomLevel={16} filter={filters.nodeHaloSelected} />
+                    </MapboxGL.ShapeSource>
+                    <MapboxGL.ShapeSource id='modifiedSharedWays' shape={modifiedSharedWays}>
+                      <MapboxGL.LineLayer id='modifiedLines' style={style.osm.editedLines} minZoomLevel={16} />
+                      <MapboxGL.FillLayer id='modifiedPolygons' style={style.osm.editedPolygons} minZoomLevel={16} />
                     </MapboxGL.ShapeSource>
                   </StyledMap>
                 )
@@ -719,12 +745,16 @@ const mapStateToProps = (state) => {
 
   const currentWayEdit = {
     type: 'FeatureCollection',
-    properties: {},
     features: []
   }
 
-  let nodes
-  if (state.wayEditingHistory.present.way && state.wayEditingHistory.present.way.nodes && state.wayEditingHistory.present.way.nodes.length) {
+  let editingWayMemberNodes = featureCollection([])
+
+  if (
+    state.wayEditingHistory.present.way &&
+    state.wayEditingHistory.present.way.nodes &&
+    state.wayEditingHistory.present.way.nodes.length
+  ) {
     currentWayEdit.features.push({
       type: 'Feature',
       geometry: {
@@ -732,16 +762,11 @@ const mapStateToProps = (state) => {
         coordinates: state.wayEditingHistory.present.way.nodes.map((point) => {
           return point.geometry.coordinates
         })
-      }
+      },
+      properties: {}
     })
 
-    nodes = {
-      type: 'FeatureCollection',
-      properties: {},
-      features: state.wayEditingHistory.present.way.nodes
-    }
-  } else {
-    nodes = state.map.nodes
+    editingWayMemberNodes = featureCollection(state.wayEditingHistory.present.way.nodes)
   }
 
   return {
@@ -752,6 +777,8 @@ const mapStateToProps = (state) => {
     currentTraceStatus: getCurrentTraceStatus(state),
     isConnected: state.network.isConnected,
     selectedFeatures: state.map.selectedFeatures || false,
+    selectedFeaturesMemberNodes: state.map.selectedFeaturesMemberNodes || featureCollection([]),
+    editingWayMemberNodes,
     mode: state.map.mode,
     edits: state.edit.edits,
     editsGeojson: state.edit.editsGeojson,
@@ -767,10 +794,11 @@ const mapStateToProps = (state) => {
     style: state.map.style,
     photosGeojson: getPhotosGeojson(state),
     selectedPhotos: state.map.selectedPhotos,
-    nodesGeojson: nodes,
     visibleTiles: getVisibleTiles(state),
     currentWayEdit,
-    selectedNode: state.wayEditing.selectedNode
+    selectedNode: state.wayEditing.selectedNode,
+    nearestFeatures: getNearestGeojson(state),
+    modifiedSharedWays: featureCollection(state.wayEditingHistory.present.modifiedSharedWays)
   }
 }
 
@@ -792,7 +820,8 @@ const mapDispatchToProps = {
   unpauseTrace,
   loadUserDetails,
   setSelectedPhotos,
-  setSelectedNode
+  setSelectedNode,
+  findNearestFeatures
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Explore)
