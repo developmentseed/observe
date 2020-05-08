@@ -243,13 +243,13 @@ export default {
     editedLines,
     editingWay: {
       nodes: editingNodes,
-      lines: editingLines
-    },
-    nearestFeatures: {
-      nodes: editingNodes,
-      lines: {
-        ...editingLines,
-        lineColor: 'pink'
+      lines: editingLines,
+      nearestFeatures: {
+        nodes: editingNodes,
+        lines: {
+          ...editingLines,
+          lineColor: 'pink'
+        }
       }
     }
   },
