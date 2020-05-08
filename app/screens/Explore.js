@@ -581,7 +581,7 @@ class Explore extends React.Component {
         ['==', ['geometry-type'], 'Point'],
         filteredFeatureIds && filteredFeatureIds.nodes[2].length ? filteredFeatureIds.nodes : ['match', ['get', 'id'], [''], false, true]
       ],
-      featureSelect: [
+      selectedFeatures: [
         'all',
         selectedFeatureIds && selectedFeatureIds.ways[2].length ? selectedFeatureIds.ways : ['==', ['get', 'id'], ''],
         filteredFeatureIds && filteredFeatureIds.ways[2].length ? filteredFeatureIds.ways : ['match', ['get', 'id'], [''], false, true]
@@ -683,7 +683,7 @@ class Explore extends React.Component {
                       <MapboxGL.LineLayer id='waterLine' filter={filters.waterLine} style={style.osm.waterLine} minZoomLevel={16} />
                       <MapboxGL.FillLayer id='buildings' filter={filters.buildings} style={style.osm.buildings} minZoomLevel={16} />
                       <MapboxGL.FillLayer id='leisure' filter={filters.leisure} style={style.osm.leisure} minZoomLevel={16} />
-                      <MapboxGL.LineLayer id='featureSelect' filter={filters.featureSelect} style={style.osm.lineSelect} minZoomLevel={16} />
+                      <MapboxGL.LineLayer id='selectedFeatures' filter={filters.selectedFeatures} style={style.osm.selectedFeatures.lines} minZoomLevel={16} />
                       <MapboxGL.CircleLayer id='iconHalo' style={style.osm.iconHalo} minZoomLevel={16} filter={filters.iconHalo} />
                       <MapboxGL.CircleLayer id='iconHaloSelected' style={style.osm.iconHaloSelected} minZoomLevel={16} filter={filters.iconHaloSelected} />
                       <MapboxGL.SymbolLayer id='pois' style={style.osm.icons} filter={filters.pois} />
@@ -710,7 +710,7 @@ class Explore extends React.Component {
                       <MapboxGL.LineLayer id='currentWayLine' style={style.osm.editingWay.lines} minZoomLevel={16} />
                     </MapboxGL.ShapeSource>
                     <MapboxGL.ShapeSource id='selectedFeaturesMemberNodesSource' shape={selectedFeaturesMemberNodes}>
-                      <MapboxGL.CircleLayer id='selectedFeaturesMemberNodes' style={style.osm.nodes} minZoomLevel={16} />
+                      <MapboxGL.CircleLayer id='selectedFeaturesMemberNodes' style={style.osm.selectedFeatures.nodes} minZoomLevel={16} />
                     </MapboxGL.ShapeSource>
                     <MapboxGL.ShapeSource id='nearestFeatures' shape={nearestFeatures}>
                       <MapboxGL.LineLayer id='nearestEdges' style={style.osm.editingWay.nearestFeatures.lines} minZoomLevel={16} />

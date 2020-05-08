@@ -115,8 +115,18 @@ const polygons = {
   ]
 }
 
-const lineSelect = {
-  lineColor: 'red',
+/*
+ * SELECTED FEATURES
+ */
+
+const selectedNode = {
+  circleRadius: 9,
+  circleOpacity: 1,
+  circleColor: '#FF40FF'
+}
+
+const selectedLine = {
+  lineColor: '#FF40FF',
   lineOpacity: 0.7,
   lineWidth: [
     'interpolate', ['linear'],
@@ -231,7 +241,7 @@ export default {
     railwayLine,
     waterLine,
     lineHighlight,
-    lineSelect,
+    selectedLine,
     polygons,
     buildings,
     leisure,
@@ -251,6 +261,10 @@ export default {
           lineColor: 'pink'
         }
       }
+    },
+    selectedFeatures: {
+      nodes: selectedNode,
+      lines: selectedLine
     }
   },
   traces: {
