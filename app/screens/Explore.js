@@ -615,7 +615,7 @@ class Explore extends React.Component {
           '==',
           ['geometry-type'], 'Point'
         ],
-        selectedNode && selectedNode.id ? ['match', ['get', 'id'], [selectedNode.id], true, false] : ['==', ['get', 'id'], '']
+        selectedNode && selectedNode.properties.id ? ['match', ['get', 'id'], [selectedNode.properties.id], true, false] : ['==', ['get', 'id'], '']
       ]
     }
 
