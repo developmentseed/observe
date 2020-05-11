@@ -1,4 +1,6 @@
 import _cloneDeep from 'lodash.clonedeep'
+import _findIndex from 'lodash.findindex'
+import _isEqual from 'lodash.isequal'
 
 export default function modifySharedWays (sharedWays, node, coordinates, action) {
   let modifiedSharedWays = []
@@ -32,6 +34,41 @@ export default function modifySharedWays (sharedWays, node, coordinates, action)
         }
         modifiedSharedWays.push(newWay)
       })
+      break
+
+    case 'ADD':
+      if (node.properties.edge) {
+        const indexOfPointOnEdge = node.properties.index
+        const pointOnEdgeAtIndex = node.properties.edge.geometry.coordinates[indexOfPointOnEdge]
+        sharedWays.forEach(oldWay => {
+          const newWay = _cloneDeep(oldWay)
+          // find the index of this point on the way
+          if (oldWay.geometry.type === 'LineString') {
+            const indexOfNearestPoint = _findIndex(newWay.geometry.coordinates, (c) => {
+              return _isEqual(c, pointOnEdgeAtIndex)
+            })
+            newWay.geometry.coordinates.splice(indexOfNearestPoint + 1, 0, node.geometry.coordinates)
+
+            // add this way membership to the node
+            node.properties.way = { ...node.properties.way }
+            node.properties.way[newWay.properties.id] = indexOfNearestPoint
+
+            // add this node to the way ndrefs
+            newWay.properties.ndrefs.splice(indexOfNearestPoint + 1, 0, node.properties.id)
+          }
+
+          if (oldWay.geometry.type === 'Polygon') {
+            const indexOfNearestPoint = _findIndex(newWay.geometry.coordinates[0], (c) => {
+              return _isEqual(c, pointOnEdgeAtIndex)
+            })
+            newWay.geometry.coordinates[0].splice(indexOfNearestPoint + 1, 0, node.geometry.coordinates)
+            node.properties.way = { ...node.properties.way }
+            node.properties.way[newWay.properties.id] = indexOfNearestPoint
+            newWay.properties.ndrefs.splice(indexOfNearestPoint + 1, 0, node.properties.id)
+          }
+          modifiedSharedWays.push(newWay)
+        })
+      }
   }
   return modifiedSharedWays
 }
