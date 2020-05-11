@@ -261,7 +261,8 @@ export const getFeaturesFromState = (state, featureIds) => {
   const features = []
   const geojson = getVisibleFeatures(state)
   featureIds.forEach(fId => {
-    const feature = _find(geojson.features, ['id', `way/${fId}`])
+    const id = fId.startsWith('way') ? fId : `way/${fId}`
+    const feature = _find(geojson.features, ['id', id])
     if (feature) features.push(feature)
   })
   return features
