@@ -1,5 +1,5 @@
 import { createNetworkMiddleware } from 'react-native-offline'
-import { createStore, applyMiddleware, compose } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import { persistStore } from 'redux-persist'
 import thunk from 'redux-thunk'
 
@@ -7,14 +7,21 @@ import rootReducer from '../reducers'
 
 const initialState = {}
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-
+// Base middleware
 const networkMiddleware = createNetworkMiddleware()
+const middlewares = [networkMiddleware, thunk]
 
+// Add logger in development enviroment
+if (process.env.NODE_ENV === `development`) {
+  const { logger } = require(`redux-logger`)
+  middlewares.push(logger)
+}
+
+// Create store
 const store = createStore(
   rootReducer,
   initialState,
-  composeEnhancers(applyMiddleware(networkMiddleware, thunk))
+  applyMiddleware(...middlewares)
 )
 
 let persistor = persistStore(store)
