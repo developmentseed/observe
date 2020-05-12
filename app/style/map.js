@@ -1,3 +1,7 @@
+/*
+ * OSM FEATURES
+ */
+
 const thinLineWidth = [
   'interpolate', ['linear'],
   ['zoom'],
@@ -35,17 +39,6 @@ const editedLines = {
     20, 9
   ],
   lineColor: 'blue'
-}
-
-const traces = {
-  lineWidth: [
-    'interpolate', ['linear'],
-    ['zoom'],
-    16, 1,
-    20, 3
-  ],
-  lineColor: 'red',
-  visibility: 'none'
 }
 
 const highways = {
@@ -122,8 +115,18 @@ const polygons = {
   ]
 }
 
-const lineSelect = {
-  lineColor: 'red',
+/*
+ * SELECTED FEATURES
+ */
+
+const selectedNode = {
+  circleRadius: 9,
+  circleOpacity: 1,
+  circleColor: '#FF40FF'
+}
+
+const selectedLine = {
+  lineColor: '#FF40FF',
   lineOpacity: 0.7,
   lineWidth: [
     'interpolate', ['linear'],
@@ -132,6 +135,25 @@ const lineSelect = {
     20, 10
   ]
 }
+
+/*
+ * EDITING FEATURES
+ */
+
+const editingNodes = {
+  circleColor: 'red',
+  circleRadius: 9,
+  circleOpacity: 1
+}
+
+const editingLines = {
+  lineWidth: thinLineWidth,
+  lineColor: 'red'
+}
+
+/*
+ * ICONS
+ */
 
 const iconHalo = {
   circleRadius: 12,
@@ -164,6 +186,25 @@ const icons = {
   iconIgnorePlacement: false,
   iconSize: 0.8
 }
+
+/*
+ * TRACES
+ */
+
+const traces = {
+  lineWidth: [
+    'interpolate', ['linear'],
+    ['zoom'],
+    16, 1,
+    20, 3
+  ],
+  lineColor: 'red',
+  visibility: 'none'
+}
+
+/*
+ * PHOTOS
+ */
 
 const photoIcon = {
   iconImage: 'maki_attraction',
@@ -200,7 +241,7 @@ export default {
     railwayLine,
     waterLine,
     lineHighlight,
-    lineSelect,
+    selectedLine,
     polygons,
     buildings,
     leisure,
@@ -209,7 +250,22 @@ export default {
     icons,
     iconEditedHalo,
     editedPolygons,
-    editedLines
+    editedLines,
+    editingWay: {
+      nodes: editingNodes,
+      lines: editingLines,
+      nearestFeatures: {
+        nodes: editingNodes,
+        lines: {
+          ...editingLines,
+          lineColor: 'pink'
+        }
+      }
+    },
+    selectedFeatures: {
+      nodes: selectedNode,
+      lines: selectedLine
+    }
   },
   traces: {
     traces
