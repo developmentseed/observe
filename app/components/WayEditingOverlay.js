@@ -91,13 +91,13 @@ const CompleteWayButton = styled.TouchableHighlight`
 `
 
 class WayEditingOverlay extends React.Component {
-  onComponentDidMount () {
-    this.props.editWayEnter()
+  componentDidMount () {
+    const editingFeature = this.props.navigation.getParam('feature')
+    this.props.editWayEnter(editingFeature)
   }
 
   onDeleteNodePress () {
-    const id = this.props.wayEditing.selectedNode.id
-    this.props.deleteSelectedNode(id)
+    this.props.deleteSelectedNode(this.props.wayEditing.selectedNode)
   }
 
   onUndoPress () {
@@ -105,17 +105,23 @@ class WayEditingOverlay extends React.Component {
   }
 
   async onAddNodePress () {
-    const center = await this.props.getMapCenter()
-    const id = getRandomId()
-    const point = {
-      type: 'Feature',
-      id: id,
-      geometry: {
-        type: 'Point',
-        coordinates: center
-      },
-      properties: {
-        id: id
+    const { wayEditing, getMapCenter } = this.props
+    const { nearestFeatures } = wayEditing
+    let point
+    if (nearestFeatures && nearestFeatures.nearestNode) {
+      point = nearestFeatures.nearestNode
+    } else {
+      const id = getRandomId()
+      point = {
+        type: 'Feature',
+        id: id,
+        geometry: {
+          type: 'Point',
+          coordinates: await getMapCenter()
+        },
+        properties: {
+          id: id
+        }
       }
     }
 
@@ -127,9 +133,8 @@ class WayEditingOverlay extends React.Component {
   }
 
   async onMoveNodePress () {
-    const id = this.props.wayEditing.selectedNode.id
     const center = await this.props.getMapCenter()
-    this.props.moveSelectedNode(id, center)
+    this.props.moveSelectedNode(this.props.wayEditing.selectedNode, center)
   }
 
   onCompleteWayPress () {

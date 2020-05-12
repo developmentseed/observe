@@ -49,7 +49,7 @@ export default function undoable (reducer) {
           return state
         }
 
-        let newPast = Object.keys(newPresent).length === 0 ? past : [...past, present]
+        let newPast = [...past, present]
 
         return {
           past: newPast,
