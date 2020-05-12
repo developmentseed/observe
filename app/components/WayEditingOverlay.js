@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components/native'
 import { TouchableHighlight, Animated, Platform } from 'react-native'
 import { connect } from 'react-redux'
+import createWayFeature from '../utils/create-way-feature'
 
 import getRandomId from '../utils/get-random-id'
 
@@ -93,7 +94,8 @@ const CompleteWayButton = styled.TouchableHighlight`
 class WayEditingOverlay extends React.Component {
   componentDidMount () {
     const editingFeature = this.props.navigation.getParam('feature')
-    this.props.editWayEnter(editingFeature)
+    const feature = editingFeature || createWayFeature()
+    this.props.editWayEnter(feature)
   }
 
   onDeleteNodePress () {
@@ -139,21 +141,7 @@ class WayEditingOverlay extends React.Component {
 
   onCompleteWayPress () {
     if (this.props.wayEditingHistory.present.way) {
-      const nodes = this.props.wayEditingHistory.present.way.nodes.map((point) => {
-        return point.geometry.coordinates
-      })
-
-      console.log('onCompleteWayPress', nodes)
-
-      const feature = {
-        type: 'Feature',
-        id: `way/${getRandomId()}`,
-        geometry: {
-          type: 'LineString',
-          coordinates: this.props.wayEditingHistory.present.way.nodes
-        }
-      }
-
+      const feature = createWayFeature(this.props.wayEditingHistory.present.way.nodes)
       this.props.navigation.navigate('SelectFeatureType', { feature })
     }
   }
