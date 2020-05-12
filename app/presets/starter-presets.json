@@ -1,10 +1,113 @@
 {
   "presets": {
-    "building": {"icon": "maki-home", "fields": ["name", "building", "levels", "height", "address"], "moreFields": ["architect", "building/material", "layer", "roof/colour", "smoking", "wheelchair"], "geometry": ["point", "area"], "tags": {"building": "*"}, "matchScore": 0.6, "terms": [], "name": "Building"},
-    "highway/bus_stop": {"icon": "maki-bus", "fields": ["name", "network", "operator", "bench", "shelter"], "geometry": ["point", "vertex"], "tags": {"highway": "bus_stop"}, "name": "Bus Stop / Platform", "searchable": false},
-    "natural/tree": {"icon": "maki-park", "fields": ["leaf_type_singular", "leaf_cycle_singular", "denotation"], "geometry": ["point", "vertex"], "tags": {"natural": "tree"}, "terms": [], "name": "Tree"},
-    "amenity/school": {"icon": "maki-school", "fields": ["name", "operator", "address", "religion", "denomination", "website"], "moreFields": ["internet_access", "internet_access/ssid", "phone", "email", "fax", "wheelchair"], "geometry": ["point", "area"], "terms": ["academy", "elementary school", "middle school", "high school"], "tags": {"amenity": "school"}, "name": "School"},
-    "amenity/restaurant": {"icon": "maki-restaurant", "fields": ["name", "cuisine", "address", "building_area", "opening_hours", "outdoor_seating"], "moreFields": ["takeaway", "delivery", "capacity", "diet_multi", "smoking", "internet_access", "internet_access/fee", "internet_access/ssid", "website", "phone", "email", "fax", "wheelchair", "bar"], "geometry": ["point", "area"], "terms": ["bar", "breakfast", "cafe", "café", "canteen", "coffee", "dine", "dining", "dinner", "drive-in", "eat", "grill", "lunch", "table"], "tags": {"amenity": "restaurant"}, "name": "Restaurant"},
-    "point": {"fields": ["name"], "geometry": ["point"], "tags": {}, "name": "Point", "matchScore": 0.1}
+    "building": {
+      "icon": "maki-home",
+      "fields": ["name", "building", "levels", "height", "address"],
+      "moreFields": [
+        "architect",
+        "building/material",
+        "layer",
+        "roof/colour",
+        "smoking",
+        "wheelchair"
+      ],
+      "geometry": ["point", "area"],
+      "tags": { "building": "*" },
+      "matchScore": 0.6,
+      "terms": [],
+      "name": "Building"
+    },
+    "highway/bus_stop": {
+      "icon": "maki-bus",
+      "fields": ["name", "network", "operator", "bench", "shelter"],
+      "geometry": ["point", "vertex"],
+      "tags": { "highway": "bus_stop" },
+      "name": "Bus Stop / Platform",
+      "searchable": false
+    },
+    "natural/tree": {
+      "icon": "maki-park",
+      "fields": ["leaf_type_singular", "leaf_cycle_singular", "denotation"],
+      "geometry": ["point", "vertex"],
+      "tags": { "natural": "tree" },
+      "terms": [],
+      "name": "Tree"
+    },
+    "amenity/school": {
+      "icon": "maki-school",
+      "fields": [
+        "name",
+        "operator",
+        "address",
+        "religion",
+        "denomination",
+        "website"
+      ],
+      "moreFields": [
+        "internet_access",
+        "internet_access/ssid",
+        "phone",
+        "email",
+        "fax",
+        "wheelchair"
+      ],
+      "geometry": ["point", "area"],
+      "terms": ["academy", "elementary school", "middle school", "high school"],
+      "tags": { "amenity": "school" },
+      "name": "School"
+    },
+    "amenity/restaurant": {
+      "icon": "maki-restaurant",
+      "fields": [
+        "name",
+        "cuisine",
+        "address",
+        "building_area",
+        "opening_hours",
+        "outdoor_seating"
+      ],
+      "moreFields": [
+        "takeaway",
+        "delivery",
+        "capacity",
+        "diet_multi",
+        "smoking",
+        "internet_access",
+        "internet_access/fee",
+        "internet_access/ssid",
+        "website",
+        "phone",
+        "email",
+        "fax",
+        "wheelchair",
+        "bar"
+      ],
+      "geometry": ["point", "area"],
+      "terms": [
+        "bar",
+        "breakfast",
+        "cafe",
+        "café",
+        "canteen",
+        "coffee",
+        "dine",
+        "dining",
+        "dinner",
+        "drive-in",
+        "eat",
+        "grill",
+        "lunch",
+        "table"
+      ],
+      "tags": { "amenity": "restaurant" },
+      "name": "Restaurant"
+    },
+    "point": {
+      "fields": ["name"],
+      "geometry": ["point"],
+      "tags": {},
+      "name": "Point",
+      "matchScore": 0.1
+    }
   }
 }
