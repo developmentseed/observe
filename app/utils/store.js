@@ -11,7 +11,7 @@ const initialState = {}
 const networkMiddleware = createNetworkMiddleware()
 const middlewares = [networkMiddleware, thunk]
 
-// Add logger in development enviroment
+// Add logger in development environment
 if (process.env.NODE_ENV === `development`) {
   const { logger } = require(`redux-logger`)
   middlewares.push(logger)
