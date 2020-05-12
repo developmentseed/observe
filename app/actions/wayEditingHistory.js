@@ -6,7 +6,6 @@ import modifySharedWays from '../utils/modify-shared-ways'
 export function addNode (node) {
   return (dispatch, getState) => {
     let modifiedSharedWays
-    console.log('adding node', node)
     if (node.properties.ways) {
       const sharedWays = getFeaturesFromState(getState(), Object.keys(node.properties.ways))
       if (sharedWays.length) {

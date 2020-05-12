@@ -8,7 +8,7 @@ export default function modifySharedWays (sharedWays, node, coordinates, action)
     case 'MOVE':
       sharedWays.forEach(oldWay => {
         const newWay = _cloneDeep(oldWay)
-        const indexOfNodeInWay = node.properties.ways[oldWay.properties.id.split('/')[1]]
+        const indexOfNodeInWay = node.properties.ways[oldWay.properties.id.split('/')[1]] || node.properties.ways[oldWay.properties.id]
         if (newWay.geometry.type === 'LineString') {
           newWay.geometry.coordinates[indexOfNodeInWay] = coordinates
         }
@@ -24,7 +24,7 @@ export default function modifySharedWays (sharedWays, node, coordinates, action)
     case 'DELETE':
       sharedWays.forEach(oldWay => {
         const newWay = _cloneDeep(oldWay)
-        const indexOfNodeInWay = node.properties.ways[oldWay.properties.id.split('/')[1]]
+        const indexOfNodeInWay = node.properties.ways[oldWay.properties.id.split('/')[1]] || node.properties.ways[oldWay.properties.id]
         if (newWay.geometry.type === 'LineString') {
           newWay.geometry.coordinates.splice(indexOfNodeInWay, 1)
         }
@@ -50,8 +50,8 @@ export default function modifySharedWays (sharedWays, node, coordinates, action)
             newWay.geometry.coordinates.splice(indexOfNearestPoint + 1, 0, node.geometry.coordinates)
 
             // add this way membership to the node
-            node.properties.way = { ...node.properties.way }
-            node.properties.way[newWay.properties.id] = indexOfNearestPoint
+            node.properties.ways = { ...node.properties.ways }
+            node.properties.ways[newWay.properties.id] = indexOfNearestPoint + 1
 
             // add this node to the way ndrefs
             newWay.properties.ndrefs.splice(indexOfNearestPoint + 1, 0, node.properties.id)
@@ -62,8 +62,8 @@ export default function modifySharedWays (sharedWays, node, coordinates, action)
               return _isEqual(c, pointOnEdgeAtIndex)
             })
             newWay.geometry.coordinates[0].splice(indexOfNearestPoint + 1, 0, node.geometry.coordinates)
-            node.properties.way = { ...node.properties.way }
-            node.properties.way[newWay.properties.id] = indexOfNearestPoint
+            node.properties.ways = { ...node.properties.ways }
+            node.properties.ways[newWay.properties.id] = indexOfNearestPoint + 1
             newWay.properties.ndrefs.splice(indexOfNearestPoint + 1, 0, node.properties.id)
           }
           modifiedSharedWays.push(newWay)

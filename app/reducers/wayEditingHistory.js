@@ -31,7 +31,7 @@ function wayEditingHistory (state = {
     }
 
     case types.WAY_EDIT_ADD_NODE: {
-      const { node } = action
+      const { node, modifiedSharedWays } = action
       let { way } = state
 
       if (!way) {
@@ -47,7 +47,8 @@ function wayEditingHistory (state = {
 
       return {
         ...state,
-        way: newWay
+        way: newWay,
+        modifiedSharedWays: modifiedSharedWays || state.modifiedSharedWays
       }
     }
 
