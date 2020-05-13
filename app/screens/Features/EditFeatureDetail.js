@@ -32,6 +32,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { getPhotosForFeature } from '../../utils/photos'
 import PhotoGrid from '../../components/PhotoGrid'
 import { modes } from '../../utils/map-modes'
+import { inheritsFields, getInheritedFields, getInheritedMoreFields } from '../../utils/get-inherited-fields'
 
 const FieldsList = styled.FlatList`
 `
@@ -234,6 +235,40 @@ class EditFeatureDetail extends React.Component {
   getMoreFields () {
     const { fields, preset } = this.state
 
+    let inheritedFields = []
+    let inheritedMoreFields = []
+    if (preset && preset.fields) {
+      preset.fields = preset.fields.filter((field, i) => {
+        if (inheritsFields(field)) {
+          const newFields = getInheritedFields(field)
+          inheritedFields = inheritedFields.concat(newFields)
+          return false
+        } else {
+          return true
+        }
+      })
+
+      if (inheritedFields.length) {
+        preset.fields = _uniq([].concat(preset.fields, inheritedFields))
+      }
+
+      if (preset.moreFields) {
+        preset.moreFields = preset.moreFields.filter((field, i) => {
+          if (inheritsFields(field)) {
+            const newMoreFields = getInheritedMoreFields(field)
+            inheritedMoreFields = inheritedMoreFields.concat(newMoreFields)
+            return false
+          } else {
+            return true
+          }
+        })
+
+        if (inheritedMoreFields.length) {
+          preset.moreFields = _uniq([].concat(preset.moreFields, inheritedMoreFields))
+        }
+      }
+    }
+
     const parentPreset = preset ? getParentPreset(preset) : undefined
 
     let moreFields = []
@@ -277,7 +312,7 @@ class EditFeatureDetail extends React.Component {
   renderAddField () {
     const fields = this.getMoreFields()
     if (!fields || !fields.length > 0) return
-
+    console.log('fields', fields)
     return (
       <Picker
         placeholder={{
