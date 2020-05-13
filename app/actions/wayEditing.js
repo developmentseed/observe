@@ -17,33 +17,41 @@ export function setSelectedNode (node) {
 }
 
 export function editWayEnter (feature) {
-  const {
-    properties: { ndrefs },
-    geometry: { coordinates, type }
-  } = feature
+  let way = null
 
-  const nodesCoordinates = type === 'Polygon' ? coordinates[0] : coordinates
+  // The following block is executed when editing a existing feature.
+  // It adds its member notes to the state, allowing their selection on click.
+  if (feature) {
+    const {
+      properties: { ndrefs },
+      geometry: { coordinates, type }
+    } = feature
 
-  // Get nodes from line/polygon to allow node selection
-  const nodes = nodesCoordinates.map((coords, i) => {
-    const id = `node/${ndrefs[i]}`
-    return {
-      id,
-      type: 'Feature',
-      properties: {
-        id
-      },
-      geometry: {
-        type: 'Point',
-        coordinates: coords
+    const nodesCoordinates = type === 'Polygon' ? coordinates[0] : coordinates
+
+    // Get nodes from line/polygon to allow node selection
+    const nodes = nodesCoordinates.map((coords, i) => {
+      const id = `node/${ndrefs[i]}`
+      return {
+        id,
+        type: 'Feature',
+        properties: {
+          id
+        },
+        geometry: {
+          type: 'Point',
+          coordinates: coords
+        }
       }
-    }
-  })
+    })
+
+    way = { nodes }
+  }
 
   return {
     type: types.WAY_EDIT_ENTER,
     feature,
-    way: { nodes }
+    way
   }
 }
 
