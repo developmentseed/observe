@@ -108,6 +108,63 @@
       "tags": {},
       "name": "Point",
       "matchScore": 0.1
+    },
+    "highway": {
+      "fields": ["name", "highway"],
+      "geometry": ["line"],
+      "tags": { "highway": "*" },
+      "searchable": false,
+      "name": "Highway"
+    },
+    "waterway/stream": {
+      "fields": ["name", "structure_waterway", "width", "intermittent"],
+      "moreFields": ["covered", "fishing", "gnis/feature_id", "salt", "tidal"],
+      "geometry": ["line"],
+      "terms": [
+        "beck",
+        "branch",
+        "brook",
+        "burn",
+        "course",
+        "creek",
+        "current",
+        "drift",
+        "flood",
+        "flow",
+        "freshet",
+        "race",
+        "rill",
+        "rindle",
+        "rivulet",
+        "run",
+        "runnel",
+        "rush",
+        "spate",
+        "spritz",
+        "surge",
+        "tide",
+        "torrent",
+        "tributary",
+        "watercourse"
+      ],
+      "tags": { "waterway": "stream" },
+      "name": "Stream"
+    },
+    "barrier/fence": {
+      "icon": "maki-fence",
+      "fields": ["fence_type", "height", "material"],
+      "geometry": ["line"],
+      "tags": { "barrier": "fence" },
+      "name": "Fence",
+      "matchScore": 0.25
+    },
+    "barrier/wall": {
+      "icon": "temaki-wall",
+      "fields": ["wall", "height", "material"],
+      "geometry": ["line", "area"],
+      "tags": { "barrier": "wall" },
+      "name": "Wall",
+      "matchScore": 0.25
     }
   }
 }
