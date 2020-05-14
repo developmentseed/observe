@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components/native'
-import { Platform } from 'react-native'
+import { Platform, View, Text } from 'react-native'
 import MapboxGL from '@react-native-mapbox-gl/maps'
 import { AndroidBackHandler } from 'react-navigation-backhandler'
 import Config from 'react-native-config'
@@ -449,6 +449,30 @@ class Explore extends React.Component {
     )
   }
 
+  renderRelationWarning () {
+    const { featuresInRelation, selectedFeatures } = this.props
+    if (!featuresInRelation || !featuresInRelation.length) return null
+    if (!selectedFeatures || !selectedFeatures.length) return null
+    console.log('selectedFeatures', selectedFeatures)
+    // this.props.currentWayEdit doesn't have the way id right now
+    // using selectedFeatures for now to see what we're working with
+    const feature = selectedFeatures.find((feature) => {
+      return featuresInRelation.includes(feature.id)
+    })
+
+    console.log('feature', feature)
+    return (
+      <View style={{
+        backgroundColor: '#ffffff',
+        padding: 20,
+        top: 200,
+        left: 30,
+        position: 'absolute',
+        elevation: 1
+      }}><Text>{feature.id} is in a relation</Text></View>
+    )
+  }
+
   render () {
     const {
       navigation,
@@ -741,6 +765,7 @@ class Explore extends React.Component {
             {mode !== modes.OFFLINE_TILES && this.renderZoomToEdit()}
           </MainBody>
           { this.renderOverlay() }
+          { this.renderRelationWarning() }
         </Container>
       </AndroidBackHandler>
     )
@@ -815,7 +840,8 @@ const mapStateToProps = (state) => {
     currentWayEdit,
     selectedNode: state.wayEditing.selectedNode,
     nearestFeatures: getNearestGeojson(state),
-    modifiedSharedWays: featureCollection(state.wayEditingHistory.present.modifiedSharedWays)
+    modifiedSharedWays: featureCollection(state.wayEditingHistory.present.modifiedSharedWays),
+    featuresInRelation: state.map.featuresInRelation
   }
 }
 

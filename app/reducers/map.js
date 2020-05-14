@@ -522,10 +522,11 @@ export default function (state = initialState, action) {
 
     case types.NEW_DATA_AVAILABLE: {
       const { serialNumber } = state
-
+      const { featuresInRelation } = action
       return {
         ...state,
-        serialNumber: serialNumber + 1
+        serialNumber: serialNumber + 1,
+        featuresInRelation
       }
     }
 

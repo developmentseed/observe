@@ -782,10 +782,12 @@ export function updateVisibleBounds (visibleBounds, zoom) {
                 allNodes: false,
                 mapRelations: true
               })
+              console.log('jsonData', jsonData)
               cache.set(tile, jsonData.geojson)
               await addNodes(tile, jsonData.nodes)
               dispatch({
-                type: types.NEW_DATA_AVAILABLE
+                type: types.NEW_DATA_AVAILABLE,
+                featuresInRelation: jsonData.featuresInRelation
               })
             } else {
               // OSM XML for this tile doesn't exist (yet)
