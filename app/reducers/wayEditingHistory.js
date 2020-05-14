@@ -4,6 +4,9 @@ import _cloneDeep from 'lodash.clonedeep'
 
 function wayEditingHistory (state = {
   way: undefined,
+  addedNodes: [],
+  movedNodes: [],
+  deletedNodes: [],
   modifiedSharedWays: []
 }, action) {
   switch (action.type) {
@@ -31,10 +34,13 @@ function wayEditingHistory (state = {
         })
       }
 
+      const movedNodes = [...state.movedNodes, node.properties.id]
+
       return {
         ...state,
         way: newWay,
-        modifiedSharedWays: modifiedSharedWays || state.modifiedSharedWays
+        modifiedSharedWays: modifiedSharedWays || state.modifiedSharedWays,
+        movedNodes
       }
     }
 
@@ -53,10 +59,13 @@ function wayEditingHistory (state = {
 
       newWay.nodes = [...oldNodes, node]
 
+      const addedNodes = [...state.addedNodes, node.properties.id]
+
       return {
         ...state,
         way: newWay,
-        modifiedSharedWays: modifiedSharedWays || state.modifiedSharedWays
+        modifiedSharedWays: modifiedSharedWays || state.modifiedSharedWays,
+        addedNodes
       }
     }
 
@@ -68,10 +77,13 @@ function wayEditingHistory (state = {
         return node.properties.id !== feature.properties.id
       })
 
+      const deletedNodes = [...state.deletedNodes, node.properties.id]
+
       return {
         ...state,
         way: newWay,
-        modifiedSharedWays: modifiedSharedWays || state.modifiedSharedWays
+        modifiedSharedWays: modifiedSharedWays || state.modifiedSharedWays,
+        deletedNodes
       }
     }
   }
