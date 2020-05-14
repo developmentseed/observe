@@ -4,9 +4,19 @@ import { getFeaturesFromState } from '../selectors'
 import modifySharedWays from '../utils/modify-shared-ways'
 
 export function addNode (node) {
-  return {
-    type: types.WAY_EDIT_ADD_NODE,
-    node
+  return (dispatch, getState) => {
+    let modifiedSharedWays
+    if (node.properties.ways) {
+      const sharedWays = getFeaturesFromState(getState(), Object.keys(node.properties.ways))
+      if (sharedWays.length) {
+        modifiedSharedWays = modifySharedWays(sharedWays, node, null, 'ADD')
+      }
+    }
+    dispatch({
+      type: types.WAY_EDIT_ADD_NODE,
+      node,
+      modifiedSharedWays
+    })
   }
 }
 

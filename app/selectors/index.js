@@ -261,7 +261,11 @@ export const getFeaturesFromState = (state, featureIds) => {
   const features = []
   const geojson = getVisibleFeatures(state)
   featureIds.forEach(fId => {
-    const feature = _find(geojson.features, ['id', `way/${fId}`])
+    const id = fId.startsWith('way') ? fId : `way/${fId}`
+    let feature
+    // see if the feature is already modified
+    feature = _find(state.wayEditingHistory.present.modifiedSharedWays, ['properties.id', id])
+    if (!feature) feature = _find(geojson.features, ['properties.id', id])
     if (feature) features.push(feature)
   })
   return features
