@@ -72,3 +72,5 @@ xcshareddata
 # CocoaPods
 /ios/Pods/*
 !/ios/Pods/Manifest.lock
+
+.vscode/.react
