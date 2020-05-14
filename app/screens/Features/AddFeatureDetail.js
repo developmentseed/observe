@@ -148,6 +148,7 @@ class EditFeatureDetail extends React.Component {
     // if we don't do this, the save dialog never clears itself
     await nextTick()
 
+    console.log('feature', feature)
     feature.properties = this.getFeatureProperties()
 
     // call addFeature action with feature
