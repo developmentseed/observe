@@ -17,6 +17,14 @@ export default function modifySharedWays (sharedWays, node, coordinates, action)
           newWay.geometry.coordinates[0][indexOfNodeInWay] = coordinates
         }
 
+        if (!newWay.properties.movedNodes) {
+          newWay.properties.movedNodes = []
+        }
+
+        if (!newWay.properties.movedNodes.includes(node.properties.id)) {
+          newWay.properties.movedNodes.push(node.properties.id)
+        }
+
         modifiedSharedWays.push(newWay)
       })
       break
@@ -32,6 +40,15 @@ export default function modifySharedWays (sharedWays, node, coordinates, action)
         if (newWay.geometry.type === 'Polygon') {
           newWay.geometry.coordinates[0].splice(indexOfNodeInWay, 1)
         }
+
+        if (!newWay.properties.deletedNodes) {
+          newWay.properties.deletedNodes = []
+        }
+
+        if (!newWay.properties.deletedNodes.includes(node.properties.id)) {
+          newWay.properties.deletedNodes.push(node.properties.id)
+        }
+
         modifiedSharedWays.push(newWay)
       })
       break
@@ -66,6 +83,15 @@ export default function modifySharedWays (sharedWays, node, coordinates, action)
             node.properties.ways[newWay.properties.id] = indexOfNearestPoint + 1
             newWay.properties.ndrefs.splice(indexOfNearestPoint + 1, 0, node.properties.id)
           }
+
+          if (!newWay.properties.addedNodes) {
+            newWay.properties.addedNodes = []
+          }
+
+          if (!newWay.properties.addedNodes.includes(node.properties.id)) {
+            newWay.properties.addedNodes.push(node.properties.id)
+          }
+
           modifiedSharedWays.push(newWay)
         })
       }
