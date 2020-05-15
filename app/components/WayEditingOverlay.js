@@ -141,6 +141,10 @@ class WayEditingOverlay extends React.Component {
   }
 
   onCompleteWayPress () {
+    // QUESTION:
+    // Made a change to send the properties of the feature if we are editing a way
+    // What more do we need to do here?
+
     console.log('wayEditingHistory state', this.props.wayEditingHistory)
     if (this.props.mode === modes.EDIT_WAY && this.props.wayEditingHistory.present.way) {
       const { nodes, properties } = this.props.wayEditingHistory.present.way

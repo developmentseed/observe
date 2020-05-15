@@ -2,6 +2,12 @@ import * as types from '../actions/actionTypes'
 import undoable from './undoable'
 import _cloneDeep from 'lodash.clonedeep'
 
+// QUESTION
+// Moving, adding or deleting a node while editing a way here doesnt update the way geometry
+// When adding a new node to existing way, we need to find the right index to add it to
+// This is now happening on modify-shared-ways.util
+// But I'm a bit confused how this should work and how the state should be.
+
 function wayEditingHistory (state = {
   way: undefined,
   addedNodes: [],
