@@ -148,7 +148,8 @@ class WayEditingOverlay extends React.Component {
     console.log('wayEditingHistory state', this.props.wayEditingHistory)
     if (this.props.mode === modes.EDIT_WAY && this.props.wayEditingHistory.present.way) {
       const { nodes, properties } = this.props.wayEditingHistory.present.way
-      const feature = createWayFeature(nodes, properties)
+      // pickup the geometry from modifiedSharedWays and send it down to createWayFeature
+      const feature = this.props.wayEditingHistory.present.modifiedSharedWays[properties.id]
       console.log('edited feature', feature)
       this.props.navigation.navigate('EditFeatureDetail', { feature })
     }
