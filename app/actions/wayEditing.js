@@ -2,6 +2,7 @@ import * as types from './actionTypes'
 import { findNearest } from '../utils/nearest'
 import { getVisibleFeatures } from '../selectors'
 import { featureCollection } from '@turf/helpers'
+import { nodesGeojson } from '../utils/nodes-to-geojson'
 
 export function setWayEditingMode (mode) {
   return {
@@ -17,41 +18,28 @@ export function setSelectedNode (node) {
 }
 
 export function editWayEnter (feature) {
-  let way = null
+  return async (dispatch, getState) => {
+    let way = null
 
-  // The following block is executed when editing a existing feature.
-  // It adds its member notes to the state, allowing their selection on click.
-  if (feature) {
-    const {
-      properties: { ndrefs },
-      geometry: { coordinates, type }
-    } = feature
+    // The following block is executed when editing a existing feature.
+    // It adds its member notes to the state, allowing their selection on click.
+    if (feature) {
+      // Get nodes from line/polygon to allow node selection
+      const nodeIds = feature.properties.ndrefs.map(n => {
+        return `node/${n}`
+      })
 
-    const nodesCoordinates = type === 'Polygon' ? coordinates[0] : coordinates
-
-    // Get nodes from line/polygon to allow node selection
-    const nodes = nodesCoordinates.map((coords, i) => {
-      const id = `node/${ndrefs[i]}`
-      return {
-        id,
-        type: 'Feature',
-        properties: {
-          id
-        },
-        geometry: {
-          type: 'Point',
-          coordinates: coords
-        }
+      // Fetch member nodes from the nodecache
+      const nodes = await nodesGeojson(nodeIds)
+      way = {
+        nodes: nodes.features
       }
+    }
+    dispatch({
+      type: types.WAY_EDIT_ENTER,
+      feature,
+      way
     })
-
-    way = { nodes }
-  }
-
-  return {
-    type: types.WAY_EDIT_ENTER,
-    feature,
-    way
   }
 }
 
