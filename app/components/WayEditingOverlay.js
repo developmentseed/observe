@@ -22,6 +22,7 @@ import { colors } from '../style/variables'
 import Icon from './Collecticons'
 
 import CrossHairOverlay from './CrosshairOverlay'
+import { modes } from '../utils/map-modes'
 
 const Container = styled.View`
   position: absolute;
@@ -140,7 +141,15 @@ class WayEditingOverlay extends React.Component {
   }
 
   onCompleteWayPress () {
-    if (this.props.wayEditingHistory.present.way) {
+    console.log('wayEditingHistory state', this.props.wayEditingHistory)
+    if (this.props.mode === modes.EDIT_WAY && this.props.wayEditingHistory.present.way) {
+      const { nodes, properties } = this.props.wayEditingHistory.present.way
+      const feature = createWayFeature(nodes, properties)
+      console.log('edited feature', feature)
+      this.props.navigation.navigate('EditFeatureDetail', { feature })
+    }
+
+    if (this.props.mode === modes.ADD_WAY && this.props.wayEditingHistory.present.way) {
       const feature = createWayFeature(this.props.wayEditingHistory.present.way.nodes)
       this.props.navigation.navigate('SelectFeatureType', { feature })
     }
@@ -182,7 +191,8 @@ const mapStateToProps = (state) => {
 
   return {
     wayEditing,
-    wayEditingHistory
+    wayEditingHistory,
+    mode: state.map.mode
   }
 }
 
