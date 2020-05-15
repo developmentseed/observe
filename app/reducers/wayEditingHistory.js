@@ -12,6 +12,7 @@ function wayEditingHistory (state = {
   switch (action.type) {
     case types.WAY_EDIT_ENTER: {
       const { way } = action
+      console.log('way being edited', way)
       return {
         ...state,
         way
@@ -21,18 +22,28 @@ function wayEditingHistory (state = {
     case types.WAY_EDIT_MOVE_NODE: {
       const { way } = state
       const { node, coordinates, modifiedSharedWays } = action
+      const newWay = _cloneDeep(way)
+      newWay.nodes = way.nodes.map((feature) => {
+        const newFeature = _cloneDeep(feature)
 
-      const newWay = {
-        nodes: way.nodes.map((feature) => {
-          const newFeature = _cloneDeep(feature)
+        if (node.properties.id === feature.properties.id) {
+          newFeature.geometry.coordinates = coordinates
+        }
 
-          if (node.properties.id === feature.properties.id) {
-            newFeature.geometry.coordinates = coordinates
-          }
+        return newFeature
+      })
 
-          return newFeature
-        })
-      }
+      // newWay = {
+      //   nodes: way.nodes.map((feature) => {
+      //     const newFeature = _cloneDeep(feature)
+
+      //     if (node.properties.id === feature.properties.id) {
+      //       newFeature.geometry.coordinates = coordinates
+      //     }
+
+      //     return newFeature
+      //   })
+      // }
 
       const movedNodes = [...state.movedNodes, node.properties.id]
 

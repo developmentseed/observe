@@ -32,7 +32,9 @@ export function editWayEnter (feature) {
       // Fetch member nodes from the nodecache
       const nodes = await nodesGeojson(nodeIds)
       way = {
-        nodes: nodes.features
+        nodes: nodes.features,
+        properties: { ...feature.properties },
+        geometry: { ...feature.geometry }
       }
     }
     dispatch({
