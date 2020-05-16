@@ -4,6 +4,8 @@ import _isEqual from 'lodash.isequal'
 
 export default function modifySharedWays (sharedWays, node, coordinates, action) {
   let modifiedSharedWays = []
+  let index
+
   switch (action) {
     case 'MOVE':
       sharedWays.forEach(oldWay => {
@@ -56,7 +58,12 @@ export default function modifySharedWays (sharedWays, node, coordinates, action)
     case 'ADD':
       if (node.properties.edge) {
         const indexOfPointOnEdge = node.properties.index
+
+        // QUESTION
+        // it seems like pointOnEdgeAtIndex is always the same
+        // i'm not sure if that's because indexOfPointOnEdge is supposed to be the same each time?
         const pointOnEdgeAtIndex = node.properties.edge.geometry.coordinates[indexOfPointOnEdge]
+        console.log('pointOnEdgeAtIndex', pointOnEdgeAtIndex)
         sharedWays.forEach(oldWay => {
           const newWay = _cloneDeep(oldWay)
           // find the index of this point on the way
@@ -64,6 +71,7 @@ export default function modifySharedWays (sharedWays, node, coordinates, action)
             const indexOfNearestPoint = _findIndex(newWay.geometry.coordinates, (c) => {
               return _isEqual(c, pointOnEdgeAtIndex)
             })
+            console.log('indexOfNearestPoint', indexOfNearestPoint)
             newWay.geometry.coordinates.splice(indexOfNearestPoint + 1, 0, node.geometry.coordinates)
 
             // add this way membership to the node
@@ -72,6 +80,8 @@ export default function modifySharedWays (sharedWays, node, coordinates, action)
 
             // add this node to the way ndrefs
             newWay.properties.ndrefs.splice(indexOfNearestPoint + 1, 0, node.properties.id)
+
+            index = indexOfNearestPoint + 1
           }
 
           if (oldWay.geometry.type === 'Polygon') {
@@ -82,6 +92,8 @@ export default function modifySharedWays (sharedWays, node, coordinates, action)
             node.properties.ways = { ...node.properties.ways }
             node.properties.ways[newWay.properties.id] = indexOfNearestPoint + 1
             newWay.properties.ndrefs.splice(indexOfNearestPoint + 1, 0, node.properties.id)
+
+            index = indexOfNearestPoint + 1
           }
 
           if (!newWay.properties.addedNodes) {
@@ -96,5 +108,5 @@ export default function modifySharedWays (sharedWays, node, coordinates, action)
         })
       }
   }
-  return modifiedSharedWays
+  return { modifiedSharedWays, index }
 }

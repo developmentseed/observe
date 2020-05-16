@@ -141,16 +141,12 @@ class WayEditingOverlay extends React.Component {
   }
 
   onCompleteWayPress () {
-    // QUESTION:
-    // Made a change to send the properties of the feature if we are editing a way
-    // What more do we need to do here?
-
-    console.log('wayEditingHistory state', this.props.wayEditingHistory)
     if (this.props.mode === modes.EDIT_WAY && this.props.wayEditingHistory.present.way) {
       const { nodes, properties } = this.props.wayEditingHistory.present.way
-      // pickup the geometry from modifiedSharedWays and send it down to createWayFeature
-      const feature = this.props.wayEditingHistory.present.modifiedSharedWays[properties.id]
-      console.log('edited feature', feature)
+      const feature = this.props.wayEditingHistory.present.modifiedSharedWays.find((way) => {
+        return way.id === properties.id
+      })
+
       this.props.navigation.navigate('EditFeatureDetail', { feature })
     }
 
