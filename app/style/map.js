@@ -39,7 +39,7 @@ const editedLines = {
     16, 6,
     20, 9
   ],
-  lineColor: colors.primary
+  lineColor: colors.base
 }
 
 const highways = {
@@ -97,9 +97,9 @@ const buildings = {
 }
 
 const editedPolygons = {
-  fillColor: colors.secondary,
+  fillColor: colors.base,
   fillOpacity: 0.3,
-  fillOutlineColor: colors.secondary
+  fillOutlineColor: colors.base
 }
 
 const leisure = {
@@ -123,11 +123,11 @@ const polygons = {
 const selectedNode = {
   circleRadius: 8,
   circleOpacity: 1,
-  circleColor: colors.secondary
+  circleColor: colors.base
 }
 
 const selectedLine = {
-  lineColor: colors.secondary,
+  lineColor: colors.base,
   lineOpacity: 0.7,
   lineWidth: thinLineWidth
 }
@@ -169,7 +169,7 @@ const iconEditedHalo = {
 
 const iconHaloSelected = {
   circleRadius: 15,
-  circleColor: colors.secondary,
+  circleColor: colors.primary,
   circleOpacity: 0.6,
   circleStrokeColor: colors.base,
   circleStrokeWidth: 2,
