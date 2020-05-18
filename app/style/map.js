@@ -1,3 +1,4 @@
+import { colors } from './variables'
 /*
  * OSM FEATURES
  */
@@ -5,8 +6,8 @@
 const thinLineWidth = [
   'interpolate', ['linear'],
   ['zoom'],
-  16, 3,
-  20, 6
+  16, 2,
+  20, 5
 ]
 
 const standardLineWidth = [
@@ -17,7 +18,7 @@ const standardLineWidth = [
 
 const nodes = {
   circleRadius: 12,
-  circleColor: 'brown',
+  circleColor: colors.base,
   circleOpacity: 0.6
 }
 
@@ -38,7 +39,7 @@ const editedLines = {
     16, 6,
     20, 9
   ],
-  lineColor: 'blue'
+  lineColor: colors.primary
 }
 
 const highways = {
@@ -90,15 +91,15 @@ const waterLine = {
 }
 
 const buildings = {
-  fillColor: 'red',
+  fillColor: colors.primary,
   fillOpacity: 0.3,
-  fillOutlineColor: 'grey'
+  fillOutlineColor: colors.base
 }
 
 const editedPolygons = {
-  fillColor: 'blue',
+  fillColor: colors.secondary,
   fillOpacity: 0.3,
-  fillOutlineColor: 'blue'
+  fillOutlineColor: colors.secondary
 }
 
 const leisure = {
@@ -111,7 +112,7 @@ const polygons = {
   fillColor: [
     'step',
     ['get', 'building'],
-    'red'
+    colors.secondary
   ]
 }
 
@@ -120,20 +121,15 @@ const polygons = {
  */
 
 const selectedNode = {
-  circleRadius: 9,
+  circleRadius: 8,
   circleOpacity: 1,
-  circleColor: '#FF40FF'
+  circleColor: colors.secondary
 }
 
 const selectedLine = {
-  lineColor: '#FF40FF',
+  lineColor: colors.secondary,
   lineOpacity: 0.7,
-  lineWidth: [
-    'interpolate', ['linear'],
-    ['zoom'],
-    10, 6,
-    20, 10
-  ]
+  lineWidth: thinLineWidth
 }
 
 /*
@@ -141,14 +137,14 @@ const selectedLine = {
  */
 
 const editingNodes = {
-  circleColor: 'red',
-  circleRadius: 9,
-  circleOpacity: 1
+  circleColor: colors.secondary,
+  circleRadius: 8,
+  circleOpacity: 0.9
 }
 
 const editingLines = {
   lineWidth: thinLineWidth,
-  lineColor: 'red'
+  lineColor: colors.secondary
 }
 
 /*
@@ -157,7 +153,7 @@ const editingLines = {
 
 const iconHalo = {
   circleRadius: 12,
-  circleColor: 'brown',
+  circleColor: colors.primary,
   circleOpacity: 0.6,
   circleStrokeColor: 'white',
   circleStrokeWidth: 0.5
@@ -165,17 +161,17 @@ const iconHalo = {
 
 const iconEditedHalo = {
   circleRadius: 12,
-  circleColor: 'blue',
-  circleOpacity: 0.6,
+  circleColor: colors.primary,
+  circleOpacity: 1,
   circleStrokeColor: 'white',
   circleStrokeWidth: 0.5
 }
 
 const iconHaloSelected = {
   circleRadius: 15,
-  circleColor: 'brown',
+  circleColor: colors.secondary,
   circleOpacity: 0.6,
-  circleStrokeColor: 'blue',
+  circleStrokeColor: colors.base,
   circleStrokeWidth: 2,
   circleStrokeOpacity: 0.6
 }
@@ -255,10 +251,13 @@ export default {
       nodes: editingNodes,
       lines: editingLines,
       nearestFeatures: {
-        nodes: editingNodes,
+        nodes: {
+          ...editingNodes,
+          circleOpacity: 0.7
+        },
         lines: {
           ...editingLines,
-          lineColor: 'pink'
+          lineOpacity: 0.5
         }
       }
     },
