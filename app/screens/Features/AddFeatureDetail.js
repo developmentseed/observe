@@ -69,6 +69,7 @@ class EditFeatureDetail extends React.Component {
     const parentPreset = preset ? getParentPreset(preset) : undefined
     let fields = []
 
+    console.log('feature', feature)
     // if no preset
     if (!preset) {
       fields = []
