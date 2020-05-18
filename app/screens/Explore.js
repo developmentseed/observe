@@ -742,6 +742,7 @@ class Explore extends React.Component {
 
 const mapStateToProps = (state) => {
   const { userDetails } = state.account
+  const { mode } = state.map
 
   const currentWayEdit = {
     type: 'FeatureCollection',
@@ -750,22 +751,31 @@ const mapStateToProps = (state) => {
 
   let editingWayMemberNodes = featureCollection([])
 
+  // Don't use currentWayEdit for displaying edits to existing ways
+  // That happens in modifiedSharedWays
   if (
+    mode === modes.ADD_WAY &&
     state.wayEditingHistory.present.way &&
     state.wayEditingHistory.present.way.nodes &&
     state.wayEditingHistory.present.way.nodes.length
   ) {
+    const coordinates = state.wayEditingHistory.present.way.nodes.map((point) => {
+      return point.geometry.coordinates
+    })
     currentWayEdit.features.push({
       type: 'Feature',
       geometry: {
         type: 'LineString',
-        coordinates: state.wayEditingHistory.present.way.nodes.map((point) => {
-          return point.geometry.coordinates
-        })
+        coordinates: coordinates
       },
-      properties: {}
+      properties: state.wayEditingHistory.present.way.properties
     })
+  }
 
+  if (state.wayEditingHistory.present.way &&
+    state.wayEditingHistory.present.way.nodes &&
+    state.wayEditingHistory.present.way.nodes.length
+  ) {
     editingWayMemberNodes = featureCollection(state.wayEditingHistory.present.way.nodes)
   }
 

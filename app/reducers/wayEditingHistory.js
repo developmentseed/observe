@@ -33,18 +33,6 @@ function wayEditingHistory (state = {
         return newFeature
       })
 
-      // newWay = {
-      //   nodes: way.nodes.map((feature) => {
-      //     const newFeature = _cloneDeep(feature)
-
-      //     if (node.properties.id === feature.properties.id) {
-      //       newFeature.geometry.coordinates = coordinates
-      //     }
-
-      //     return newFeature
-      //   })
-      // }
-
       const movedNodes = [...state.movedNodes, node.properties.id]
 
       return {
@@ -56,7 +44,7 @@ function wayEditingHistory (state = {
     }
 
     case types.WAY_EDIT_ADD_NODE: {
-      const { node, index, modifiedSharedWays } = action
+      const { node, modifiedSharedWays } = action
       let { way } = state
 
       if (!way) {
@@ -65,20 +53,15 @@ function wayEditingHistory (state = {
         }
       }
 
-      const oldNodes = way.nodes
+      const newNodes = [ ...way.nodes ]
       const newWay = { ...way }
 
-      // if there's an index we need to slice the array to add it
-      // otherwise just add to the end of the array
-      if (index) {
-        newWay.nodes = [
-          ...oldNodes.slice(0, index),
-          node,
-          ...oldNodes.slice(index)
-        ]
-      } else {
-        newWay.nodes = [...oldNodes, node]
-      }
+      // Don't use way.nodes to generate the geometry because they are coming
+      // from the nodecache and duplicate nodes are represented only once
+      // for example a polygon
+
+      // So we'll just push the new node
+      newWay.nodes = [...newNodes, node]
 
       const addedNodes = [...state.addedNodes, node.properties.id]
 

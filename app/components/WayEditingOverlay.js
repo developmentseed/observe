@@ -141,17 +141,20 @@ class WayEditingOverlay extends React.Component {
   }
 
   onCompleteWayPress () {
+    console.log('wayEditingHistory state', JSON.stringify(this.props.wayEditingHistory.present))
     if (this.props.mode === modes.EDIT_WAY && this.props.wayEditingHistory.present.way) {
       const { nodes, properties } = this.props.wayEditingHistory.present.way
       const feature = this.props.wayEditingHistory.present.modifiedSharedWays.find((way) => {
         return way.id === properties.id
       })
 
+      console.log('edited feature', JSON.stringify(feature))
       this.props.navigation.navigate('EditFeatureDetail', { feature })
     }
 
     if (this.props.mode === modes.ADD_WAY && this.props.wayEditingHistory.present.way) {
       const feature = createWayFeature(this.props.wayEditingHistory.present.way.nodes)
+      console.log('edited feature', JSON.stringify(feature))
       this.props.navigation.navigate('SelectFeatureType', { feature })
     }
   }

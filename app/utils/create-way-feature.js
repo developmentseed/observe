@@ -10,6 +10,8 @@ export default function createWayFeature (nodes = [], properties = {}, options =
   }
 
   const coordinates = nodes.map((node) => {
+    // populate ndrefs
+    properties.ndrefs.push(node.properties.id)
     return node.geometry.coordinates
   })
 
