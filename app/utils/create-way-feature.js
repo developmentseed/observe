@@ -15,6 +15,7 @@ export default function createWayFeature (nodes = [], properties = {}, options =
     return node.geometry.coordinates
   })
 
+  // TODO: based on the nodes we have to decide whether this is a polyon or not
   return {
     type: 'Feature',
     id: `way/${options.id}`,
