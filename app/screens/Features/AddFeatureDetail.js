@@ -26,7 +26,7 @@ import { getParentPreset } from '../../utils/get-parent-preset'
 import { colors } from '../../style/variables'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { modes } from '../../utils/map-modes'
-import { osmTagSuggestingArea } from '../../utils/get-area-tags'
+import { osmTagSuggestingArea } from '../../utils/osm-tag-suggesting-area'
 
 const FieldsList = styled.FlatList`
 `
