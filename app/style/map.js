@@ -139,7 +139,10 @@ const selectedLine = {
 const editingNodes = {
   circleColor: colors.secondary,
   circleRadius: 8,
-  circleOpacity: 0.9
+  circleOpacity: 0.9,
+  circleStrokeColor: 'white',
+  circleStrokeWidth: 2,
+  circleStrokeOpacity: 0.5
 }
 
 const editingLines = {
