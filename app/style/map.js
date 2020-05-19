@@ -39,7 +39,7 @@ const editedLines = {
     16, 6,
     20, 9
   ],
-  lineColor: colors.base
+  lineColor: colors.primary
 }
 
 const highways = {
@@ -91,15 +91,15 @@ const waterLine = {
 }
 
 const buildings = {
-  fillColor: colors.primary,
-  fillOpacity: 0.3,
+  fillColor: colors.base,
+  fillOpacity: 0.2,
   fillOutlineColor: colors.base
 }
 
 const editedPolygons = {
-  fillColor: colors.base,
-  fillOpacity: 0.3,
-  fillOutlineColor: colors.base
+  fillColor: colors.primary,
+  fillOpacity: 0.2,
+  fillOutlineColor: colors.primary
 }
 
 const leisure = {
@@ -123,11 +123,11 @@ const polygons = {
 const selectedNode = {
   circleRadius: 8,
   circleOpacity: 1,
-  circleColor: colors.base
+  circleColor: colors.primary
 }
 
 const selectedLine = {
-  lineColor: colors.base,
+  lineColor: colors.primary,
   lineOpacity: 0.7,
   lineWidth: thinLineWidth
 }
@@ -145,6 +145,21 @@ const editingNodes = {
 const editingLines = {
   lineWidth: thinLineWidth,
   lineColor: colors.secondary
+}
+
+const nearestNodes = {
+  circleColor: colors.secondary,
+  circleRadius: 6,
+  circleOpacity: 0.5,
+  circleStrokeColor: colors.base,
+  circleStrokeWidth: 2,
+  circleStrokeOpacity: 0.5
+}
+
+const nearestLines = {
+  lineWidth: thinLineWidth,
+  lineColor: colors.secondary,
+  lineOpacity: 0.5
 }
 
 /*
@@ -251,14 +266,8 @@ export default {
       nodes: editingNodes,
       lines: editingLines,
       nearestFeatures: {
-        nodes: {
-          ...editingNodes,
-          circleOpacity: 0.7
-        },
-        lines: {
-          ...editingLines,
-          lineOpacity: 0.5
-        }
+        nodes: nearestNodes,
+        lines: nearestLines
       }
     },
     selectedFeatures: {
