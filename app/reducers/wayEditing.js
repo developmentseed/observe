@@ -35,6 +35,10 @@ function wayEditing (state = {}, action) {
         nearestFeatures: action.nearest
       }
     }
+
+    case types.RESET_WAY_EDITING: {
+      return {}
+    }
   }
 
   return state

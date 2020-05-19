@@ -7,13 +7,15 @@ import createWayFeature from '../utils/create-way-feature'
 import getRandomId from '../utils/get-random-id'
 
 import {
-  editWayEnter
+  editWayEnter,
+  resetWayEditing
 } from '../actions/wayEditing'
 
 import {
   addNode,
   moveSelectedNode,
-  deleteSelectedNode
+  deleteSelectedNode,
+  mergeSelectedNode
 } from '../actions/wayEditingHistory'
 
 import { undo, redo } from '../actions/undoable'
@@ -22,6 +24,7 @@ import { colors } from '../style/variables'
 import Icon from './Collecticons'
 
 import CrossHairOverlay from './CrosshairOverlay'
+import { modes } from '../utils/map-modes'
 
 const Container = styled.View`
   position: absolute;
@@ -135,13 +138,34 @@ class WayEditingOverlay extends React.Component {
   }
 
   async onMoveNodePress () {
-    const center = await this.props.getMapCenter()
-    this.props.moveSelectedNode(this.props.wayEditing.selectedNode, center)
+    const { wayEditing, getMapCenter } = this.props
+    const { nearestFeatures, selectedNode } = wayEditing
+
+    const center = await getMapCenter()
+
+    if (nearestFeatures && nearestFeatures.nearestNode) {
+      this.props.mergeSelectedNode(selectedNode, nearestFeatures.nearestNode)
+    } else {
+      this.props.moveSelectedNode(selectedNode, center)
+    }
   }
 
   onCompleteWayPress () {
-    if (this.props.wayEditingHistory.present.way) {
+    console.log('wayEditingHistory state', JSON.stringify(this.props.wayEditingHistory.present))
+    if (this.props.mode === modes.EDIT_WAY && this.props.wayEditingHistory.present.way) {
+      const { properties } = this.props.wayEditingHistory.present.way
+      const feature = this.props.wayEditingHistory.present.modifiedSharedWays.find((way) => {
+        return way.id === properties.id
+      })
+
+      console.log('edited feature', JSON.stringify(feature))
+      this.props.navigation.navigate('EditFeatureDetail', { feature })
+    }
+
+    if (this.props.mode === modes.ADD_WAY && this.props.wayEditingHistory.present.way) {
       const feature = createWayFeature(this.props.wayEditingHistory.present.way.nodes)
+      console.log('edited feature', JSON.stringify(feature))
+      this.props.resetWayEditing()
       this.props.navigation.navigate('SelectFeatureType', { feature })
     }
   }
@@ -182,15 +206,18 @@ const mapStateToProps = (state) => {
 
   return {
     wayEditing,
-    wayEditingHistory
+    wayEditingHistory,
+    mode: state.map.mode
   }
 }
 
 const mapDispatchToProps = {
+  resetWayEditing,
   editWayEnter,
   addNode,
   moveSelectedNode,
   deleteSelectedNode,
+  mergeSelectedNode,
   undo,
   redo
 }

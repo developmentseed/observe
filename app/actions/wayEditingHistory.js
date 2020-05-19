@@ -1,6 +1,6 @@
 import * as types from './actionTypes'
 import { getFeaturesFromState } from '../selectors'
-// import _cloneDeep from 'lodash.clonedeep'
+
 import modifySharedWays from '../utils/modify-shared-ways'
 
 export function addNode (node) {
@@ -8,8 +8,9 @@ export function addNode (node) {
     let modifiedSharedWays
     if (node.properties.ways) {
       const sharedWays = getFeaturesFromState(getState(), Object.keys(node.properties.ways))
+
       if (sharedWays.length) {
-        modifiedSharedWays = modifySharedWays(sharedWays, node, null, 'ADD')
+        modifiedSharedWays = modifySharedWays.addNode(sharedWays, node)
       }
     }
     dispatch({
@@ -28,7 +29,7 @@ export function moveSelectedNode (node, coordinates) {
     if (node.properties.ways) {
       const sharedWays = getFeaturesFromState(getState(), Object.keys(node.properties.ways))
       if (sharedWays.length) {
-        modifiedSharedWays = modifySharedWays(sharedWays, node, coordinates, 'MOVE')
+        modifiedSharedWays = modifySharedWays.moveNode(sharedWays, node, coordinates)
       }
     }
 
@@ -47,13 +48,32 @@ export function deleteSelectedNode (node) {
     if (node.properties.ways) {
       const sharedWays = getFeaturesFromState(getState(), Object.keys(node.properties.ways))
       if (sharedWays.length) {
-        modifiedSharedWays = modifySharedWays(sharedWays, node, null, 'DELETE')
+        modifiedSharedWays = modifySharedWays.deleteNode(sharedWays, node)
       }
     }
 
     dispatch({
       type: types.WAY_EDIT_DELETE_NODE,
       node,
+      modifiedSharedWays
+    })
+  }
+}
+
+export function mergeSelectedNode (sourceNode, destinationNode) {
+  return (dispatch, getState) => {
+    let modifiedSharedWays
+    if (sourceNode.properties.ways) {
+      const sharedWays = getFeaturesFromState(getState(), Object.keys(sourceNode.properties.ways))
+      if (sharedWays.length) {
+        modifiedSharedWays = modifySharedWays.mergeNode(sharedWays, sourceNode, destinationNode)
+      }
+    }
+
+    dispatch({
+      type: types.WAY_EDIT_MERGE_NODE,
+      sourceNode,
+      destinationNode,
       modifiedSharedWays
     })
   }
