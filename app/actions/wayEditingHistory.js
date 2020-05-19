@@ -10,7 +10,7 @@ export function addNode (node) {
       const sharedWays = getFeaturesFromState(getState(), Object.keys(node.properties.ways))
 
       if (sharedWays.length) {
-        modifiedSharedWays = modifySharedWays(sharedWays, node, null, null, 'ADD')
+        modifiedSharedWays = modifySharedWays.addNode(sharedWays, node)
       }
     }
     dispatch({
@@ -29,7 +29,7 @@ export function moveSelectedNode (node, coordinates) {
     if (node.properties.ways) {
       const sharedWays = getFeaturesFromState(getState(), Object.keys(node.properties.ways))
       if (sharedWays.length) {
-        modifiedSharedWays = modifySharedWays(sharedWays, node, coordinates, null, 'MOVE')
+        modifiedSharedWays = modifySharedWays.moveNode(sharedWays, node, coordinates)
       }
     }
 
@@ -48,7 +48,7 @@ export function deleteSelectedNode (node) {
     if (node.properties.ways) {
       const sharedWays = getFeaturesFromState(getState(), Object.keys(node.properties.ways))
       if (sharedWays.length) {
-        modifiedSharedWays = modifySharedWays(sharedWays, node, null, null, 'DELETE')
+        modifiedSharedWays = modifySharedWays.deleteNode(sharedWays, node)
       }
     }
 
@@ -66,7 +66,7 @@ export function mergeSelectedNode (sourceNode, destinationNode) {
     if (sourceNode.properties.ways) {
       const sharedWays = getFeaturesFromState(getState(), Object.keys(sourceNode.properties.ways))
       if (sharedWays.length) {
-        modifiedSharedWays = modifySharedWays(sharedWays, sourceNode, null, destinationNode, 'MERGE')
+        modifiedSharedWays = modifySharedWays.mergeNode(sharedWays, sourceNode, destinationNode)
       }
     }
 
