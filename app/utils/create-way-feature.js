@@ -1,3 +1,4 @@
+import _isEqual from 'lodash.isequal'
 import getRandomId from '../utils/get-random-id'
 
 export default function createWayFeature (nodes = [], properties = {}, options = {}) {
@@ -15,13 +16,14 @@ export default function createWayFeature (nodes = [], properties = {}, options =
     return node.geometry.coordinates
   })
 
-  // TODO: based on the nodes we have to decide whether this is a polyon or not
+  let geometryType = (!!nodes.length && _isEqual(nodes[0], nodes[nodes.length - 1])) ? 'Polygon' : 'LineString'
+
   return {
     type: 'Feature',
     id: `way/${options.id}`,
     properties,
     geometry: {
-      type: 'LineString',
+      type: geometryType,
       coordinates
     }
   }
