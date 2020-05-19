@@ -34,15 +34,19 @@ function deleteNode (sharedWays, node) {
   sharedWays.forEach(oldWay => {
     const newWay = _cloneDeep(oldWay)
     const indexOfNodeInWay = node.properties.ways[oldWay.properties.id.split('/')[1]] || node.properties.ways[oldWay.properties.id]
+
     if (newWay.geometry.type === 'LineString') {
       newWay.geometry.coordinates.splice(indexOfNodeInWay, 1)
-      // TODO: remove the node from ndrefs
     }
 
     if (newWay.geometry.type === 'Polygon') {
       newWay.geometry.coordinates[0].splice(indexOfNodeInWay, 1)
-      // TODO: remove the node from ndrefs
     }
+
+    // remove the node from ndrefs
+    newWay.properties.ndrefs = newWay.properties.ndrefs.filter(n => {
+      return n !== node.properties.id.split('/')[1]
+    })
 
     if (!newWay.properties.deletedNodes) {
       newWay.properties.deletedNodes = []
@@ -66,29 +70,27 @@ function addNode (sharedWays, node) {
     sharedWays.forEach(oldWay => {
       const newWay = _cloneDeep(oldWay)
       // find the index of this point on the way
+      let indexOfNearestPoint
       if (oldWay.geometry.type === 'LineString') {
-        const indexOfNearestPoint = _findIndex(newWay.geometry.coordinates, (c) => {
+        indexOfNearestPoint = _findIndex(newWay.geometry.coordinates, (c) => {
           return _isEqual(c, pointOnEdgeAtIndex)
         })
         newWay.geometry.coordinates.splice(indexOfNearestPoint + 1, 0, node.geometry.coordinates)
-
-        // add this way membership to the node
-        node.properties.ways = { ...node.properties.ways }
-        node.properties.ways[newWay.properties.id] = indexOfNearestPoint + 1
-
-        // add this node to the way ndrefs
-        newWay.properties.ndrefs.splice(indexOfNearestPoint + 1, 0, node.properties.id)
       }
 
       if (oldWay.geometry.type === 'Polygon') {
-        const indexOfNearestPoint = _findIndex(newWay.geometry.coordinates[0], (c) => {
+        indexOfNearestPoint = _findIndex(newWay.geometry.coordinates[0], (c) => {
           return _isEqual(c, pointOnEdgeAtIndex)
         })
         newWay.geometry.coordinates[0].splice(indexOfNearestPoint + 1, 0, node.geometry.coordinates)
-        node.properties.ways = { ...node.properties.ways }
-        node.properties.ways[newWay.properties.id] = indexOfNearestPoint + 1
-        newWay.properties.ndrefs.splice(indexOfNearestPoint + 1, 0, node.properties.id)
       }
+
+      // add this way membership to the node
+      node.properties.ways = { ...node.properties.ways }
+      node.properties.ways[newWay.properties.id] = indexOfNearestPoint + 1
+
+      // add this node to the way ndrefs
+      newWay.properties.ndrefs.splice(indexOfNearestPoint + 1, 0, node.properties.id)
 
       if (!newWay.properties.addedNodes) {
         newWay.properties.addedNodes = []
