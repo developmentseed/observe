@@ -14,7 +14,8 @@ import {
 import {
   addNode,
   moveSelectedNode,
-  deleteSelectedNode
+  deleteSelectedNode,
+  mergeSelectedNode
 } from '../actions/wayEditingHistory'
 
 import { undo, redo } from '../actions/undoable'
@@ -142,10 +143,11 @@ class WayEditingOverlay extends React.Component {
 
     const center = await getMapCenter()
 
-    // TODO: does this approach for snapping a moved node look right?
-    // if nearestNode, use that node in place of the one being moved
-    // else, call moveSelectedNode
-    this.props.moveSelectedNode(selectedNode, center)
+    if (nearestFeatures && nearestFeatures.nearestNode) {
+      this.props.mergeSelectedNode(selectedNode, nearestFeatures.nearestNode)
+    } else {
+      this.props.moveSelectedNode(selectedNode, center)
+    }
   }
 
   onCompleteWayPress () {
@@ -215,6 +217,7 @@ const mapDispatchToProps = {
   addNode,
   moveSelectedNode,
   deleteSelectedNode,
+  mergeSelectedNode,
   undo,
   redo
 }
