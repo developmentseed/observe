@@ -1,6 +1,7 @@
 import * as types from '../actions/actionTypes'
 import undoable from './undoable'
 import _cloneDeep from 'lodash.clonedeep'
+import _findIndex from 'lodash.findindex'
 
 function createDefaultState () {
   return {
@@ -8,6 +9,7 @@ function createDefaultState () {
     addedNodes: [],
     movedNodes: [],
     deletedNodes: [],
+    mergedNodes: [],
     modifiedSharedWays: []
   }
 }
@@ -97,6 +99,31 @@ function wayEditingHistory (state = createDefaultState(), action) {
 
     case types.RESET_WAY_EDITING: {
       return createDefaultState()
+    }
+
+    case types.WAY_EDIT_MERGE_NODE: {
+      const { way } = state
+      const { sourceNode, destinationNode, modifiedSharedWays } = action
+
+      console.log('sourceNode', sourceNode)
+      console.log('destinationNode', destinationNode)
+
+      const newWay = _cloneDeep(way)
+
+      const indexOfSourceNode = _findIndex(newWay.nodes, (feature) => {
+        return feature.properties.id === sourceNode.properties.id
+      })
+
+      // replace the sourceNode in way.nodes
+      newWay.nodes.splice(indexOfSourceNode, 1, destinationNode)
+      const mergedNodes = [...state.mergedNodes, destinationNode.properties.id]
+
+      return {
+        ...state,
+        way: newWay,
+        modifiedSharedWays: modifiedSharedWays || state.modifiedSharedWays,
+        mergedNodes
+      }
     }
   }
 

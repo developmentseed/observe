@@ -2,7 +2,7 @@ import _cloneDeep from 'lodash.clonedeep'
 import _findIndex from 'lodash.findindex'
 import _isEqual from 'lodash.isequal'
 
-export default function modifySharedWays (sharedWays, node, coordinates, action) {
+export default function modifySharedWays (sharedWays, node, coordinates, destinationNode, action) {
   let modifiedSharedWays = []
 
   switch (action) {
@@ -36,10 +36,12 @@ export default function modifySharedWays (sharedWays, node, coordinates, action)
         const indexOfNodeInWay = node.properties.ways[oldWay.properties.id.split('/')[1]] || node.properties.ways[oldWay.properties.id]
         if (newWay.geometry.type === 'LineString') {
           newWay.geometry.coordinates.splice(indexOfNodeInWay, 1)
+          // TODO: remove the node from ndrefs
         }
 
         if (newWay.geometry.type === 'Polygon') {
           newWay.geometry.coordinates[0].splice(indexOfNodeInWay, 1)
+          // TODO: remove the node from ndrefs
         }
 
         if (!newWay.properties.deletedNodes) {
@@ -97,6 +99,46 @@ export default function modifySharedWays (sharedWays, node, coordinates, action)
           modifiedSharedWays.push(newWay)
         })
       }
+      break
+
+    case 'MERGE':
+      const sourceNode = node
+      sharedWays.forEach(oldWay => {
+        const newWay = _cloneDeep(oldWay)
+
+        let indexOfSourceNode
+        if (newWay.geometry.type === 'LineString') {
+          indexOfSourceNode = _findIndex(newWay.properties.ndrefs, (r) => {
+            return _isEqual(r, sourceNode.properties.id.split('/')[1])
+          })
+          // update the geometry
+          newWay.geometry.coordinates.splice(indexOfSourceNode, 1, destinationNode.geometry.coordinates)
+        }
+
+        if (newWay.geometry.type === 'Polygon') {
+          indexOfSourceNode = _findIndex(newWay.properties.ndrefs, (r) => {
+            return _isEqual(r, sourceNode.properties.id.split('/')[1])
+          })
+          // update the geometry
+          newWay.geometry.coordinates[0].splice(indexOfSourceNode, 1, destinationNode.geometry.coordinates)
+        }
+
+        // update the ndrefs of the way
+        newWay.properties.ndrefs.splice(indexOfSourceNode, 1, destinationNode.properties.id)
+
+        // add the ways membership for the destinationNode
+        destinationNode.properties.ways[newWay.properties.id.split('/')[1]] = indexOfSourceNode
+
+        if (!newWay.properties.mergedNodes) {
+          newWay.properties.mergedNodes = []
+        }
+
+        if (!newWay.properties.mergedNodes.includes(destinationNode.properties.id)) {
+          newWay.properties.mergedNodes.push(destinationNode.properties.id)
+        }
+
+        modifiedSharedWays.push(newWay)
+      })
   }
   return modifiedSharedWays
 }
