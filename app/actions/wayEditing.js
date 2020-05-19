@@ -65,3 +65,9 @@ export function findNearestFeatures (node) {
     })
   }
 }
+
+export function resetWayEditing () {
+  return {
+    type: types.RESET_WAY_EDITING
+  }
+}
