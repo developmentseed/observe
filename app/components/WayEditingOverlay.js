@@ -137,8 +137,15 @@ class WayEditingOverlay extends React.Component {
   }
 
   async onMoveNodePress () {
-    const center = await this.props.getMapCenter()
-    this.props.moveSelectedNode(this.props.wayEditing.selectedNode, center)
+    const { wayEditing, getMapCenter } = this.props
+    const { nearestFeatures, selectedNode } = wayEditing
+
+    const center = await getMapCenter()
+
+    // TODO: does this approach for snapping a moved node look right?
+    // if nearestNode, use that node in place of the one being moved
+    // else, call moveSelectedNode
+    this.props.moveSelectedNode(selectedNode, center)
   }
 
   onCompleteWayPress () {
