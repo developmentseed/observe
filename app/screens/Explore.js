@@ -33,7 +33,8 @@ import {
 
 import {
   setSelectedNode,
-  findNearestFeatures
+  findNearestFeatures,
+  resetWayEditing
 } from '../actions/wayEditing'
 
 import {
@@ -321,9 +322,15 @@ class Explore extends React.Component {
 
   onBackButtonPress = () => {
     const { mode } = this.props
+
     if (mode === modes.EXPLORE) { // let default back handling happen when in Explore mode
       return false
     }
+
+    if (mode === modes.ADD_WAY || mode === modes.EDIT_WAY) {
+      this.props.resetWayEditing()
+    }
+
     this.props.mapBackPress()
     return true
   }
@@ -831,7 +838,8 @@ const mapDispatchToProps = {
   loadUserDetails,
   setSelectedPhotos,
   setSelectedNode,
-  findNearestFeatures
+  findNearestFeatures,
+  resetWayEditing
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Explore)

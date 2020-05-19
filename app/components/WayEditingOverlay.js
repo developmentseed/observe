@@ -7,7 +7,8 @@ import createWayFeature from '../utils/create-way-feature'
 import getRandomId from '../utils/get-random-id'
 
 import {
-  editWayEnter
+  editWayEnter,
+  resetWayEditing
 } from '../actions/wayEditing'
 
 import {
@@ -155,6 +156,7 @@ class WayEditingOverlay extends React.Component {
     if (this.props.mode === modes.ADD_WAY && this.props.wayEditingHistory.present.way) {
       const feature = createWayFeature(this.props.wayEditingHistory.present.way.nodes)
       console.log('edited feature', JSON.stringify(feature))
+      this.props.resetWayEditing()
       this.props.navigation.navigate('SelectFeatureType', { feature })
     }
   }
@@ -201,6 +203,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
+  resetWayEditing,
   editWayEnter,
   addNode,
   moveSelectedNode,

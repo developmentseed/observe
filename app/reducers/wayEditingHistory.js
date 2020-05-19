@@ -2,13 +2,17 @@ import * as types from '../actions/actionTypes'
 import undoable from './undoable'
 import _cloneDeep from 'lodash.clonedeep'
 
-function wayEditingHistory (state = {
-  way: undefined,
-  addedNodes: [],
-  movedNodes: [],
-  deletedNodes: [],
-  modifiedSharedWays: []
-}, action) {
+function createDefaultState () {
+  return {
+    way: undefined,
+    addedNodes: [],
+    movedNodes: [],
+    deletedNodes: [],
+    modifiedSharedWays: []
+  }
+}
+
+function wayEditingHistory (state = createDefaultState(), action) {
   switch (action.type) {
     case types.WAY_EDIT_ENTER: {
       const { way } = action
@@ -89,6 +93,10 @@ function wayEditingHistory (state = {
         modifiedSharedWays: modifiedSharedWays || state.modifiedSharedWays,
         deletedNodes
       }
+    }
+
+    case types.RESET_WAY_EDITING: {
+      return createDefaultState()
     }
   }
 
