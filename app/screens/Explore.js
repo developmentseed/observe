@@ -678,6 +678,8 @@ class Explore extends React.Component {
                     onRegionDidChange={this.onRegionDidChange}
                     regionDidChangeDebounceTime={10}
                     onPress={this.onPress}
+                    compassViewPosition={1}
+                    compassViewMargins={[18, 6]}
                   >
                     <MapboxGL.Camera
                       zoomLevel={12}
