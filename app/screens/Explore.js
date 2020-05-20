@@ -537,6 +537,11 @@ class Explore extends React.Component {
         ['has', 'waterway'],
         ['==', ['geometry-type'], 'LineString']
       ],
+      amenities: [
+        'all',
+        ['has', 'amenity'],
+        ['==', ['geometry-type'], 'Polygon']
+      ],
       buildings: [
         'all',
         ['has', 'building'],
@@ -689,6 +694,7 @@ class Explore extends React.Component {
                       <MapboxGL.LineLayer id='railwayLine' filter={filters.railwayLine} minZoomLevel={16} />
                       <MapboxGL.LineLayer id='waterLine' filter={filters.waterLine} style={style.osm.waterLine} minZoomLevel={16} />
                       <MapboxGL.FillLayer id='buildings' filter={filters.buildings} style={style.osm.buildings} minZoomLevel={16} />
+                      <MapboxGL.FillLayer id='amenities' filter={filters.amenities} style={style.osm.amenities} minZoomLevel={16} />
                       <MapboxGL.FillLayer id='leisure' filter={filters.leisure} style={style.osm.leisure} minZoomLevel={16} />
                       <MapboxGL.LineLayer id='selectedFeatures' filter={filters.selectedFeatures} style={style.osm.selectedFeatures.lines} minZoomLevel={16} />
                       <MapboxGL.CircleLayer id='iconHalo' style={style.osm.iconHalo} minZoomLevel={16} filter={filters.iconHalo} />
