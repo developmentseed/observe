@@ -96,10 +96,16 @@ const buildings = {
   fillOutlineColor: colors.base
 }
 
-const editedPolygons = {
+const amenities = {
   fillColor: colors.primary,
   fillOpacity: 0.2,
   fillOutlineColor: colors.primary
+}
+
+const editedPolygons = {
+  fillColor: colors.secondary,
+  fillOpacity: 0.4,
+  fillOutlineColor: colors.secondary
 }
 
 const leisure = {
@@ -258,6 +264,7 @@ export default {
     selectedLine,
     polygons,
     buildings,
+    amenities,
     leisure,
     iconHalo,
     iconHaloSelected,
