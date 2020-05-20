@@ -113,6 +113,11 @@ const leisure = {
   fillOutlineColor: 'grey'
 }
 
+const water = {
+  fillColor: 'rgba(90,140,210,0.3)',
+  fillOutlineColor: 'grey'
+}
+
 const polygons = {
   fillOpacity: 0.6,
   fillColor: [
@@ -265,6 +270,7 @@ export default {
     polygons,
     buildings,
     amenities,
+    water,
     leisure,
     iconHalo,
     iconHaloSelected,
