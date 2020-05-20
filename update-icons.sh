@@ -5,6 +5,8 @@
 echo 'Clone maki'
 git clone https://github.com/mapbox/maki.git /tmp/maki
 
+convert_svg_to_png=$PWD/node_modules/.bin/convert-svg-to-png
+
 cd /tmp/maki/icons
 
 echo 'Making the svgs white'
@@ -15,7 +17,7 @@ find . -name '*-11.svg' | xargs -n 1 basename |
 while read file; do
   filename="maki-${file%-11.svg}.png"
   filename=${filename//-/_}
-  cat $file | convert-svg-to-png --height 64 --width 64 --filename $filename
+  cat $file | $convert_svg_to_png --height 64 --width 64 --filename $filename
 done
 
 echo 'Clone temaki'
@@ -31,7 +33,7 @@ find . -name '*.svg' | xargs -n 1 basename |
 while read file; do
   filename="temaki-${file%.svg}.png"
   filename=${filename//-/_}
-  cat $file | convert-svg-to-png --height 64 --width 64 --filename $filename
+  cat $file | $convert_svg_to_png --height 64 --width 64 --filename $filename
 done
 
 echo 'Prepare fontawesome'
@@ -46,7 +48,7 @@ find . -name '*.svg' | xargs -n 1 basename |
 while read file; do
   filename="${file%.svg}.png"
   filename=${filename//-/_}
-  cat $file | convert-svg-to-png --height 64 --width 64 --filename $filename
+  cat $file | $convert_svg_to_png --height 64 --width 64 --filename $filename
 done
 
 echo 'Copy icons to Observe...'
