@@ -158,7 +158,7 @@ class Explore extends React.Component {
       isMapLoaded: true,
       clickableLayers: ['editedPois', 'pois', 'editedPolygons',
         'buildings', 'roads', 'roadsLower',
-        'railwayLine', 'waterLine', 'leisure', 'photos'],
+        'railwayLine', 'waterLine', 'leisure', 'photos', 'water', 'allPolygons', 'allLines'],
       userTrackingMode: MapboxGL.UserTrackingModes.None
     })
 
@@ -523,6 +523,15 @@ class Explore extends React.Component {
     }
 
     const filters = {
+      allPolygons: [
+        'any',
+        ['==', ['geometry-type'], 'Polygon'],
+        ['==', ['geometry-type'], 'MultiPolygon']
+      ],
+      allLines: [
+        'all',
+        ['==', ['geometry-type'], 'LineString']
+      ],
       allRoads: [
         'all',
         ['==', ['geometry-type'], 'LineString']
@@ -558,7 +567,7 @@ class Explore extends React.Component {
         [
           'match',
           ['get', 'leisure'],
-          ['pitch', 'track', 'garden'],
+          ['pitch', 'track', 'garden', 'park'],
           true, false
         ],
         [
@@ -570,7 +579,7 @@ class Explore extends React.Component {
         [
           'match',
           ['get', 'landuse'],
-          ['grass', 'forest'],
+          ['grass', 'forest', 'meadow'],
           true, false
         ]
       ],
@@ -699,8 +708,10 @@ class Explore extends React.Component {
                     <MapboxGL.ShapeSource id='geojsonSource' shape={geojson}>
                       <MapboxGL.LineLayer id='roadsHighlight' filter={filters.allRoads} style={style.osm.lineHighlight} minZoomLevel={16} />
                       <MapboxGL.LineLayer id='roads' filter={filters.allRoads} style={style.osm.highways} minZoomLevel={16} />
-                      <MapboxGL.LineLayer id='railwayLine' filter={filters.railwayLine} minZoomLevel={16} />
+                      <MapboxGL.LineLayer id='railwayLine' filter={filters.railwayLine} style={style.osm.railwayLine} minZoomLevel={16} />
+                      <MapboxGL.LineLayer id='allLines' filter={filters.allLines} style={style.osm.lines} minZoomLevel={16} />
                       <MapboxGL.LineLayer id='waterLine' filter={filters.waterLine} style={style.osm.waterLine} minZoomLevel={16} />
+                      <MapboxGL.FillLayer id='allPolygons' filter={filters.allPolygons} style={style.osm.polygons} minZoomLevel={16} />
                       <MapboxGL.FillLayer id='buildings' filter={filters.buildings} style={style.osm.buildings} minZoomLevel={16} />
                       <MapboxGL.FillLayer id='amenities' filter={filters.amenities} style={style.osm.amenities} minZoomLevel={16} />
                       <MapboxGL.FillLayer id='leisure' filter={filters.leisure} style={style.osm.leisure} minZoomLevel={16} />
