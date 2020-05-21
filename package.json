@@ -61,7 +61,7 @@
     "node-forge": "^0.8.1",
     "oauth-1.0a": "^2.2.5",
     "object-sizeof": "^1.3.0",
-    "observe-icon-font": "developmentseed/observe-icon-font",
+    "observe-icon-font": "developmentseed/observe-icon-font#71dbdb137d51d1a668d06928422c1825f672c243",
     "osmtogeojson": "https://github.com/geohacker/osmtogeojson.git#af17910488131dd04f278c7e1bc04d77c9a8c16d",
     "p-event": "^3.0.0",
     "p-queue": "^4.0.0",
