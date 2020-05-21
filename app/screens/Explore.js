@@ -565,6 +565,12 @@ class Explore extends React.Component {
         ['has', 'waterway'],
         ['==', ['geometry-type'], 'LineString']
       ],
+      coastlines: [
+        'match',
+        ['get', 'natural'],
+        'coastline',
+        true, false
+      ],
       amenities: [
         'all',
         ['has', 'amenity'],
@@ -706,8 +712,8 @@ class Explore extends React.Component {
                     onRegionDidChange={this.onRegionDidChange}
                     regionDidChangeDebounceTime={10}
                     onPress={this.onPress}
-                    compassViewPosition={1}
-                    compassViewMargins={[18, 6]}
+                    compassViewPosition={0}
+                    compassViewMargins={[16, 16]}
                   >
                     <MapboxGL.Camera
                       zoomLevel={12}
@@ -728,7 +734,7 @@ class Explore extends React.Component {
                       <MapboxGL.LineLayer id='roadsHighlight' filter={filters.allRoads} style={style.osm.lineHighlight} minZoomLevel={16} />
                       <MapboxGL.LineLayer id='roads' filter={filters.allRoads} style={style.osm.highways} minZoomLevel={16} />
                       <MapboxGL.LineLayer id='railwayLine' filter={filters.railwayLine} style={style.osm.railwayLine} minZoomLevel={16} />
-                      <MapboxGL.LineLayer id='allLines' filter={filters.allLines} style={style.osm.lines} minZoomLevel={16} />
+                      <MapboxGL.LineLayer id='coastlines' filter={filters.coastlines} style={style.osm.coastline} minZoomLevel={16} />
                       <MapboxGL.LineLayer id='waterLine' filter={filters.waterLine} style={style.osm.waterLine} minZoomLevel={16} />
                       <MapboxGL.FillLayer id='allPolygons' filter={filters.allPolygons} style={style.osm.polygons} minZoomLevel={16} />
                       <MapboxGL.FillLayer id='buildings' filter={filters.buildings} style={style.osm.buildings} minZoomLevel={16} />
