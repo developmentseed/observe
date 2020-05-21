@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components/native'
-import { colors } from '../style/variables'
 
 const Warning = styled.View`
   position: absolute;
