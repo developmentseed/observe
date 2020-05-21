@@ -40,8 +40,8 @@ function getTags (feature) {
  */
 function getComplexChange(edit, changesetId) {
 
-  const changes = edit.type === 'create' ? getComplexAdd(edit) : getComplexModify(edit)
-  const { adds, modifies, deletes } = changes
+  const changes = edit.type === 'create' ? getComplexCreate(edit) : getComplexModify(edit)
+  const { creates, modifies, deletes } = changes
 
   // TODO: Generate required XML for `adds`, `modifies` and `deletes`
 }
@@ -50,10 +50,10 @@ function getComplexChange(edit, changesetId) {
  * Returns changes for creating a new way
  * 
  * @param {Object} edit - edit object
- * @returns {Object} with keys: adds, modifies, deletes with arrays of each type of operation 
+ * @returns {Object} with keys: creates, modifies, deletes with arrays of each type of operation 
  */
-function getComplexAdd (edit) {
-  // TODO: return an object with `adds`, `modifies`, `deletes` for changes to be performed,
+function getComplexCreate (edit) {
+  // TODO: return an object with `creates`, `modifies`, `deletes` for changes to be performed,
   // based on contents of edit.newFeature and edit.newFeature.wayEditHistory
 
 }
@@ -62,10 +62,10 @@ function getComplexAdd (edit) {
  * Returns changes for modifying a way
  * 
  * @param {Object} edit - edit object
- * @returns {Object} with keys: adds, modifies, deletes with arrays of each type of operation 
+ * @returns {Object} with keys: creates, modifies, deletes with arrays of each type of operation 
  */
 function getComplexModify (edit) {
-  // TODO: return an object with `adds`, `modifies`, `deletes` for changes to be performed,
+  // TODO: return an object with `creates`, `modifies`, `deletes` for changes to be performed,
   // based on contents of edit.newFeature and edit.newFeature.wayEditHistory
 }
 
