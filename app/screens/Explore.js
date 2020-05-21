@@ -160,7 +160,7 @@ class Explore extends React.Component {
       isMapLoaded: true,
       clickableLayers: ['editedPois', 'pois', 'editedPolygons',
         'buildings', 'roads', 'roadsLower',
-        'railwayLine', 'waterLine', 'leisure', 'photos', 'water', 'allPolygons', 'allLines'],
+        'railwayLine', 'waterLine', 'leisure', 'photos', 'natural', 'allPolygons', 'allLines'],
       userTrackingMode: MapboxGL.UserTrackingModes.None
     })
 
