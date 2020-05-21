@@ -130,12 +130,18 @@ export function editUploaded (edit, changesetId) {
 }
 
 export function addFeature (feature, comment = '') {
-  return {
-    type: types.ADD_FEATURE,
-    feature,
-    id: feature.id,
-    comment,
-    timestamp: Number(new Date())
+  return (dispatch, getState) => {
+    const state = getState()
+    if (state.wayEditHistory.present.addedNodes.length > 0) { // is a way edit, copy over wayEditHistory
+      feature.wayEditHistory = { ...state.wayEditHistory.present }
+    }
+    dispatch({
+      type: types.ADD_FEATURE,
+      feature,
+      id: feature.id,
+      comment,
+      timestamp: Number(new Date())      
+    })
   }
 }
 
@@ -153,7 +159,11 @@ export function deleteFeature (feature, comment = '') {
 }
 
 export function editFeature (oldFeature, newFeature, comment = '') {
-  return async dispatch => {
+  return async (dispatch, getState) => {
+    const state = getState()
+    if (state.wayEditHistory.present.modifiedSharedWays.length > 0) { // is a way edit
+      newFeature.wayEditHistory = { ...state.wayEditHistory.present }   
+    }
     dispatch({
       type: types.EDIT_FEATURE,
       oldFeature,
