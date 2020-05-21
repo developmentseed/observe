@@ -96,6 +96,13 @@ class ViewFeatureDetail extends React.Component {
     )
   }
 
+  isFeatureInRelation () {
+    const { featuresInRelation, navigation } = this.props
+    const { state: { params: { feature } } } = navigation
+console.log('feature', feature, featuresInRelation.includes(feature.id))
+    return featuresInRelation.includes(feature.id)
+  }
+
   render () {
     const { navigation, photos } = this.props
     const { state: { params: { feature } } } = navigation
@@ -135,6 +142,11 @@ class ViewFeatureDetail extends React.Component {
       {
         name: 'trash-bin',
         onPress: () => {
+          if (this.isFeatureInRelation()) {
+            console.log('delete not allowed')
+            return
+          }
+
           this.setState({ dialogVisible: true })
         }
       }
@@ -147,6 +159,7 @@ class ViewFeatureDetail extends React.Component {
           preset={preset}
           feature={feature}
           navigation={navigation}
+          featureInRelation={this.isFeatureInRelation()}
         />
         <PageWrapper>
           {this.renderFields([presetSection, metaSection])}
@@ -166,7 +179,8 @@ class ViewFeatureDetail extends React.Component {
 const mapStateToProps = (state) => {
   return {
     edits: state.edit.edits,
-    photos: state.photos.photos
+    photos: state.photos.photos,
+    featuresInRelation: state.map.featuresInRelation
   }
 }
 
