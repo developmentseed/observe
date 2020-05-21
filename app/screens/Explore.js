@@ -59,6 +59,8 @@ import getRandomId from '../utils/get-random-id'
 import LocateUserButton from '../components/LocateUserButton'
 import AuthMessage from '../components/AuthMessage'
 import WayEditingOverlay from '../components/WayEditingOverlay'
+import FeatureRelationWarning from '../components/FeatureRelationWarning'
+
 import getUserLocation from '../utils/get-user-location'
 import {
   getVisibleBounds,
@@ -453,23 +455,16 @@ class Explore extends React.Component {
     const { featuresInRelation, selectedFeatures } = this.props
     if (!featuresInRelation || !featuresInRelation.length) return null
     if (!selectedFeatures || !selectedFeatures.length) return null
-    console.log('selectedFeatures', selectedFeatures)
-    // this.props.currentWayEdit doesn't have the way id right now
-    // using selectedFeatures for now to see what we're working with
+
+    // TODO: consider only showing this on ADD_WAY or EDIT_WAY modes
     const feature = selectedFeatures.find((feature) => {
       return featuresInRelation.includes(feature.id)
     })
 
-    console.log('feature', feature)
+    if (!feature) return null
+
     return (
-      <View style={{
-        backgroundColor: '#ffffff',
-        padding: 20,
-        top: 200,
-        left: 30,
-        position: 'absolute',
-        elevation: 1
-      }}><Text>{feature.id} is in a relation</Text></View>
+      <FeatureRelationWarning id={feature.id} />
     )
   }
 
@@ -763,9 +758,9 @@ class Explore extends React.Component {
             <LocateUserButton onPress={() => this.locateUser()} />
             <BasemapModal onChange={this.props.setBasemap} />
             {mode !== modes.OFFLINE_TILES && this.renderZoomToEdit()}
+            { this.renderRelationWarning() }
           </MainBody>
-          { this.renderOverlay() }
-          { this.renderRelationWarning() }
+          { this.renderOverlay() } 
         </Container>
       </AndroidBackHandler>
     )

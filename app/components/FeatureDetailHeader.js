@@ -89,6 +89,12 @@ export default class FeatureDetailHeader extends React.Component {
             (
               <IconWrapper onPress={() => {
                 if (preset) {
+                  if (this.props.featureInRelation) {
+                    // TODO: show modal explaining that preset change isn't allowed in this case
+                    console.log('preset change not allowed')
+                    return
+                  }
+
                   this.setState({ dialogVisible: true })
                 }
               }}>

@@ -102,7 +102,22 @@ class WayEditingOverlay extends React.Component {
   }
 
   onDeleteNodePress () {
-    this.props.deleteSelectedNode(this.props.wayEditing.selectedNode)
+    const { featuresInRelation, wayEditing } = this.props
+    const { selectedNode } = wayEditing
+
+    if (!featuresInRelation || !featuresInRelation.length) return null
+    if (!selectedNode) return null
+
+    const nodeWays = Object.keys(selectedNode.properties.ways)
+    const feature = nodeWays.find((wayId) => {
+      return featuresInRelation.includes(`way/${wayId}`)
+    })
+
+    console.log('delete not allowed')
+    // TODO: trigger modal explaining that deleting in this case is disallowed
+    if (feature) return
+
+    this.props.deleteSelectedNode(selectedNode)
   }
 
   onUndoPress () {
@@ -138,12 +153,28 @@ class WayEditingOverlay extends React.Component {
   }
 
   async onMoveNodePress () {
-    const { wayEditing, getMapCenter } = this.props
+    const { featuresInRelation, wayEditing, getMapCenter } = this.props
     const { nearestFeatures, selectedNode } = wayEditing
+
+    if (!featuresInRelation || !featuresInRelation.length) return null
+    if (!selectedNode) return null
 
     const center = await getMapCenter()
 
     if (nearestFeatures && nearestFeatures.nearestNode) {
+      const nodeWays = Object.keys(wayEditing.selectedNode.properties.ways)
+      const nearestNodeWays = Object.keys(nearestFeatures.nearestNode.properties.ways)
+      const allWays = nodeWays.concat(nearestNodeWays)
+
+      const feature = allWays.find((wayId) => {
+        const id = wayId.indexOf('way/') === -1 ? `way/${wayId}` : wayId
+        return featuresInRelation.includes(id)
+      })
+
+      // TODO: trigger modal explaining that merging in this case is disallowed
+      console.log('merge not allowed')
+      if (feature) return
+
       this.props.mergeSelectedNode(selectedNode, nearestFeatures.nearestNode)
     } else {
       this.props.moveSelectedNode(selectedNode, center)
@@ -207,7 +238,9 @@ const mapStateToProps = (state) => {
   return {
     wayEditing,
     wayEditingHistory,
-    mode: state.map.mode
+    mode: state.map.mode,
+    featuresInRelation: state.map.featuresInRelation,
+    selectedFeatures: state.map.selectedFeatures || false
   }
 }
 
