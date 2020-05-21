@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components/native'
-import { Platform, View, Text } from 'react-native'
+import { Platform } from 'react-native'
 import MapboxGL from '@react-native-mapbox-gl/maps'
 import { AndroidBackHandler } from 'react-navigation-backhandler'
 import Config from 'react-native-config'
@@ -760,7 +760,7 @@ class Explore extends React.Component {
             {mode !== modes.OFFLINE_TILES && this.renderZoomToEdit()}
             { this.renderRelationWarning() }
           </MainBody>
-          { this.renderOverlay() } 
+          { this.renderOverlay() }
         </Container>
       </AndroidBackHandler>
     )
