@@ -22,6 +22,11 @@ const nodes = {
   circleOpacity: 0.6
 }
 
+const lines = {
+  lineWidth: thinLineWidth,
+  lineColor: '#eaeaea'
+}
+
 const lineHighlight = {
   lineWidth: [
     'interpolate', ['linear'],
@@ -69,7 +74,7 @@ const highwaysLower = {
   lineWidth: thinLineWidth,
   lineDasharray: [2, 0, 0, 2],
   lineColor: [
-    'step',
+    'match',
     ['get', 'highway'],
     'foot', '#988',
     'footway', '#988',
@@ -97,9 +102,13 @@ const buildings = {
 }
 
 const amenities = {
-  fillColor: colors.primary,
-  fillOpacity: 0.2,
-  fillOutlineColor: colors.primary
+  fillColor: [
+    'match',
+    ['get', 'amenity'],
+    'parking', colors.muted,
+    'rgba(235, 225, 118, 0.3)'
+  ],
+  fillOutlineColor: colors.base
 }
 
 const editedPolygons = {
@@ -109,22 +118,24 @@ const editedPolygons = {
 }
 
 const leisure = {
-  fillColor: 'rgba(140, 208, 95, 0.3)',
+  fillColor: [
+    'match',
+    ['get', 'leisure'],
+    'pitch', '#dca',
+    'rgba(140, 208, 95, 0.3)'
+  ],
   fillOutlineColor: 'grey'
 }
 
 const water = {
-  fillColor: 'rgba(90,140,210,0.3)',
-  fillOutlineColor: 'grey'
+  fillColor: 'rgba(30,160,250,0.3)',
+  fillOutlineColor: 'blue'
 }
 
 const polygons = {
-  fillOpacity: 0.6,
-  fillColor: [
-    'step',
-    ['get', 'building'],
-    colors.secondary
-  ]
+  fillOpacity: 0.1,
+  fillColor: colors.baseMuted,
+  fillOutlineColor: colors.baseMuted
 }
 
 /*
@@ -134,7 +145,10 @@ const polygons = {
 const selectedNode = {
   circleRadius: 8,
   circleOpacity: 1,
-  circleColor: colors.primary
+  circleColor: colors.primary,
+  circleStrokeColor: colors.base,
+  circleStrokeWidth: 1,
+  circleStrokeOpacity: 0.5
 }
 
 const selectedLine = {
@@ -260,6 +274,7 @@ const photoIconSelected = {
 
 export default {
   osm: {
+    lines,
     nodes,
     highways,
     highwaysLower,
