@@ -10,6 +10,72 @@ import { nonpropKeys } from '../utils/uninterestingKeys'
  * @return {String<XML>} - osmChange XML string
  */
 export default function (edit, changesetId, memberNodes = null) {
+  const isSimpleChange = !(edit.newFeature && edit.newFeature.wayEditHistory)
+  return isSimpleChange ? getSimpleChange(edit, changesetId, memberNodes) : getComplexChange(edit, changesetId)
+}
+
+/**
+ * @param {Object<GeoJSON Feature>} feature
+ * @returns {Object} - key value pairs of osm tags for feature (removed uninteresting tags)
+ */
+function getTags (feature) {
+  // FIXME: get from app consts
+  const uninterestingProps = [
+    'id',
+    'version',
+    'user',
+    'uid',
+    'changeset',
+    'timestamp',
+    'icon',
+    'ndrefs'
+  ]
+  return _omit(feature.properties, uninterestingProps)
+}
+
+/**
+ * 
+ * @param {Object} edit - containing newFeature.wayEditHistory with details of the complex edit 
+ * @param {Number} changesetId 
+ */
+function getComplexChange(edit, changesetId) {
+
+  const changes = edit.type === 'create' ? getComplexAdd(edit) : getComplexModify(edit)
+  const { adds, modifies, deletes } = changes
+
+  // TODO: Generate required XML for `adds`, `modifies` and `deletes`
+}
+
+/**
+ * Returns changes for creating a new way
+ * 
+ * @param {Object} edit - edit object
+ * @returns {Object} with keys: adds, modifies, deletes with arrays of each type of operation 
+ */
+function getComplexAdd (edit) {
+  // TODO: return an object with `adds`, `modifies`, `deletes` for changes to be performed,
+  // based on contents of edit.newFeature and edit.newFeature.wayEditHistory
+
+}
+
+/**
+ * Returns changes for modifying a way
+ * 
+ * @param {Object} edit - edit object
+ * @returns {Object} with keys: adds, modifies, deletes with arrays of each type of operation 
+ */
+function getComplexModify (edit) {
+  // TODO: return an object with `adds`, `modifies`, `deletes` for changes to be performed,
+  // based on contents of edit.newFeature and edit.newFeature.wayEditHistory
+}
+
+
+/**
+ * Function to get XML for "simple" changes that result in a single change operation
+ * For the more complex case of way edits, where other ways may be affected, etc. we use
+ * getComplexChange 
+ */
+function getSimpleChange (edit, changesetId, memberNodes) {
   const xmlRoot = '<osmChange></osmChange>'
   const parser = new DOMParser()
   const xmlDoc = parser.parseFromString(xmlRoot, 'text/xml')
@@ -73,23 +139,4 @@ export default function (edit, changesetId, memberNodes = null) {
   }
   rootElem[0].appendChild(changeTypeNode)
   return xmlDoc.toString()
-}
-
-/**
- * @param {Object<GeoJSON Feature>} feature
- * @returns {Object} - key value pairs of osm tags for feature (removed uninteresting tags)
- */
-function getTags (feature) {
-  // FIXME: get from app consts
-  const uninterestingProps = [
-    'id',
-    'version',
-    'user',
-    'uid',
-    'changeset',
-    'timestamp',
-    'icon',
-    'ndrefs'
-  ]
-  return _omit(feature.properties, uninterestingProps)
 }
