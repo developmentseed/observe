@@ -24,6 +24,8 @@ import { colors } from '../style/variables'
 import Icon from './Collecticons'
 
 import CrossHairOverlay from './CrosshairOverlay'
+import FeatureRelationErrorDialog from './FeatureRelationErrorDialog'
+
 import { modes } from '../utils/map-modes'
 
 const Container = styled.View`
@@ -95,6 +97,11 @@ const CompleteWayButton = styled.TouchableHighlight`
 `
 
 class WayEditingOverlay extends React.Component {
+  state = {
+    featureInRelationDialogVisible: false,
+    featureInRelationDialogDescription: null
+  }
+
   componentDidMount () {
     const editingFeature = this.props.navigation.getParam('feature')
     const feature = editingFeature || createWayFeature()
@@ -113,9 +120,10 @@ class WayEditingOverlay extends React.Component {
       return featuresInRelation.includes(`way/${wayId}`)
     })
 
-    console.log('delete not allowed')
-    // TODO: trigger modal explaining that deleting in this case is disallowed
-    if (feature) return
+    if (feature) {
+      this.showFeatureRelationDialog('Deleting nodes in ways that are in a relation is not currently supported')
+      return
+    }
 
     this.props.deleteSelectedNode(selectedNode)
   }
@@ -171,9 +179,10 @@ class WayEditingOverlay extends React.Component {
         return featuresInRelation.includes(id)
       })
 
-      // TODO: trigger modal explaining that merging in this case is disallowed
-      console.log('merge not allowed')
-      if (feature) return
+      if (feature) {
+        this.showFeatureRelationDialog('Merging nodes in ways that are in a relation is not currently supported')
+        return
+      }
 
       this.props.mergeSelectedNode(selectedNode, nearestFeatures.nearestNode)
     } else {
@@ -199,6 +208,33 @@ class WayEditingOverlay extends React.Component {
       this.props.resetWayEditing()
       this.props.navigation.navigate('SelectFeatureType', { feature })
     }
+  }
+
+  showFeatureRelationDialog (description) {
+    this.setState({
+      featureInRelationDialogVisible: 'visible',
+      featureInRelationDialogDescription: description
+    })
+  }
+
+  hideFeatureRelationDialog () {
+    this.setState({
+      featureInRelationDialogVisible: false,
+      featureInRelationDialogDescription: null
+    })
+  }
+
+  renderFeatureRelationDialog () {
+    if (!this.state.featureInRelationDialogVisible) return null
+    return (
+      <FeatureRelationErrorDialog
+        visible={this.state.featureInRelationDialogVisible}
+        description={this.state.featureInRelationDialogDescription}
+        confirm={() => {
+          this.hideFeatureRelationDialog()
+        }}
+      />
+    )
   }
 
   render () {
@@ -227,6 +263,13 @@ class WayEditingOverlay extends React.Component {
             <Icon name='arrow-move' size={24} color={colors.primary} />
           </ActionButton>
         </MenuWrapper>
+        <FeatureRelationErrorDialog
+          visible={this.state.featureInRelationDialogVisible}
+          description={this.state.featureInRelationDialogDescription}
+          confirm={() => {
+            this.hideFeatureRelationDialog()
+          }}
+        />
       </Container>
     )
   }

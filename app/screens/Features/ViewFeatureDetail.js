@@ -17,6 +17,8 @@ import SaveEditDialog from '../../components/SaveEditDialog'
 import { deleteFeature, uploadEdits } from '../../actions/edit'
 import { colors } from '../../style/variables'
 import PhotoGrid from '../../components/PhotoGrid'
+import FeatureRelationErrorDialog from '../../components/FeatureRelationErrorDialog'
+
 import { getPhotosForFeature } from '../../utils/photos'
 import { modes } from '../../utils/map-modes'
 
@@ -62,7 +64,8 @@ class ViewFeatureDetail extends React.Component {
   }
 
   state = {
-    dialogVisible: false
+    dialogVisible: false,
+    featureInRelationDialogVisible: false
   }
 
   renderField (field) {
@@ -132,6 +135,13 @@ class ViewFeatureDetail extends React.Component {
       navigation.navigate('Explore', { message: 'Your edit is being processed.', mode: modes.EXPLORE })
     }
 
+    const toggleFeatureRelationDialog = () => {
+      const visible = this.state.featureInRelationDialogVisible
+      this.setState({
+        featureInRelationDialogVisible: !visible
+      })
+    }
+
     const headerActions = [
       {
         name: 'pencil',
@@ -171,6 +181,12 @@ class ViewFeatureDetail extends React.Component {
           navigation={navigation}
         />
         <SaveEditDialog visible={this.state.dialogVisible} cancel={cancelEditDialog} save={saveEditDialog} action='delete' />
+        <FeatureRelationErrorDialog
+          visible={this.state.featureInRelationDialogVisible}
+          confirm={() => {
+            toggleFeatureRelationDialog()
+          }}
+        />
       </Container>
     )
   }
