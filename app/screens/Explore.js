@@ -557,12 +557,6 @@ class Explore extends React.Component {
         ['has', 'amenity'],
         ['==', ['geometry-type'], 'Polygon']
       ],
-      water: [
-        'match',
-        ['get', 'natural'],
-        'water',
-        true, false
-      ],
       buildings: [
         'all',
         ['has', 'building'],
@@ -573,13 +567,7 @@ class Explore extends React.Component {
         [
           'match',
           ['get', 'leisure'],
-          ['pitch', 'track', 'garden', 'park'],
-          true, false
-        ],
-        [
-          'match',
-          ['get', 'natural'],
-          'wood',
+          ['pitch', 'track', 'garden', 'park', 'nature_reserve'],
           true, false
         ],
         [
@@ -588,6 +576,16 @@ class Explore extends React.Component {
           ['grass', 'forest', 'meadow'],
           true, false
         ]
+      ],
+      boundaries: [
+        'all',
+        ['has', 'boundary']
+      ],
+      natural: [
+        'match',
+        ['get', 'natural'],
+        ['wood', 'beach', 'water'],
+        true, false
       ],
       iconHalo: [
         'all',
@@ -714,6 +712,7 @@ class Explore extends React.Component {
                     <MapboxGL.ShapeSource id='geojsonSource' shape={geojson}>
                       <MapboxGL.LineLayer id='roadsHighlight' filter={filters.allRoads} style={style.osm.lineHighlight} minZoomLevel={16} />
                       <MapboxGL.LineLayer id='roads' filter={filters.allRoads} style={style.osm.highways} minZoomLevel={16} />
+                      <MapboxGL.LineLayer id='boundaries' filter={filters.boundaries} style={style.osm.boundaries} minZoomLevel={16} />
                       <MapboxGL.LineLayer id='railwayLine' filter={filters.railwayLine} style={style.osm.railwayLine} minZoomLevel={16} />
                       <MapboxGL.LineLayer id='coastlines' filter={filters.coastlines} style={style.osm.coastline} minZoomLevel={16} />
                       <MapboxGL.LineLayer id='waterLine' filter={filters.waterLine} style={style.osm.waterLine} minZoomLevel={16} />
@@ -721,7 +720,7 @@ class Explore extends React.Component {
                       <MapboxGL.FillLayer id='buildings' filter={filters.buildings} style={style.osm.buildings} minZoomLevel={16} />
                       <MapboxGL.FillLayer id='amenities' filter={filters.amenities} style={style.osm.amenities} minZoomLevel={16} />
                       <MapboxGL.FillLayer id='leisure' filter={filters.leisure} style={style.osm.leisure} minZoomLevel={16} />
-                      <MapboxGL.FillLayer id='water' filter={filters.water} style={style.osm.water} minZoomLevel={16} />
+                      <MapboxGL.FillLayer id='natural' filter={filters.natural} style={style.osm.natural} minZoomLevel={16} />
                       <MapboxGL.LineLayer id='selectedFeatures' filter={filters.selectedFeatures} style={style.osm.selectedFeatures.lines} minZoomLevel={16} />
                       <MapboxGL.CircleLayer id='iconHalo' style={style.osm.iconHalo} minZoomLevel={16} filter={filters.iconHalo} />
                       <MapboxGL.CircleLayer id='iconHaloSelected' style={style.osm.iconHaloSelected} minZoomLevel={16} filter={filters.iconHaloSelected} />

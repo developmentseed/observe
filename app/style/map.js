@@ -53,6 +53,12 @@ const editedLines = {
   lineColor: colors.primary
 }
 
+const boundaries = {
+  lineWidth: thinLineWidth,
+  lineColor: '#985500',
+  lineDasharray: [0, 4, 4, 0]
+}
+
 const highways = {
   lineWidth: standardLineWidth,
   lineColor: [
@@ -125,7 +131,7 @@ const amenities = {
 
 const editedPolygons = {
   fillColor: colors.secondary,
-  fillOpacity: 0.4,
+  fillOpacity: 0.2,
   fillOutlineColor: colors.secondary
 }
 
@@ -139,9 +145,17 @@ const leisure = {
   fillOutlineColor: 'grey'
 }
 
-const water = {
-  fillColor: 'rgba(30,160,250,0.3)',
-  fillOutlineColor: 'blue'
+const natural = {
+  fillColor: [
+    'match',
+    ['get', 'natural'],
+    'water', 'rgb(50,130,220)',
+    'wood', 'rgb(110, 188, 75)',
+    'beach', '#f0dd8a',
+    '#a0ad5a'
+  ],
+  fillOpacity: '0.3',
+  fillOutlineColor: '#0a42af'
 }
 
 /*
@@ -149,12 +163,12 @@ const water = {
  */
 
 const selectedNode = {
-  circleRadius: 8,
+  circleRadius: 3,
   circleOpacity: 1,
-  circleColor: colors.primary,
-  circleStrokeColor: colors.base,
-  circleStrokeWidth: 1,
-  circleStrokeOpacity: 0.5
+  circleColor: 'white',
+  circleStrokeColor: colors.primary,
+  circleStrokeWidth: 2,
+  circleStrokeOpacity: 1
 }
 
 const selectedLine = {
@@ -169,8 +183,8 @@ const selectedLine = {
 
 const editingNodes = {
   circleColor: colors.secondary,
-  circleRadius: 8,
-  circleOpacity: 0.9,
+  circleRadius: 4,
+  circleOpacity: 1,
   circleStrokeColor: 'white',
   circleStrokeWidth: 2,
   circleStrokeOpacity: 0.5
@@ -182,8 +196,8 @@ const editingLines = {
 }
 
 const nearestNodes = {
-  circleColor: colors.secondary,
-  circleRadius: 6,
+  circleColor: 'white',
+  circleRadius: 3,
   circleOpacity: 0.5,
   circleStrokeColor: colors.base,
   circleStrokeWidth: 2,
@@ -217,10 +231,10 @@ const iconEditedHalo = {
 }
 
 const iconHaloSelected = {
-  circleRadius: 15,
+  circleRadius: 12,
   circleColor: colors.primary,
   circleOpacity: 0.6,
-  circleStrokeColor: colors.base,
+  circleStrokeColor: 'white',
   circleStrokeWidth: 2,
   circleStrokeOpacity: 0.6
 }
@@ -282,6 +296,7 @@ export default {
   osm: {
     lines,
     nodes,
+    boundaries,
     highways,
     highwaysLower,
     railwayLine,
@@ -292,7 +307,7 @@ export default {
     buildings,
     amenities,
     coastline,
-    water,
+    natural,
     leisure,
     iconHalo,
     iconHaloSelected,
