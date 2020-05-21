@@ -76,18 +76,18 @@ echo 'Copy icons to Observe...'
 
 mkdir -p /tmp/maki_observe
 cp /tmp/maki/icons/*.png /tmp/maki_observe
-rm -rf app/assets/maki
-mv /tmp/maki_observe app/assets/maki
+rm -rf $APP_PATH/app/assets/maki
+mv /tmp/maki_observe $APP_PATH/app/assets/maki
 
 mkdir -p /tmp/temaki_observe  
 cp /tmp/temaki/icons/*.png /tmp/temaki_observe
-rm -rf app/assets/temaki
-mv /tmp/temaki_observe app/assets/temaki
+rm -rf $APP_PATH/app/assets/temaki
+mv /tmp/temaki_observe $APP_PATH/app/assets/temaki
 
 mkdir -p /tmp/fas_observe
 cp /tmp/iD/svg/fontawesome/*.png /tmp/fas_observe
-rm -rf app/assets/fontawesome
-mv /tmp/fas_observe app/assets/fontawesome
+rm -rf $APP_PATH/app/assets/fontawesome
+mv /tmp/fas_observe $APP_PATH/app/assets/fontawesome
 
 mkdir -p /tmp/id_presets_observe
 cp /tmp/iD/svg/iD-sprite/presets/*.png /tmp/id_presets_observe
@@ -103,4 +103,4 @@ rm -rf /tmp/temaki
 rm -rf /tmp/iD
 
 # update links
-. scripts/link-icons.sh
+. $APP_PATH/scripts/link-icons.sh
