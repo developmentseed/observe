@@ -22,6 +22,12 @@ const nodes = {
   circleOpacity: 0.6
 }
 
+const polygons = {
+  fillOpacity: 0.1,
+  fillColor: colors.baseMuted,
+  fillOutlineColor: colors.baseMuted
+}
+
 const lines = {
   lineWidth: thinLineWidth,
   lineColor: '#eaeaea'
@@ -95,6 +101,12 @@ const waterLine = {
   lineColor: '#7dd'
 }
 
+const coastline = {
+  lineWidth: thinLineWidth,
+  lineColor: '#4fa3fd',
+  lineDasharray: [0, 2, 2, 0]
+}
+
 const buildings = {
   fillColor: colors.base,
   fillOpacity: 0.2,
@@ -130,12 +142,6 @@ const leisure = {
 const water = {
   fillColor: 'rgba(30,160,250,0.3)',
   fillOutlineColor: 'blue'
-}
-
-const polygons = {
-  fillOpacity: 0.1,
-  fillColor: colors.baseMuted,
-  fillOutlineColor: colors.baseMuted
 }
 
 /*
@@ -285,6 +291,7 @@ export default {
     polygons,
     buildings,
     amenities,
+    coastline,
     water,
     leisure,
     iconHalo,
