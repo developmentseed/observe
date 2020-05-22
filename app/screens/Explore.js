@@ -543,13 +543,21 @@ class Explore extends React.Component {
 
     const filters = {
       allPolygons: [
-        'any',
-        ['==', ['geometry-type'], 'Polygon'],
-        ['==', ['geometry-type'], 'MultiPolygon']
+        'all',
+        ['!', ['has', 'building']],
+        ['!', ['has', 'amenity']],
+        [
+          'any',
+          ['==', ['geometry-type'], 'Polygon'],
+          ['==', ['geometry-type'], 'MultiPolygon']
+        ]
       ],
       allLines: [
         'all',
-        ['==', ['geometry-type'], 'LineString']
+        ['==', ['geometry-type'], 'LineString'],
+        ['!', ['has', 'waterway']],
+        ['!', ['has', 'railway']],
+        ['!', ['has', 'highway']]
       ],
       allRoads: [
         'all',
@@ -574,6 +582,7 @@ class Explore extends React.Component {
       amenities: [
         'all',
         ['has', 'amenity'],
+        ['!', ['has', 'building']],
         ['==', ['geometry-type'], 'Polygon']
       ],
       buildings: [
@@ -601,10 +610,14 @@ class Explore extends React.Component {
         ['has', 'boundary']
       ],
       natural: [
-        'match',
-        ['get', 'natural'],
-        ['wood', 'beach', 'water'],
-        true, false
+        'all',
+        ['==', ['geometry-type'], 'Polygon'],
+        [
+          'match',
+          ['get', 'natural'],
+          ['wood', 'beach', 'water'],
+          true, false
+        ]
       ],
       iconHalo: [
         'all',
@@ -710,8 +723,8 @@ class Explore extends React.Component {
                     onRegionDidChange={this.onRegionDidChange}
                     regionDidChangeDebounceTime={10}
                     onPress={this.onPress}
-                    compassViewPosition={0}
-                    compassViewMargins={[16, 16]}
+                    // compassViewPosition={0}
+                    // compassViewMargins={[16, 16]}
                   >
                     <MapboxGL.Camera
                       zoomLevel={12}
@@ -731,9 +744,9 @@ class Explore extends React.Component {
                     <MapboxGL.ShapeSource id='geojsonSource' shape={geojson}>
                       <MapboxGL.LineLayer id='roadsHighlight' filter={filters.allRoads} style={style.osm.lineHighlight} minZoomLevel={16} />
                       <MapboxGL.LineLayer id='roads' filter={filters.allRoads} style={style.osm.highways} minZoomLevel={16} />
-                      <MapboxGL.LineLayer id='boundaries' filter={filters.boundaries} style={style.osm.boundaries} minZoomLevel={16} />
+                      {/* <MapboxGL.LineLayer id='boundaries' filter={filters.boundaries} style={style.osm.boundaries} minZoomLevel={16} /> */}
                       <MapboxGL.LineLayer id='railwayLine' filter={filters.railwayLine} style={style.osm.railwayLine} minZoomLevel={16} />
-                      <MapboxGL.LineLayer id='coastlines' filter={filters.coastlines} style={style.osm.coastline} minZoomLevel={16} />
+                      {/* <MapboxGL.LineLayer id='coastlines' filter={filters.coastlines} style={style.osm.coastline} minZoomLevel={16} /> */}
                       <MapboxGL.LineLayer id='waterLine' filter={filters.waterLine} style={style.osm.waterLine} minZoomLevel={16} />
                       <MapboxGL.FillLayer id='allPolygons' filter={filters.allPolygons} style={style.osm.polygons} minZoomLevel={16} />
                       <MapboxGL.FillLayer id='buildings' filter={filters.buildings} style={style.osm.buildings} minZoomLevel={16} />
