@@ -1,38 +1,54 @@
 import { presets } from '../presets/presets.json'
 
 /**
+ * Get the match score of a preset for a set of tags. Based on:
+ * https://github.com/openstreetmap/iD/blob/8deec6daa9a5803e77164fb39cf898a306148309/modules/presets/preset.js#L53
+ * @param Object preset
+ * @param Object entityTags
+ * @return Number preset score
+ */
+function getMatchScore (preset, entityTags) {
+  let seen = {}
+  let score = 0
+  const matchScore = preset.matchScore || 1
+
+  // match on tags
+  for (let k in preset.tags) {
+    seen[k] = true
+
+    if (entityTags[k] === preset.tags[k]) {
+      // If tag is a perfect match, add full score
+      score += matchScore
+    } else if (preset.tags[k] === '*' && k in entityTags) {
+      // If tag is a partial match, add half score
+      score += matchScore / 2
+    } else {
+      // If no match, make score negative
+      return -1
+    }
+  }
+
+  // boost score for additional matches in addTags
+  const addTags = preset.addTags
+  for (let k in addTags) {
+    if (!seen[k] && entityTags[k] === addTags[k]) {
+      score += matchScore
+    }
+  }
+
+  return score
+}
+
+/**
  * Get the default preset for a given geometry type
  * @param String feature type
  * @return Object preset
  */
-
 export default function getPresetByTags (tags) {
-  const scoreIndex = {}
-
-  Object.keys(presets).forEach((presetKey) => {
-    const preset = presets[presetKey]
-
-    if (scoreIndex[presetKey] === undefined) {
-      scoreIndex[presetKey] = preset.matchScore || 0
-    }
-
-    Object.keys(preset.tags).forEach((tagKey) => {
-      const tag = preset.tags[tagKey]
-
-      if (tags[tagKey] && tag && tags[tagKey] === tag) {
-        scoreIndex[presetKey] += (preset.matchScore || 1)
-      } else if (tag === '*' && tagKey in tags) {
-        scoreIndex[presetKey] += (preset.matchScore || 1) / 2
-      } else {
-        scoreIndex[presetKey] += -1
-      }
-    })
-  })
-
-  const scores = Object.keys(scoreIndex).map((key) => {
+  const scores = Object.keys(presets).map((key) => {
     return {
       key,
-      score: scoreIndex[key]
+      score: getMatchScore(presets[key], tags)
     }
   })
 
