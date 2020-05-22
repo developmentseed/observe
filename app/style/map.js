@@ -25,12 +25,14 @@ const nodes = {
 const polygons = {
   fillOpacity: 0.1,
   fillColor: colors.baseMuted,
-  fillOutlineColor: colors.baseMuted
+  fillOutlineColor: colors.baseMuted,
+  visibility: 'none'
 }
 
 const lines = {
   lineWidth: thinLineWidth,
-  lineColor: '#eaeaea'
+  lineColor: '#eaeaea',
+  visibility: 'none'
 }
 
 const lineHighlight = {
