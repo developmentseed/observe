@@ -748,7 +748,6 @@ class Explore extends React.Component {
                       <MapboxGL.LineLayer id='railwayLine' filter={filters.railwayLine} style={style.osm.railwayLine} minZoomLevel={16} />
                       {/* <MapboxGL.LineLayer id='coastlines' filter={filters.coastlines} style={style.osm.coastline} minZoomLevel={16} /> */}
                       <MapboxGL.LineLayer id='waterLine' filter={filters.waterLine} style={style.osm.waterLine} minZoomLevel={16} />
-                      <MapboxGL.FillLayer id='allPolygons' filter={filters.allPolygons} style={style.osm.polygons} minZoomLevel={16} />
                       <MapboxGL.FillLayer id='buildings' filter={filters.buildings} style={style.osm.buildings} minZoomLevel={16} />
                       <MapboxGL.FillLayer id='amenities' filter={filters.amenities} style={style.osm.amenities} minZoomLevel={16} />
                       <MapboxGL.FillLayer id='leisure' filter={filters.leisure} style={style.osm.leisure} minZoomLevel={16} />
@@ -758,6 +757,13 @@ class Explore extends React.Component {
                       <MapboxGL.CircleLayer id='iconHaloSelected' style={style.osm.iconHaloSelected} minZoomLevel={16} filter={filters.iconHaloSelected} />
                       <MapboxGL.SymbolLayer id='pois' style={style.osm.icons} filter={filters.pois} />
                     </MapboxGL.ShapeSource>
+                    {
+                      (mode === modes.EDIT_WAY || mode === modes.ADD_WAY) &&
+                        <MapboxGL.ShapeSource id='geojsonSource' shape={geojson}>
+                          <MapboxGL.FillLayer id='allPolygons' filter={filters.allPolygons} style={style.osm.polygons} minZoomLevel={16} />
+                          <MapboxGL.LineLayer id='allLines' filter={filters.allLines} style={style.osm.lines} minZoomLevel={16} />
+                        </MapboxGL.ShapeSource>
+                    }
                     <MapboxGL.ShapeSource id='editGeojsonSource' shape={editsGeojson}>
                       <MapboxGL.FillLayer id='editedPolygons' filter={filters.editedPolygons} style={style.osm.editedPolygons} minZoomLevel={16} />
                       <MapboxGL.CircleLayer id='editedIconHalo' style={style.osm.iconEditedHalo} minZoomLevel={16} filter={filters.editedPois} />
