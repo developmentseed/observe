@@ -268,11 +268,21 @@ export default function (state = initialState, action) {
         mode: modes.EXPLORE
       }
 
-    case types.SET_MAP_MODE:
+    case types.SET_MAP_MODE: {
+      let updatedStyle = _cloneDeep(state.style)
+      if (action.mode === modes.ADD_WAY || action.mode === modes.EDIT_WAY) {
+        updatedStyle.osm.polygons.visibility = 'visible'
+        updatedStyle.osm.lines.visibility = 'visible'
+      } else {
+        updatedStyle.osm.polygons.visibility = 'none'
+        updatedStyle.osm.lines.visibility = 'none'
+      }
       return {
         ...state,
-        mode: action.mode
+        mode: action.mode,
+        style: updatedStyle
       }
+    }
 
     case types.UPDATE_VISIBLE_BOUNDS: {
       const { visibleBounds, zoom } = action
