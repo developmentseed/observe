@@ -10,7 +10,6 @@ ANDROID_DIR=${PWD}/android/app/src/main/res/drawable-xxhdpi
 ANDROID_ICONS_PATH=../../../../../../app/assets
 
 ICON_DIRS="${ASSETS_DIR}/fontawesome/*.png
-${ASSETS_DIR}/id_presets/*.png
 ${ASSETS_DIR}/maki/*.png
 ${ASSETS_DIR}/temaki/*.png"
 
@@ -36,7 +35,7 @@ do
 
   # android
   ANDROID_FILEPATH=${ANDROID_ICONS_PATH}/${PARENT_DIR}/${FILENAME}
-  ln -s $ANDROID_FILEPATH $ANDROID_DIR
+  ln -s $ANDROID_FILEPATH $ANDROID_DIR  
 
   # ios
   IOS_FILEPATH=${IOS_ICONS_PATH}/${PARENT_DIR}/${FILENAME}
