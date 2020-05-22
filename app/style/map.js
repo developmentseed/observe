@@ -154,7 +154,7 @@ const natural = {
     'beach', '#f0dd8a',
     '#a0ad5a'
   ],
-  fillOpacity: '0.3',
+  fillOpacity: 0.3,
   fillOutlineColor: '#0a42af'
 }
 
