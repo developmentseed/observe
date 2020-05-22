@@ -592,7 +592,8 @@ class Explore extends React.Component {
         'all',
         ['has', 'amenity'],
         ['!', ['has', 'building']],
-        ['==', ['geometry-type'], 'Polygon']
+        ['==', ['geometry-type'], 'Polygon'],
+        ['==', ['geometry-type'], 'MultiPolygon']
       ],
       buildings: [
         'all',
@@ -621,6 +622,7 @@ class Explore extends React.Component {
       natural: [
         'all',
         ['==', ['geometry-type'], 'Polygon'],
+        ['==', ['geometry-type'], 'MultiPolygon'],
         [
           'match',
           ['get', 'natural'],
