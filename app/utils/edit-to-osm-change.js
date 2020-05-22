@@ -39,36 +39,122 @@ function getTags (feature) {
  * @param {Number} changesetId 
  */
 function getComplexChange(edit, changesetId) {
+  let negativeIdCounter = 0
 
-  const changes = edit.type === 'create' ? getComplexCreate(edit) : getComplexModify(edit)
-  const { creates, modifies, deletes } = changes
+  function getNextNegativeId () {
+    negativeIdCounter = negativeIdCounter - 1
+    return negativeIdCounter
+  }
 
-  // TODO: Generate required XML for `adds`, `modifies` and `deletes`
+  // const changes = edit.type === 'create' ? getComplexCreate(edit) : getComplexModify(edit)
+  // const { creates, modifies, deletes } = changes
+  const creates = [],
+    modifies = [],
+    deletes = []
+
+  const { wayEditHistory, ...feature }  = edit.newFeature
+
+  const nodeIdMap = wayEditHistory.way.nodes.reduce((mapping, node, idx) => {
+    const id = node.properties.id
+    if (isNewId(id)) {
+      mapping[id] = getNextNegativeId()
+    } else {
+      mapping[id] = id
+    }
+    return id
+  }, {})
+
+  // replace ndrefs of temporary ids with negative ids generated in mapping above
+  feature.properties.ndrefs = feature.properties.ndrefs.map(ref => nodeIdMap[ref])
+
+  if (edit.type === 'create') {
+    creates.push({
+      type: 'way',
+      id: getNextNegativeId(),
+      feature
+    })
+  } else if (edit.type === 'modify') {
+
+    // if feature is modified, we only need to include in change XML if nodes
+    // were added or removed
+    if (wayEditHistory.addedNodes.length > 0 || wayEditHistory.deletedNodes.length > 0 || wayEditHistory.mergedNodes.length > 0) {
+      modifies.push({
+        type: 'way',
+        id: feature.properties.id,
+        feature
+      })
+    }
+  }
+
+  wayEditHistory.addedNodes.forEach(addedNodeId => {
+    const node = wayEditHistory.nodes.find(nd => nd.properties.id === addedNodeId)
+    const id = node.properties.id
+    creates.push({
+      type: 'node',
+      id: nodeIdMap[id],
+      feature: node
+    })
+  })
+  
+  wayEditHistory.movedNodes.forEach(movedNodeId => {
+    const node = wayEditHistory.nodes.find(nd => nd.properties.id === movedNodeId)
+    modifies.push({
+      type: 'node',
+      id: node.properties.id,
+      feature: node
+    })
+  })
+
+  wayEditHistory.deletedNodes.forEach(deletedNodeId => {
+    const node = wayEditHistory.nodes.find(nd => nd.properties.id === deletedNodeId)
+    deletes.push({
+      type: 'node',
+      id: node.properties.id,
+      feature: node
+    })
+  })
+
+  wayEditHistory.modifiedSharedWays.forEach(way => {
+    
+    // if shared way is same as top level feature, ignore
+    if (way.properties.id !== feature.properties.id) {
+      // if way has only moved nodes, ignore
+      if (way.addedNodes.length > 0 || way.deletedNodes.length > 0) {
+
+        // for nodes with new ids, retrieve the current negative id mapping
+        way.properties.ndrefs = way.properties.ndrefs.map(ndref => {
+          if (isNewId(ndref)) {
+            return nodeIdMap[ndref]
+          } else {
+            return ndref
+          }
+        })
+
+        modifies.push({
+          type: 'way',
+          id: way.properties.id,
+          feature: way
+        })
+      }
+    }
+  })
+
+  return getXMLForChanges({creates, modifies, deletes})
+
 }
 
-/**
- * Returns changes for creating a new way
- * 
- * @param {Object} edit - edit object
- * @returns {Object} with keys: creates, modifies, deletes with arrays of each type of operation 
- */
-function getComplexCreate (edit) {
-  // TODO: return an object with `creates`, `modifies`, `deletes` for changes to be performed,
-  // based on contents of edit.newFeature and edit.newFeature.wayEditHistory
-
+function getXMLForChanges ({ creates, modifies, deletes }) {
+  const xmlRoot = '<osmChange></osmChange>'
+  const parser = new DOMParser()
+  const xmlDoc = parser.parseFromString(xmlRoot, 'text/xml')
+  // TODO: Loop through creates, modifies, deletes and create
+  // XML structure accordingly    
 }
 
-/**
- * Returns changes for modifying a way
- * 
- * @param {Object} edit - edit object
- * @returns {Object} with keys: creates, modifies, deletes with arrays of each type of operation 
- */
-function getComplexModify (edit) {
-  // TODO: return an object with `creates`, `modifies`, `deletes` for changes to be performed,
-  // based on contents of edit.newFeature and edit.newFeature.wayEditHistory
-}
 
+function isNewId (id) {
+  return id.startsWith('observe-')
+}
 
 /**
  * Function to get XML for "simple" changes that result in a single change operation
