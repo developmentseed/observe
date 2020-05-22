@@ -102,7 +102,6 @@ class ViewFeatureDetail extends React.Component {
   isFeatureInRelation () {
     const { featuresInRelation, navigation } = this.props
     const { state: { params: { feature } } } = navigation
-    console.log('feature', feature, featuresInRelation.includes(feature.id))
     return featuresInRelation.includes(feature.id)
   }
 
@@ -153,7 +152,7 @@ class ViewFeatureDetail extends React.Component {
         name: 'trash-bin',
         onPress: () => {
           if (this.isFeatureInRelation()) {
-            console.log('delete not allowed')
+            console.warn('delete not allowed')
             return
           }
 

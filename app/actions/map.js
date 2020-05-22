@@ -782,7 +782,6 @@ export function updateVisibleBounds (visibleBounds, zoom) {
                 allNodes: false,
                 mapRelations: true
               })
-              console.log('jsonData', jsonData)
               cache.set(tile, jsonData.geojson)
               await addNodes(tile, jsonData.nodes)
               dispatch({
