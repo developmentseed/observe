@@ -22,6 +22,19 @@ const nodes = {
   circleOpacity: 0.6
 }
 
+const polygons = {
+  fillOpacity: 0.1,
+  fillColor: colors.baseMuted,
+  fillOutlineColor: colors.baseMuted,
+  visibility: 'none'
+}
+
+const lines = {
+  lineWidth: thinLineWidth,
+  lineColor: '#eaeaea',
+  visibility: 'none'
+}
+
 const lineHighlight = {
   lineWidth: [
     'interpolate', ['linear'],
@@ -40,6 +53,12 @@ const editedLines = {
     20, 9
   ],
   lineColor: colors.primary
+}
+
+const boundaries = {
+  lineWidth: thinLineWidth,
+  lineColor: '#985500',
+  lineDasharray: [0, 4, 4, 0]
 }
 
 const highways = {
@@ -69,7 +88,7 @@ const highwaysLower = {
   lineWidth: thinLineWidth,
   lineDasharray: [2, 0, 0, 2],
   lineColor: [
-    'step',
+    'match',
     ['get', 'highway'],
     'foot', '#988',
     'footway', '#988',
@@ -90,30 +109,55 @@ const waterLine = {
   lineColor: '#7dd'
 }
 
+const coastline = {
+  lineWidth: thinLineWidth,
+  lineColor: '#4fa3fd',
+  lineDasharray: [0, 2, 2, 0]
+}
+
 const buildings = {
   fillColor: colors.base,
   fillOpacity: 0.2,
   fillOutlineColor: colors.base
 }
 
+const amenities = {
+  fillColor: [
+    'match',
+    ['get', 'amenity'],
+    'parking', colors.muted,
+    'rgba(235, 225, 118, 0.3)'
+  ],
+  fillOutlineColor: colors.base
+}
+
 const editedPolygons = {
-  fillColor: colors.primary,
+  fillColor: colors.secondary,
   fillOpacity: 0.2,
-  fillOutlineColor: colors.primary
+  fillOutlineColor: colors.secondary
 }
 
 const leisure = {
-  fillColor: 'rgba(140, 208, 95, 0.3)',
+  fillColor: [
+    'match',
+    ['get', 'leisure'],
+    'pitch', '#dca',
+    'rgba(140, 208, 95, 0.3)'
+  ],
   fillOutlineColor: 'grey'
 }
 
-const polygons = {
-  fillOpacity: 0.6,
+const natural = {
   fillColor: [
-    'step',
-    ['get', 'building'],
-    colors.secondary
-  ]
+    'match',
+    ['get', 'natural'],
+    'water', 'rgb(50,130,220)',
+    'wood', 'rgb(110, 188, 75)',
+    'beach', '#f0dd8a',
+    '#a0ad5a'
+  ],
+  fillOpacity: 0.3,
+  fillOutlineColor: '#0a42af'
 }
 
 /*
@@ -121,9 +165,12 @@ const polygons = {
  */
 
 const selectedNode = {
-  circleRadius: 8,
+  circleRadius: 3,
   circleOpacity: 1,
-  circleColor: colors.primary
+  circleColor: 'white',
+  circleStrokeColor: colors.primary,
+  circleStrokeWidth: 2,
+  circleStrokeOpacity: 1
 }
 
 const selectedLine = {
@@ -138,8 +185,8 @@ const selectedLine = {
 
 const editingNodes = {
   circleColor: colors.secondary,
-  circleRadius: 8,
-  circleOpacity: 0.9,
+  circleRadius: 4,
+  circleOpacity: 1,
   circleStrokeColor: 'white',
   circleStrokeWidth: 2,
   circleStrokeOpacity: 0.5
@@ -151,8 +198,8 @@ const editingLines = {
 }
 
 const nearestNodes = {
-  circleColor: colors.secondary,
-  circleRadius: 6,
+  circleColor: 'white',
+  circleRadius: 3,
   circleOpacity: 0.5,
   circleStrokeColor: colors.base,
   circleStrokeWidth: 2,
@@ -186,10 +233,10 @@ const iconEditedHalo = {
 }
 
 const iconHaloSelected = {
-  circleRadius: 15,
+  circleRadius: 12,
   circleColor: colors.primary,
   circleOpacity: 0.6,
-  circleStrokeColor: colors.base,
+  circleStrokeColor: 'white',
   circleStrokeWidth: 2,
   circleStrokeOpacity: 0.6
 }
@@ -249,7 +296,9 @@ const photoIconSelected = {
 
 export default {
   osm: {
+    lines,
     nodes,
+    boundaries,
     highways,
     highwaysLower,
     railwayLine,
@@ -258,6 +307,9 @@ export default {
     selectedLine,
     polygons,
     buildings,
+    amenities,
+    coastline,
+    natural,
     leisure,
     iconHalo,
     iconHaloSelected,
