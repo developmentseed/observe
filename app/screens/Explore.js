@@ -59,6 +59,8 @@ import getRandomId from '../utils/get-random-id'
 import LocateUserButton from '../components/LocateUserButton'
 import AuthMessage from '../components/AuthMessage'
 import WayEditingOverlay from '../components/WayEditingOverlay'
+import FeatureRelationWarning from '../components/FeatureRelationWarning'
+
 import getUserLocation from '../utils/get-user-location'
 import {
   getVisibleBounds,
@@ -449,6 +451,23 @@ class Explore extends React.Component {
     )
   }
 
+  renderRelationWarning () {
+    const { featuresInRelation, selectedFeatures } = this.props
+    if (!featuresInRelation || !featuresInRelation.length) return null
+    if (!selectedFeatures || !selectedFeatures.length) return null
+
+    // TODO: consider only showing this on ADD_WAY or EDIT_WAY modes
+    const feature = selectedFeatures.find((feature) => {
+      return featuresInRelation.includes(feature.id)
+    })
+
+    if (!feature) return null
+
+    return (
+      <FeatureRelationWarning id={feature.id} />
+    )
+  }
+
   render () {
     const {
       navigation,
@@ -739,6 +758,7 @@ class Explore extends React.Component {
             <LocateUserButton onPress={() => this.locateUser()} />
             <BasemapModal onChange={this.props.setBasemap} />
             {mode !== modes.OFFLINE_TILES && this.renderZoomToEdit()}
+            { this.renderRelationWarning() }
           </MainBody>
           { this.renderOverlay() }
         </Container>
@@ -815,7 +835,8 @@ const mapStateToProps = (state) => {
     currentWayEdit,
     selectedNode: state.wayEditing.selectedNode,
     nearestFeatures: getNearestGeojson(state),
-    modifiedSharedWays: featureCollection(state.wayEditingHistory.present.modifiedSharedWays)
+    modifiedSharedWays: featureCollection(state.wayEditingHistory.present.modifiedSharedWays),
+    featuresInRelation: state.map.featuresInRelation
   }
 }
 

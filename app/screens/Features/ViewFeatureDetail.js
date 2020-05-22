@@ -17,6 +17,8 @@ import SaveEditDialog from '../../components/SaveEditDialog'
 import { deleteFeature, uploadEdits } from '../../actions/edit'
 import { colors } from '../../style/variables'
 import PhotoGrid from '../../components/PhotoGrid'
+import FeatureRelationErrorDialog from '../../components/FeatureRelationErrorDialog'
+
 import { getPhotosForFeature } from '../../utils/photos'
 import { modes } from '../../utils/map-modes'
 
@@ -62,7 +64,8 @@ class ViewFeatureDetail extends React.Component {
   }
 
   state = {
-    dialogVisible: false
+    dialogVisible: false,
+    featureInRelationDialogVisible: false
   }
 
   renderField (field) {
@@ -96,6 +99,12 @@ class ViewFeatureDetail extends React.Component {
     )
   }
 
+  isFeatureInRelation () {
+    const { featuresInRelation, navigation } = this.props
+    const { state: { params: { feature } } } = navigation
+    return featuresInRelation.includes(feature.id)
+  }
+
   render () {
     const { navigation, photos } = this.props
     const { state: { params: { feature } } } = navigation
@@ -125,6 +134,13 @@ class ViewFeatureDetail extends React.Component {
       navigation.navigate('Explore', { message: 'Your edit is being processed.', mode: modes.EXPLORE })
     }
 
+    const toggleFeatureRelationDialog = () => {
+      const visible = this.state.featureInRelationDialogVisible
+      this.setState({
+        featureInRelationDialogVisible: !visible
+      })
+    }
+
     const headerActions = [
       {
         name: 'pencil',
@@ -135,6 +151,11 @@ class ViewFeatureDetail extends React.Component {
       {
         name: 'trash-bin',
         onPress: () => {
+          if (this.isFeatureInRelation()) {
+            console.warn('delete not allowed')
+            return
+          }
+
           this.setState({ dialogVisible: true })
         }
       }
@@ -147,6 +168,7 @@ class ViewFeatureDetail extends React.Component {
           preset={preset}
           feature={feature}
           navigation={navigation}
+          featureInRelation={this.isFeatureInRelation()}
         />
         <PageWrapper>
           {this.renderFields([presetSection, metaSection])}
@@ -158,6 +180,12 @@ class ViewFeatureDetail extends React.Component {
           navigation={navigation}
         />
         <SaveEditDialog visible={this.state.dialogVisible} cancel={cancelEditDialog} save={saveEditDialog} action='delete' />
+        <FeatureRelationErrorDialog
+          visible={this.state.featureInRelationDialogVisible}
+          confirm={() => {
+            toggleFeatureRelationDialog()
+          }}
+        />
       </Container>
     )
   }
@@ -166,7 +194,8 @@ class ViewFeatureDetail extends React.Component {
 const mapStateToProps = (state) => {
   return {
     edits: state.edit.edits,
-    photos: state.photos.photos
+    photos: state.photos.photos,
+    featuresInRelation: state.map.featuresInRelation
   }
 }
 

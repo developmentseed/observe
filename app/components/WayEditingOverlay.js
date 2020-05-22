@@ -24,6 +24,8 @@ import { colors } from '../style/variables'
 import Icon from './Collecticons'
 
 import CrossHairOverlay from './CrosshairOverlay'
+import FeatureRelationErrorDialog from './FeatureRelationErrorDialog'
+
 import { modes } from '../utils/map-modes'
 
 const Container = styled.View`
@@ -95,6 +97,11 @@ const CompleteWayButton = styled.TouchableHighlight`
 `
 
 class WayEditingOverlay extends React.Component {
+  state = {
+    featureInRelationDialogVisible: false,
+    featureInRelationDialogDescription: null
+  }
+
   componentDidMount () {
     const editingFeature = this.props.navigation.getParam('feature')
     const feature = editingFeature || createWayFeature()
@@ -102,7 +109,23 @@ class WayEditingOverlay extends React.Component {
   }
 
   onDeleteNodePress () {
-    this.props.deleteSelectedNode(this.props.wayEditing.selectedNode)
+    const { featuresInRelation, wayEditing } = this.props
+    const { selectedNode } = wayEditing
+
+    if (!featuresInRelation || !featuresInRelation.length) return null
+    if (!selectedNode) return null
+
+    const nodeWays = Object.keys(selectedNode.properties.ways)
+    const feature = nodeWays.find((wayId) => {
+      return featuresInRelation.includes(`way/${wayId}`)
+    })
+
+    if (feature) {
+      this.showFeatureRelationDialog('Deleting nodes in ways that are in a relation is not currently supported')
+      return
+    }
+
+    this.props.deleteSelectedNode(selectedNode)
   }
 
   onUndoPress () {
@@ -138,12 +161,29 @@ class WayEditingOverlay extends React.Component {
   }
 
   async onMoveNodePress () {
-    const { wayEditing, getMapCenter } = this.props
+    const { featuresInRelation, wayEditing, getMapCenter } = this.props
     const { nearestFeatures, selectedNode } = wayEditing
+
+    if (!featuresInRelation || !featuresInRelation.length) return null
+    if (!selectedNode) return null
 
     const center = await getMapCenter()
 
     if (nearestFeatures && nearestFeatures.nearestNode) {
+      const nodeWays = Object.keys(wayEditing.selectedNode.properties.ways)
+      const nearestNodeWays = Object.keys(nearestFeatures.nearestNode.properties.ways)
+      const allWays = nodeWays.concat(nearestNodeWays)
+
+      const feature = allWays.find((wayId) => {
+        const id = wayId.indexOf('way/') === -1 ? `way/${wayId}` : wayId
+        return featuresInRelation.includes(id)
+      })
+
+      if (feature) {
+        this.showFeatureRelationDialog('Merging nodes in ways that are in a relation is not currently supported')
+        return
+      }
+
       this.props.mergeSelectedNode(selectedNode, nearestFeatures.nearestNode)
     } else {
       this.props.moveSelectedNode(selectedNode, center)
@@ -168,6 +208,33 @@ class WayEditingOverlay extends React.Component {
       this.props.resetWayEditing()
       this.props.navigation.navigate('SelectFeatureType', { feature })
     }
+  }
+
+  showFeatureRelationDialog (description) {
+    this.setState({
+      featureInRelationDialogVisible: 'visible',
+      featureInRelationDialogDescription: description
+    })
+  }
+
+  hideFeatureRelationDialog () {
+    this.setState({
+      featureInRelationDialogVisible: false,
+      featureInRelationDialogDescription: null
+    })
+  }
+
+  renderFeatureRelationDialog () {
+    if (!this.state.featureInRelationDialogVisible) return null
+    return (
+      <FeatureRelationErrorDialog
+        visible={this.state.featureInRelationDialogVisible}
+        description={this.state.featureInRelationDialogDescription}
+        confirm={() => {
+          this.hideFeatureRelationDialog()
+        }}
+      />
+    )
   }
 
   render () {
@@ -196,6 +263,13 @@ class WayEditingOverlay extends React.Component {
             <Icon name='arrow-move' size={24} color={colors.primary} />
           </ActionButton>
         </MenuWrapper>
+        <FeatureRelationErrorDialog
+          visible={this.state.featureInRelationDialogVisible}
+          description={this.state.featureInRelationDialogDescription}
+          confirm={() => {
+            this.hideFeatureRelationDialog()
+          }}
+        />
       </Container>
     )
   }
@@ -207,7 +281,9 @@ const mapStateToProps = (state) => {
   return {
     wayEditing,
     wayEditingHistory,
-    mode: state.map.mode
+    mode: state.map.mode,
+    featuresInRelation: state.map.featuresInRelation,
+    selectedFeatures: state.map.selectedFeatures || false
   }
 }
 

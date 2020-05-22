@@ -2,6 +2,7 @@ import React from 'react'
 import { View } from 'react-native'
 import styled from 'styled-components/native'
 import ConfirmDialog from './ConfirmDialog'
+import FeatureRelationErrorDialog from './FeatureRelationErrorDialog'
 import ObserveIcon from './ObserveIcon'
 import { colors } from '../style/variables'
 import getDefaultPreset from '../utils/get-default-preset'
@@ -51,7 +52,8 @@ const geometryTypeToEditMode = {
 
 export default class FeatureDetailHeader extends React.Component {
   state = {
-    dialogVisible: false
+    dialogVisible: false,
+    featureInRelationDialogVisible: false
   }
 
   onEditPress () {
@@ -75,6 +77,13 @@ export default class FeatureDetailHeader extends React.Component {
       this.setState({ dialogVisible: false })
     }
 
+    const toggleFeatureRelationDialog = () => {
+      const visible = this.state.featureInRelationDialogVisible
+      this.setState({
+        featureInRelationDialogVisible: !visible
+      })
+    }
+
     const changePreset = () => {
       cancelDialog()
       navigation.navigate('SelectFeatureType', { feature })
@@ -89,6 +98,11 @@ export default class FeatureDetailHeader extends React.Component {
             (
               <IconWrapper onPress={() => {
                 if (preset) {
+                  if (this.props.featureInRelation) {
+                    toggleFeatureRelationDialog()
+                    return
+                  }
+
                   this.setState({ dialogVisible: true })
                 }
               }}>
@@ -120,6 +134,13 @@ export default class FeatureDetailHeader extends React.Component {
           </View>
         </Header>
         <ConfirmDialog visible={this.state.dialogVisible} cancel={cancelDialog} continue={changePreset} />
+        <FeatureRelationErrorDialog
+          visible={this.state.featureInRelationDialogVisible}
+          description='Changing the preset of a feature in a relation is not currently supported'
+          confirm={() => {
+            toggleFeatureRelationDialog()
+          }}
+        />
       </>
     )
   }
