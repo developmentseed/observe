@@ -200,7 +200,6 @@ class WayEditingOverlay extends React.Component {
       let feature
       if (present.modifiedSharedWays.length) {
         feature = present.modifiedSharedWays.find((way) => {
-          console.log('way.id', way.id, 'properties.id', properties.id)
           return way.id === properties.id
         })
       } else {
