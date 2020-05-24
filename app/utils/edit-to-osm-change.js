@@ -28,17 +28,18 @@ function getTags (feature) {
     'changeset',
     'timestamp',
     'icon',
+    'edge',
     'ndrefs'
   ]
   return _omit(feature.properties, uninterestingProps)
 }
 
 /**
- * 
- * @param {Object} edit - containing newFeature.wayEditHistory with details of the complex edit 
- * @param {Number} changesetId 
+ *
+ * @param {Object} edit - containing newFeature.wayEditHistory with details of the complex edit
+ * @param {Number} changesetId
  */
-function getComplexChange(edit, changesetId) {
+function getComplexChange (edit, changesetId) {
   let negativeIdCounter = 0
 
   function getNextNegativeId () {
@@ -48,11 +49,13 @@ function getComplexChange(edit, changesetId) {
 
   // const changes = edit.type === 'create' ? getComplexCreate(edit) : getComplexModify(edit)
   // const { creates, modifies, deletes } = changes
-  const creates = [],
-    modifies = [],
-    deletes = []
+  const creates = []
 
-  const { wayEditHistory, ...feature }  = edit.newFeature
+  const modifies = []
+
+  const deletes = []
+
+  const { wayEditHistory, ...feature } = edit.newFeature
 
   const nodeIdMap = wayEditHistory.way.nodes.reduce((mapping, node, idx) => {
     const id = node.properties.id
@@ -74,7 +77,6 @@ function getComplexChange(edit, changesetId) {
       feature
     })
   } else if (edit.type === 'modify') {
-
     // if feature is modified, we only need to include in change XML if nodes
     // were added or removed
     if (wayEditHistory.addedNodes.length > 0 || wayEditHistory.deletedNodes.length > 0 || wayEditHistory.mergedNodes.length > 0) {
@@ -95,7 +97,7 @@ function getComplexChange(edit, changesetId) {
       feature: node
     })
   })
-  
+
   wayEditHistory.movedNodes.forEach(movedNodeId => {
     const node = wayEditHistory.nodes.find(nd => nd.properties.id === movedNodeId)
     modifies.push({
@@ -115,12 +117,10 @@ function getComplexChange(edit, changesetId) {
   })
 
   wayEditHistory.modifiedSharedWays.forEach(way => {
-    
     // if shared way is same as top level feature, ignore
     if (way.properties.id !== feature.properties.id) {
       // if way has only moved nodes, ignore
       if (way.addedNodes.length > 0 || way.deletedNodes.length > 0) {
-
         // for nodes with new ids, retrieve the current negative id mapping
         way.properties.ndrefs = way.properties.ndrefs.map(ndref => {
           if (isNewId(ndref)) {
@@ -139,18 +139,106 @@ function getComplexChange(edit, changesetId) {
     }
   })
 
-  return getXMLForChanges({creates, modifies, deletes})
-
+  return getXMLForChanges({ creates, modifies, deletes }, changesetId)
 }
 
-function getXMLForChanges ({ creates, modifies, deletes }) {
+function getXMLForChanges ({ creates, modifies, deletes }, changesetId) {
   const xmlRoot = '<osmChange></osmChange>'
   const parser = new DOMParser()
   const xmlDoc = parser.parseFromString(xmlRoot, 'text/xml')
-  // TODO: Loop through creates, modifies, deletes and create
-  // XML structure accordingly    
+  const rootElem = xmlDoc.getElementsByTagName('osmChange')
+  if (creates.length > 0) {
+    const createNode = xmlDoc.createElement('create')
+    creates.forEach(create => {
+      const featureType = create.type
+      const feature = create.feature
+      const id = create.id
+      const elemNode = xmlDoc.createNode(featureType)
+      elemNode.setAttribute('id', id) // TODO: Verify id is consistent
+      elemNode.setAttribute('changeset', changesetId)
+      elemNode.setAttribute('version', 1) // QUESTION: is this correct for new features?
+      if (featureType === 'node') {
+        elemNode.setAttribute('lon', feature.geometry.coordinates[0])
+        elemNode.setAttribute('lat', feature.geometry.coordinates[1])
+      }
+      const tags = getTags(feature)
+      addTags(xmlDoc, elemNode, tags)
+
+      if (featureType === 'way') {
+        addNdrefs(xmlDoc, elemNode, feature.properties.ndrefs)
+      }
+      createNode.appendChild(elemNode)
+    })
+    rootElem[0].appendChild(createNode)
+  }
+  if (modifies.length > 0) {
+    const modifyNode = xmlDoc.createElement('modify')
+    modifies.forEach(modify => {
+      const featureType = modify.type
+      const feature = modify.feature
+      const id = modify.id
+      const elemNode = xmlDoc.createNode(featureType)
+      elemNode.setAttribute('id', id)
+      elemNode.setAttribute('changeset', changesetId)
+      elemNode.setAttribute('version', feature.properties.version)
+      if (featureType === 'node') {
+        elemNode.setAttribute('lon', feature.geometry.coordinates[0])
+        elemNode.setAttribute('lat', feature.geometry.coordinates[1])
+      }
+      const tags = getTags(feature)
+      addTags(xmlDoc, elemNode, tags)
+      if (featureType === 'way') {
+        addNdrefs(xmlDoc, elemNode, feature.properties.ndrefs)
+      }
+      modifyNode.appendChild(elemNode)
+    })
+    rootElem[0].appendChild(modifyNode)
+  }
+  if (deletes.length > 0) {
+    const deleteNode = xmlDoc.createElement('delete')
+    deletes.forEach(del => {
+      const featureType = del.type
+      const feature = del.feature
+      const id = del.id
+      const elemNode = xmlDoc.createNode(featureType)
+      elemNode.setAttribute('if-unused', 'true')
+      elemNode.setAttribute('id', id)
+      elemNode.setAttribute('changeset', changesetId)
+      elemNode.setAttribute('version', feature.properties.version)
+      if (featureType === 'node') {
+        elemNode.setAttribute('lon', feature.geometry.coordinates[0])
+        elemNode.setAttribute('lat', feature.geometry.coordinates[1])
+      }
+      const tags = getTags(feature)
+      addTags(xmlDoc, elemNode, tags)
+      if (featureType === 'way') {
+        addNdrefs(xmlDoc, elemNode, feature.properties.ndrefs)
+      }
+      deleteNode.appendChild(elemNode)
+    })
+    rootElem[0].appendChild(deleteNode)
+  }
+  return xmlDoc.toString()
 }
 
+function addTags (xmlDoc, elem, tags) {
+  Object.keys(tags).forEach(key => {
+    const tagElem = xmlDoc.createElement('tag')
+    tagElem.setAttribute('k', key)
+    tagElem.setAttribute('v', tags[key])
+    elem.appendChild(tagElem)
+  })
+  return elem
+}
+
+function addNdrefs (xmlDoc, elem, refs) {
+  refs.forEach(ref => {
+    const refElem = xmlDoc.createElement('nd')
+    refElem.setAttribute('ref', ref)
+    elem.appendChild(refElem)
+  })
+  return elem
+}
 
 function isNewId (id) {
   return id.startsWith('observe-')
@@ -159,7 +247,7 @@ function isNewId (id) {
 /**
  * Function to get XML for "simple" changes that result in a single change operation
  * For the more complex case of way edits, where other ways may be affected, etc. we use
- * getComplexChange 
+ * getComplexChange
  */
 function getSimpleChange (edit, changesetId, memberNodes) {
   const xmlRoot = '<osmChange></osmChange>'
@@ -187,12 +275,8 @@ function getSimpleChange (edit, changesetId, memberNodes) {
     changeNode.setAttribute('lat', feature.geometry.coordinates[1])
   }
   const tags = getTags(feature)
-  Object.keys(tags).forEach(k => {
-    const tagElem = xmlDoc.createElement('tag')
-    tagElem.setAttribute('k', k)
-    tagElem.setAttribute('v', tags[k])
-    changeNode.appendChild(tagElem)
-  })
+  addTags(changeNode, tags)
+
   if (featureType === 'way') {
     const refs = feature.properties.ndrefs
     refs.forEach(ref => {
