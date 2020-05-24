@@ -141,7 +141,7 @@ export function addFeature (feature, comment = '') {
       feature,
       id: feature.id,
       comment,
-      timestamp: Number(new Date())      
+      timestamp: Number(new Date())
     })
   }
 }
@@ -163,7 +163,7 @@ export function editFeature (oldFeature, newFeature, comment = '') {
   return async (dispatch, getState) => {
     const state = getState()
     if (state.wayEditHistory.present.modifiedSharedWays.length > 0) { // is a way edit
-      newFeature.wayEditHistory = { ...state.wayEditHistory.present }   
+      newFeature.wayEditHistory = { ...state.wayEditHistory.present }
     }
     dispatch({
       type: types.EDIT_FEATURE,
