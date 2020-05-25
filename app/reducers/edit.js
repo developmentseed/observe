@@ -1,6 +1,10 @@
 import * as types from '../actions/actionTypes'
 import editsToGeojson from '../utils/edits-to-geojson'
+<<<<<<< HEAD
 import { EDIT_PENDING_STATUS, EDIT_SUCCEEDED_STATUS, EDIT_UPLOADING_STATUS } from '../constants'
+=======
+import editToOsmChange from '../utils/edit-to-osm-change'
+>>>>>>> DEBUG: add console.logs to make debugging changeset generation easier
 
 const initialState = {
   edits: [], // array of edit actions
@@ -26,6 +30,8 @@ export default function (state = initialState, action) {
         timestamp: action.timestamp
       })
 
+      // FIXME: remove
+      console.log(editToOsmChange(edits.slice(-1)[0]))
       let editsGeojson = editsToGeojson(edits)
       return {
         ...state,
@@ -54,7 +60,8 @@ export default function (state = initialState, action) {
           timestamp: action.timestamp
         })
       }
-
+      // FIXME: remove
+      console.log(editToOsmChange(edits.slice(-1)[0]))
       let editsGeojson = editsToGeojson(edits)
       return {
         ...state,
@@ -95,6 +102,9 @@ export default function (state = initialState, action) {
           timestamp: action.timestamp
         })
       }
+      
+      // FIXME: remove
+      console.log(editToOsmChange(edits.slice(-1)[0]))
       let editsGeojson = editsToGeojson(edits)
       return {
         ...state,
