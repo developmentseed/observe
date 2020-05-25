@@ -133,8 +133,8 @@ export function editUploaded (edit, changesetId) {
 export function addFeature (feature, comment = '') {
   return (dispatch, getState) => {
     const state = getState()
-    if (state.wayEditHistory.present.addedNodes.length > 0) { // is a way edit, copy over wayEditHistory
-      feature.wayEditHistory = { ...state.wayEditHistory.present }
+    if (state.wayEditingHistory.present.addedNodes.length > 0) { // is a way edit, copy over wayEditHistory
+      feature.wayEditingHistory = { ...state.wayEditingHistory.present }
     }
     dispatch({
       type: types.ADD_FEATURE,
@@ -162,8 +162,8 @@ export function deleteFeature (feature, comment = '') {
 export function editFeature (oldFeature, newFeature, comment = '') {
   return async (dispatch, getState) => {
     const state = getState()
-    if (state.wayEditHistory.present.modifiedSharedWays.length > 0) { // is a way edit
-      newFeature.wayEditHistory = { ...state.wayEditHistory.present }
+    if (state.wayEditingHistory.present.modifiedSharedWays.length > 0) { // is a way edit
+      newFeature.wayEditingHistory = { ...state.wayEditingHistory.present }
     }
     dispatch({
       type: types.EDIT_FEATURE,
