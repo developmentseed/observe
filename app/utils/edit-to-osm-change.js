@@ -10,7 +10,7 @@ import { nonpropKeys } from '../utils/uninterestingKeys'
  * @return {String<XML>} - osmChange XML string
  */
 export default function (edit, changesetId, memberNodes = null) {
-  const isSimpleChange = !(edit.newFeature && edit.newFeature.wayEditHistory)
+  const isSimpleChange = !(edit.newFeature && edit.newFeature.wayEditingHistory)
   return isSimpleChange ? getSimpleChange(edit, changesetId, memberNodes) : getComplexChange(edit, changesetId)
 }
 
@@ -36,7 +36,7 @@ function getTags (feature) {
 
 /**
  *
- * @param {Object} edit - containing newFeature.wayEditHistory with details of the complex edit
+ * @param {Object} edit - containing newFeature.wayEditingHistory with details of the complex edit
  * @param {Number} changesetId
  */
 function getComplexChange (edit, changesetId) {
@@ -55,9 +55,9 @@ function getComplexChange (edit, changesetId) {
 
   const deletes = []
 
-  const { wayEditHistory, ...feature } = edit.newFeature
+  const { wayEditingHistory, ...feature } = edit.newFeature
 
-  const nodeIdMap = wayEditHistory.way.nodes.reduce((mapping, node, idx) => {
+  const nodeIdMap = wayEditingHistory.way.nodes.reduce((mapping, node, idx) => {
     const id = node.properties.id
     if (isNewId(id)) {
       mapping[id] = getNextNegativeId()
@@ -79,7 +79,7 @@ function getComplexChange (edit, changesetId) {
   } else if (edit.type === 'modify') {
     // if feature is modified, we only need to include in change XML if nodes
     // were added or removed
-    if (wayEditHistory.addedNodes.length > 0 || wayEditHistory.deletedNodes.length > 0 || wayEditHistory.mergedNodes.length > 0) {
+    if (wayEditingHistory.addedNodes.length > 0 || wayEditingHistory.deletedNodes.length > 0 || wayEditingHistory.mergedNodes.length > 0) {
       modifies.push({
         type: 'way',
         id: feature.properties.id,
@@ -88,8 +88,8 @@ function getComplexChange (edit, changesetId) {
     }
   }
 
-  wayEditHistory.addedNodes.forEach(addedNodeId => {
-    const node = wayEditHistory.nodes.find(nd => nd.properties.id === addedNodeId)
+  wayEditingHistory.addedNodes.forEach(addedNodeId => {
+    const node = wayEditingHistory.nodes.find(nd => nd.properties.id === addedNodeId)
     const id = node.properties.id
     creates.push({
       type: 'node',
@@ -98,8 +98,8 @@ function getComplexChange (edit, changesetId) {
     })
   })
 
-  wayEditHistory.movedNodes.forEach(movedNodeId => {
-    const node = wayEditHistory.nodes.find(nd => nd.properties.id === movedNodeId)
+  wayEditingHistory.movedNodes.forEach(movedNodeId => {
+    const node = wayEditingHistory.nodes.find(nd => nd.properties.id === movedNodeId)
     modifies.push({
       type: 'node',
       id: node.properties.id,
@@ -107,8 +107,8 @@ function getComplexChange (edit, changesetId) {
     })
   })
 
-  wayEditHistory.deletedNodes.forEach(deletedNodeId => {
-    const node = wayEditHistory.nodes.find(nd => nd.properties.id === deletedNodeId)
+  wayEditingHistory.deletedNodes.forEach(deletedNodeId => {
+    const node = wayEditingHistory.nodes.find(nd => nd.properties.id === deletedNodeId)
     deletes.push({
       type: 'node',
       id: node.properties.id,
@@ -116,7 +116,7 @@ function getComplexChange (edit, changesetId) {
     })
   })
 
-  wayEditHistory.modifiedSharedWays.forEach(way => {
+  wayEditingHistory.modifiedSharedWays.forEach(way => {
     // if shared way is same as top level feature, ignore
     if (way.properties.id !== feature.properties.id) {
       // if way has only moved nodes, ignore
@@ -218,6 +218,7 @@ function getXMLForChanges ({ creates, modifies, deletes }, changesetId) {
     })
     rootElem[0].appendChild(deleteNode)
   }
+  // console.log('xml', xmlDoc.toString())
   return xmlDoc.toString()
 }
 
