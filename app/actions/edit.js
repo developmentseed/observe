@@ -132,7 +132,7 @@ export function editUploaded (edit, changesetId) {
 export function addFeature (feature, comment = '') {
   return (dispatch, getState) => {
     const state = getState()
-    if (state.wayEditingHistory.present.addedNodes.length > 0) { // is a way edit, copy over wayEditHistory
+    if (state.wayEditingHistory.present.addedNodes.length > 0) { // is a way edit, copy over wayEditingHistory
       feature.wayEditingHistory = { ...state.wayEditingHistory.present }
     }
     dispatch({
