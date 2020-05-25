@@ -77,23 +77,19 @@ const Grabber = styled.View`
 class MapOverlay extends Component {
   renderFeature (feature) {
     const { navigation } = this.props
-    function onPress () {
-      navigation.navigate('ViewFeatureDetail', { feature })
-    }
 
-    const name = feature.properties.name || feature.properties['name:end'] || feature.properties.brand || undefined
-    let nameText
-    if (name) {
-      nameText = (
-        <NameText>{feature.properties.hasOwnProperty('name') ? feature.properties.name : ''}</NameText>
-      )
-    }
+    const name =
+      feature.properties.name ||
+      feature.properties['name:end'] ||
+      feature.properties.brand
 
     return (
-      <Feature onPress={onPress}>
+      <Feature
+        onPress={() => navigation.navigate('ViewFeatureDetail', { feature })}
+      >
         <FeatureText>
-          {nameText}
-          <BoldText>{ getTaginfo(feature) }</BoldText>
+          {name && <NameText>{name}</NameText>}
+          <BoldText>{getTaginfo(feature)}</BoldText>
           <Text>{feature.id}</Text>
         </FeatureText>
       </Feature>
