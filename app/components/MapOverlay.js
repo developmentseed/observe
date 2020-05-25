@@ -129,7 +129,7 @@ class MapOverlay extends Component {
   render () {
     const { features, selectedFeatures, selectedPhotos } = this.props
     if ((selectedFeatures && selectedFeatures.length > 0) || (selectedPhotos && selectedPhotos.length > 0)) {
-      const featureSection = { 'title': 'Featues', 'data': selectedFeatures || features }
+      const featureSection = { 'title': 'Features', 'data': selectedFeatures || features }
       const photoSection = { 'title': 'Photos', 'data': selectedPhotos }
 
       return (
