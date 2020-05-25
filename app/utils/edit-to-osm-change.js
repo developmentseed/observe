@@ -40,6 +40,7 @@ function getTags (feature) {
  * @param {Number} changesetId
  */
 function getComplexChange (edit, changesetId) {
+  console.log('called get complex change')
   let negativeIdCounter = 0
 
   function getNextNegativeId () {
@@ -276,7 +277,7 @@ function getSimpleChange (edit, changesetId, memberNodes) {
     changeNode.setAttribute('lat', feature.geometry.coordinates[1])
   }
   const tags = getTags(feature)
-  addTags(changeNode, tags)
+  addTags(xmlDoc, changeNode, tags)
 
   if (featureType === 'way') {
     const refs = feature.properties.ndrefs
