@@ -140,7 +140,10 @@ function mergeNode (sharedWays, sourceNode, destinationNode) {
     }
 
     if (!newWay.properties.mergedNodes.includes(destinationNode.properties.id)) {
-      newWay.properties.mergedNodes.push(destinationNode.properties.id)
+      newWay.properties.mergedNodes.push({
+        sourceNode: sourceNode.properties.id,
+        destinationNode: destinationNode.properties.id
+      })
     }
 
     modifiedSharedWays.push(newWay)

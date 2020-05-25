@@ -125,7 +125,12 @@ function wayEditingHistory (state = createDefaultState(), action) {
 
       // replace the sourceNode in way.nodes
       newWay.nodes.splice(indexOfSourceNode, 1, destinationNode)
-      const mergedNodes = [...state.mergedNodes, destinationNode.properties.id]
+
+      let mergedNodes = _cloneDeep(state.mergedNodes)
+      mergedNodes.push({
+        sourceNode: sourceNode.properties.id,
+        destinationNode: destinationNode.properties.id
+      })
 
       return {
         ...state,
