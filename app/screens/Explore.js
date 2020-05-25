@@ -416,9 +416,15 @@ class Explore extends React.Component {
       return null
     }
 
-    if (mode === modes.ADD_POINT || mode === modes.EDIT_POINT) {
+    if (mode === modes.ADD_POINT) {
       return <AddPointOverlay
         onAddConfirmPress={this.onAddConfirmPress}
+      />
+    }
+
+    if (mode === modes.EDIT_POINT) {
+      return <AddPointOverlay
+        onAddConfirmPress={this.onEditConfirmPress}
       />
     }
 
