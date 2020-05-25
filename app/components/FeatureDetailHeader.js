@@ -60,7 +60,6 @@ export default class FeatureDetailHeader extends React.Component {
     const { feature, navigation } = this.props
     const geometryType = feature.geometry.type
     const mode = geometryTypeToEditMode[geometryType]
-
     navigation.navigate('Explore', { feature, mode })
   }
 
