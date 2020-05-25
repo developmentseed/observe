@@ -182,6 +182,11 @@ class Explore extends React.Component {
 
     if (!requiresPreauth) {
       this.forceUpdate()
+    }
+
+    // When camera is undefined, this is the first time this screen is shown and
+    // the camera should be set to the user location.
+    if (!this.state.camera) {
       this.locateUser()
     }
   }
@@ -243,22 +248,19 @@ class Explore extends React.Component {
     }
   }
 
-  onUserLocationUpdate = location => {
-    // console.log('user location updated', location)
-  }
-
   async locateUser () {
     try {
       const userLocation = await getUserLocation()
       if (userLocation.hasOwnProperty('coords')) {
-        const centerCoordinate = [userLocation.coords.longitude, userLocation.coords.latitude]
-
-        this.cameraRef && this.cameraRef.setCamera({
-          centerCoordinate,
+        // Create camera object from user location
+        const camera = {
+          centerCoordinate: [userLocation.coords.longitude, userLocation.coords.latitude],
           zoomLevel: 18
-        })
+        }
 
-        this.setState({ centerCoordinate })
+        // Set map and component state
+        this.cameraRef && this.cameraRef.setCamera(camera)
+        this.setState({ camera })
       }
     } catch (error) {
       console.log('error fetching user location', error)
