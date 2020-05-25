@@ -145,7 +145,7 @@ class MapOverlay extends Component {
               <ItemList
                 sections={[featureSection, photoSection]}
                 renderItem={({ item }) => { return this.renderItem(item) }}
-                keyExtractor={(item, i) => `${item.properties.id}`}
+                keyExtractor={(item, i) => item.properties.id + i}
               />
             </FeatureListWrapper>
           </Drawer>
