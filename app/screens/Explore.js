@@ -248,10 +248,6 @@ class Explore extends React.Component {
     }
   }
 
-  onUserLocationUpdate = location => {
-    // console.log('user location updated', location)
-  }
-
   async locateUser () {
     try {
       const userLocation = await getUserLocation()
