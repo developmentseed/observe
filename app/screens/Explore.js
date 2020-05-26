@@ -325,7 +325,7 @@ class Explore extends React.Component {
   }
 
   onBackButtonPress = () => {
-    const { mode } = this.props
+    const { mode, navigation } = this.props
 
     if (mode === modes.EXPLORE) { // let default back handling happen when in Explore mode
       return false
@@ -334,6 +334,11 @@ class Explore extends React.Component {
     if (mode === modes.ADD_WAY || mode === modes.EDIT_WAY) {
       this.props.resetWayEditing()
       this.props.setMapMode(modes.EXPLORE)
+
+      // remove the feature from the navigation
+      navigation.setParams({
+        feature: null
+      })
     }
 
     this.props.mapBackPress()
