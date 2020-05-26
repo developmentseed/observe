@@ -77,23 +77,19 @@ const Grabber = styled.View`
 class MapOverlay extends Component {
   renderFeature (feature) {
     const { navigation } = this.props
-    function onPress () {
-      navigation.navigate('ViewFeatureDetail', { feature })
-    }
 
-    const name = feature.properties.name || feature.properties['name:end'] || feature.properties.brand || undefined
-    let nameText
-    if (name) {
-      nameText = (
-        <NameText>{feature.properties.hasOwnProperty('name') ? feature.properties.name : ''}</NameText>
-      )
-    }
+    const name =
+      feature.properties.name ||
+      feature.properties['name:end'] ||
+      feature.properties.brand
 
     return (
-      <Feature onPress={onPress}>
+      <Feature
+        onPress={() => navigation.navigate('ViewFeatureDetail', { feature })}
+      >
         <FeatureText>
-          {nameText}
-          <BoldText>{ getTaginfo(feature) }</BoldText>
+          {name && <NameText>{name}</NameText>}
+          <BoldText>{getTaginfo(feature)}</BoldText>
           <Text>{feature.id}</Text>
         </FeatureText>
       </Feature>
@@ -129,7 +125,7 @@ class MapOverlay extends Component {
   render () {
     const { features, selectedFeatures, selectedPhotos } = this.props
     if ((selectedFeatures && selectedFeatures.length > 0) || (selectedPhotos && selectedPhotos.length > 0)) {
-      const featureSection = { 'title': 'Featues', 'data': selectedFeatures || features }
+      const featureSection = { 'title': 'Features', 'data': selectedFeatures || features }
       const photoSection = { 'title': 'Photos', 'data': selectedPhotos }
 
       return (
@@ -145,7 +141,7 @@ class MapOverlay extends Component {
               <ItemList
                 sections={[featureSection, photoSection]}
                 renderItem={({ item }) => { return this.renderItem(item) }}
-                keyExtractor={(item, i) => `${item.properties.id}`}
+                keyExtractor={(item, i) => item.properties.id + i}
               />
             </FeatureListWrapper>
           </Drawer>
