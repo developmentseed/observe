@@ -9,6 +9,7 @@ import { getFeatureInChangeset } from '../services/osm-api'
 import { editPhoto } from '../actions/camera'
 import { EDIT_UPLOADING_STATUS } from '../constants'
 import { clearNodeCacheForTile } from '../services/nodecache'
+import { resetWayEditing } from '../actions/wayEditing'
 /**
  * Retries all retriable edits in the current state
  */
@@ -136,6 +137,9 @@ export function addFeature (feature, comment = '') {
     if (state.wayEditingHistory.present.addedNodes.length > 0) { // is a way edit, copy over wayEditingHistory
       feature.wayEditingHistory = { ...state.wayEditingHistory.present }
     }
+
+    dispatch(resetWayEditing())
+
     dispatch({
       type: types.ADD_FEATURE,
       feature,
@@ -165,6 +169,9 @@ export function editFeature (oldFeature, newFeature, comment = '') {
     if (state.wayEditingHistory.present.modifiedSharedWays.length > 0) { // is a way edit
       newFeature.wayEditingHistory = { ...state.wayEditingHistory.present }
     }
+
+    dispatch(resetWayEditing())
+
     dispatch({
       type: types.EDIT_FEATURE,
       oldFeature,
