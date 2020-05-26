@@ -160,7 +160,7 @@ class Explore extends React.Component {
       isMapLoaded: true,
       clickableLayers: ['editedPois', 'pois', 'editedPolygons',
         'buildings', 'roads', 'roadsLower',
-        'railwayLine', 'waterLine', 'waterFill', 'leisure', 'photos', 'natural', 'allPolygons', 'allLines'],
+        'railwayLine', 'waterLine', 'waterFill', 'leisure', 'landuse', 'photos', 'natural', 'allPolygons', 'allLines'],
       userTrackingMode: MapboxGL.UserTrackingModes.None
     })
 
@@ -603,8 +603,11 @@ class Explore extends React.Component {
         'all',
         ['has', 'amenity'],
         ['!', ['has', 'building']],
-        ['==', ['geometry-type'], 'Polygon'],
-        ['==', ['geometry-type'], 'MultiPolygon']
+        [
+          'any',
+          ['==', ['geometry-type'], 'Polygon'],
+          ['==', ['geometry-type'], 'MultiPolygon']
+        ]
       ],
       buildings: [
         'all',
@@ -612,18 +615,21 @@ class Explore extends React.Component {
         filteredFeatureIds && filteredFeatureIds.ways[2].length ? filteredFeatureIds.ways : ['match', ['get', 'id'], [''], false, true]
       ],
       leisure: [
-        'any',
+        'all',
+        ['has', 'leisure'],
         [
-          'match',
-          ['get', 'leisure'],
-          ['pitch', 'track', 'garden', 'park', 'nature_reserve'],
-          true, false
-        ],
+          'any',
+          ['==', ['geometry-type'], 'Polygon'],
+          ['==', ['geometry-type'], 'MultiPolygon']
+        ]
+      ],
+      landuse: [
+        'all',
+        ['has', 'landuse'],
         [
-          'match',
-          ['get', 'landuse'],
-          ['grass', 'forest', 'meadow'],
-          true, false
+          'any',
+          ['==', ['geometry-type'], 'Polygon'],
+          ['==', ['geometry-type'], 'MultiPolygon']
         ]
       ],
       boundaries: [
@@ -632,13 +638,11 @@ class Explore extends React.Component {
       ],
       natural: [
         'all',
-        ['==', ['geometry-type'], 'Polygon'],
-        ['==', ['geometry-type'], 'MultiPolygon'],
+        ['has', 'natural'],
         [
-          'match',
-          ['get', 'natural'],
-          ['wood', 'beach', 'water'],
-          true, false
+          'any',
+          ['==', ['geometry-type'], 'Polygon'],
+          ['==', ['geometry-type'], 'MultiPolygon']
         ]
       ],
       iconHalo: [
@@ -771,11 +775,12 @@ class Explore extends React.Component {
                       {/* <MapboxGL.LineLayer id='coastlines' filter={filters.coastlines} style={style.osm.coastline} minZoomLevel={16} /> */}
                       <MapboxGL.LineLayer id='waterLine' filter={filters.waterLine} style={style.osm.waterLine} minZoomLevel={16} />
                       <MapboxGL.FillLayer id='waterFill' filter={filters.waterFill} style={style.osm.waterFill} minZoomLevel={16} />
-                      <MapboxGL.FillLayer id='buildings' filter={filters.buildings} style={style.osm.buildings} minZoomLevel={16} />
-                      <MapboxGL.FillLayer id='amenities' filter={filters.amenities} style={style.osm.amenities} minZoomLevel={16} />
-                      <MapboxGL.FillLayer id='leisure' filter={filters.leisure} style={style.osm.leisure} minZoomLevel={16} />
                       <MapboxGL.FillLayer id='natural' filter={filters.natural} style={style.osm.natural} minZoomLevel={16} />
+                      <MapboxGL.FillLayer id='landuse' filter={filters.landuse} style={style.osm.landuse} minZoomLevel={16} />
+                      <MapboxGL.FillLayer id='leisure' filter={filters.leisure} style={style.osm.leisure} minZoomLevel={16} />
                       <MapboxGL.FillLayer id='allPolygons' filter={filters.allPolygons} style={style.osm.polygons} minZoomLevel={16} />
+                      <MapboxGL.FillLayer id='amenities' filter={filters.amenities} style={style.osm.amenities} minZoomLevel={16} />
+                      <MapboxGL.FillLayer id='buildings' filter={filters.buildings} style={style.osm.buildings} minZoomLevel={16} />
                       <MapboxGL.LineLayer id='allLines' filter={filters.allLines} style={style.osm.lines} minZoomLevel={16} />
                       <MapboxGL.LineLayer id='selectedFeatures' filter={filters.selectedFeatures} style={style.osm.selectedFeatures.lines} minZoomLevel={16} />
                       <MapboxGL.CircleLayer id='iconHalo' style={style.osm.iconHalo} minZoomLevel={16} filter={filters.iconHalo} />

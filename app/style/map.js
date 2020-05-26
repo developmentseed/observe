@@ -143,6 +143,7 @@ const amenities = {
     'parking', colors.muted,
     'rgba(235, 225, 118, 0.3)'
   ],
+  fillOpacity: 0.3,
   fillOutlineColor: colors.base
 }
 
@@ -157,6 +158,8 @@ const leisure = {
     'match',
     ['get', 'leisure'],
     'pitch', '#dca',
+    'track', '#a93a28',
+    'swimming_pool', '#0ef',
     '#3fbd30'
   ],
   fillOpacity: 0.3,
@@ -167,13 +170,45 @@ const natural = {
   fillColor: [
     'match',
     ['get', 'natural'],
+    'wetland', '#0a42af',
     'water', 'rgb(50,130,220)',
-    'wood', 'rgb(110, 188, 75)',
+    'bay', '#4fa3fd',
+    'glacier', '#7a9af0',
+    'wood', '#3aaf3a',
+    'scrub', 'rgb(110, 188, 75)',
     'beach', '#f0dd8a',
-    '#a0ad5a'
+    'sand', '#f0dd8a',
+    'cliff', '#434343',
+    'rock', '#677587',
+    'scree', '#679587',
+    'stone', '#574557',
+    'shingle', '#777577',
+    'bare_rock', '#f7f5f7',
+    'cave_entrance', '#677587',
+    '#aDeB50'
   ],
   fillOpacity: 0.3,
   fillOutlineColor: '#0a42af'
+}
+
+const landuse = {
+  fillColor: [
+    'match',
+    ['get', 'landuse'],
+    'meadow', '#CDEBB0',
+    'residential', 'rgb(196, 189, 25)',
+    'retail', 'rgb(214, 136, 26)',
+    'commericial', 'rgb(214, 136, 26)',
+    'military', 'rgb(214, 136, 26)',
+    'landfill', 'rgb(214, 136, 26)',
+    'industrial', 'rgb(228, 164, 245)',
+    'railway', 'rgb(140, 140, 140)',
+    'quarry', 'rgb(140, 140, 140)',
+    'farmyard', 'rgb(245, 220, 186)',
+    '#3fbd30'
+  ],
+  fillOpacity: 0.3,
+  fillOutlineColor: '#1da01a'
 }
 
 /*
@@ -327,6 +362,7 @@ export default {
     amenities,
     coastline,
     natural,
+    landuse,
     leisure,
     iconHalo,
     iconHaloSelected,
