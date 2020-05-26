@@ -109,6 +109,21 @@ const waterLine = {
   lineColor: '#7dd'
 }
 
+const waterFill = {
+  fillColor: [
+    'match',
+    ['get', 'waterway'],
+    'boatyard', '#30778b',
+    'dam', '#677587',
+    'fuel', '#4f4536',
+    'dock', '#1e4d87',
+    'riverbank', '#413b7e',
+    '#0aa9da'
+  ],
+  fillOpacity: 0.3,
+  fillOutlineColor: '#0f33a9'
+}
+
 const coastline = {
   lineWidth: thinLineWidth,
   lineColor: '#4fa3fd',
@@ -128,6 +143,7 @@ const amenities = {
     'parking', colors.muted,
     'rgba(235, 225, 118, 0.3)'
   ],
+  fillOpacity: 0.3,
   fillOutlineColor: colors.base
 }
 
@@ -142,22 +158,57 @@ const leisure = {
     'match',
     ['get', 'leisure'],
     'pitch', '#dca',
-    'rgba(140, 208, 95, 0.3)'
+    'track', '#a93a28',
+    'swimming_pool', '#0ef',
+    '#3fbd30'
   ],
-  fillOutlineColor: 'grey'
+  fillOpacity: 0.3,
+  fillOutlineColor: '#6fd02a'
 }
 
 const natural = {
   fillColor: [
     'match',
     ['get', 'natural'],
+    'wetland', '#0a42af',
     'water', 'rgb(50,130,220)',
-    'wood', 'rgb(110, 188, 75)',
+    'bay', '#4fa3fd',
+    'glacier', '#7a9af0',
+    'wood', '#3aaf3a',
+    'scrub', 'rgb(110, 188, 75)',
     'beach', '#f0dd8a',
-    '#a0ad5a'
+    'sand', '#f0dd8a',
+    'cliff', '#434343',
+    'rock', '#677587',
+    'scree', '#679587',
+    'stone', '#574557',
+    'shingle', '#777577',
+    'bare_rock', '#f7f5f7',
+    'cave_entrance', '#677587',
+    '#aDeB50'
   ],
   fillOpacity: 0.3,
   fillOutlineColor: '#0a42af'
+}
+
+const landuse = {
+  fillColor: [
+    'match',
+    ['get', 'landuse'],
+    'meadow', '#CDEBB0',
+    'residential', 'rgb(196, 189, 25)',
+    'retail', 'rgb(214, 136, 26)',
+    'commericial', 'rgb(214, 136, 26)',
+    'military', 'rgb(214, 136, 26)',
+    'landfill', 'rgb(214, 136, 26)',
+    'industrial', 'rgb(228, 164, 245)',
+    'railway', 'rgb(140, 140, 140)',
+    'quarry', 'rgb(140, 140, 140)',
+    'farmyard', 'rgb(245, 220, 186)',
+    '#3fbd30'
+  ],
+  fillOpacity: 0.3,
+  fillOutlineColor: '#1da01a'
 }
 
 /*
@@ -165,7 +216,7 @@ const natural = {
  */
 
 const selectedNode = {
-  circleRadius: 3,
+  circleRadius: 6,
   circleOpacity: 1,
   circleColor: 'white',
   circleStrokeColor: colors.primary,
@@ -199,7 +250,7 @@ const editingLines = {
 
 const nearestNodes = {
   circleColor: 'white',
-  circleRadius: 3,
+  circleRadius: 4,
   circleOpacity: 0.5,
   circleStrokeColor: colors.base,
   circleStrokeWidth: 2,
@@ -236,8 +287,8 @@ const iconHaloSelected = {
   circleRadius: 12,
   circleColor: colors.primary,
   circleOpacity: 0.6,
-  circleStrokeColor: 'white',
-  circleStrokeWidth: 2,
+  circleStrokeColor: colors.primary,
+  circleStrokeWidth: 4,
   circleStrokeOpacity: 0.6
 }
 
@@ -303,6 +354,7 @@ export default {
     highwaysLower,
     railwayLine,
     waterLine,
+    waterFill,
     lineHighlight,
     selectedLine,
     polygons,
@@ -310,6 +362,7 @@ export default {
     amenities,
     coastline,
     natural,
+    landuse,
     leisure,
     iconHalo,
     iconHaloSelected,
