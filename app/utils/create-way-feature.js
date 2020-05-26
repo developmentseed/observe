@@ -18,6 +18,7 @@ export default function createWayFeature (nodes = [], properties = {}, options =
 
   let geometryType = (!!nodes.length && _isEqual(nodes[0], nodes[nodes.length - 1])) ? 'Polygon' : 'LineString'
 
+  properties.id = `way/${options.id}`
   return {
     type: 'Feature',
     id: `way/${options.id}`,
