@@ -75,6 +75,8 @@ function getComplexChange (edit, changesetId) {
     const id = node.properties.id
     if (isNewId(id)) {
       mapping[id] = getNextNegativeId()
+    } else if (id.split('/').length > 1) {
+      mapping[id] = id.split('/')[1]
     } else {
       mapping[id] = id
     }
