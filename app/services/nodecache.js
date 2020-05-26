@@ -11,7 +11,12 @@ export async function addNodes (tile, nodes) {
     JSON.stringify({
       'lat': n.lat,
       'lon': n.lon,
-      'ways': n.ways ? n.ways : null
+      'ways': n.ways ? n.ways : null,
+      'tags': n.tags ? n.tags : null,
+      'version': n.version,
+      'changeset': n.changeset,
+      'user': n.user,
+      'uid': n.uid
     })
   ])
   const nodeIds = nodes.map(n => {

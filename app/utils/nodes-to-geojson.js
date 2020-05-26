@@ -16,9 +16,15 @@ export async function nodesGeojson (nodeIds) {
       },
       'properties': {
         'id': id,
-        'ways': nodes[id].ways
+        'ways': nodes[id].ways,
+        'version': nodes[id].version
       }
     }
+
+    if (nodes[id].tags) {
+      feature.properties = Object.assign(feature.properties, nodes[id].tags)
+    }
+
     geojson.features.push(feature)
   })
   return Promise.resolve(geojson)
