@@ -181,7 +181,7 @@ const natural = {
  */
 
 const selectedNode = {
-  circleRadius: 3,
+  circleRadius: 6,
   circleOpacity: 1,
   circleColor: 'white',
   circleStrokeColor: colors.primary,
@@ -215,7 +215,7 @@ const editingLines = {
 
 const nearestNodes = {
   circleColor: 'white',
-  circleRadius: 3,
+  circleRadius: 4,
   circleOpacity: 0.5,
   circleStrokeColor: colors.base,
   circleStrokeWidth: 2,
@@ -252,8 +252,8 @@ const iconHaloSelected = {
   circleRadius: 12,
   circleColor: colors.primary,
   circleOpacity: 0.6,
-  circleStrokeColor: 'white',
-  circleStrokeWidth: 2,
+  circleStrokeColor: colors.primary,
+  circleStrokeWidth: 4,
   circleStrokeOpacity: 0.6
 }
 
