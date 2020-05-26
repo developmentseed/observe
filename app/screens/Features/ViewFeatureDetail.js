@@ -102,7 +102,11 @@ class ViewFeatureDetail extends React.Component {
   isFeatureInRelation () {
     const { featuresInRelation, navigation } = this.props
     const { state: { params: { feature } } } = navigation
-    return featuresInRelation.includes(feature.id)
+    if (featuresInRelation) {
+      return featuresInRelation.includes(feature.id)
+    } else {
+      return false
+    }
   }
 
   render () {
