@@ -6,7 +6,8 @@ function moveNode (sharedWays, node, coordinates) {
   let modifiedSharedWays = []
   sharedWays.forEach(oldWay => {
     const newWay = _cloneDeep(oldWay)
-    const indexOfNodeInWay = node.properties.ways[oldWay.properties.id.split('/')[1]] || node.properties.ways[oldWay.properties.id]
+    const wayId = oldWay.properties.id.startsWith('way') ? oldWay.properties.id.split('/')[1] : oldWay.properties.id
+    const indexOfNodeInWay = node.properties.ways[wayId]
     if (newWay.geometry.type === 'LineString') {
       newWay.geometry.coordinates[indexOfNodeInWay] = coordinates
     }
