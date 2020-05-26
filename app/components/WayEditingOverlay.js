@@ -218,7 +218,7 @@ class WayEditingOverlay extends React.Component {
     if (this.props.mode === modes.ADD_WAY && this.props.wayEditingHistory.present.way) {
       const feature = createWayFeature(this.props.wayEditingHistory.present.way.nodes)
       console.log('edited feature', JSON.stringify(feature))
-      this.props.resetWayEditing()
+      // this.props.resetWayEditing()
       this.props.navigation.navigate('SelectFeatureType', { feature })
     }
   }
