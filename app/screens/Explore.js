@@ -160,7 +160,7 @@ class Explore extends React.Component {
       isMapLoaded: true,
       clickableLayers: ['editedPois', 'pois', 'editedPolygons',
         'buildings', 'roads', 'roadsLower',
-        'railwayLine', 'waterLine', 'leisure', 'photos', 'natural', 'allPolygons', 'allLines'],
+        'railwayLine', 'waterLine', 'waterFill', 'leisure', 'photos', 'natural', 'allPolygons', 'allLines'],
       userTrackingMode: MapboxGL.UserTrackingModes.None
     })
 
@@ -582,6 +582,17 @@ class Explore extends React.Component {
         ['has', 'waterway'],
         ['==', ['geometry-type'], 'LineString']
       ],
+      waterFill: [
+        'all',
+        ['has', 'waterway'],
+        ['!', ['has', 'building']],
+        ['!', ['has', 'amenity']],
+        [
+          'any',
+          ['==', ['geometry-type'], 'Polygon'],
+          ['==', ['geometry-type'], 'MultiPolygon']
+        ]
+      ],
       coastlines: [
         'match',
         ['get', 'natural'],
@@ -759,6 +770,7 @@ class Explore extends React.Component {
                       <MapboxGL.LineLayer id='railwayLine' filter={filters.railwayLine} style={style.osm.railwayLine} minZoomLevel={16} />
                       {/* <MapboxGL.LineLayer id='coastlines' filter={filters.coastlines} style={style.osm.coastline} minZoomLevel={16} /> */}
                       <MapboxGL.LineLayer id='waterLine' filter={filters.waterLine} style={style.osm.waterLine} minZoomLevel={16} />
+                      <MapboxGL.FillLayer id='waterFill' filter={filters.waterFill} style={style.osm.waterFill} minZoomLevel={16} />
                       <MapboxGL.FillLayer id='buildings' filter={filters.buildings} style={style.osm.buildings} minZoomLevel={16} />
                       <MapboxGL.FillLayer id='amenities' filter={filters.amenities} style={style.osm.amenities} minZoomLevel={16} />
                       <MapboxGL.FillLayer id='leisure' filter={filters.leisure} style={style.osm.leisure} minZoomLevel={16} />

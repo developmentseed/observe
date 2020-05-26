@@ -109,6 +109,21 @@ const waterLine = {
   lineColor: '#7dd'
 }
 
+const waterFill = {
+  fillColor: [
+    'match',
+    ['get', 'waterway'],
+    'boatyard', '#30778b',
+    'dam', '#677587',
+    'fuel', '#4f4536',
+    'dock', '#1e4d87',
+    'riverbank', '#413b7e',
+    '#0aa9da'
+  ],
+  fillOpacity: 0.3,
+  fillOutlineColor: '#0f33a9'
+}
+
 const coastline = {
   lineWidth: thinLineWidth,
   lineColor: '#4fa3fd',
@@ -142,9 +157,10 @@ const leisure = {
     'match',
     ['get', 'leisure'],
     'pitch', '#dca',
-    'rgba(140, 208, 95, 0.3)'
+    '#3fbd30'
   ],
-  fillOutlineColor: 'grey'
+  fillOpacity: 0.3,
+  fillOutlineColor: '#6fd02a'
 }
 
 const natural = {
@@ -303,6 +319,7 @@ export default {
     highwaysLower,
     railwayLine,
     waterLine,
+    waterFill,
     lineHighlight,
     selectedLine,
     polygons,
