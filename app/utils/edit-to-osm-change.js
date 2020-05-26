@@ -75,6 +75,8 @@ function getComplexChange (edit, changesetId) {
     const id = node.properties.id
     if (isNewId(id)) {
       mapping[id] = getNextNegativeId()
+    } else if (id.split('/').length > 1) {
+      mapping[id] = id.split('/')[1]
     } else {
       mapping[id] = id
     }
@@ -89,27 +91,31 @@ function getComplexChange (edit, changesetId) {
     const node = wayEditingHistory.way.nodes.find(nd => nd.properties.id === addedNodeId)
     console.log('node', node)
     const id = node.properties.id
-    creates.push({
+    if (!creates.find(create => create.id === id)) {
+      creates.push({
+        type: 'node',
+        id: nodeIdMap[id],
+        feature: node
+      })
+    }
+  })
+
+  wayEditingHistory.movedNodes.forEach(movedNodeId => {
+    const node = wayEditingHistory.way.nodes.find(nd => nd.properties.id === movedNodeId)
+    const id = node.properties.id
+    modifies.push({
       type: 'node',
       id: nodeIdMap[id],
       feature: node
     })
   })
 
-  wayEditingHistory.movedNodes.forEach(movedNodeId => {
-    const node = wayEditingHistory.way.nodes.find(nd => nd.properties.id === movedNodeId)
-    modifies.push({
-      type: 'node',
-      id: node.properties.id,
-      feature: node
-    })
-  })
-
   wayEditingHistory.deletedNodes.forEach(deletedNodeId => {
     const node = wayEditingHistory.way.nodes.find(nd => nd.properties.id === deletedNodeId)
+    const id = node.properties.id
     deletes.push({
       type: 'node',
-      id: node.properties.id,
+      id: nodeIdMap[id],
       feature: node
     })
   })
