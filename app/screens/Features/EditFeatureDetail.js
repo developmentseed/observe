@@ -210,8 +210,8 @@ class EditFeatureDetail extends React.Component {
       newFeature.geometry.coordinates = newCoords
     }
 
-    const { version, ndrefs } = newFeature.properties
-    newFeature.properties = Object.assign({ version, ndrefs }, this.state.properties)
+    const { version, ndrefs, movedNodes, addedNodes, deletedNodes, mergedNodes } = newFeature.properties
+    newFeature.properties = Object.assign({ version, ndrefs, movedNodes, addedNodes, deletedNodes, mergedNodes }, this.state.properties)
 
     // remove undefined props
     newFeature.properties = _omitBy(newFeature.properties, prop => !prop)

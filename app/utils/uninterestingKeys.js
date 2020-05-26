@@ -28,11 +28,7 @@ const metaKeys = [
   'user',
   'version',
   'uid',
-  'ndrefs',
-  'movedNodes',
-  'addedNodes',
-  'deletedNodes',
-  'mergedNodes'
+  'ndrefs'
 ]
 
 /**
