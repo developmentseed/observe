@@ -78,6 +78,11 @@ const ActionButton = styled(AnimatedTouchable)`
   justify-content: center;
   align-items: center;
   border-radius: 100;
+  ${({ disabled }) => disabled && `    
+    background: red;
+    shadow-color: ${colors.primary};
+  `}
+
 `
 
 const CompleteWayButton = styled.TouchableHighlight`
@@ -247,6 +252,12 @@ class WayEditingOverlay extends React.Component {
   }
 
   render () {
+    const { wayEditing, wayEditingHistory } = this.props
+
+    const canDeleteOrMove = wayEditing.selectedNode
+    const hasPast = wayEditingHistory.past.length > 0
+    const hasFuture = wayEditingHistory.future.length > 0
+
     return (
       <Container pointerEvents={Platform.OS === 'ios' ? 'box-none' : 'auto'}>
         <CrossHairOverlay />
@@ -256,19 +267,19 @@ class WayEditingOverlay extends React.Component {
         </CompleteWayButton>
 
         <MenuWrapper>
-          <ActionButton onPress={() => this.onDeleteNodePress()} underlayColor='#E4E6F2'>
+          <ActionButton disabled={!canDeleteOrMove} onPress={() => canDeleteOrMove && this.onDeleteNodePress()} underlayColor='#E4E6F2'>
             <Icon name='trash-bin' size={24} color={colors.primary} />
           </ActionButton>
-          <ActionButton onPress={() => this.onUndoPress()} underlayColor='#E4E6F2'>
+          <ActionButton disabled={!hasPast} onPress={() => this.onUndoPress()} underlayColor='#E4E6F2'>
             <Icon name='arrow-semi-spin-ccw' size={24} color={colors.primary} />
           </ActionButton>
           <AddNodeButton onPress={() => this.onAddNodePress()} underlayColor='#E4E6F2'>
             <Icon name='plus' size={24} color={colors.primary} />
           </AddNodeButton>
-          <ActionButton onPress={() => this.onRedoPress()} underlayColor='#E4E6F2'>
+          <ActionButton disabled={!hasFuture} onPress={() => this.onRedoPress()} underlayColor='#E4E6F2'>
             <Icon name='arrow-semi-spin-cw' size={24} color={colors.primary} />
           </ActionButton>
-          <ActionButton onPress={() => this.onMoveNodePress()} underlayColor='#E4E6F2'>
+          <ActionButton disabled={!canDeleteOrMove} onPress={() => canDeleteOrMove && this.onMoveNodePress()} underlayColor='#E4E6F2'>
             <Icon name='arrow-move' size={24} color={colors.primary} />
           </ActionButton>
         </MenuWrapper>
