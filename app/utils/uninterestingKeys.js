@@ -28,7 +28,11 @@ const metaKeys = [
   'user',
   'version',
   'uid',
-  'ndrefs'
+  'ndrefs',
+  'movedNodes',
+  'addedNodes',
+  'deletedNodes',
+  'mergedNodes'
 ]
 
 /**
@@ -37,7 +41,11 @@ const metaKeys = [
 const hiddenKeys = [
   'ndrefs',
   'icon',
-  'uid'
+  'uid',
+  'movedNodes',
+  'addedNodes',
+  'deletedNodes',
+  'mergedNodes'
 ]
 
 /**
