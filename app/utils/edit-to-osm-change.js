@@ -164,7 +164,6 @@ function getComplexChange (edit, changesetId) {
 }
 
 function getXMLForChanges ({ creates, modifies, deletes }, changesetId) {
-  console.log('called getXMLForChanges')
   const xmlRoot = '<osmChange></osmChange>'
   const parser = new DOMParser()
   const xmlDoc = parser.parseFromString(xmlRoot, 'text/xml')
