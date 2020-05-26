@@ -89,11 +89,13 @@ function getComplexChange (edit, changesetId) {
     const node = wayEditingHistory.way.nodes.find(nd => nd.properties.id === addedNodeId)
     console.log('node', node)
     const id = node.properties.id
-    creates.push({
-      type: 'node',
-      id: nodeIdMap[id],
-      feature: node
-    })
+    if (!creates.find(create => create.id === id)) {
+      creates.push({
+        type: 'node',
+        id: nodeIdMap[id],
+        feature: node
+      })
+    }
   })
 
   wayEditingHistory.movedNodes.forEach(movedNodeId => {
