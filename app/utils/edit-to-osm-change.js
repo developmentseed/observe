@@ -77,24 +77,6 @@ function getComplexChange (edit, changesetId) {
   // replace ndrefs of temporary ids with negative ids generated in mapping above
   feature.properties.ndrefs = feature.properties.ndrefs.map(ref => nodeIdMap[ref])
 
-  if (edit.type === 'create') {
-    creates.push({
-      type: 'way',
-      id: getNextNegativeId(),
-      feature
-    })
-  } else if (edit.type === 'modify') {
-    // if feature is modified, we only need to include in change XML if nodes
-    // were added or removed
-    if (wayEditingHistory.addedNodes.length > 0 || wayEditingHistory.deletedNodes.length > 0 || wayEditingHistory.mergedNodes.length > 0) {
-      modifies.push({
-        type: 'way',
-        id: feature.properties.id,
-        feature
-      })
-    }
-  }
-
   wayEditingHistory.addedNodes.forEach(addedNodeId => {
     console.log('added node id', addedNodeId)
     const node = wayEditingHistory.way.nodes.find(nd => nd.properties.id === addedNodeId)
@@ -147,6 +129,27 @@ function getComplexChange (edit, changesetId) {
       }
     }
   })
+
+  // make sure we add the XML for the main feature last to make sure
+  // all references have been added before
+  if (edit.type === 'create') {
+    creates.push({
+      type: 'way',
+      id: getNextNegativeId(),
+      feature
+    })
+  } else if (edit.type === 'modify') {
+    // if feature is modified, we only need to include in change XML if nodes
+    // were added or removed
+    if (wayEditingHistory.addedNodes.length > 0 || wayEditingHistory.deletedNodes.length > 0 || wayEditingHistory.mergedNodes.length > 0) {
+      modifies.push({
+        type: 'way',
+        id: feature.properties.id,
+        feature
+      })
+    }
+  }
+
   return getXMLForChanges({ creates, modifies, deletes }, changesetId)
 }
 
