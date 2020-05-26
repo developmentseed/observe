@@ -1,6 +1,7 @@
 import { DOMParser } from 'xmldom'
 import _omit from 'lodash.omit'
 import { nonpropKeys } from '../utils/uninterestingKeys'
+import _get from 'lodash.get'
 
 /**
  * Takes an edit and transforms it into `osmChange` XML to be uploaded to the OSM API
@@ -127,7 +128,7 @@ function getComplexChange (edit, changesetId) {
     // if shared way is same as top level feature, ignore
     if (way.properties.id !== feature.properties.id) {
       // if way has only moved nodes, ignore
-      if (way.properties.addedNodes.length > 0 || way.properties.deletedNodes.length > 0) {
+      if (_get(way, 'properties.addedNodes', []).length > 0 || _get(way, 'properties.deletedNodes', []).length > 0) {
         // for nodes with new ids, retrieve the current negative id mapping
         way.properties.ndrefs = way.properties.ndrefs.map(ndref => {
           if (isNewId(ndref)) {
@@ -199,6 +200,7 @@ function getXMLForChanges ({ creates, modifies, deletes }, changesetId) {
     rootElem[0].appendChild(createNode)
   }
   if (modifies.length > 0) {
+    console.log('modified feature props', feature.properties)
     const modifyNode = xmlDoc.createElement('modify')
     modifies.forEach(modify => {
       const featureType = modify.type
