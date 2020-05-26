@@ -221,6 +221,13 @@ class EditFeatureDetail extends React.Component {
   hasFeatureChanged () {
     const { state: { params: { feature } } } = this.props.navigation
     const newFeature = this.getNewFeature()
+
+    // if this way has any changes to nodes, return true. this is because way editing
+    // doesn't follow same pattern as node edting to update geometry
+    if (Object.keys(newFeature.properties).some(k => ['addedNodes', 'movedNodes', 'mergedNodes', 'deletedNodes'].includes(k))) {
+      return true
+    }
+
     const newOsmTags = _omit(newFeature.properties, nonpropKeys)
     const oldOsmTags = _omit(feature.properties, nonpropKeys)
     return !_isEqual(newOsmTags, oldOsmTags) || !_isEqual(feature.geometry, newFeature.geometry)
