@@ -200,7 +200,6 @@ function getXMLForChanges ({ creates, modifies, deletes }, changesetId) {
     rootElem[0].appendChild(createNode)
   }
   if (modifies.length > 0) {
-    console.log('modified feature props', feature.properties)
     const modifyNode = xmlDoc.createElement('modify')
     modifies.forEach(modify => {
       const featureType = modify.type
