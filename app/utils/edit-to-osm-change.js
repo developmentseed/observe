@@ -30,6 +30,8 @@ function getTags (feature) {
     'timestamp',
     'icon',
     'edge',
+    'distance',
+    'ways',
     'ndrefs',
     'addedNodes',
     'deletedNodes',
@@ -64,6 +66,11 @@ function getComplexChange (edit, changesetId) {
   const { wayEditingHistory, ...feature } = edit.newFeature
 
   feature.properties = { ...edit.newFeature.properties }
+
+  if (feature.properties.id.split('/').length > 1) {
+    feature.properties.id = feature.properties.id.split('/')[1]
+  }
+  
   const nodeIdMap = wayEditingHistory.way.nodes.reduce((mapping, node, idx) => {
     const id = node.properties.id
     if (isNewId(id)) {
@@ -108,6 +115,9 @@ function getComplexChange (edit, changesetId) {
   })
 
   wayEditingHistory.modifiedSharedWays.forEach(way => {
+    if (way.properties.id.split('/').length > 1) {
+      way.properties.id = way.properties.id.split('/')[1]
+    }
     // if shared way is same as top level feature, ignore
     if (way.properties.id !== feature.properties.id) {
       // if way has only moved nodes, ignore
