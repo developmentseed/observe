@@ -70,7 +70,7 @@ function getComplexChange (edit, changesetId) {
   if (feature.properties.id.split('/').length > 1) {
     feature.properties.id = feature.properties.id.split('/')[1]
   }
-  
+
   const nodeIdMap = wayEditingHistory.way.nodes.reduce((mapping, node, idx) => {
     const id = node.properties.id
     if (isNewId(id)) {

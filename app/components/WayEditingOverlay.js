@@ -164,7 +164,7 @@ class WayEditingOverlay extends React.Component {
     const { featuresInRelation, wayEditing, getMapCenter } = this.props
     const { nearestFeatures, selectedNode } = wayEditing
 
-    if (!featuresInRelation || !featuresInRelation.length) return null
+    // if (!featuresInRelation || !featuresInRelation.length) return null
     if (!selectedNode) return null
 
     const center = await getMapCenter()
