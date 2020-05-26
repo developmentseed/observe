@@ -10,6 +10,7 @@ import { nonpropKeys } from '../utils/uninterestingKeys'
  * @return {String<XML>} - osmChange XML string
  */
 export default function (edit, changesetId, memberNodes = null) {
+  console.log('edit', edit)
   const isSimpleChange = !(edit.newFeature && edit.newFeature.wayEditingHistory)
   return isSimpleChange ? getSimpleChange(edit, changesetId, memberNodes) : getComplexChange(edit, changesetId)
 }
@@ -50,11 +51,11 @@ function getComplexChange (edit, changesetId) {
 
   // const changes = edit.type === 'create' ? getComplexCreate(edit) : getComplexModify(edit)
   // const { creates, modifies, deletes } = changes
-  const creates = []
+  let creates = []
 
-  const modifies = []
+  let modifies = []
 
-  const deletes = []
+  let deletes = []
 
   const { wayEditingHistory, ...feature } = edit.newFeature
 
@@ -65,7 +66,7 @@ function getComplexChange (edit, changesetId) {
     } else {
       mapping[id] = id
     }
-    return id
+    return mapping
   }, {})
 
   // replace ndrefs of temporary ids with negative ids generated in mapping above
@@ -90,7 +91,9 @@ function getComplexChange (edit, changesetId) {
   }
 
   wayEditingHistory.addedNodes.forEach(addedNodeId => {
-    const node = wayEditingHistory.nodes.find(nd => nd.properties.id === addedNodeId)
+    console.log('added node id', addedNodeId)
+    const node = wayEditingHistory.way.nodes.find(nd => nd.properties.id === addedNodeId)
+    console.log('node', node)
     const id = node.properties.id
     creates.push({
       type: 'node',
@@ -100,7 +103,7 @@ function getComplexChange (edit, changesetId) {
   })
 
   wayEditingHistory.movedNodes.forEach(movedNodeId => {
-    const node = wayEditingHistory.nodes.find(nd => nd.properties.id === movedNodeId)
+    const node = wayEditingHistory.way.nodes.find(nd => nd.properties.id === movedNodeId)
     modifies.push({
       type: 'node',
       id: node.properties.id,
@@ -109,7 +112,7 @@ function getComplexChange (edit, changesetId) {
   })
 
   wayEditingHistory.deletedNodes.forEach(deletedNodeId => {
-    const node = wayEditingHistory.nodes.find(nd => nd.properties.id === deletedNodeId)
+    const node = wayEditingHistory.way.nodes.find(nd => nd.properties.id === deletedNodeId)
     deletes.push({
       type: 'node',
       id: node.properties.id,
@@ -139,11 +142,12 @@ function getComplexChange (edit, changesetId) {
       }
     }
   })
-
+  console.log('changes', creates, modifies, deletes)
   return getXMLForChanges({ creates, modifies, deletes }, changesetId)
 }
 
 function getXMLForChanges ({ creates, modifies, deletes }, changesetId) {
+  console.log('called getXMLForChanges')
   const xmlRoot = '<osmChange></osmChange>'
   const parser = new DOMParser()
   const xmlDoc = parser.parseFromString(xmlRoot, 'text/xml')
@@ -154,7 +158,7 @@ function getXMLForChanges ({ creates, modifies, deletes }, changesetId) {
       const featureType = create.type
       const feature = create.feature
       const id = create.id
-      const elemNode = xmlDoc.createNode(featureType)
+      const elemNode = xmlDoc.createElement(featureType)
       elemNode.setAttribute('id', id) // TODO: Verify id is consistent
       elemNode.setAttribute('changeset', changesetId)
       elemNode.setAttribute('version', 1) // QUESTION: is this correct for new features?
@@ -178,7 +182,7 @@ function getXMLForChanges ({ creates, modifies, deletes }, changesetId) {
       const featureType = modify.type
       const feature = modify.feature
       const id = modify.id
-      const elemNode = xmlDoc.createNode(featureType)
+      const elemNode = xmlDoc.createElement(featureType)
       elemNode.setAttribute('id', id)
       elemNode.setAttribute('changeset', changesetId)
       elemNode.setAttribute('version', feature.properties.version)
@@ -201,7 +205,7 @@ function getXMLForChanges ({ creates, modifies, deletes }, changesetId) {
       const featureType = del.type
       const feature = del.feature
       const id = del.id
-      const elemNode = xmlDoc.createNode(featureType)
+      const elemNode = xmlDoc.createElement(featureType)
       elemNode.setAttribute('if-unused', 'true')
       elemNode.setAttribute('id', id)
       elemNode.setAttribute('changeset', changesetId)
