@@ -253,6 +253,7 @@ function addNdrefs (xmlDoc, elem, refs) {
 }
 
 function isNewId (id) {
+  id = String(id)
   return id.startsWith('observe-')
 }
 
