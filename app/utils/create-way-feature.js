@@ -1,4 +1,3 @@
-import _isEqual from 'lodash.isequal'
 import getRandomId from '../utils/get-random-id'
 
 export default function createWayFeature (nodes = [], properties = {}, options = {}) {
@@ -16,15 +15,13 @@ export default function createWayFeature (nodes = [], properties = {}, options =
     return node.geometry.coordinates
   })
 
-  let geometryType = (!!nodes.length && _isEqual(nodes[0], nodes[nodes.length - 1])) ? 'Polygon' : 'LineString'
-
   properties.id = `way/${options.id}`
   return {
     type: 'Feature',
     id: `way/${options.id}`,
     properties,
     geometry: {
-      type: geometryType,
+      type: 'LineString',
       coordinates
     }
   }

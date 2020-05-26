@@ -173,7 +173,6 @@ class EditFeatureDetail extends React.Component {
 
   setGeometryFromTags (feature) {
     const { geometry } = feature
-
     // Do not update feature of type 'Point'
     if (geometry.type === 'Point') return feature
 

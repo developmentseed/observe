@@ -27,8 +27,6 @@ export default function (state = initialState, action) {
         timestamp: action.timestamp
       })
 
-      // FIXME: remove
-      console.log(editToOsmChange(edits.slice(-1)[0]), 123)
       let editsGeojson = editsToGeojson(edits)
       return {
         ...state,
@@ -57,8 +55,7 @@ export default function (state = initialState, action) {
           timestamp: action.timestamp
         })
       }
-      // FIXME: remove
-      console.log(editToOsmChange(edits.slice(-1)[0]), 123)
+
       let editsGeojson = editsToGeojson(edits)
       return {
         ...state,
@@ -99,9 +96,7 @@ export default function (state = initialState, action) {
           timestamp: action.timestamp
         })
       }
-      
-      // FIXME: remove
-      console.log(editToOsmChange(edits.slice(-1)[0]), 123)
+
       let editsGeojson = editsToGeojson(edits)
       return {
         ...state,
