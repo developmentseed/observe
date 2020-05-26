@@ -30,7 +30,11 @@ function getTags (feature) {
     'timestamp',
     'icon',
     'edge',
-    'ndrefs'
+    'ndrefs',
+    'addedNodes',
+    'deletedNodes',
+    'modifiedNodes',
+    'mergedNodes'
   ]
   return _omit(feature.properties, uninterestingProps)
 }
@@ -124,7 +128,7 @@ function getComplexChange (edit, changesetId) {
     // if shared way is same as top level feature, ignore
     if (way.properties.id !== feature.properties.id) {
       // if way has only moved nodes, ignore
-      if (way.addedNodes.length > 0 || way.deletedNodes.length > 0) {
+      if (way.properties.addedNodes.length > 0 || way.properties.deletedNodes.length > 0) {
         // for nodes with new ids, retrieve the current negative id mapping
         way.properties.ndrefs = way.properties.ndrefs.map(ndref => {
           if (isNewId(ndref)) {
@@ -142,12 +146,10 @@ function getComplexChange (edit, changesetId) {
       }
     }
   })
-  console.log('changes', creates, modifies, deletes)
   return getXMLForChanges({ creates, modifies, deletes }, changesetId)
 }
 
 function getXMLForChanges ({ creates, modifies, deletes }, changesetId) {
-  console.log('called getXMLForChanges')
   const xmlRoot = '<osmChange></osmChange>'
   const parser = new DOMParser()
   const xmlDoc = parser.parseFromString(xmlRoot, 'text/xml')
