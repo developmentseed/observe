@@ -63,6 +63,7 @@ function getComplexChange (edit, changesetId) {
 
   const { wayEditingHistory, ...feature } = edit.newFeature
 
+  feature.properties = { ...edit.newFeature.properties }
   const nodeIdMap = wayEditingHistory.way.nodes.reduce((mapping, node, idx) => {
     const id = node.properties.id
     if (isNewId(id)) {
