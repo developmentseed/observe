@@ -102,18 +102,20 @@ function getComplexChange (edit, changesetId) {
 
   wayEditingHistory.movedNodes.forEach(movedNodeId => {
     const node = wayEditingHistory.way.nodes.find(nd => nd.properties.id === movedNodeId)
+    const id = node.properties.id
     modifies.push({
       type: 'node',
-      id: node.properties.id,
+      id: nodeIdMap[id],
       feature: node
     })
   })
 
   wayEditingHistory.deletedNodes.forEach(deletedNodeId => {
     const node = wayEditingHistory.way.nodes.find(nd => nd.properties.id === deletedNodeId)
+    const id = node.properties.id
     deletes.push({
       type: 'node',
-      id: node.properties.id,
+      id: nodeIdMap[id],
       feature: node
     })
   })
