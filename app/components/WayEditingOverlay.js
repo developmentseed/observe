@@ -164,7 +164,6 @@ class WayEditingOverlay extends React.Component {
     const { featuresInRelation, wayEditing, getMapCenter } = this.props
     const { nearestFeatures, selectedNode } = wayEditing
 
-    // if (!featuresInRelation || !featuresInRelation.length) return null
     if (!selectedNode) return null
 
     const center = await getMapCenter()
@@ -174,14 +173,16 @@ class WayEditingOverlay extends React.Component {
       const nearestNodeWays = Object.keys(nearestFeatures.nearestNode.properties.ways)
       const allWays = nodeWays.concat(nearestNodeWays)
 
-      const feature = allWays.find((wayId) => {
-        const id = wayId.indexOf('way/') === -1 ? `way/${wayId}` : wayId
-        return featuresInRelation.includes(id)
-      })
+      if (featuresInRelation && featuresInRelation.length) {
+        const feature = allWays.find((wayId) => {
+          const id = wayId.indexOf('way/') === -1 ? `way/${wayId}` : wayId
+          return featuresInRelation.includes(id)
+        })
 
-      if (feature) {
-        this.showFeatureRelationDialog('Merging nodes in ways that are in a relation is not currently supported')
-        return
+        if (feature) {
+          this.showFeatureRelationDialog('Merging nodes in ways that are in a relation is not currently supported')
+          return
+        }
       }
 
       this.props.mergeSelectedNode(selectedNode, nearestFeatures.nearestNode)
