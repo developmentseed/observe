@@ -83,9 +83,9 @@ function wayEditingHistory (state = createDefaultState(), action) {
       const { way } = state
       const { node, modifiedSharedWays } = action
       const newWay = _cloneDeep(way)
-      newWay.nodes = newWay.nodes.filter((feature) => {
-        return node.properties.id !== feature.properties.id
-      })
+      // newWay.nodes = newWay.nodes.filter((feature) => {
+      //   return node.properties.id !== feature.properties.id
+      // })
 
       const deletedNodes = [...state.deletedNodes, node.properties.id]
 

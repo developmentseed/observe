@@ -85,8 +85,15 @@ function getComplexChange (edit, changesetId) {
   }, {})
 
   // replace ndrefs of temporary ids with negative ids generated in mapping above
-  feature.properties.ndrefs = feature.properties.ndrefs.map(ref => nodeIdMap[ref])
-
+  feature.properties.ndrefs = feature.properties.ndrefs.map(ref => {
+    if (nodeIdMap.hasOwnProperty(ref)) {
+      return nodeIdMap[ref]
+    } else {
+      return ref
+    }
+  })
+  
+  console.log('feature ndrefs', feature.properties.ndrefs)
   wayEditingHistory.addedNodes.forEach(addedNodeId => {
     console.log('added node id', addedNodeId)
     const node = wayEditingHistory.way.nodes.find(nd => nd.properties.id === addedNodeId)
