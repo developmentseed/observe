@@ -266,20 +266,51 @@ class WayEditingOverlay extends React.Component {
         </CompleteWayButton>
 
         <MenuWrapper>
-          <ActionButton onPress={() => canDeleteOrMove && this.onDeleteNodePress()} underlayColor='#E4E6F2'>
-            <ActionButtonIcon name='trash-bin' size={24} disabled={!canDeleteOrMove} />
+          <ActionButton
+            onPress={() => canDeleteOrMove && this.onDeleteNodePress()}
+            underlayColor='#E4E6F2'
+          >
+            <ActionButtonIcon
+              name='trash-bin'
+              size={24}
+              disabled={!canDeleteOrMove}
+            />
           </ActionButton>
-          <ActionButton onPress={() => this.onUndoPress()} underlayColor='#E4E6F2'>
-            <ActionButtonIcon name='arrow-semi-spin-ccw' size={24} disabled={!hasPast} />
+          <ActionButton
+            onPress={() => hasPast && this.onUndoPress()}
+            underlayColor='#E4E6F2'
+          >
+            <ActionButtonIcon
+              name='arrow-semi-spin-ccw'
+              size={24}
+              disabled={!hasPast}
+            />
           </ActionButton>
-          <AddNodeButton onPress={() => this.onAddNodePress()} underlayColor='#E4E6F2'>
+          <AddNodeButton
+            onPress={() => this.onAddNodePress()}
+            underlayColor='#E4E6F2'
+          >
             <Icon name='plus' size={24} color={colors.primary} />
           </AddNodeButton>
-          <ActionButton onPress={() => this.onRedoPress()} underlayColor='#E4E6F2'>
-            <ActionButtonIcon name='arrow-semi-spin-cw' size={24} disabled={!hasFuture} />
+          <ActionButton
+            onPress={() => hasFuture && this.onRedoPress()}
+            underlayColor='#E4E6F2'
+          >
+            <ActionButtonIcon
+              name='arrow-semi-spin-cw'
+              size={24}
+              disabled={!hasFuture}
+            />
           </ActionButton>
-          <ActionButton onPress={() => canDeleteOrMove && this.onMoveNodePress()} underlayColor='#E4E6F2'>
-            <ActionButtonIcon name='arrow-move' size={24} disabled={!canDeleteOrMove} />
+          <ActionButton
+            onPress={() => canDeleteOrMove && this.onMoveNodePress()}
+            underlayColor='#E4E6F2'
+          >
+            <ActionButtonIcon
+              name='arrow-move'
+              size={24}
+              disabled={!canDeleteOrMove}
+            />
           </ActionButton>
         </MenuWrapper>
         <FeatureRelationErrorDialog
