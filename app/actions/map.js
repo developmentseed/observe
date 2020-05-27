@@ -14,7 +14,6 @@ import { saveDataForTile } from '../services/osm-api'
 import { addNodes, clearNodeCacheForTile, purgeNodeCache } from '../services/nodecache'
 import { bboxToTiles } from '../utils/bbox'
 import cache from '../utils/data-cache'
-import { nodesGeojson } from '../utils/nodes-to-geojson'
 
 const queue = new PQueue({
   concurrency: 4
@@ -700,25 +699,6 @@ export function setSelectedFeatures (features) {
       type: types.SET_SELECTED_FEATURES,
       features: features
     })
-    if (features.length) {
-      features.forEach(async f => {
-        if (f.geometry.type !== 'Point') {
-          const nodeIds = f.properties.ndrefs.map(n => {
-            return `node/${n}`
-          })
-          const geojson = await nodesGeojson(nodeIds)
-          dispatch({
-            type: types.SET_SELECTED_WAY,
-            geojson: geojson
-          })
-        }
-      })
-    } else {
-      dispatch({
-        type: types.SET_SELECTED_WAY,
-        geojson: null
-      })
-    }
   }
 }
 
