@@ -10,7 +10,7 @@ import _sortBy from 'lodash.sortby'
 import getRandomId from './get-random-id'
 
 // FIXME: adjust these based on interactions
-const threshold = 0.005
+const threshold = 0.0005
 const nodeThreshold = 0.0005
 
 export async function findNearest (node, features) {
