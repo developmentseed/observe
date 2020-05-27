@@ -11,9 +11,18 @@ const TextInput = {
   borderBottomWidth: 0.5
 }
 
+const defaultComment = 'Changeset created from Observe'
+
 export default class SaveEditDialog extends React.Component {
   state = {
-    comment: 'Changeset created from Observe'
+    comment: defaultComment
+  }
+
+  componentDidUpdate (prevProps) {
+    // When dialog is redisplayed, clear previous comment
+    if (this.props.visible && !prevProps.visible) {
+      this.setState({ comment: defaultComment })
+    }
   }
 
   message = () => {
