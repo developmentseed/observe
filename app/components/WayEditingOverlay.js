@@ -112,17 +112,18 @@ class WayEditingOverlay extends React.Component {
     const { featuresInRelation, wayEditing } = this.props
     const { selectedNode } = wayEditing
 
-    if (!featuresInRelation || !featuresInRelation.length) return null
     if (!selectedNode) return null
 
     const nodeWays = Object.keys(selectedNode.properties.ways)
-    const feature = nodeWays.find((wayId) => {
-      return featuresInRelation.includes(`way/${wayId}`)
-    })
+    if (featuresInRelation && featuresInRelation.length) {
+      const feature = nodeWays.find((wayId) => {
+        return featuresInRelation.includes(`way/${wayId}`)
+      })
 
-    if (feature) {
-      this.showFeatureRelationDialog('Deleting nodes in ways that are in a relation is not currently supported')
-      return
+      if (feature) {
+        this.showFeatureRelationDialog('Deleting nodes in ways that are in a relation is not currently supported')
+        return
+      }
     }
 
     this.props.deleteSelectedNode(selectedNode)
