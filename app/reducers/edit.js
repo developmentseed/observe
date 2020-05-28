@@ -1,6 +1,5 @@
 import * as types from '../actions/actionTypes'
 import editsToGeojson from '../utils/edits-to-geojson'
-import editToOsmChange from '../utils/edit-to-osm-change'
 
 const initialState = {
   edits: [], // array of edit actions
