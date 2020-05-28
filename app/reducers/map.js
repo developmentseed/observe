@@ -246,13 +246,6 @@ export default function (state = initialState, action) {
         selectedFeatures: features
       }
 
-    case types.SET_SELECTED_WAY:
-      let geojson = action.geojson
-      return {
-        ...state,
-        selectedFeaturesMemberNodes: geojson
-      }
-
     case types.START_ADD_POINT:
       return {
         ...state,
