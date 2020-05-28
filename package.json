@@ -46,6 +46,7 @@
     "lodash.find": "^4.6.0",
     "lodash.findindex": "^4.6.0",
     "lodash.flatten": "^4.4.0",
+    "lodash.get": "^4.4.2",
     "lodash.intersection": "^4.4.0",
     "lodash.isequal": "^4.5.0",
     "lodash.negate": "^3.0.2",

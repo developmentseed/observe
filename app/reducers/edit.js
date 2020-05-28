@@ -94,6 +94,7 @@ export default function (state = initialState, action) {
           timestamp: action.timestamp
         })
       }
+
       let editsGeojson = editsToGeojson(edits)
       return {
         ...state,

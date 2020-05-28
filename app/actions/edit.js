@@ -8,6 +8,7 @@ import { getPhotosForFeature } from '../utils/photos'
 import { getFeatureInChangeset } from '../services/osm-api'
 import { editPhoto } from '../actions/camera'
 import { clearNodeCacheForTile } from '../services/nodecache'
+import { resetWayEditing } from '../actions/wayEditing'
 /**
  * Retries all retriable edits in the current state
  */
@@ -130,12 +131,21 @@ export function editUploaded (edit, changesetId) {
 }
 
 export function addFeature (feature, comment = '') {
-  return {
-    type: types.ADD_FEATURE,
-    feature,
-    id: feature.id,
-    comment,
-    timestamp: Number(new Date())
+  return (dispatch, getState) => {
+    const state = getState()
+    if (state.wayEditingHistory.present.addedNodes.length > 0) { // is a way edit, copy over wayEditingHistory
+      feature.wayEditingHistory = { ...state.wayEditingHistory.present }
+    }
+
+    dispatch(resetWayEditing())
+
+    dispatch({
+      type: types.ADD_FEATURE,
+      feature,
+      id: feature.id,
+      comment,
+      timestamp: Number(new Date())
+    })
   }
 }
 
@@ -153,7 +163,14 @@ export function deleteFeature (feature, comment = '') {
 }
 
 export function editFeature (oldFeature, newFeature, comment = '') {
-  return async dispatch => {
+  return async (dispatch, getState) => {
+    const state = getState()
+    if (state.wayEditingHistory.present.modifiedSharedWays.length > 0) { // is a way edit
+      newFeature.wayEditingHistory = { ...state.wayEditingHistory.present }
+    }
+
+    dispatch(resetWayEditing())
+
     dispatch({
       type: types.EDIT_FEATURE,
       oldFeature,

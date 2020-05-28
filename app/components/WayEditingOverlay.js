@@ -116,17 +116,18 @@ class WayEditingOverlay extends React.Component {
     const { featuresInRelation, wayEditing } = this.props
     const { selectedNode } = wayEditing
 
-    if (!featuresInRelation || !featuresInRelation.length) return null
     if (!selectedNode) return null
 
     const nodeWays = Object.keys(selectedNode.properties.ways)
-    const feature = nodeWays.find((wayId) => {
-      return featuresInRelation.includes(`way/${wayId}`)
-    })
+    if (featuresInRelation && featuresInRelation.length) {
+      const feature = nodeWays.find((wayId) => {
+        return featuresInRelation.includes(`way/${wayId}`)
+      })
 
-    if (feature) {
-      this.showFeatureRelationDialog('Deleting nodes in ways that are in a relation is not currently supported')
-      return
+      if (feature) {
+        this.showFeatureRelationDialog('Deleting nodes in ways that are in a relation is not currently supported')
+        return
+      }
     }
 
     this.props.deleteSelectedNode(selectedNode)
@@ -218,7 +219,7 @@ class WayEditingOverlay extends React.Component {
     if (this.props.mode === modes.ADD_WAY && this.props.wayEditingHistory.present.way) {
       const feature = createWayFeature(this.props.wayEditingHistory.present.way.nodes)
       console.log('edited feature', JSON.stringify(feature))
-      this.props.resetWayEditing()
+      // this.props.resetWayEditing()
       this.props.navigation.navigate('SelectFeatureType', { feature })
     }
   }

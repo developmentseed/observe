@@ -31,12 +31,18 @@ const mockFeature1 = getFeature('node/1')
 // set mock date
 advanceTo(1000)
 
-describe('test sync edit actions', () => {
+describe('test sync edit actions', async () => {
   it('should ADD_FEATURE', () => {
-    const store = mockStore({})
+    const store = mockStore({
+      wayEditingHistory: {
+        present: {
+          addedNodes: []
+        }
+      }
+    })
     store.dispatch(addFeature(mockFeature1, 'test comment'))
     const actions = store.getActions()
-    expect(actions[0]).toEqual({
+    expect(actions[1]).toEqual({
       type: 'ADD_FEATURE',
       feature: mockFeature1,
       id: 'node/1',
@@ -45,13 +51,20 @@ describe('test sync edit actions', () => {
     })
   })
 
-  it('should EDIT_FEATURE', () => {
-    const store = mockStore({})
+  it('should EDIT_FEATURE', async () => {
+    const store = mockStore({
+      wayEditingHistory: {
+        present: {
+          addedNodes: [],
+          modifiedSharedWays: []
+        }
+      }
+    })
     const oldFeature = getFeature('node/1', { 'building': 'yes' })
     const newFeature = getFeature('node/1', { 'building': 'no' })
-    store.dispatch(editFeature(oldFeature, newFeature, 'test comment'))
+    await store.dispatch(editFeature(oldFeature, newFeature, 'test comment'))
     const actions = store.getActions()
-    expect(actions[0]).toEqual({
+    expect(actions[1]).toEqual({
       type: 'EDIT_FEATURE',
       oldFeature,
       newFeature,

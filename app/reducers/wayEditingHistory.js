@@ -1,7 +1,7 @@
 import * as types from '../actions/actionTypes'
 import undoable from './undoable'
 import _cloneDeep from 'lodash.clonedeep'
-import _findIndex from 'lodash.findindex'
+import { isNewId } from '../utils/utils'
 
 function createDefaultState () {
   return {
@@ -39,13 +39,17 @@ function wayEditingHistory (state = createDefaultState(), action) {
         return newFeature
       })
 
-      const movedNodes = [...state.movedNodes, node.properties.id]
+      let movedNodes
+      if (!isNewId(node.properties.id)) {
+        movedNodes = _cloneDeep(state.movedNodes)
+        movedNodes.push(node.properties.id)
+      }
 
       return {
         ...state,
         way: newWay,
         modifiedSharedWays: modifiedSharedWays || state.modifiedSharedWays,
-        movedNodes
+        movedNodes: movedNodes || state.movedNodes
       }
     }
 
@@ -83,17 +87,21 @@ function wayEditingHistory (state = createDefaultState(), action) {
       const { way } = state
       const { node, modifiedSharedWays } = action
       const newWay = _cloneDeep(way)
-      newWay.nodes = newWay.nodes.filter((feature) => {
-        return node.properties.id !== feature.properties.id
-      })
+      // newWay.nodes = newWay.nodes.filter((feature) => {
+      //   return node.properties.id !== feature.properties.id
+      // })
 
-      const deletedNodes = [...state.deletedNodes, node.properties.id]
+      let deletedNodes
+      if (!isNewId(node.properties.id)) {
+        let deletedNodes = _cloneDeep(state.deletedNodes)
+        deletedNodes.push(node.properties.id)
+      }
 
       return {
         ...state,
         way: newWay,
         modifiedSharedWays: modifiedSharedWays || state.modifiedSharedWays,
-        deletedNodes
+        deletedNodes: deletedNodes || state.deletedNodes
       }
     }
 
@@ -110,13 +118,11 @@ function wayEditingHistory (state = createDefaultState(), action) {
 
       const newWay = _cloneDeep(way)
 
-      const indexOfSourceNode = _findIndex(newWay.nodes, (feature) => {
-        return feature.properties.id === sourceNode.properties.id
+      let mergedNodes = _cloneDeep(state.mergedNodes)
+      mergedNodes.push({
+        sourceNode: sourceNode.properties.id,
+        destinationNode: destinationNode.properties.id
       })
-
-      // replace the sourceNode in way.nodes
-      newWay.nodes.splice(indexOfSourceNode, 1, destinationNode)
-      const mergedNodes = [...state.mergedNodes, destinationNode.properties.id]
 
       return {
         ...state,
