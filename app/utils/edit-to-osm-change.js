@@ -92,7 +92,7 @@ function getComplexChange (edit, changesetId) {
       return ref
     }
   })
-  
+
   console.log('feature ndrefs', feature.properties.ndrefs)
   wayEditingHistory.addedNodes.forEach(addedNodeId => {
     console.log('added node id', addedNodeId)
@@ -127,6 +127,21 @@ function getComplexChange (edit, changesetId) {
       feature: node
     })
   })
+
+  wayEditingHistory.mergedNodes.forEach(mergedNode => {
+    const sourceNodeId = mergedNode.sourceNode
+    const node = wayEditingHistory.way.nodes.find(nd => nd.properties.id === sourceNodeId)
+    const id = node.properties.id
+    const nodeTags = getTags(node)
+    if (Object.keys(nodeTags).length === 0) { // node had no other tags, can be deleted
+      deletes.push({
+        type: 'node',
+        id: nodeIdMap[id],
+        feature: node
+      })
+    }
+  })
+
 
   wayEditingHistory.modifiedSharedWays.forEach(way => {
     if (way.properties.id.split('/').length > 1) {
