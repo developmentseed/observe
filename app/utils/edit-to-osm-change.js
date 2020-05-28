@@ -246,12 +246,12 @@ function getXMLForChanges ({ creates, modifies, deletes }, changesetId) {
   }
   if (deletes.length > 0) {
     const deleteNode = xmlDoc.createElement('delete')
+    deleteNode.setAttribute('if-unused', 'true')
     deletes.forEach(del => {
       const featureType = del.type
       const feature = del.feature
       const id = del.id
       const elemNode = xmlDoc.createElement(featureType)
-      elemNode.setAttribute('if-unused', 'true')
       elemNode.setAttribute('id', id)
       elemNode.setAttribute('changeset', changesetId)
       elemNode.setAttribute('version', feature.properties.version)
