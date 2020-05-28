@@ -142,7 +142,6 @@ function getComplexChange (edit, changesetId) {
     }
   })
 
-
   wayEditingHistory.modifiedSharedWays.forEach(way => {
     if (way.properties.id.split('/').length > 1) {
       way.properties.id = way.properties.id.split('/')[1]
