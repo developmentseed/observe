@@ -119,13 +119,6 @@ function wayEditingHistory (state = createDefaultState(), action) {
 
       const newWay = _cloneDeep(way)
 
-      const indexOfSourceNode = _findIndex(newWay.nodes, (feature) => {
-        return feature.properties.id === sourceNode.properties.id
-      })
-
-      // replace the sourceNode in way.nodes
-      newWay.nodes.splice(indexOfSourceNode, 1, destinationNode)
-
       let mergedNodes = _cloneDeep(state.mergedNodes)
       mergedNodes.push({
         sourceNode: sourceNode.properties.id,
