@@ -120,7 +120,7 @@ const waterFill = {
     'riverbank', '#413b7e',
     '#0aa9da'
   ],
-  fillOpacity: 0.3,
+  fillOpacity: 0.25,
   fillOutlineColor: '#0f33a9'
 }
 
@@ -143,7 +143,7 @@ const amenities = {
     'parking', colors.muted,
     'rgba(235, 225, 118, 0.3)'
   ],
-  fillOpacity: 0.3,
+  fillOpacity: 0.25,
   fillOutlineColor: colors.base
 }
 
@@ -162,7 +162,7 @@ const leisure = {
     'swimming_pool', '#0ef',
     '#3fbd30'
   ],
-  fillOpacity: 0.3,
+  fillOpacity: 0.25,
   fillOutlineColor: '#6fd02a'
 }
 
@@ -187,7 +187,7 @@ const natural = {
     'cave_entrance', '#677587',
     '#aDeB50'
   ],
-  fillOpacity: 0.3,
+  fillOpacity: 0.25,
   fillOutlineColor: '#0a42af'
 }
 
