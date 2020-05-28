@@ -46,12 +46,7 @@ const lineHighlight = {
 }
 
 const editedLines = {
-  lineWidth: [
-    'interpolate', ['linear'],
-    ['zoom'],
-    16, 6,
-    20, 9
-  ],
+  lineWidth: standardLineWidth,
   lineColor: colors.primary
 }
 
