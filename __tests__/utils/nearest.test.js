@@ -24,7 +24,7 @@ test('find nearest features for a node', async () => {
     'properties': {}
   }
 
-  // node close to a linestring
+  // node away from a linestring
   const node2 = {
     'type': 'Feature',
     'geometry': {
@@ -34,24 +34,13 @@ test('find nearest features for a node', async () => {
     'properties': {}
   }
 
-  const node3 = {
-    'type': 'Feature',
-    'geometry': {
-      'type': 'Point',
-      'coordinates': [-77.0246, 38.9024]
-    },
-    'properties': {}
-  }
-
   const nearest1 = await findNearest(node1, features)
   const nearest2 = await findNearest(node2, features)
-  const nearest3 = await findNearest(node3, features)
 
   expect(nearest1).toMatchSnapshot()
   expect(nearest2).toMatchSnapshot()
-  expect(nearest3).toMatchSnapshot()
 
-  const edge = nearest2.nearestEdge
-  const snappedPoint = findNearestPoint(node2, edge)
+  const edge = nearest1.nearestEdge
+  const snappedPoint = findNearestPoint(node1, edge)
   expect(snappedPoint).toMatchSnapshot()
 })
