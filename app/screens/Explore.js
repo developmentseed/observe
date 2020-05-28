@@ -780,7 +780,7 @@ class Explore extends React.Component {
                       <MapboxGL.LineLayer id='waterLine' filter={filters.waterLine} style={style.osm.waterLine} minZoomLevel={16} />
                       <MapboxGL.FillLayer id='waterFill' filter={filters.waterFill} style={style.osm.waterFill} minZoomLevel={16} />
                       <MapboxGL.FillLayer id='natural' filter={filters.natural} style={style.osm.natural} minZoomLevel={16} />
-                      <MapboxGL.FillLayer id='landuse' filter={filters.landuse} style={style.osm.landuse} minZoomLevel={16} />
+                      <MapboxGL.FillLayer id='landuse' filter={filters.landuse} style={style.osm.landuse} minZoomLevel={12} />
                       <MapboxGL.FillLayer id='leisure' filter={filters.leisure} style={style.osm.leisure} minZoomLevel={16} />
                       <MapboxGL.FillLayer id='allPolygons' filter={filters.allPolygons} style={style.osm.polygons} minZoomLevel={16} />
                       <MapboxGL.FillLayer id='amenities' filter={filters.amenities} style={style.osm.amenities} minZoomLevel={16} />
