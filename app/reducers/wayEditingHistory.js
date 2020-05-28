@@ -2,6 +2,7 @@ import * as types from '../actions/actionTypes'
 import undoable from './undoable'
 import _cloneDeep from 'lodash.clonedeep'
 import _findIndex from 'lodash.findindex'
+import { isNewId } from '../utils/utils'
 
 function createDefaultState () {
   return {
@@ -39,13 +40,17 @@ function wayEditingHistory (state = createDefaultState(), action) {
         return newFeature
       })
 
-      const movedNodes = [...state.movedNodes, node.properties.id]
+      let movedNodes
+      if (!isNewId(node.properties.id)) {
+        movedNodes = _cloneDeep(state.movedNodes)
+        movedNodes.push(node.properties.id)
+      }
 
       return {
         ...state,
         way: newWay,
         modifiedSharedWays: modifiedSharedWays || state.modifiedSharedWays,
-        movedNodes
+        movedNodes: movedNodes || state.movedNodes
       }
     }
 
@@ -87,13 +92,17 @@ function wayEditingHistory (state = createDefaultState(), action) {
       //   return node.properties.id !== feature.properties.id
       // })
 
-      const deletedNodes = [...state.deletedNodes, node.properties.id]
+      let deletedNodes
+      if (!isNewId(node.properties.id)) {
+        let deletedNodes = _cloneDeep(state.deletedNodes)
+        deletedNodes.push(node.properties.id)
+      }
 
       return {
         ...state,
         way: newWay,
         modifiedSharedWays: modifiedSharedWays || state.modifiedSharedWays,
-        deletedNodes
+        deletedNodes: deletedNodes || state.deletedNodes
       }
     }
 

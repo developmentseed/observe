@@ -80,6 +80,10 @@ const ActionButton = styled(AnimatedTouchable)`
   border-radius: 100;
 `
 
+const ActionButtonIcon = styled(Icon)`
+  color: ${({ disabled }) => !disabled ? colors.primary : colors.muted}
+`
+
 const CompleteWayButton = styled.TouchableHighlight`
   border-radius: 100;
   width: 56;
@@ -248,6 +252,12 @@ class WayEditingOverlay extends React.Component {
   }
 
   render () {
+    const { wayEditing, wayEditingHistory } = this.props
+
+    const canDeleteOrMove = wayEditing.selectedNode
+    const hasPast = wayEditingHistory.past.length > 0
+    const hasFuture = wayEditingHistory.future.length > 0
+
     return (
       <Container pointerEvents={Platform.OS === 'ios' ? 'box-none' : 'auto'}>
         <CrossHairOverlay />
@@ -257,20 +267,51 @@ class WayEditingOverlay extends React.Component {
         </CompleteWayButton>
 
         <MenuWrapper>
-          <ActionButton onPress={() => this.onDeleteNodePress()} underlayColor='#E4E6F2'>
-            <Icon name='trash-bin' size={24} color={colors.primary} />
+          <ActionButton
+            onPress={() => canDeleteOrMove && this.onDeleteNodePress()}
+            underlayColor='#E4E6F2'
+          >
+            <ActionButtonIcon
+              name='trash-bin'
+              size={24}
+              disabled={!canDeleteOrMove}
+            />
           </ActionButton>
-          <ActionButton onPress={() => this.onUndoPress()} underlayColor='#E4E6F2'>
-            <Icon name='arrow-semi-spin-ccw' size={24} color={colors.primary} />
+          <ActionButton
+            onPress={() => hasPast && this.onUndoPress()}
+            underlayColor='#E4E6F2'
+          >
+            <ActionButtonIcon
+              name='arrow-semi-spin-ccw'
+              size={24}
+              disabled={!hasPast}
+            />
           </ActionButton>
-          <AddNodeButton onPress={() => this.onAddNodePress()} underlayColor='#E4E6F2'>
+          <AddNodeButton
+            onPress={() => this.onAddNodePress()}
+            underlayColor='#E4E6F2'
+          >
             <Icon name='plus' size={24} color={colors.primary} />
           </AddNodeButton>
-          <ActionButton onPress={() => this.onRedoPress()} underlayColor='#E4E6F2'>
-            <Icon name='arrow-semi-spin-cw' size={24} color={colors.primary} />
+          <ActionButton
+            onPress={() => hasFuture && this.onRedoPress()}
+            underlayColor='#E4E6F2'
+          >
+            <ActionButtonIcon
+              name='arrow-semi-spin-cw'
+              size={24}
+              disabled={!hasFuture}
+            />
           </ActionButton>
-          <ActionButton onPress={() => this.onMoveNodePress()} underlayColor='#E4E6F2'>
-            <Icon name='arrow-move' size={24} color={colors.primary} />
+          <ActionButton
+            onPress={() => canDeleteOrMove && this.onMoveNodePress()}
+            underlayColor='#E4E6F2'
+          >
+            <ActionButtonIcon
+              name='arrow-move'
+              size={24}
+              disabled={!canDeleteOrMove}
+            />
           </ActionButton>
         </MenuWrapper>
         <FeatureRelationErrorDialog
