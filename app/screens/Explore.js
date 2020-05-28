@@ -491,7 +491,6 @@ class Explore extends React.Component {
       style,
       photosGeojson,
       selectedPhotos,
-      selectedFeaturesMemberNodes,
       editingWayMemberNodes,
       currentWayEdit,
       selectedNode,
@@ -808,9 +807,6 @@ class Explore extends React.Component {
                     <MapboxGL.ShapeSource id='currentWayEdit' shape={currentWayEdit}>
                       <MapboxGL.LineLayer id='currentWayLine' style={style.osm.editingWay.lines} minZoomLevel={16} />
                     </MapboxGL.ShapeSource>
-                    <MapboxGL.ShapeSource id='selectedFeaturesMemberNodesSource' shape={selectedFeaturesMemberNodes}>
-                      <MapboxGL.CircleLayer id='selectedFeaturesMemberNodes' style={style.osm.selectedFeatures.nodes} minZoomLevel={16} />
-                    </MapboxGL.ShapeSource>
                     <MapboxGL.ShapeSource id='nearestFeatures' shape={nearestFeatures}>
                       <MapboxGL.LineLayer id='nearestEdges' style={style.osm.editingWay.nearestFeatures.lines} minZoomLevel={16} />
                       <MapboxGL.CircleLayer id='nearestNodes' minZoomLevel={16} style={style.osm.editingWay.nearestFeatures.nodes} />
@@ -887,7 +883,6 @@ const mapStateToProps = (state) => {
     currentTraceStatus: getCurrentTraceStatus(state),
     isConnected: state.network.isConnected,
     selectedFeatures: state.map.selectedFeatures || false,
-    selectedFeaturesMemberNodes: state.map.selectedFeaturesMemberNodes || featureCollection([]),
     editingWayMemberNodes,
     mode: state.map.mode,
     edits: state.edit.edits,
