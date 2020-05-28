@@ -126,8 +126,8 @@ const coastline = {
 }
 
 const buildings = {
-  fillColor: colors.base,
-  fillOpacity: 0.2,
+  fillColor: colors.secondary,
+  fillOpacity: 0.3,
   fillOutlineColor: colors.base
 }
 
