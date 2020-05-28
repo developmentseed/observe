@@ -283,6 +283,9 @@ function addTags (xmlDoc, elem, tags) {
 
 function addNdrefs (xmlDoc, elem, refs) {
   refs.forEach(ref => {
+    if (ref.split('/').length > 1) {
+      ref = ref.split('/')[1]
+    }
     const refElem = xmlDoc.createElement('nd')
     refElem.setAttribute('ref', ref)
     elem.appendChild(refElem)
