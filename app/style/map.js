@@ -207,7 +207,7 @@ const landuse = {
     'farmyard', 'rgb(245, 220, 186)',
     '#3fbd30'
   ],
-  fillOpacity: 0.3,
+  fillOpacity: 0.1,
   fillOutlineColor: '#1da01a'
 }
 
