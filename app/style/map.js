@@ -211,10 +211,10 @@ const landuse = {
  */
 
 const selectedNode = {
+  circleColor: colors.primary,
   circleRadius: 6,
   circleOpacity: 1,
-  circleColor: 'white',
-  circleStrokeColor: colors.primary,
+  circleStrokeColor: 'white',
   circleStrokeWidth: 2,
   circleStrokeOpacity: 1
 }
