@@ -753,8 +753,8 @@ class Explore extends React.Component {
                     onRegionDidChange={this.onRegionDidChange}
                     regionDidChangeDebounceTime={10}
                     onPress={this.onPress}
-                    // compassViewPosition={0}
-                    // compassViewMargins={[16, 16]}
+                    // compassViewPosition={0} requires latest version of react-native-mapbox-gl
+                    compassViewMargins={{ x: 20, y: 148 }}
                   >
                     <MapboxGL.Camera
                       zoomLevel={12}
