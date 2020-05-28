@@ -92,7 +92,7 @@ function getComplexChange (edit, changesetId) {
       return ref
     }
   })
-  
+
   console.log('feature ndrefs', feature.properties.ndrefs)
   wayEditingHistory.addedNodes.forEach(addedNodeId => {
     console.log('added node id', addedNodeId)
