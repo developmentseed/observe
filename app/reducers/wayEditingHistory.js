@@ -1,7 +1,6 @@
 import * as types from '../actions/actionTypes'
 import undoable from './undoable'
 import _cloneDeep from 'lodash.clonedeep'
-import _findIndex from 'lodash.findindex'
 import { isNewId } from '../utils/utils'
 
 function createDefaultState () {
