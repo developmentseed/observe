@@ -81,6 +81,8 @@ export async function findNearest (node, features) {
 export function findNearestPoint (node, edge) {
   const point = turfNearestPointOnLine(edge, node, { 'units': 'kilometers' })
   point.properties.id = getRandomId()
+  // add a member property to style this node differently
+  point.properties.membership = 'no'
   point.properties.edge = edge
   point.properties.ways = {}
   if (edge.properties.hasOwnProperty('parent_feature')) {
