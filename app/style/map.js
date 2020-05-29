@@ -244,7 +244,12 @@ const editingLines = {
 }
 
 const nearestNodes = {
-  circleColor: 'white',
+  circleColor: [
+    'match',
+    ['get', 'membership'],
+    'no', 'red',
+    'white'
+  ],
   circleRadius: 4,
   circleOpacity: 0.5,
   circleStrokeColor: colors.base,
