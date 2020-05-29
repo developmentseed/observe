@@ -37,7 +37,8 @@ function getTags (feature) {
     'addedNodes',
     'deletedNodes',
     'modifiedNodes',
-    'mergedNodes'
+    'mergedNodes',
+    'membership'
   ]
   return _omit(feature.properties, uninterestingProps)
 }

@@ -157,6 +157,7 @@ Object {
       "id": "observe-hauptbanhof",
       "index": 0,
       "location": 0.0018341862152104543,
+      "membership": "no",
       "ways": Object {
         "way/4294967474": null,
       },
@@ -258,6 +259,7 @@ Object {
     "id": "observe-hauptbanhof",
     "index": 0,
     "location": 0.0018341862152104543,
+    "membership": "no",
     "ways": Object {
       "way/4294967474": null,
     },

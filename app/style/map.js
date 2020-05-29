@@ -46,12 +46,7 @@ const lineHighlight = {
 }
 
 const editedLines = {
-  lineWidth: [
-    'interpolate', ['linear'],
-    ['zoom'],
-    16, 6,
-    20, 9
-  ],
+  lineWidth: standardLineWidth,
   lineColor: colors.primary
 }
 
@@ -120,7 +115,7 @@ const waterFill = {
     'riverbank', '#413b7e',
     '#0aa9da'
   ],
-  fillOpacity: 0.3,
+  fillOpacity: 0.25,
   fillOutlineColor: '#0f33a9'
 }
 
@@ -131,8 +126,8 @@ const coastline = {
 }
 
 const buildings = {
-  fillColor: colors.base,
-  fillOpacity: 0.2,
+  fillColor: colors.secondary,
+  fillOpacity: 0.3,
   fillOutlineColor: colors.base
 }
 
@@ -143,7 +138,7 @@ const amenities = {
     'parking', colors.muted,
     'rgba(235, 225, 118, 0.3)'
   ],
-  fillOpacity: 0.3,
+  fillOpacity: 0.25,
   fillOutlineColor: colors.base
 }
 
@@ -162,7 +157,7 @@ const leisure = {
     'swimming_pool', '#0ef',
     '#3fbd30'
   ],
-  fillOpacity: 0.3,
+  fillOpacity: 0.25,
   fillOutlineColor: '#6fd02a'
 }
 
@@ -187,7 +182,7 @@ const natural = {
     'cave_entrance', '#677587',
     '#aDeB50'
   ],
-  fillOpacity: 0.3,
+  fillOpacity: 0.25,
   fillOutlineColor: '#0a42af'
 }
 
@@ -207,7 +202,7 @@ const landuse = {
     'farmyard', 'rgb(245, 220, 186)',
     '#3fbd30'
   ],
-  fillOpacity: 0.3,
+  fillOpacity: 0.1,
   fillOutlineColor: '#1da01a'
 }
 
@@ -216,10 +211,10 @@ const landuse = {
  */
 
 const selectedNode = {
+  circleColor: colors.primary,
   circleRadius: 6,
   circleOpacity: 1,
-  circleColor: 'white',
-  circleStrokeColor: colors.primary,
+  circleStrokeColor: 'white',
   circleStrokeWidth: 2,
   circleStrokeOpacity: 1
 }
@@ -249,7 +244,12 @@ const editingLines = {
 }
 
 const nearestNodes = {
-  circleColor: 'white',
+  circleColor: [
+    'match',
+    ['get', 'membership'],
+    'no', 'red',
+    'white'
+  ],
   circleRadius: 4,
   circleOpacity: 0.5,
   circleStrokeColor: colors.base,

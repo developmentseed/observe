@@ -1,13 +1,26 @@
 import React from 'react'
 import styled from 'styled-components/native'
 import { colors } from '../style/variables'
+import getPlatformStyles from '../utils/get-platform-styles'
+
+const headerHeight = getPlatformStyles({
+  ios: {
+    height: 80
+  },
+  iphoneX: {
+    height: 100
+  },
+  android: {
+    height: 64
+  }
+})
 
 const Container = styled.View`
   flex: 1;
   justify-content: center;
   position: absolute;
   left: 16;
-  top: 80;
+  top: ${headerHeight.height - 48};
 `
 
 const ActivityIndicator = styled.ActivityIndicator``
