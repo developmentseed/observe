@@ -283,6 +283,7 @@ function addTags (xmlDoc, elem, tags) {
 
 function addNdrefs (xmlDoc, elem, refs) {
   refs.forEach(ref => {
+    ref = String(ref) // normalize to strings
     if (ref.split('/').length > 1) {
       ref = ref.split('/')[1]
     }
