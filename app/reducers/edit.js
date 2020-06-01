@@ -1,5 +1,6 @@
 import * as types from '../actions/actionTypes'
 import editsToGeojson from '../utils/edits-to-geojson'
+import _cloneDeep from 'lodash.clonedeep'
 
 const initialState = {
   edits: [], // array of edit actions
@@ -259,6 +260,33 @@ export default function (state = initialState, action) {
       return {
         ...state,
         addPointGeometry: action.geometry
+      }
+    }
+
+    case types.NEW_NODE_MAPPING: {
+      let edits = [...state.edits]
+
+      // go through each edit
+      // replace the observeid with new id
+
+      // replace it in addedNodes, deletedNodes, movedNodes, mergedNodes
+      if (edits.length) {
+        edits.forEach(edit => {
+          console.log('edit', edit)
+          // replace it in wayEditHistory.way.nodes
+
+          // replace it in ndrefs of the way
+          const feature = _cloneDeep(edit.newFeature)
+          const newNdrefs = []
+          feature.properties.ndrefs.map(oldRef => {
+            newNdrefs.push(action.newNodeIdMap[oldRef])
+          }, newNdrefs)
+          feature.properties.ndrefs = newNdrefs
+        })
+      }
+      return {
+        ...state,
+        edits
       }
     }
   }
