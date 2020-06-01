@@ -494,7 +494,7 @@ class EditFeatureDetail extends React.Component {
     const { preset } = this.state
     const { navigation, photos } = this.props
     const { state: { params: { feature } } } = navigation
-    const title = feature.properties.name || feature.id
+    const title = feature.geometry.type === 'Point' ? 'Edit Node' : 'Edit Way'
     const featurePhotos = getPhotosForFeature(photos, feature.id)
 
     let headerActions = []

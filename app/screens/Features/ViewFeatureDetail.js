@@ -114,7 +114,7 @@ class ViewFeatureDetail extends React.Component {
     const { state: { params: { feature } } } = navigation
     const { preset } = this.state
     const featurePhotos = getPhotosForFeature(photos, feature.id)
-    const title = feature.properties.name || feature.id
+    const title = feature.geometry.type === 'Point' ? 'View Node Details' : 'View Way Details'
     const fields = getFeatureFields(feature)
     const [ meta, presets ] = _partition(fields, field => {
       return metaKeys.indexOf(field.key) > -1
