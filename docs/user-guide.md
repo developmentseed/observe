@@ -64,7 +64,7 @@ This screen displays some advanced data management functions, only to be used if
 
 On the Explore screen, pressing on a feature will bring up a drawer indicating all selected features. The user can choose the feature from the drawer to see the details. 
 
-![](https://paper-attachments.dropbox.com/s_F93699907F08C9A5CFEA336B060601FC1F56081D6CDCD065E76BFC67A1561305_1555329580070_Kapture+2019-04-15+at+17.29.27.gif)
+![ViewDetals](https://user-images.githubusercontent.com/12634024/83421821-aa242800-a3f6-11ea-9598-0a90758e70e9.gif)
 
 
 ## 4. Adding a point
@@ -105,7 +105,7 @@ On the Explore screen, pressing on a feature will bring up a drawer indicating a
 - To change the location of the feature (only for Points), press ‘Edit coordinates’. Move the crosshair to the desired location, and confirm by pressing the ‘tick’ button
 - When done editing, press the ‘tick’ button, enter an optional changeset comment, and press save
 
-![](https://paper-attachments.dropbox.com/s_F93699907F08C9A5CFEA336B060601FC1F56081D6CDCD065E76BFC67A1561305_1555328953699_Kapture+2019-04-15+at+17.10.55.gif)
+![EditNodeDetalis](https://user-images.githubusercontent.com/12634024/83421952-d475e580-a3f6-11ea-83e0-12717521e956.gif)
 
 
 
@@ -121,9 +121,7 @@ Observe allows the user to store OSM data, map and satellite tiles for offline m
 - Press the ‘tick’ button to start the download
 - The download will happen in the background. You can see the status of the download right in the Offline Map screen
 
-
-![](https://paper-attachments.dropbox.com/s_F93699907F08C9A5CFEA336B060601FC1F56081D6CDCD065E76BFC67A1561305_1555326281469_Kapture+2019-04-15+at+16.33.50.gif)
-
+![DownloadOffline](https://user-images.githubusercontent.com/12634024/83421978-e061a780-a3f6-11ea-8352-b44ffd0faa91.gif)
 
 ### Updating and deleting an AOI
 
@@ -173,7 +171,7 @@ Observe API (which is optional to use Observe Mobile) uses the same authenticati
 - Then take a picture and enter an optional description
 - If authenticated with the Observe API, photos will be automatically uploaded. Otherwise, you can retry uploading from the Your Photos screen
 
-![take-photo](https://user-images.githubusercontent.com/371666/70525686-e4aab780-1b6d-11ea-8a75-e43155d5367e.gif)
+![TakePhoto](https://user-images.githubusercontent.com/12634024/83423406-ec4e6900-a3f8-11ea-9642-a1c8448cbb57.gif)
 
 ### Take the photo of a feature
 
@@ -182,8 +180,7 @@ Observe API (which is optional to use Observe Mobile) uses the same authenticati
 - Add a description, and press the tick icon to save
 - Once uploaded to the Observe API, these photos can be viewed and downloaded through the Dashboard for further editing
 
-![take-photo-feature](https://user-images.githubusercontent.com/371666/70525815-30f5f780-1b6e-11ea-9ed5-9294a787d00e.gif)
-
+![TakePhotoFeature](https://user-images.githubusercontent.com/12634024/83423672-4ea76980-a3f9-11ea-8c2c-0d53386d9a3c.gif)
 
 ### Recording a GPS Track
 
@@ -192,7 +189,7 @@ Observe API (which is optional to use Observe Mobile) uses the same authenticati
 - Once done, press stop to save
 - You can pause the recording for as long as needed or discard the trace if you wish to
 
-![record-trace](https://user-images.githubusercontent.com/371666/70527045-f5106180-1b70-11ea-8029-ab5a31cde1b1.gif)
+![record-track](https://user-images.githubusercontent.com/12634024/83424297-397f0a80-a3fa-11ea-9a6f-7452c1480af6.gif)
 
 # Observe Dashboard v0.1
 
