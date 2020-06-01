@@ -51,7 +51,7 @@ function getNewNodeIds (nodeIdMap, response) {
   Object.keys(nodeIdMap).forEach(observeNode => {
     mapping[observeNode] = _find(response.diffResult.node, (osmNode) => {
       return osmNode['$'].old_id === String(nodeIdMap[observeNode])
-    }).$.old_id
+    }).$.new_id
   })
   return mapping
 }
