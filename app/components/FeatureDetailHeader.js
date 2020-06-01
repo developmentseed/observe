@@ -89,6 +89,7 @@ export default class FeatureDetailHeader extends React.Component {
     }
 
     const featureType = feature.geometry.type === 'Point' ? 'node' : 'way'
+    const { pendingDeleteUpload } = feature.properties
     const icon = (preset.icon || feature.properties.icon || 'maki_marker').replace(/-/g, '_')
 
     return (
@@ -122,11 +123,13 @@ export default class FeatureDetailHeader extends React.Component {
               }}
             >
               <Coordinates>
-                {featureType === 'node' ? (
-                  <Edit>Move Geometry</Edit>
-                ) : (
-                  <Edit>Edit Geometry</Edit>
-                )}
+                {pendingDeleteUpload && <Edit>This feature was deleted</Edit>}
+                {!pendingDeleteUpload &&
+                  (featureType === 'node' ? (
+                    <Edit>Move Geometry</Edit>
+                  ) : (
+                    <Edit>Edit Geometry</Edit>
+                  ))}
               </Coordinates>
             </Button>
           </View>
