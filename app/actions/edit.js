@@ -50,6 +50,13 @@ export function uploadEdits (editIds) {
 
         // update the list of modified tiles with ones that touch the feature being uploaded
         featureToTiles(feature).forEach(modifiedTiles.add, modifiedTiles)
+
+        if (newNodeIdMap) {
+          dispatch({
+            'type': types.NEW_NODE_MAPPING,
+            newNodeIdMap
+          })
+        }
       } catch (e) {
         console.warn('Upload failed', e, edit)
         dispatch(setNotification({ level: 'error', message: 'Upload failed' }))
