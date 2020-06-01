@@ -20,6 +20,8 @@ import {
 
 import { undo, redo } from '../actions/undoable'
 
+import { showRecordingHeader } from '../selectors'
+
 import { colors } from '../style/variables'
 import Icon from './Collecticons'
 
@@ -260,7 +262,7 @@ class WayEditingOverlay extends React.Component {
 
     return (
       <Container pointerEvents={Platform.OS === 'ios' ? 'box-none' : 'auto'}>
-        <CrossHairOverlay />
+        <CrossHairOverlay isRecording={this.props.isRecording} />
 
         <CompleteWayButton onPress={() => this.onCompleteWayPress()} underlayColor={colors.base}>
           <Icon name='tick' size={20} color='#FFFFFF' />
@@ -334,7 +336,8 @@ const mapStateToProps = (state) => {
     wayEditingHistory,
     mode: state.map.mode,
     featuresInRelation: state.map.featuresInRelation,
-    selectedFeatures: state.map.selectedFeatures || false
+    selectedFeatures: state.map.selectedFeatures || false,
+    isRecording: showRecordingHeader(state)
   }
 }
 
