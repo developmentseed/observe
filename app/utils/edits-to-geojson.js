@@ -10,7 +10,20 @@ export default function editsToGeojson (edits) {
     edits.forEach(e => {
       if (!_find(editsGeojson.features, { 'id': e.id })) {
         // set tag information for this feature
-        const feature = e.type === 'delete' ? e.oldFeature : e.newFeature
+
+        // Add feature to editsGeojson. If feature was deleted and is pending
+        // upload, add a property to flag this.
+        const feature =
+          e.type === 'delete'
+            ? {
+              ...e.oldFeature,
+              properties: {
+                ...e.oldFeature.properties,
+                pendingDeleteUpload: true
+              }
+            }
+            : e.newFeature
+
         // add this feature to the editsGeojson
         editsGeojson.features.push(addIconUrl(feature))
       }
