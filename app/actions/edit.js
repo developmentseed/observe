@@ -44,7 +44,7 @@ export function uploadEdits (editIds) {
       }
       dispatch(startEditUpload(edit))
       try {
-        const changesetId = await uploadEdit(edit)
+        const { changesetId, newNodeIdMap } = await uploadEdit(edit)
         dispatch(editUploaded(edit, changesetId))
         const feature = edit.type === 'delete' ? edit.oldFeature : edit.newFeature
 

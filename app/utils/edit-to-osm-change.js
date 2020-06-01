@@ -13,7 +13,14 @@ import _get from 'lodash.get'
 export default function (edit, changesetId, memberNodes = null) {
   console.log('edit', edit)
   const isSimpleChange = !(edit.newFeature && edit.newFeature.wayEditingHistory)
-  return isSimpleChange ? getSimpleChange(edit, changesetId, memberNodes) : getComplexChange(edit, changesetId)
+  if (isSimpleChange) {
+    return {
+      osmChangeXML: getSimpleChange(edit, changesetId, memberNodes),
+      nodeIdMap: null
+    }
+  } else {
+    return getComplexChange(edit, changesetId)
+  }
 }
 
 /**
@@ -191,8 +198,8 @@ function getComplexChange (edit, changesetId) {
 
   const XMLForChanges = getXMLForChanges({ creates, modifies, deletes }, changesetId)
   return {
-    xml: XMLForChanges,
-    map: nodeIdMap
+    osmChangeXML: XMLForChanges,
+    nodeIdMap: nodeIdMap
   }
 }
 
