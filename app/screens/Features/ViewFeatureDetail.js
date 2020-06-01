@@ -145,25 +145,32 @@ class ViewFeatureDetail extends React.Component {
       })
     }
 
-    const headerActions = [
-      {
-        name: 'pencil',
-        onPress: () => {
-          navigation.navigate('EditFeatureDetail', { feature })
-        }
-      },
-      {
-        name: 'trash-bin',
-        onPress: () => {
-          if (this.isFeatureInRelation()) {
-            console.warn('delete not allowed')
-            return
+    /**
+     * Check if feature was deleted and is pending upload. If that
+     * is the case, disable editing actions.
+     */
+    const headerActions = []
+    if (!feature.properties.pendingDeleteUpload) {
+      headerActions.push(
+        {
+          name: 'pencil',
+          onPress: () => {
+            navigation.navigate('EditFeatureDetail', { feature })
           }
+        },
+        {
+          name: 'trash-bin',
+          onPress: () => {
+            if (this.isFeatureInRelation()) {
+              console.warn('delete not allowed')
+              return
+            }
 
-          this.setState({ dialogVisible: true })
+            this.setState({ dialogVisible: true })
+          }
         }
-      }
-    ]
+      )
+    }
 
     return (
       <Container>
