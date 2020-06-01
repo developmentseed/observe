@@ -189,7 +189,11 @@ function getComplexChange (edit, changesetId) {
     }
   }
 
-  return getXMLForChanges({ creates, modifies, deletes }, changesetId)
+  const XMLForChanges = getXMLForChanges({ creates, modifies, deletes }, changesetId)
+  return {
+    xml: XMLForChanges,
+    map: nodeIdMap
+  }
 }
 
 function getXMLForChanges ({ creates, modifies, deletes }, changesetId) {
