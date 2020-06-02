@@ -64,7 +64,6 @@ export async function findNearest (node, features) {
   }
 
   if (closestFeature && closestFeature.geometry.type === 'LineString') {
-    console.log('closesFeature', closestFeature)
     if (closestFeature.properties.hasOwnProperty('parent_feature')) {
       memberNodes = await getNodes(closestFeature.properties.parent_feature)
     } else {
@@ -115,7 +114,7 @@ async function getNodes (feature) {
     const nodeCollection = feature.wayEditingHistory.way.nodes
     feature.properties.ndrefs.forEach(nd => {
       const thisNode = _find(nodeCollection, (node) => {
-        return node.properties === nd
+        return node.properties.id === nd
       })
       if (thisNode) geojson.features.push(thisNode)
     })
