@@ -37,7 +37,7 @@ export default async function uploadEdit (edit) {
   let newNodeIdMap = null
   await closeChangeset(changesetId)
   console.log('changeset closed')
-  if (response && response.hasOwnProperty('diffResult')) {
+  if (nodeIdMap && response && response.hasOwnProperty('diffResult')) {
     newNodeIdMap = getNewNodeIds(nodeIdMap, response)
   }
   return {
@@ -49,9 +49,13 @@ export default async function uploadEdit (edit) {
 function getNewNodeIds (nodeIdMap, response) {
   const mapping = {}
   Object.keys(nodeIdMap).forEach(observeNode => {
-    mapping[observeNode] = _find(response.diffResult.node, (osmNode) => {
+    const match = _find(response.diffResult.node, (osmNode) => {
       return osmNode['$'].old_id === String(nodeIdMap[observeNode])
-    }).$.new_id
+    })
+
+    if (match && match.$ && match.$.new_id) {
+      mapping[observeNode] = match.$.new_id
+    }
   })
   return mapping
 }

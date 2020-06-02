@@ -270,9 +270,10 @@ export default function (state = initialState, action) {
       // go through each edit
       // replace the observeid with new id
 
+      console.log('# edits', edits)
+      console.log('# newNodeIdMap', action.newNodeIdMap)
       if (edits.length) {
         edits.forEach(edit => {
-          console.log('edit', edit)
 
           const feature = _cloneDeep(edit.newFeature)
           if (feature) {
@@ -283,17 +284,25 @@ export default function (state = initialState, action) {
             const movedNodes = []
             const nodes = []
 
+            const newNodeIdMap = action.newNodeIdMap
+            const newNodeIdMapKeys = Object.keys(newNodeIdMap)
+
             // replace it in ndrefs of the way
             feature.properties.ndrefs.map(oldRef => {
-              newNdrefs.push(action.newNodeIdMap[oldRef])
+              let newRef = oldRef
+              if (newNodeIdMapKeys.includes(oldRef)) {
+                newRef = action.newNodeIdMap[oldRef]
+              }
+              newNdrefs.push(newRef)
             }, newNdrefs)
+
             feature.properties.ndrefs = newNdrefs
 
             // replace it in addedNodes, deletedNodes, movedNodes, mergedNodes
             if (feature.wayEditingHistory.addedNodes.length) {
               feature.wayEditingHistory.addedNodes.map(oldRef => {
                 let newRef = oldRef
-                if (_findIndex(Object.keys(action.newNodeIdMap), oldRef) > -1) {
+                if (newNodeIdMapKeys.includes(oldRef)) {
                   newRef = action.newNodeIdMap[oldRef]
                 }
                 addedNodes.push(newRef)
@@ -304,7 +313,7 @@ export default function (state = initialState, action) {
             if (feature.wayEditingHistory.movedNodes.length) {
               feature.wayEditingHistory.movedNodes.map(oldRef => {
                 let newRef = oldRef
-                if (_findIndex(Object.keys(action.newNodeIdMap), oldRef) > -1) {
+                if (newNodeIdMapKeys.includes(oldRef)) {
                   newRef = action.newNodeIdMap[oldRef]
                 }
                 movedNodes.push(newRef)
@@ -315,7 +324,7 @@ export default function (state = initialState, action) {
             if (feature.wayEditingHistory.deletedNodes.length) {
               feature.wayEditingHistory.deletedNodes.map(oldRef => {
                 let newRef = oldRef
-                if (_findIndex(Object.keys(action.newNodeIdMap), oldRef) > -1) {
+                if (newNodeIdMapKeys.includes(oldRef)) {
                   newRef = action.newNodeIdMap[oldRef]
                 }
                 deletedNodes.push(newRef)
@@ -326,10 +335,11 @@ export default function (state = initialState, action) {
             if (feature.wayEditingHistory.mergedNodes.length) {
               feature.wayEditingHistory.mergedNodes.map(oldRef => {
                 const thisMerge = oldRef
-                if (_findIndex(Object.keys(action.newNodeIdMap), oldRef.sourceNode) > -1) {
+                if (newNodeIdMapKeys.includes(oldRef.sourceNode)) {
                   thisMerge.sourceNode = action.newNodeIdMap[oldRef]
                 }
-                if (_findIndex(Object.keys(action.newNodeIdMap), oldRef.destinationNode) > -1) {
+
+                if (newNodeIdMapKeys.includes(oldRef.destinationNode)) {
                   thisMerge.destinationNode = action.newNodeIdMap[oldRef]
                 }
                 mergedNodes.push(thisMerge)
@@ -338,18 +348,21 @@ export default function (state = initialState, action) {
             feature.wayEditingHistory.mergedNodes = mergedNodes
 
             // replace it in wayEditHistory.way.nodes
-            feature.wayEditingHistory.nodes.forEach(oldNode => {
+            feature.wayEditingHistory.way.nodes.forEach(oldNode => {
               const thisNode = _cloneDeep(oldNode)
-              if (_findIndex(Object.keys(action.newNodeIdMap), oldNode.properties.id) > -1) {
+              if (newNodeIdMapKeys.includes(oldNode.properties.id)) {
+                thisNode.id = action.newNodeIdMap[oldNode.properties.id]
                 thisNode.properties.id = action.newNodeIdMap[oldNode.properties.id]
                 thisNode.properties.version = 1
               }
               nodes.push(thisNode)
             })
-            feature.wayEditingHistory.nodes = nodes
+            feature.wayEditingHistory.way.nodes = nodes
           }
+          edit.newFeature = feature
         })
       }
+      console.log('** edits', edits)
       return {
         ...state,
         edits

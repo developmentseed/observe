@@ -63,7 +63,6 @@ export function findNearestFeatures (node) {
       } else {
         visibleFeatures = featureCollection(mapFeatures.features)
       }
-      console.log('visibleFeatures', visibleFeatures)
       nearest = await findNearest(node, visibleFeatures)
     }
 
