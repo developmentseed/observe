@@ -220,9 +220,9 @@ const selectedNode = {
 }
 
 const selectedLine = {
-  lineColor: colors.primary,
+  lineColor: colors.secondary,
   lineOpacity: 0.7,
-  lineWidth: thinLineWidth
+  lineWidth: standardLineWidth
 }
 
 /*
@@ -252,9 +252,14 @@ const nearestNodes = {
   ],
   circleRadius: 4,
   circleOpacity: 0.5,
-  circleStrokeColor: colors.base,
-  circleStrokeWidth: 2,
-  circleStrokeOpacity: 0.5
+  circleStrokeColor: [
+    'match',
+    ['get', 'membership'],
+    'no', 'white',
+    colors.primary
+  ],
+  circleStrokeWidth: 4,
+  circleStrokeOpacity: 1
 }
 
 const nearestLines = {
@@ -277,7 +282,7 @@ const iconHalo = {
 
 const iconEditedHalo = {
   circleRadius: 12,
-  circleColor: colors.primary,
+  circleColor: colors.secondary,
   circleOpacity: 1,
   circleStrokeColor: 'white',
   circleStrokeWidth: 0.5
