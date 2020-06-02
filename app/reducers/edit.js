@@ -2,7 +2,6 @@ import * as types from '../actions/actionTypes'
 import editsToGeojson from '../utils/edits-to-geojson'
 import { EDIT_PENDING_STATUS, EDIT_SUCCEEDED_STATUS, EDIT_UPLOADING_STATUS } from '../constants'
 import _cloneDeep from 'lodash.clonedeep'
-import _findIndex from 'lodash.findindex'
 
 const initialState = {
   edits: [], // array of edit actions
@@ -270,12 +269,8 @@ export default function (state = initialState, action) {
 
       // go through each edit
       // replace the observeid with new id
-
-      console.log('# edits', edits)
-      console.log('# newNodeIdMap', action.newNodeIdMap)
       if (edits.length) {
         edits.forEach(edit => {
-
           const feature = _cloneDeep(edit.newFeature)
           if (feature) {
             const newNdrefs = []
@@ -363,7 +358,6 @@ export default function (state = initialState, action) {
           edit.newFeature = feature
         })
       }
-      console.log('** edits', edits)
       return {
         ...state,
         edits
