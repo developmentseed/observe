@@ -88,7 +88,20 @@ export default class FeatureDetailHeader extends React.Component {
       navigation.navigate('SelectFeatureType', { feature })
     }
 
-    const featureType = feature.geometry.type === 'Point' ? 'node' : 'way'
+    // Get feature type to allow/disallow editing
+    let featureType
+    switch (feature.geometry.type) {
+      case 'Point':
+        featureType = 'node'
+        break
+      case 'LineString':
+        featureType = 'way'
+        break
+      default:
+        featureType = 'unsupported'
+        break
+    }
+
     const { pendingDeleteUpload } = feature.properties
     const icon = (preset.icon || feature.properties.icon || 'maki_marker').replace(/-/g, '_')
 
@@ -96,8 +109,8 @@ export default class FeatureDetailHeader extends React.Component {
       <>
         <Header>
           {
-            (
-              <IconWrapper onPress={() => {
+            <IconWrapper
+              onPress={() => {
                 if (preset) {
                   if (this.props.featureInRelation) {
                     toggleFeatureRelationDialog()
@@ -106,30 +119,32 @@ export default class FeatureDetailHeader extends React.Component {
 
                   this.setState({ dialogVisible: true })
                 }
-              }}>
-                <ObserveIcon
-                  name={icon}
-                  size={36}
-                  color={colors.primary}
-                />
-              </IconWrapper>
-            )
+              }}
+            >
+              <ObserveIcon name={icon} size={36} color={colors.primary} />
+            </IconWrapper>
           }
           <View>
             <PresetName>{preset.name}</PresetName>
             <Button
               onPress={() => {
-                this.onEditPress()
+                if (!pendingDeleteUpload && featureType !== 'unsupported') {
+                  this.onEditPress()
+                }
               }}
             >
               <Coordinates>
-                {pendingDeleteUpload && <Edit>This feature was deleted</Edit>}
-                {!pendingDeleteUpload &&
-                  (featureType === 'node' ? (
-                    <Edit>Move Geometry</Edit>
-                  ) : (
-                    <Edit>Edit Geometry</Edit>
-                  ))}
+                {pendingDeleteUpload ? (
+                  <Edit>This feature was deleted</Edit>
+                ) : (
+                  <>
+                    {featureType === 'node' && <Edit>Move Geometry</Edit>}
+                    {featureType === 'way' && <Edit>Edit Geometry</Edit>}
+                    {featureType === 'unsupported' && (
+                      <Edit>Geometry Edit Not supported</Edit>
+                    )}
+                  </>
+                )}
               </Coordinates>
             </Button>
           </View>
