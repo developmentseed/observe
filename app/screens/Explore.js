@@ -158,7 +158,7 @@ class Explore extends React.Component {
   onDidFinishRenderingMapFully = async () => {
     this.setState({
       isMapLoaded: true,
-      clickableLayers: ['editedPois', 'pois', 'editedPolygons',
+      clickableLayers: ['editedPois', 'pois', 'editedPolygons', 'editedLines',
         'buildings', 'roads', 'roadsLower',
         'railwayLine', 'waterLine', 'waterFill', 'leisure', 'landuse', 'photos', 'natural', 'allPolygons', 'allLines'],
       userTrackingMode: MapboxGL.UserTrackingModes.None
