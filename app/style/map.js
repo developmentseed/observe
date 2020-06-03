@@ -143,9 +143,9 @@ const amenities = {
 }
 
 const editedPolygons = {
-  fillColor: colors.secondary,
+  fillColor: colors.primary,
   fillOpacity: 0.2,
-  fillOutlineColor: colors.secondary
+  fillOutlineColor: colors.primary
 }
 
 const leisure = {
