@@ -8,7 +8,6 @@ export function addNode (node) {
     let modifiedSharedWays
     if (node.properties.ways) {
       const sharedWays = getFeaturesFromState(getState(), Object.keys(node.properties.ways))
-
       if (sharedWays.length) {
         modifiedSharedWays = modifySharedWays.addNode(sharedWays, node)
       }

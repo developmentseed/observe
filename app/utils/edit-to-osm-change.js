@@ -42,10 +42,14 @@ function getTags (feature) {
     'ways',
     'ndrefs',
     'addedNodes',
+    'movedNodes',
     'deletedNodes',
     'modifiedNodes',
     'mergedNodes',
-    'membership'
+    'membership',
+    'dist',
+    'index',
+    'location'
   ]
   return _omit(feature.properties, uninterestingProps)
 }
