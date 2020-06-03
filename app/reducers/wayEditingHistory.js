@@ -18,10 +18,30 @@ function wayEditingHistory (state = createDefaultState(), action) {
   switch (action.type) {
     case types.WAY_EDIT_ENTER: {
       const { way } = action
+      let addedNodes
+      let movedNodes
+      let deletedNodes
+      let mergedNodes
+      let modifiedSharedWays
       console.log('way being edited', way)
+      if (action.wayEditingHistory) {
+        // editing a way that's pending upload
+
+        const wayEditingHistory = _cloneDeep(action.wayEditingHistory)
+        addedNodes = wayEditingHistory.addedNodes
+        movedNodes = wayEditingHistory.movedNodes
+        deletedNodes = wayEditingHistory.deletedNodes
+        mergedNodes = wayEditingHistory.mergedNodes
+        modifiedSharedWays = wayEditingHistory.modifiedSharedWays
+      }
       return {
         ...state,
-        way
+        way,
+        addedNodes: addedNodes || state.addedNodes,
+        movedNodes: movedNodes || state.movedNodes,
+        deletedNodes: deletedNodes || state.deletedNodes,
+        mergedNodes: mergedNodes || state.mergedNodes,
+        modifiedSharedWays: modifiedSharedWays || state.modifiedSharedWays
       }
     }
 
@@ -74,7 +94,6 @@ function wayEditingHistory (state = createDefaultState(), action) {
       newWay.nodes = [...newNodes, node]
 
       const addedNodes = [...state.addedNodes, node.properties.id]
-
       return {
         ...state,
         way: newWay,
@@ -92,16 +111,22 @@ function wayEditingHistory (state = createDefaultState(), action) {
       // })
 
       let deletedNodes
+      let addedNodes
       if (!isNewId(node.properties.id)) {
         deletedNodes = _cloneDeep(state.deletedNodes)
         deletedNodes.push(node.properties.id)
+      } else {
+        // if this is a new node, then remove it from addedNode so we don't create it
+        addedNodes = _cloneDeep(state.addedNodes)
+        addedNodes = addedNodes.filter(nd => nd !== node.properties.id)
       }
 
       return {
         ...state,
         way: newWay,
         modifiedSharedWays: modifiedSharedWays || state.modifiedSharedWays,
-        deletedNodes: deletedNodes || state.deletedNodes
+        deletedNodes: deletedNodes || state.deletedNodes,
+        addedNodes: addedNodes || state.addedNodes
       }
     }
 
