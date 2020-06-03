@@ -148,6 +148,17 @@ const editedPolygons = {
   fillOutlineColor: colors.secondary
 }
 
+const modifiedSharedPolygons = {
+  fillColor: 'grey',
+  fillOpacity: 0.2,
+  fillOutlineColor: 'black'
+}
+
+const modifiedSharedLines = {
+  lineWidth: standardLineWidth,
+  lineColor: 'black'
+}
+
 const leisure = {
   fillColor: [
     'match',
@@ -375,6 +386,8 @@ export default {
     iconEditedHalo,
     editedPolygons,
     editedLines,
+    modifiedSharedLines,
+    modifiedSharedPolygons,
     editingWay: {
       nodes: editingNodes,
       lines: editingLines,

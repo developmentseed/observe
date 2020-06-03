@@ -73,7 +73,10 @@ function wayEditingHistory (state = createDefaultState(), action) {
       // So we'll just push the new node
       newWay.nodes = [...newNodes, node]
 
-      const addedNodes = [...state.addedNodes, node.properties.id]
+      let addedNodes = _cloneDeep(state.addedNodes)
+      if (!addedNodes.includes(node.properties.id)) {
+        addedNodes.push(node.properties.id)
+      }
 
       return {
         ...state,

@@ -160,7 +160,7 @@ class Explore extends React.Component {
       isMapLoaded: true,
       clickableLayers: ['editedPois', 'pois', 'editedPolygons',
         'buildings', 'roads', 'roadsLower',
-        'railwayLine', 'waterLine', 'waterFill', 'leisure', 'landuse', 'photos', 'natural', 'allPolygons', 'allLines'],
+        'railwayLine', 'waterLine', 'waterFill', 'leisure', 'landuse', 'photos', 'natural', 'allPolygons', 'allLines', 'amenities'],
       userTrackingMode: MapboxGL.UserTrackingModes.None
     })
 
@@ -821,8 +821,8 @@ class Explore extends React.Component {
                       <MapboxGL.CircleLayer id='editingWayMemberNodesHalo' style={style.osm.iconHaloSelected} minZoomLevel={16} filter={filters.nodeHaloSelected} />
                     </MapboxGL.ShapeSource>
                     <MapboxGL.ShapeSource id='modifiedSharedWays' shape={modifiedSharedWays}>
-                      <MapboxGL.LineLayer id='modifiedLines' style={style.osm.editedLines} minZoomLevel={16} />
-                      <MapboxGL.FillLayer id='modifiedPolygons' style={style.osm.editedPolygons} minZoomLevel={16} />
+                      <MapboxGL.LineLayer id='modifiedLines' style={style.osm.modifiedSharedLines} minZoomLevel={16} filter={['==', ['geometry-type'], 'LineString']} />
+                      <MapboxGL.FillLayer id='modifiedPolygons' style={style.osm.modifiedSharedPolygons} minZoomLevel={16} filter={['==', ['geometry-type'], 'Polygon']} />
                     </MapboxGL.ShapeSource>
                   </StyledMap>
                 )

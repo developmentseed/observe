@@ -12,6 +12,7 @@ export async function nodesGeojson (nodeIds) {
       'type': 'Feature',
       'geometry': {
         'type': 'Point',
+        // FIXME: parseFloat loses precision
         'coordinates': [parseFloat(nodes[id].lon), parseFloat(nodes[id].lat)]
       },
       'properties': {

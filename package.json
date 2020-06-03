@@ -63,7 +63,7 @@
     "oauth-1.0a": "^2.2.5",
     "object-sizeof": "^1.3.0",
     "observe-icon-font": "developmentseed/observe-icon-font#71dbdb137d51d1a668d06928422c1825f672c243",
-    "osmtogeojson": "https://github.com/geohacker/osmtogeojson.git#af17910488131dd04f278c7e1bc04d77c9a8c16d",
+    "osmtogeojson": "https://github.com/geohacker/osmtogeojson.git#7df57f708a2d3ce3baa959707b4c09e64579da6a",
     "p-event": "^3.0.0",
     "p-queue": "^4.0.0",
     "p-retry": "^4.0.0",

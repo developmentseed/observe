@@ -16,6 +16,8 @@ function moveNode (sharedWays, node, coordinates) {
     if (newWay.geometry.type === 'Polygon') {
       const numberOfNodes = newWay.properties.ndrefs.length - 1
       const isFirstOrLastNode = indexOfNodeInWay === 0 || indexOfNodeInWay === numberOfNodes
+      console.log('indexOfNodeInWay', indexOfNodeInWay)
+      console.log('isFirstOrLastNode', isFirstOrLastNode)
       if (isFirstOrLastNode) {
         newWay.geometry.coordinates[0][0] = coordinates
         newWay.geometry.coordinates[0][newWay.geometry.coordinates[0].length - 1] = coordinates
