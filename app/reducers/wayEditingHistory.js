@@ -93,7 +93,7 @@ function wayEditingHistory (state = createDefaultState(), action) {
 
       let deletedNodes
       if (!isNewId(node.properties.id)) {
-        let deletedNodes = _cloneDeep(state.deletedNodes)
+        deletedNodes = _cloneDeep(state.deletedNodes)
         deletedNodes.push(node.properties.id)
       }
 
