@@ -43,12 +43,19 @@ export function uploadEdits (editIds) {
       }
       dispatch(startEditUpload(edit))
       try {
-        const changesetId = await uploadEdit(edit)
+        const { changesetId, newNodeIdMap } = await uploadEdit(edit)
         dispatch(editUploaded(edit, changesetId))
         const feature = edit.type === 'delete' ? edit.oldFeature : edit.newFeature
 
         // update the list of modified tiles with ones that touch the feature being uploaded
         featureToTiles(feature).forEach(modifiedTiles.add, modifiedTiles)
+
+        if (newNodeIdMap) {
+          dispatch({
+            'type': types.NEW_NODE_MAPPING,
+            newNodeIdMap
+          })
+        }
       } catch (e) {
         console.warn('Upload failed', e, edit)
         dispatch(setNotification({ level: 'error', message: 'Upload failed' }))

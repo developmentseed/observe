@@ -55,7 +55,14 @@ export function findNearestFeatures (node) {
     }
 
     if (!nearest || !nearest.nearestNode) {
-      const visibleFeatures = getVisibleFeatures(getState())
+      const mapFeatures = getVisibleFeatures(getState())
+      const pendingFeatures = getState().edit.editsGeojson
+      let visibleFeatures
+      if (pendingFeatures.features.length) {
+        visibleFeatures = featureCollection(mapFeatures.features.concat(pendingFeatures.features))
+      } else {
+        visibleFeatures = featureCollection(mapFeatures.features)
+      }
       nearest = await findNearest(node, visibleFeatures)
     }
 

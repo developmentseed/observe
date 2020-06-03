@@ -4,10 +4,11 @@
 import turfPointToLineDistance from '@turf/point-to-line-distance'
 import turfDistance from '@turf/distance'
 import turfNearestPointOnLine from '@turf/nearest-point-on-line'
-import { lineString } from '@turf/helpers'
+import { lineString, featureCollection } from '@turf/helpers'
 import { nodesGeojson } from '../utils/nodes-to-geojson'
 import _sortBy from 'lodash.sortby'
 import getRandomId from './get-random-id'
+import _find from 'lodash.find'
 
 // FIXME: adjust these based on interactions
 const threshold = 0.0005
@@ -106,11 +107,25 @@ function getEdge (polygon) {
 }
 
 async function getNodes (feature) {
-  // get all nodes of this way
-  const nodeIds = feature.properties.ndrefs.map(n => {
-    return `node/${n}`
-  })
-  const geojson = await nodesGeojson(nodeIds)
+  let geojson = featureCollection([])
+  // if this feature is not yet uploaded
+  // fetch member nodes from within the feature props
+  if (feature.properties.id.split('/')[1].startsWith('observe')) {
+    const nodeCollection = feature.wayEditingHistory.way.nodes
+    feature.properties.ndrefs.forEach(nd => {
+      const thisNode = _find(nodeCollection, (node) => {
+        return node.properties.id === nd
+      })
+      if (thisNode) geojson.features.push(thisNode)
+    })
+  } else {
+    // get all nodes of this way
+    const nodeIds = feature.properties.ndrefs.map(n => {
+      return `node/${n}`
+    })
+    geojson = await nodesGeojson(nodeIds)
+  }
+
   return geojson
 }
 

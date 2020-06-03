@@ -197,7 +197,8 @@ export async function uploadOsmChange (changeXML, changesetId) {
       }
       throw new ChangesetNotFoundError(undefined, responseText)
     default:
-      return responseText
+      const jsonResponse = await xml2jsonPromise(responseText)
+      return jsonResponse
   }
 }
 
