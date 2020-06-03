@@ -14,12 +14,13 @@ function moveNode (sharedWays, node, coordinates) {
     }
 
     if (newWay.geometry.type === 'Polygon') {
-      newWay.geometry.coordinates[0][indexOfNodeInWay] = coordinates
-
-      if (indexOfNodeInWay === 0) {
-        newWay.geometry.coordinates[0][newWay.geometry.coordinates[0].length - 1] = coordinates
-      } else if (indexOfNodeInWay === newWay.geometry.coordinates[0].length - 1) {
+      const numberOfNodes = newWay.properties.ndrefs.length - 1
+      const isFirstOrLastNode = indexOfNodeInWay === 0 || indexOfNodeInWay === numberOfNodes
+      if (isFirstOrLastNode) {
         newWay.geometry.coordinates[0][0] = coordinates
+        newWay.geometry.coordinates[0][newWay.geometry.coordinates[0].length - 1] = coordinates
+      } else {
+        newWay.geometry.coordinates[0][indexOfNodeInWay] = coordinates
       }
     }
 
