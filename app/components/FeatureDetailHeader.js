@@ -63,6 +63,65 @@ export default class FeatureDetailHeader extends React.Component {
     navigation.navigate('Explore', { feature, mode })
   }
 
+  renderEditGeometryButton () {
+    const { feature, navigation } = this.props
+    const { pendingDeleteUpload } = feature.properties
+
+    // Hide edit geometry button on AddFeatureDetail screen
+    if (navigation.state.routeName === 'AddFeatureDetail') {
+      return
+    }
+
+    // If feature was deleted and waiting to be uploaded, block further edits
+    // by passing button without associated action.
+    if (pendingDeleteUpload) {
+      return <Button>
+        <Coordinates>
+          <Edit>This feature was deleted</Edit>
+        </Coordinates>
+      </Button>
+    }
+
+    // Get feature type to allow/disallow editing
+    let featureType
+    switch (feature.geometry.type) {
+      case 'Point':
+        featureType = 'node'
+        break
+      case 'LineString':
+        featureType = 'way'
+        break
+      case 'Polygon':
+        featureType = 'way'
+        break
+      default:
+        featureType = 'unsupported'
+        break
+    }
+
+    if (featureType === 'unsupported') {
+      // If feature is unsupported, block further edits
+      return <Button>
+        <Coordinates>
+          <Edit>Editing this feature is not supported</Edit>
+        </Coordinates>
+      </Button>
+    } else {
+      // Toggle button label on feature type
+      return (
+        <Button onPress={() => this.onEditPress()}>
+          <Coordinates>
+            {feature === 'node' ? (
+              <Edit>Move Geometry</Edit>
+            ) : (
+              <Edit>Edit Geometry</Edit>
+            )}
+          </Coordinates>
+        </Button>
+      )
+    }
+  }
+
   render () {
     const { feature, navigation } = this.props
     let { preset } = this.props
@@ -88,16 +147,14 @@ export default class FeatureDetailHeader extends React.Component {
       navigation.navigate('SelectFeatureType', { feature })
     }
 
-    const featureType = feature.geometry.type === 'Point' ? 'node' : 'way'
-    const { pendingDeleteUpload } = feature.properties
     const icon = (preset.icon || feature.properties.icon || 'maki_marker').replace(/-/g, '_')
 
     return (
       <>
         <Header>
           {
-            (
-              <IconWrapper onPress={() => {
+            <IconWrapper
+              onPress={() => {
                 if (preset) {
                   if (this.props.featureInRelation) {
                     toggleFeatureRelationDialog()
@@ -106,32 +163,14 @@ export default class FeatureDetailHeader extends React.Component {
 
                   this.setState({ dialogVisible: true })
                 }
-              }}>
-                <ObserveIcon
-                  name={icon}
-                  size={36}
-                  color={colors.primary}
-                />
-              </IconWrapper>
-            )
+              }}
+            >
+              <ObserveIcon name={icon} size={36} color={colors.primary} />
+            </IconWrapper>
           }
           <View>
             <PresetName>{preset.name}</PresetName>
-            <Button
-              onPress={() => {
-                this.onEditPress()
-              }}
-            >
-              <Coordinates>
-                {pendingDeleteUpload && <Edit>This feature was deleted</Edit>}
-                {!pendingDeleteUpload &&
-                  (featureType === 'node' ? (
-                    <Edit>Move Geometry</Edit>
-                  ) : (
-                    <Edit>Edit Geometry</Edit>
-                  ))}
-              </Coordinates>
-            </Button>
+            {this.renderEditGeometryButton()}
           </View>
         </Header>
         <ConfirmDialog visible={this.state.dialogVisible} cancel={cancelDialog} continue={changePreset} />
