@@ -97,6 +97,9 @@ export default class FeatureDetailHeader extends React.Component {
       case 'LineString':
         featureType = 'way'
         break
+      case 'Polygon':
+        featureType = 'way'
+        break
       default:
         featureType = 'unsupported'
         break
