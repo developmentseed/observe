@@ -8,12 +8,24 @@ function moveNode (sharedWays, node, coordinates) {
     const newWay = _cloneDeep(oldWay)
     const wayId = oldWay.properties.id.startsWith('way') ? oldWay.properties.id.split('/')[1] : oldWay.properties.id
     const indexOfNodeInWay = node.properties.ways[wayId]
+
     if (newWay.geometry.type === 'LineString') {
       newWay.geometry.coordinates[indexOfNodeInWay] = coordinates
     }
 
     if (newWay.geometry.type === 'Polygon') {
-      newWay.geometry.coordinates[0][indexOfNodeInWay] = coordinates
+      const numberOfNodes = newWay.properties.ndrefs.length - 1
+      const isFirstOrLastNode = indexOfNodeInWay === 0 || indexOfNodeInWay === numberOfNodes
+      if (isFirstOrLastNode) {
+        newWay.geometry.coordinates[0][0] = coordinates
+        newWay.geometry.coordinates[0][newWay.geometry.coordinates[0].length - 1] = coordinates
+      } else {
+        newWay.geometry.coordinates[0][indexOfNodeInWay] = coordinates
+      }
+    }
+
+    if (typeof newWay.properties.movedNodes === 'string') {
+      newWay.properties.movedNodes = [newWay.properties.movedNodes]
     }
 
     if (!newWay.properties.movedNodes) {
