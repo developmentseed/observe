@@ -1,4 +1,6 @@
 import getRandomId from '../utils/get-random-id'
+import rewind from '@mapbox/geojson-rewind'
+import _isEqual from 'lodash.isequal'
 
 export default function createWayFeature (nodes = [], properties = {}, options = {}) {
   if (!properties.ndrefs) {
@@ -16,7 +18,8 @@ export default function createWayFeature (nodes = [], properties = {}, options =
   })
 
   properties.id = `way/${options.id}`
-  return {
+
+  const feature = {
     type: 'Feature',
     id: `way/${options.id}`,
     properties,
@@ -25,4 +28,11 @@ export default function createWayFeature (nodes = [], properties = {}, options =
       coordinates
     }
   }
+
+  const rewoundFeature = rewind(feature)
+  if (!_isEqual(rewoundFeature.geometry.coordinates, feature.geometry.coordinates)) {
+    rewoundFeature.properties.ndrefs.reverse()
+  }
+
+  return rewoundFeature
 }
