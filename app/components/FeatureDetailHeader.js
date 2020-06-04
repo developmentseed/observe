@@ -103,7 +103,7 @@ export default class FeatureDetailHeader extends React.Component {
       // If feature is unsupported, block further edits
       return <Button>
         <Coordinates>
-          <Edit>This feature was deleted</Edit>
+          <Edit>Editing this feature is not supported</Edit>
         </Coordinates>
       </Button>
     } else {
