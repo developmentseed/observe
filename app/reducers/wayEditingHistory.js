@@ -93,7 +93,9 @@ function wayEditingHistory (state = createDefaultState(), action) {
       // So we'll just push the new node
       newWay.nodes = [...newNodes, node]
 
-      const addedNodes = [...state.addedNodes, node.properties.id]
+      const addedNodes = _cloneDeep(state.addedNodes)
+      addedNodes.push(node.properties.id)
+
       return {
         ...state,
         way: newWay,
@@ -144,10 +146,14 @@ function wayEditingHistory (state = createDefaultState(), action) {
       const newWay = _cloneDeep(way)
 
       let mergedNodes = _cloneDeep(state.mergedNodes)
-      mergedNodes.push({
-        sourceNode: sourceNode.properties.id,
-        destinationNode: destinationNode.properties.id
-      })
+      // if the source node is a new node, then this pretty much an addNode operation.
+      // so no need to say we are merging
+      if (!isNewId(sourceNode.properties.id)) {
+        mergedNodes.push({
+          sourceNode: sourceNode.properties.id,
+          destinationNode: destinationNode.properties.id
+        })
+      }
 
       return {
         ...state,
