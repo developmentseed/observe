@@ -15,7 +15,7 @@ export default function createWayFeature (nodes = [], properties = {}, options =
     properties.ndrefs.push(node.properties.id)
     if (!node.properties.ways) node.properties.ways = {}
     if (!node.properties.ways.hasOwnProperty(properties.id)) {
-      node.properties.ways[properties.id] = index
+      node.properties.ways[options.id] = index
     }
     return node.geometry.coordinates
   })
