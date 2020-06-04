@@ -35,7 +35,6 @@ function moveNode (sharedWays, node, coordinates) {
     if (!newWay.properties.movedNodes.includes(node.properties.id)) {
       newWay.properties.movedNodes.push(node.properties.id)
     }
-
     modifiedSharedWays.push(newWay)
   })
 
@@ -48,7 +47,6 @@ function deleteNode (sharedWays, node) {
     const newWay = _cloneDeep(oldWay)
     const wayId = oldWay.properties.id.startsWith('way') ? oldWay.properties.id.split('/')[1] : oldWay.properties.id
     const indexOfNodeInWay = node.properties.ways[wayId]
-
     if (newWay.geometry.type === 'LineString') {
       newWay.geometry.coordinates.splice(indexOfNodeInWay, 1)
     }
@@ -59,7 +57,8 @@ function deleteNode (sharedWays, node) {
 
     // remove the node from ndrefs
     newWay.properties.ndrefs = newWay.properties.ndrefs.filter(n => {
-      return n !== node.properties.id.split('/')[1]
+      const nodeId = (node.properties.id.startsWith('node')) ? node.properties.id.split('/')[1] : node.properties.id
+      return n !== nodeId
     })
 
     if (!newWay.properties.deletedNodes) {
@@ -82,6 +81,8 @@ function addNode (sharedWays, node) {
 
     const pointOnEdgeAtIndex = node.properties.edge.geometry.coordinates[indexOfPointOnEdge]
     sharedWays.forEach(oldWay => {
+      const wayId = oldWay.properties.id.startsWith('way') ? oldWay.properties.id.split('/')[1] : oldWay.properties.id
+
       const newWay = _cloneDeep(oldWay)
       // find the index of this point on the way
       let indexOfNearestPoint
@@ -101,7 +102,7 @@ function addNode (sharedWays, node) {
 
       // add this way membership to the node
       node.properties.ways = { ...node.properties.ways }
-      node.properties.ways[newWay.properties.id] = indexOfNearestPoint + 1
+      node.properties.ways[wayId] = indexOfNearestPoint + 1
 
       // add this node to the way ndrefs
       newWay.properties.ndrefs.splice(indexOfNearestPoint + 1, 0, node.properties.id)
@@ -124,11 +125,13 @@ function mergeNode (sharedWays, sourceNode, destinationNode) {
   let modifiedSharedWays = []
   sharedWays.forEach(oldWay => {
     const newWay = _cloneDeep(oldWay)
+    const sourceNodeId = sourceNode.properties.id.startsWith('node') ? sourceNode.properties.id.split('/')[1] : sourceNode.properties.id
+    // const destinationNodeId = destinationNode.properties.id.startsWith('node') ? destinationNode.properties.id.split('/')[1] : destinationNode.properties.id
 
     let indexOfSourceNode
     if (newWay.geometry.type === 'LineString') {
       indexOfSourceNode = _findIndex(newWay.properties.ndrefs, (r) => {
-        return _isEqual(r, sourceNode.properties.id.split('/')[1])
+        return _isEqual(r, sourceNodeId)
       })
       // update the geometry
       newWay.geometry.coordinates.splice(indexOfSourceNode, 1, destinationNode.geometry.coordinates)
@@ -136,7 +139,7 @@ function mergeNode (sharedWays, sourceNode, destinationNode) {
 
     if (newWay.geometry.type === 'Polygon') {
       indexOfSourceNode = _findIndex(newWay.properties.ndrefs, (r) => {
-        return _isEqual(r, sourceNode.properties.id.split('/')[1])
+        return _isEqual(r, sourceNodeId)
       })
       // update the geometry
       newWay.geometry.coordinates[0].splice(indexOfSourceNode, 1, destinationNode.geometry.coordinates)
