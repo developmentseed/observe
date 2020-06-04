@@ -26,13 +26,8 @@ function wayEditingHistory (state = createDefaultState(), action) {
       console.log('way being edited', way)
       if (action.wayEditingHistory) {
         // editing a way that's pending upload
-
-        const wayEditingHistory = _cloneDeep(action.wayEditingHistory)
-        addedNodes = wayEditingHistory.addedNodes
-        movedNodes = wayEditingHistory.movedNodes
-        deletedNodes = wayEditingHistory.deletedNodes
-        mergedNodes = wayEditingHistory.mergedNodes
-        modifiedSharedWays = wayEditingHistory.modifiedSharedWays
+        const wayEditingHistory = _cloneDeep(action.wayEditingHistory);
+        ({ addedNodes, movedNodes, deletedNodes, mergedNodes, modifiedSharedWays } = wayEditingHistory)
       }
       return {
         ...state,
