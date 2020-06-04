@@ -8,7 +8,7 @@ export default function createWayFeature (nodes = [], properties = {}, options =
   if (!options.id) {
     options.id = getRandomId()
   }
-  properties.id = options.id
+  properties.id = `way/${options.id}`
 
   const coordinates = nodes.map((node, index) => {
     // populate ndrefs

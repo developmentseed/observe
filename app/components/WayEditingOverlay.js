@@ -29,6 +29,7 @@ import CrossHairOverlay from './CrosshairOverlay'
 import FeatureRelationErrorDialog from './FeatureRelationErrorDialog'
 
 import { modes } from '../utils/map-modes'
+import { isNewId } from '../utils/utils'
 
 const Container = styled.View`
   position: absolute;
@@ -192,6 +193,10 @@ class WayEditingOverlay extends React.Component {
         }
       }
 
+      if (isNewId(selectedNode.properties.id)) {
+        this.props.deleteSelectedNode(selectedNode)
+        this.props.addNode(nearestFeatures.nearestNode)
+      }
       this.props.mergeSelectedNode(selectedNode, nearestFeatures.nearestNode)
     } else {
       this.props.moveSelectedNode(selectedNode, center)
