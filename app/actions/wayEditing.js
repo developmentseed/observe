@@ -46,7 +46,8 @@ export function editWayEnter (feature) {
         })
 
         // Fetch member nodes from the nodecache
-        const nodes = await nodesGeojson(nodeIds)
+        const { edits } = getState().edit
+        const nodes = await nodesGeojson(nodeIds, edits)
         way = {
           nodes: nodes.features,
           properties: { ...feature.properties },
@@ -66,10 +67,11 @@ export function editWayEnter (feature) {
 export function findNearestFeatures (node) {
   return async (dispatch, getState) => {
     const { present } = getState().wayEditingHistory
+    const { edits } = getState().edit
     let nearest = null
     if (present.way && present.way.nodes) {
       const wayNodes = featureCollection(present.way.nodes)
-      nearest = await findNearest(node, wayNodes)
+      nearest = await findNearest(node, wayNodes, edits)
     }
 
     if (!nearest || !nearest.nearestNode) {
@@ -81,7 +83,7 @@ export function findNearestFeatures (node) {
       } else {
         visibleFeatures = featureCollection(mapFeatures.features)
       }
-      nearest = await findNearest(node, visibleFeatures)
+      nearest = await findNearest(node, visibleFeatures, edits)
     }
 
     dispatch({
