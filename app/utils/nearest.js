@@ -14,7 +14,7 @@ import _find from 'lodash.find'
 const threshold = 0.0005
 const nodeThreshold = 0.0005
 
-export async function findNearest (node, features) {
+export async function findNearest (node, features, edits = []) {
   let nearestFeatures = []
   for (const index in features.features) {
     const feature = features.features[index]
@@ -65,9 +65,9 @@ export async function findNearest (node, features) {
 
   if (closestFeature && closestFeature.geometry.type === 'LineString') {
     if (closestFeature.properties.hasOwnProperty('parent_feature')) {
-      memberNodes = await getNodes(closestFeature.properties.parent_feature)
+      memberNodes = await getNodes(closestFeature.properties.parent_feature, edits)
     } else {
-      memberNodes = await getNodes(closestFeature)
+      memberNodes = await getNodes(closestFeature, edits)
     }
     results.nearestEdge = closestFeature
     results.nearestNode = getNearbyMemberNodes(node, memberNodes)
@@ -106,7 +106,7 @@ function getEdge (polygon) {
   return edges
 }
 
-async function getNodes (feature) {
+async function getNodes (feature, edits) {
   let geojson = featureCollection([])
   // if this feature is not yet uploaded
   // fetch member nodes from within the feature props
@@ -123,7 +123,7 @@ async function getNodes (feature) {
     const nodeIds = feature.properties.ndrefs.map(n => {
       return `node/${n}`
     })
-    geojson = await nodesGeojson(nodeIds)
+    geojson = await nodesGeojson(nodeIds, edits)
   }
 
   return geojson
