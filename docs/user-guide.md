@@ -6,12 +6,14 @@
 3. Viewing feature details
 4. Adding a point
 5. Editing an existing feature
-6. Offline mapping
-7. Managing your edits
-8. Authenticating with Observe API
-9. Taking photos
-10. Taking photos associated to map features
-11. Recording GPS traces
+6. Adding a way
+7. Editing existing ways
+8. Offline mapping
+9. Managing your edits
+10. Authenticating with Observe API
+11. Taking photos
+12. Taking photos associated to map features
+13. Recording GPS traces
 
 
 ## 1. Introduction
@@ -81,7 +83,17 @@ On the Explore screen, pressing on a feature will bring up a drawer indicating a
 
 ![AddPoint-treeSat](https://user-images.githubusercontent.com/12634024/83361484-544c7300-a357-11ea-8d2b-a5286addd607.gif)
 
-## 5. Add a way
+## 5. Editing an existing feature
+- Select the feature to edit from the map, and then from the drawer after confirming the details
+- Press the ‘pencil’ button to start editing
+- Edit attributes by adding new fields, removing existing tags, or introducing additional tags
+- To change the preset of the feature, press the preset icon. Then follow steps similar to Adding a point
+- To change the location of the feature (only for Points), press ‘Edit coordinates’. Move the crosshair to the desired location, and confirm by pressing the ‘tick’ button
+- When done editing, press the ‘tick’ button, enter an optional changeset comment, and press save
+
+![EditNodeDetalis](https://user-images.githubusercontent.com/12634024/83421952-d475e580-a3f6-11ea-83e0-12717521e956.gif)
+
+## 6. Add a way
 - To add a point, click the '+' button, then cilck "Add Way"
 - Move the crosshair to the position of the first node
 - Press the '+' button in the ways menu on the bottom of the screen
@@ -97,19 +109,13 @@ On the Explore screen, pressing on a feature will bring up a drawer indicating a
 
 ![AddWay](https://user-images.githubusercontent.com/12634024/83361525-c91fad00-a357-11ea-9df7-1b47b89c8565.gif)
 
-## 6. Editing an existing feature
-- Select the feature to edit from the map, and then from the drawer after confirming the details
-- Press the ‘pencil’ button to start editing
-- Edit attributes by adding new fields, removing existing tags, or introducing additional tags
-- To change the preset of the feature, press the preset icon. Then follow steps similar to Adding a point
-- To change the location of the feature (only for Points), press ‘Edit coordinates’. Move the crosshair to the desired location, and confirm by pressing the ‘tick’ button
-- When done editing, press the ‘tick’ button, enter an optional changeset comment, and press save
+Redo and Undo
 
-![EditNodeDetalis](https://user-images.githubusercontent.com/12634024/83421952-d475e580-a3f6-11ea-83e0-12717521e956.gif)
+Delete
 
+## 7. Editing existing ways
 
-
-## 7. Offline mapping
+## 8. Offline mapping
 
 Observe allows the user to store OSM data, map and satellite tiles for offline mapping. The changesets created while offline are stored on device, and will be uploaded once the user is back online. To download data for an AOI:
 
@@ -133,7 +139,7 @@ Observe allows the user to store OSM data, map and satellite tiles for offline m
 
 
 
-## 8. Managing your edits
+## 9. Managing your edits
 
 Edits made by the user through Observe are managed via the Your Contributions screen. The user can see the status of every edit and retry, resolve conflicts, or discard pending edits. 
 
@@ -159,21 +165,21 @@ Edits made by the user through Observe are managed via the Your Contributions sc
 
 ![](https://paper-attachments.dropbox.com/s_F93699907F08C9A5CFEA336B060601FC1F56081D6CDCD065E76BFC67A1561305_1555329050742_resized-contributions-error.png)
 
-### Logging into the Observe API
+## 10 Logging into the Observe API
 Observe API (which is optional to use Observe Mobile) uses the same authentication system as Observe Mobile. However, the user will have to authenticate from the Account screen to upload photos and traces.
 
 ![Screenshot_1575989165](https://user-images.githubusercontent.com/371666/70539879-4aa53800-1b8a-11ea-8286-1c06a38f5a67.png)
 
 
 
-### Take a photo
+## 11 Take a photo
 - To take a photo at any time while using Observe, press the camera button on the main screen.
 - Then take a picture and enter an optional description
 - If authenticated with the Observe API, photos will be automatically uploaded. Otherwise, you can retry uploading from the Your Photos screen
 
 ![TakePhoto](https://user-images.githubusercontent.com/12634024/83423406-ec4e6900-a3f8-11ea-9642-a1c8448cbb57.gif)
 
-### Take the photo of a feature
+## 12 Take the photo of a feature
 
 - Observe allows the user to take a picture associated with a map feature
 - To take a photo of a feature, select the feature from the map, and then press on the camera icon
@@ -182,7 +188,7 @@ Observe API (which is optional to use Observe Mobile) uses the same authenticati
 
 ![TakePhotoFeature](https://user-images.githubusercontent.com/12634024/83423672-4ea76980-a3f9-11ea-8c2c-0d53386d9a3c.gif)
 
-### Recording a GPS Track
+## 13 Recording a GPS Track
 
 - To record a GPS Track, press the record button on the main screen
 - This will start recording points as you move
