@@ -500,7 +500,8 @@ class Explore extends React.Component {
       currentWayEdit,
       selectedNode,
       nearestFeatures,
-      modifiedSharedWays
+      modifiedSharedWays,
+      deletedNodes
     } = this.props
     let selectedFeatureIds = null
     let selectedPhotoIds = null
@@ -535,6 +536,11 @@ class Explore extends React.Component {
         this.getFeatureType(feature) === 'node' ? filteredFeatureIds.nodes[2].push(feature.id) : filteredFeatureIds.ways[2].push(feature.id)
         return filteredFeatureIds
       }, filteredFeatureIds)
+    }
+
+    let editingWayDeletedMemberNodes = ['match', ['get', 'id'], [], false, true]
+    if (deletedNodes && deletedNodes.length) {
+      editingWayDeletedMemberNodes[2] = deletedNodes
     }
 
     let styleURL
@@ -708,8 +714,10 @@ class Explore extends React.Component {
           '==',
           ['geometry-type'], 'Point'
         ],
-        selectedNode && selectedNode.properties.id ? ['match', ['get', 'id'], [selectedNode.properties.id], true, false] : ['==', ['get', 'id'], '']
-      ]
+        selectedNode && selectedNode.properties.id ? ['match', ['get', 'id'], [selectedNode.properties.id], true, false] : ['==', ['get', 'id'], ''],
+        deletedNodes && deletedNodes.length ? editingWayDeletedMemberNodes : ['match', ['get', 'id'], [''], false, true]
+      ],
+      editingWayMemberNodes: deletedNodes && deletedNodes.length ? editingWayDeletedMemberNodes : ['match', ['get', 'id'], [''], false, true]
     }
 
     return (
@@ -817,7 +825,7 @@ class Explore extends React.Component {
                       <MapboxGL.CircleLayer id='nearestNodes' minZoomLevel={16} style={style.osm.editingWay.nearestFeatures.nodes} />
                     </MapboxGL.ShapeSource>
                     <MapboxGL.ShapeSource id='editingWayMemberNodesSource' shape={editingWayMemberNodes}>
-                      <MapboxGL.CircleLayer id='editingWayMemberNodes' style={style.osm.editingWay.nodes} minZoomLevel={16} />
+                      <MapboxGL.CircleLayer id='editingWayMemberNodes' style={style.osm.editingWay.nodes} minZoomLevel={16} filter={filters.editingWayMemberNodes} />
                       <MapboxGL.CircleLayer id='editingWayMemberNodesHalo' style={style.osm.iconHaloSelected} minZoomLevel={16} filter={filters.nodeHaloSelected} />
                     </MapboxGL.ShapeSource>
                     <MapboxGL.ShapeSource id='modifiedSharedWays' shape={modifiedSharedWays}>
@@ -909,7 +917,8 @@ const mapStateToProps = (state) => {
     selectedNode: state.wayEditing.selectedNode,
     nearestFeatures: getNearestGeojson(state),
     modifiedSharedWays: featureCollection(state.wayEditingHistory.present.modifiedSharedWays),
-    featuresInRelation: state.map.featuresInRelation
+    featuresInRelation: state.map.featuresInRelation,
+    deletedNodes: state.wayEditingHistory.present.deletedNodes
   }
 }
 
