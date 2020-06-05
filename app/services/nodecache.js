@@ -70,7 +70,7 @@ export async function purgeNodeCache () {
   try {
     await AsyncStorage.clear()
   } catch (error) {
-    console.error('Failed to purge async storage cache')
+    console.warn('Failed to purge async storage cache')
   }
 }
 
@@ -84,6 +84,6 @@ export async function clearNodeCacheForTile (tile) {
     await AsyncStorage.multiRemove(keys)
     await AsyncStorage.removeItem(tile)
   } catch (error) {
-    console.error('Failed to remove node', error)
+    console.warn('Failed to remove node', error)
   }
 }
