@@ -196,7 +196,19 @@ class UserContributionsItemScreen extends React.Component {
     ]
   }
 
+  getWayConflictActions () {
+    return [
+      {
+        name: 'trash-bin',
+        onPress: this.discardEdit
+      }
+    ]
+  }
+
   getHeaderActions (edit) {
+    if (edit.newFeature.geometry.type === 'LineString' || edit.newFeature.geometry.type === 'Polygon') {
+      return this.getWayConflictActions()
+    }
     if (edit.status === 'success') {
       return this.getUploadedActions()
     }
