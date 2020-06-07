@@ -58,8 +58,13 @@ function deleteNode (sharedWays, node) {
       if (isFirstOrLastNode) {
         newWay.geometry.coordinates[0].splice(0, 1)
         newWay.geometry.coordinates[0].splice(newWay.geometry.coordinates[0].length - 1, 1)
+
+        // make this way closed
+        newWay.geometry.coordinates[0].push(newWay.geometry.coordinates[0][0])
+        newWay.properties.ndrefs.push(newWay.properties.ndrefs[0])
+      } else {
+        newWay.geometry.coordinates[0].splice(indexOfNodeInWay, 1)
       }
-      newWay.geometry.coordinates[0].splice(indexOfNodeInWay, 1)
     }
 
     // remove the node from ndrefs
@@ -67,10 +72,6 @@ function deleteNode (sharedWays, node) {
       const nodeId = (node.properties.id.startsWith('node')) ? node.properties.id.split('/')[1] : node.properties.id
       return n !== nodeId
     })
-
-    // make this way closed
-    newWay.geometry.coordinates[0].push(newWay.geometry.coordinates[0][0])
-    newWay.properties.ndrefs.push(newWay.properties.ndrefs[0])
 
     if (!newWay.properties.deletedNodes) {
       newWay.properties.deletedNodes = []
