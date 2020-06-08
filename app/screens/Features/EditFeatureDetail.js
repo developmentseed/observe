@@ -189,7 +189,7 @@ class EditFeatureDetail extends React.Component {
     this.props.editFeature(feature, newFeature, changesetComment)
     this.props.uploadEdits([feature.id])
 
-    navigation.navigate('Explore', { message: 'Your edit is being processed.', mode: modes.EXPLORE })
+    navigation.navigate('Explore', { message: 'Your edit is being processed.', mode: modes.EXPLORE, feature: null })
   }
 
   getNewFeature () {
