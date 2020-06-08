@@ -87,10 +87,12 @@ export function findNearestPoint (node, edge) {
   point.properties.edge = edge
   point.properties.ways = {}
   if (edge.properties.hasOwnProperty('parent_feature')) {
-    point.properties.ways[edge.properties.parent_feature.properties.id] = null
+    const wayId = edge.properties.parent_feature.properties.id.startsWith('way') ? edge.properties.parent_feature.properties.id.split('/')[1] : edge.properties.parent_feature.properties.id
+    point.properties.ways[wayId] = null
   } else {
+    const wayId = edge.properties.id.startsWith('way') ? edge.properties.id.split('/')[1] : edge.properties.id
     point.properties.ways = {}
-    point.properties.ways[edge.properties.id] = null
+    point.properties.ways[wayId] = null
   }
   return point
 }
