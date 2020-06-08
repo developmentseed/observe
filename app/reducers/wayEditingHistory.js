@@ -10,14 +10,15 @@ function createDefaultState () {
     movedNodes: [],
     deletedNodes: [],
     mergedNodes: [],
-    modifiedSharedWays: []
+    modifiedSharedWays: [],
+    oldFeature: undefined
   }
 }
 
 function wayEditingHistory (state = createDefaultState(), action) {
   switch (action.type) {
     case types.WAY_EDIT_ENTER: {
-      const { way } = action
+      const { way, feature } = action
       let addedNodes
       let movedNodes
       let deletedNodes
@@ -36,7 +37,8 @@ function wayEditingHistory (state = createDefaultState(), action) {
         movedNodes: movedNodes || state.movedNodes,
         deletedNodes: deletedNodes || state.deletedNodes,
         mergedNodes: mergedNodes || state.mergedNodes,
-        modifiedSharedWays: modifiedSharedWays || state.modifiedSharedWays
+        modifiedSharedWays: modifiedSharedWays || state.modifiedSharedWays,
+        oldFeature: feature
       }
     }
 

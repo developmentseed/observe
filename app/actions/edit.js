@@ -45,7 +45,18 @@ export function uploadEdits (editIds) {
       try {
         const { changesetId, newNodeIdMap } = await uploadEdit(edit)
         dispatch(editUploaded(edit, changesetId))
-        const feature = edit.type === 'delete' ? edit.oldFeature : edit.newFeature
+
+        let feature
+        if (edit.type === 'delete') {
+          // if it's a delete operation, then use oldFeature
+          feature = edit.oldFeature
+        } else if (edit.type === 'modify' && edit.newFeature.geometry.type !== 'Point' && edit.newFeature.geometry.coordinates.length < 2) {
+          // this is a special case when one of two nodes of a way is deleted, then the way itself is deleted.
+          // in the edits this is considered as a modify operation because it may involve other sharedways. Read for more https://github.com/developmentseed/observe/issues/296
+          feature = edit.oldFeature
+        } else {
+          feature = edit.newFeature
+        }
 
         // update the list of modified tiles with ones that touch the feature being uploaded
         featureToTiles(feature).forEach(modifiedTiles.add, modifiedTiles)

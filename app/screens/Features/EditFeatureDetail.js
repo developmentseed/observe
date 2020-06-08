@@ -176,6 +176,7 @@ class EditFeatureDetail extends React.Component {
   saveEditDialog = async (comment) => {
     const { navigation } = this.props
     const { state: { params: { feature } } } = navigation
+    const { state: { params: { oldFeature } } } = navigation
 
     this.cancelEditDialog()
     const changesetComment = comment
@@ -186,7 +187,11 @@ class EditFeatureDetail extends React.Component {
 
     const newFeature = this.getNewFeature()
 
-    this.props.editFeature(feature, newFeature, changesetComment)
+    // for EDIT_WAY mode, the oldFeature is passed down through the navigation
+    // this is because during edit way, we need to update things like ndrefs and that happens in the actions
+    const originalFeature = oldFeature || feature
+
+    this.props.editFeature(originalFeature, newFeature, changesetComment)
     this.props.uploadEdits([feature.id])
 
     navigation.navigate('Explore', { message: 'Your edit is being processed.', mode: modes.EXPLORE })
