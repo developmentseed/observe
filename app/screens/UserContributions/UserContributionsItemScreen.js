@@ -206,7 +206,7 @@ class UserContributionsItemScreen extends React.Component {
   }
 
   getHeaderActions (edit) {
-    if (edit.newFeature.geometry.type === 'LineString' || edit.newFeature.geometry.type === 'Polygon') {
+    if (edit.newFeature.wayEditingHistory) {
       return this.getWayConflictActions()
     }
     if (edit.status === 'success') {
