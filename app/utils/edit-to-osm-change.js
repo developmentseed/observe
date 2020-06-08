@@ -171,11 +171,21 @@ function getComplexChange (edit, changesetId) {
           }
         })
 
-        modifies.push({
-          type: 'way',
-          id: way.properties.id,
-          feature: way
-        })
+        if (way.properties.ndrefs.length < 2) {
+          // if the way now contains less than 2 nodes, delete it
+          deletes.push({
+            type: 'way',
+            id: way.properties.id,
+            feature: way
+          })
+        } else {
+          // in the normal case, push a modify operation
+          modifies.push({
+            type: 'way',
+            id: way.properties.id,
+            feature: way
+          })
+        }
       }
     }
   })
@@ -189,14 +199,23 @@ function getComplexChange (edit, changesetId) {
       feature
     })
   } else if (edit.type === 'modify') {
-    // if feature is modified, we only need to include in change XML if nodes
-    // were added or removed
-    if (wayEditingHistory.addedNodes.length > 0 || wayEditingHistory.deletedNodes.length > 0 || wayEditingHistory.mergedNodes.length > 0) {
+    if (feature.properties.ndrefs.length < 2) {
+      // way does not contain enough nodes, delete it.
+      deletes.push({
+        type: 'way',
+        id: feature.properties.id,
+        feature
+      })
+    } else if (wayEditingHistory.addedNodes.length > 0 || wayEditingHistory.deletedNodes.length > 0 || wayEditingHistory.mergedNodes.length > 0) {
+      // if feature is modified, we only need to include in change XML if nodes
+      // were added or removed
       modifies.push({
         type: 'way',
         id: feature.properties.id,
         feature
       })
+    } else {
+      // if way has only moved nodes, do nothing
     }
   }
 
