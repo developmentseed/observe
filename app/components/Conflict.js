@@ -228,7 +228,7 @@ export default class Conflict extends React.Component {
     if (updatedFeature.isDeleted) {
       return this.upstreamDeleted()
     }
-    if (updatedFeature.geometry.type === 'LineString' || updatedFeature.geometry.type === 'Polygon') {
+    if (originalEdit.newFeature.wayEditingHistory) {
       return this.featureIsAWay()
     }
     if (originalEdit.type === 'delete') {
