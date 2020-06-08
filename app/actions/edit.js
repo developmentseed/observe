@@ -45,7 +45,15 @@ export function uploadEdits (editIds) {
       try {
         const { changesetId, newNodeIdMap } = await uploadEdit(edit)
         dispatch(editUploaded(edit, changesetId))
-        const feature = edit.type === 'delete' ? edit.oldFeature : edit.newFeature
+
+        let feature
+        if (edit.type === 'delete') {
+          feature = edit.oldFeature
+        } else if (edit.type === 'modify' && edit.newFeature.geometry.type !== 'Point' && edit.newFeature.geometry.coordinates.length < 2) {
+          feature = edit.oldFeature
+        } else {
+          feature = edit.newFeature
+        }
 
         // update the list of modified tiles with ones that touch the feature being uploaded
         featureToTiles(feature).forEach(modifiedTiles.add, modifiedTiles)
