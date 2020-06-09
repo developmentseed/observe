@@ -13,3 +13,10 @@ export function isWayPendingUpload (feature) {
     return false
   }
 }
+
+export function isInvalidFeature (feature) {
+  return (
+    (feature.geometry.type === 'LineString' && feature.properties.ndrefs.length < 2) ||
+    (feature.geometry.type === 'Polygon' && feature.properties.ndrefs.length < 3)
+  )
+}

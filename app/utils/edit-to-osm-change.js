@@ -2,6 +2,8 @@ import { DOMParser } from 'xmldom'
 import _omit from 'lodash.omit'
 import { nonpropKeys } from '../utils/uninterestingKeys'
 import _get from 'lodash.get'
+import _uniq from 'lodash.uniq'
+import { isInvalidFeature } from '../utils/utils'
 
 /**
  * Takes an edit and transforms it into `osmChange` XML to be uploaded to the OSM API
@@ -171,12 +173,21 @@ function getComplexChange (edit, changesetId) {
           }
         })
 
-        if (way.properties.ndrefs.length < 2) {
-          // if the way now contains less than 2 nodes, delete it
+        if (isInvalidFeature(way)) {
+          // if the way now contains less than 2 nodes (3 for polygons), delete it
           deletes.push({
             type: 'way',
             id: way.properties.id,
             feature: way
+          })
+          const ndrefs = _uniq(way.properties.ndrefs)
+          ndrefs.forEach(nd => {
+            const node = wayEditingHistory.way.nodes.find(n => n.properties.id === `node/${nd}`)
+            deletes.push({
+              type: 'node',
+              id: nodeIdMap[node.properties.id],
+              feature: node
+            })
           })
         } else {
           // in the normal case, push a modify operation
@@ -199,12 +210,21 @@ function getComplexChange (edit, changesetId) {
       feature
     })
   } else if (edit.type === 'modify') {
-    if (feature.properties.ndrefs.length < 2) {
+    if (isInvalidFeature(feature)) {
       // way does not contain enough nodes, delete it.
       deletes.push({
         type: 'way',
         id: feature.properties.id,
         feature
+      })
+      const ndrefs = _uniq(feature.properties.ndrefs)
+      ndrefs.forEach(nd => {
+        const node = wayEditingHistory.way.nodes.find(n => n.properties.id === `node/${nd}`)
+        deletes.push({
+          type: 'node',
+          id: nodeIdMap[node.properties.id],
+          feature: node
+        })
       })
     } else if (wayEditingHistory.addedNodes.length > 0 || wayEditingHistory.deletedNodes.length > 0 || wayEditingHistory.mergedNodes.length > 0) {
       // if feature is modified, we only need to include in change XML if nodes
