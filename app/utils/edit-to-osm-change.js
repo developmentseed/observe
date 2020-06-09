@@ -2,6 +2,7 @@ import { DOMParser } from 'xmldom'
 import _omit from 'lodash.omit'
 import { nonpropKeys } from '../utils/uninterestingKeys'
 import _get from 'lodash.get'
+import _uniq from 'lodash.uniq'
 import { isInvalidFeature } from '../utils/utils'
 
 /**
@@ -179,8 +180,8 @@ function getComplexChange (edit, changesetId) {
             id: way.properties.id,
             feature: way
           })
-
-          way.properties.ndrefs.forEach(nd => {
+          const ndrefs = _uniq(way.properties.ndrefs)
+          ndrefs.forEach(nd => {
             const node = wayEditingHistory.way.nodes.find(n => n.properties.id === `node/${nd}`)
             deletes.push({
               type: 'node',
@@ -216,7 +217,8 @@ function getComplexChange (edit, changesetId) {
         id: feature.properties.id,
         feature
       })
-      feature.properties.ndrefs.forEach(nd => {
+      const ndrefs = _uniq(feature.properties.ndrefs)
+      ndrefs.forEach(nd => {
         const node = wayEditingHistory.way.nodes.find(n => n.properties.id === `node/${nd}`)
         deletes.push({
           type: 'node',
