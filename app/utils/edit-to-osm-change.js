@@ -179,10 +179,16 @@ function getComplexChange (edit, changesetId) {
             feature: way
           })
 
-          // TODO: loop through remaining ndrefs and delete orphaned nodes
-          way.properties.ndrefs.forEach(nd => {
 
+          way.properties.ndrefs.forEach(nd => {
+            const node = wayEditingHistory.way.nodes.find(n => n.properties.id === `node/${nd}`)
+            deletes.push({
+              type: 'node',
+              id: node.properties.id,
+              feature: node
+            })
           })
+    
         } else {
           // in the normal case, push a modify operation
           modifies.push({
@@ -211,7 +217,14 @@ function getComplexChange (edit, changesetId) {
         id: feature.properties.id,
         feature
       })
-      // TODO: loop through remaining ndrefs and delete orphaned nodes
+      feature.properties.ndrefs.forEach(nd => {
+        const node = wayEditingHistory.way.nodes.find(n => n.properties.id === `node/${nd}`)
+        deletes.push({
+          type: 'node',
+          id: node.properties.id,
+          feature: node
+        })
+      })
     } else if (wayEditingHistory.addedNodes.length > 0 || wayEditingHistory.deletedNodes.length > 0 || wayEditingHistory.mergedNodes.length > 0) {
       // if feature is modified, we only need to include in change XML if nodes
       // were added or removed
