@@ -261,11 +261,22 @@ class WayEditingOverlay extends React.Component {
   }
 
   render () {
-    const { wayEditing, wayEditingHistory } = this.props
+    const { wayEditing, wayEditingHistory, mode } = this.props
+    const { nearestFeatures } = wayEditing
 
     const canDeleteOrMove = wayEditing.selectedNode
     const hasPast = wayEditingHistory.past.length > 0
     const hasFuture = wayEditingHistory.future.length > 0
+    let canAdd = true
+    if (mode === modes.ADD_WAY) {
+      canAdd = true
+    }
+
+    // in the edit way mode, don't allow adding stray nodes.
+    // nodes should only be added to existing ways
+    if (mode === modes.EDIT_WAY && (!nearestFeatures || !nearestFeatures.nearestNode)) {
+      canAdd = false
+    }
 
     return (
       <Container pointerEvents={Platform.OS === 'ios' ? 'box-none' : 'auto'}>
@@ -297,10 +308,15 @@ class WayEditingOverlay extends React.Component {
             />
           </ActionButton>
           <AddNodeButton
-            onPress={() => this.onAddNodePress()}
+            onPress={() => canAdd && this.onAddNodePress()}
             underlayColor='#E4E6F2'
           >
-            <Icon name='plus' size={24} color={colors.primary} />
+            <ActionButtonIcon
+              name='plus'
+              size={24}
+              color={colors.primary}
+              disabled={!canAdd}
+            />
           </AddNodeButton>
           <ActionButton
             onPress={() => hasFuture && this.onRedoPress()}
