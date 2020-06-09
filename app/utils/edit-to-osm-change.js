@@ -184,7 +184,7 @@ function getComplexChange (edit, changesetId) {
             const node = wayEditingHistory.way.nodes.find(n => n.properties.id === `node/${nd}`)
             deletes.push({
               type: 'node',
-              id: node.properties.id,
+              id: nodeIdMap[node.properties.id],
               feature: node
             })
           })
@@ -220,7 +220,7 @@ function getComplexChange (edit, changesetId) {
         const node = wayEditingHistory.way.nodes.find(n => n.properties.id === `node/${nd}`)
         deletes.push({
           type: 'node',
-          id: node.properties.id,
+          id: nodeIdMap[node.properties.id],
           feature: node
         })
       })
