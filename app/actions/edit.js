@@ -10,6 +10,7 @@ import { editPhoto } from '../actions/camera'
 import { EDIT_UPLOADING_STATUS } from '../constants'
 import { clearNodeCacheForTile } from '../services/nodecache'
 import { resetWayEditing } from '../actions/wayEditing'
+import { isInvalidFeature } from '../utils/utils'
 /**
  * Retries all retriable edits in the current state
  */
@@ -51,7 +52,7 @@ export function uploadEdits (editIds) {
         if (edit.type === 'delete') {
           // if it's a delete operation, then use oldFeature
           feature = edit.oldFeature
-        } else if (edit.type === 'modify' && edit.newFeature.geometry.type !== 'Point' && edit.newFeature.geometry.coordinates.length < 2) {
+        } else if (isInvalidFeature) {
           // this is a special case when one of two nodes of a way is deleted, then the way itself is deleted.
           // in the edits this is considered as a modify operation because it may involve other sharedways. Read for more https://github.com/developmentseed/observe/issues/296
           feature = edit.oldFeature
