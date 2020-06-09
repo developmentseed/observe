@@ -2,6 +2,7 @@ import { DOMParser } from 'xmldom'
 import _omit from 'lodash.omit'
 import { nonpropKeys } from '../utils/uninterestingKeys'
 import _get from 'lodash.get'
+import { isInvalidFeature } from '../utils/utils'
 
 /**
  * Takes an edit and transforms it into `osmChange` XML to be uploaded to the OSM API
@@ -179,7 +180,6 @@ function getComplexChange (edit, changesetId) {
             feature: way
           })
 
-
           way.properties.ndrefs.forEach(nd => {
             const node = wayEditingHistory.way.nodes.find(n => n.properties.id === `node/${nd}`)
             deletes.push({
@@ -188,7 +188,6 @@ function getComplexChange (edit, changesetId) {
               feature: node
             })
           })
-    
         } else {
           // in the normal case, push a modify operation
           modifies.push({
@@ -346,13 +345,6 @@ function addNdrefs (xmlDoc, elem, refs) {
     elem.appendChild(refElem)
   })
   return elem
-}
-
-function isInvalidFeature (feature) {
-  return (
-    (feature.geometry.type === 'LineString' && feature.properties.ndrefs.length < 2) ||
-    (feature.geometry.type === 'Polygon' && feature.properties.ndrefs.length < 3)
-  )
 }
 
 function isNewId (id) {
