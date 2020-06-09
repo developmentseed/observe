@@ -179,11 +179,10 @@ function getComplexChange (edit, changesetId) {
             feature: way
           })
 
-          //TODO: loop through remaining ndrefs and delete orphaned nodes
+          // TODO: loop through remaining ndrefs and delete orphaned nodes
           way.properties.ndrefs.forEach(nd => {
-            
-          })
 
+          })
         } else {
           // in the normal case, push a modify operation
           modifies.push({
@@ -212,8 +211,7 @@ function getComplexChange (edit, changesetId) {
         id: feature.properties.id,
         feature
       })
-      //TODO: loop through remaining ndrefs and delete orphaned nodes
-      
+      // TODO: loop through remaining ndrefs and delete orphaned nodes
     } else if (wayEditingHistory.addedNodes.length > 0 || wayEditingHistory.deletedNodes.length > 0 || wayEditingHistory.mergedNodes.length > 0) {
       // if feature is modified, we only need to include in change XML if nodes
       // were added or removed
@@ -339,8 +337,8 @@ function addNdrefs (xmlDoc, elem, refs) {
 
 function isInvalidFeature (feature) {
   return (
-    feature.geometry.type === 'LineString' && feature.properties.ndrefs.length < 2 ||
-    feature.geometry.type === 'Polygon' && feature.properties.ndrefs.length < 3
+    (feature.geometry.type === 'LineString' && feature.properties.ndrefs.length < 2) ||
+    (feature.geometry.type === 'Polygon' && feature.properties.ndrefs.length < 3)
   )
 }
 
