@@ -28,7 +28,6 @@ const TextWrapper = styled.TouchableOpacity`
 
 const Text = styled.Text`
   text-align: center;
-  font-weight: 900;
 `
 
 const PlusIcon = styled(Icon)`
