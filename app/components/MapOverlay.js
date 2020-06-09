@@ -27,8 +27,7 @@ const Drawer = styled(BottomDrawer)`
 `
 
 const FeatureListWrapper = styled.View`
-  margin-top: 16;
-  padding-top: 16;
+  padding-top: 12;
   padding-left: 16;
   padding-right: 16;
   align-self: stretch;
@@ -48,10 +47,13 @@ const ItemList = styled.SectionList`
 `
 
 const Feature = styled.TouchableOpacity`
-  padding-bottom: 24;
+  padding-bottom: 12;
+  padding-top: 12;
   border-bottom-width: 0.5;
   border-bottom-color: ${colors.primary};
   flex: 1;
+  flex-shrink: 0;
+  flex-grow: 0;
   flex-direction: row;
 `
 
@@ -133,7 +135,7 @@ class MapOverlay extends Component {
           <Drawer
             startUp={false}
             containerHeight={300}
-            offset={64}
+            offset={72}
             elevation={10}
           >
             <FeatureListWrapper>
