@@ -159,7 +159,7 @@ Object {
       "location": 0.0018341862152104543,
       "membership": "no",
       "ways": Object {
-        "way/4294967474": null,
+        "4294967474": null,
       },
     },
     "type": "Feature",
@@ -261,7 +261,7 @@ Object {
     "location": 0.0018341862152104543,
     "membership": "no",
     "ways": Object {
-      "way/4294967474": null,
+      "4294967474": null,
     },
   },
   "type": "Feature",

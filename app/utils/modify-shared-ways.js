@@ -6,8 +6,8 @@ function moveNode (sharedWays, node, coordinates) {
   let modifiedSharedWays = []
   sharedWays.forEach(oldWay => {
     const newWay = _cloneDeep(oldWay)
-    const wayId = oldWay.properties.id.startsWith('way') ? oldWay.properties.id.split('/')[1] : oldWay.properties.id
-    const indexOfNodeInWay = node.properties.ways[wayId]
+    const nodeId = node.properties.id.startsWith('node') ? node.properties.id.split('/')[1] : node.properties.id
+    const indexOfNodeInWay = _findIndex(newWay.properties.ndrefs, ref => ref === nodeId)
 
     if (newWay.geometry.type === 'LineString') {
       newWay.geometry.coordinates[indexOfNodeInWay] = coordinates
@@ -44,15 +44,27 @@ function moveNode (sharedWays, node, coordinates) {
 function deleteNode (sharedWays, node) {
   let modifiedSharedWays = []
   sharedWays.forEach(oldWay => {
-    const newWay = _cloneDeep(oldWay)
-    const wayId = oldWay.properties.id.startsWith('way') ? oldWay.properties.id.split('/')[1] : oldWay.properties.id
-    const indexOfNodeInWay = node.properties.ways[wayId]
+    let newWay = _cloneDeep(oldWay)
+    const nodeId = node.properties.id.startsWith('node') ? node.properties.id.split('/')[1] : node.properties.id
+    const indexOfNodeInWay = _findIndex(newWay.properties.ndrefs, ref => ref === nodeId)
+
     if (newWay.geometry.type === 'LineString') {
       newWay.geometry.coordinates.splice(indexOfNodeInWay, 1)
     }
 
     if (newWay.geometry.type === 'Polygon') {
-      newWay.geometry.coordinates[0].splice(indexOfNodeInWay, 1)
+      const numberOfNodes = newWay.properties.ndrefs.length - 1
+      const isFirstOrLastNode = indexOfNodeInWay === 0 || indexOfNodeInWay === numberOfNodes
+      if (isFirstOrLastNode) {
+        newWay.geometry.coordinates[0].splice(0, 1)
+        newWay.geometry.coordinates[0].splice(newWay.geometry.coordinates[0].length - 1, 1)
+
+        // make this way closed
+        newWay.geometry.coordinates[0].push(newWay.geometry.coordinates[0][0])
+        newWay.properties.ndrefs.push(newWay.properties.ndrefs[0])
+      } else {
+        newWay.geometry.coordinates[0].splice(indexOfNodeInWay, 1)
+      }
     }
 
     // remove the node from ndrefs
