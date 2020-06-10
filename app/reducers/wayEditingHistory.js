@@ -105,9 +105,6 @@ function wayEditingHistory (state = createDefaultState(), action) {
       const { way } = state
       const { node, modifiedSharedWays } = action
       const newWay = _cloneDeep(way)
-      // newWay.nodes = newWay.nodes.filter((feature) => {
-      //   return node.properties.id !== feature.properties.id
-      // })
 
       let deletedNodes
       let addedNodes
@@ -118,6 +115,11 @@ function wayEditingHistory (state = createDefaultState(), action) {
         // if this is a new node, then remove it from addedNode so we don't create it
         addedNodes = _cloneDeep(state.addedNodes)
         addedNodes = addedNodes.filter(nd => nd !== node.properties.id)
+
+        // also remove it from way.nodes
+        newWay.nodes = newWay.nodes.filter((feature) => {
+          return node.properties.id !== feature.properties.id
+        })
       }
 
       return {
