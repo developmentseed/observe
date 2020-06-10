@@ -2,6 +2,8 @@ import * as types from './actionTypes'
 import { getFeaturesFromState } from '../selectors'
 
 import modifySharedWays from '../utils/modify-shared-ways'
+import { isInvalidFeature } from '../utils/utils'
+import { setNotification, unsetNotification } from '../actions/notification'
 
 export function addNode (node) {
   return (dispatch, getState) => {
@@ -48,6 +50,23 @@ export function deleteSelectedNode (node) {
       const sharedWays = getFeaturesFromState(getState(), Object.keys(node.properties.ways))
       if (sharedWays.length) {
         modifiedSharedWays = modifySharedWays.deleteNode(sharedWays, node)
+
+        // check if any of the ways will be deleted
+        // and show a notification
+        const showDeleteWarning = modifiedSharedWays.some(feature => {
+          return isInvalidFeature(feature)
+        })
+
+        if (showDeleteWarning) {
+          dispatch(setNotification({
+            level: 'info',
+            message: 'A way will be deleted'
+          }))
+
+          setTimeout(() => {
+            dispatch(unsetNotification())
+          }, 1000)
+        }
       }
     }
 
