@@ -1,11 +1,12 @@
 {
+    "icon": "maki-circle-stroked",
     "geometry": [
         "point",
         "vertex"
     ],
     "fields": [
         "direction"
-     ],
+    ],
     "tags": {
         "highway": "traffic_mirror"
     },

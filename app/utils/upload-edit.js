@@ -8,6 +8,8 @@ import {
 } from '../services/osm-api'
 
 import { version } from '../../package.json'
+import _find from 'lodash.find'
+
 /**
  * Takes a single edit object and creates a changeset for it and uploads it to the OSM API
  * @param {Object} edit - edit object with `id`, `oldFeature`, `newFeature`, `type`
@@ -28,11 +30,32 @@ export default async function uploadEdit (edit) {
   let changesetId
   changesetId = await createChangeset(changesetXML)
   console.log('changeset ID', changesetId)
-  const osmChangeXML = editToOSMChange(edit, changesetId, memberNodes)
+  const { osmChangeXML, nodeIdMap } = editToOSMChange(edit, changesetId, memberNodes)
   console.log('osm change xml', osmChangeXML)
-  await uploadOsmChange(osmChangeXML, changesetId)
-  console.log('osm change uploaded')
+  const response = await uploadOsmChange(osmChangeXML, changesetId)
+  console.log('osm change uploaded', response)
+  let newNodeIdMap = null
   await closeChangeset(changesetId)
   console.log('changeset closed')
-  return changesetId
+  if (nodeIdMap && response && response.hasOwnProperty('diffResult')) {
+    newNodeIdMap = getNewNodeIds(nodeIdMap, response)
+  }
+  return {
+    changesetId,
+    newNodeIdMap
+  }
+}
+
+function getNewNodeIds (nodeIdMap, response) {
+  const mapping = {}
+  Object.keys(nodeIdMap).forEach(observeNode => {
+    const match = _find(response.diffResult.node, (osmNode) => {
+      return osmNode['$'].old_id === String(nodeIdMap[observeNode])
+    })
+
+    if (match && match.$ && match.$.new_id) {
+      mapping[observeNode] = match.$.new_id
+    }
+  })
+  return mapping
 }

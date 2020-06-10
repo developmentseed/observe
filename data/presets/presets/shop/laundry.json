@@ -1,5 +1,9 @@
 {
-    "icon": "maki-laundry",
+    "icon": "temaki-laundry",
+    "fields": [
+        "{shop}",
+        "self_service"
+    ],
     "geometry": [
         "point",
         "area"

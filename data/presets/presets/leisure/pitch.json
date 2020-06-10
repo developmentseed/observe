@@ -3,16 +3,21 @@
     "fields": [
         "name",
         "sport",
+        "access_simple",
         "surface",
         "lit"
     ],
     "moreFields": [
-        "access_simple",
-        "fee"
+        "charge_fee",
+        "covered",
+        "fee",
+        "gnis/feature_id",
+        "indoor",
+        "payment_multi_fee"
     ],
     "geometry": [
-        "point",
-        "area"
+        "area",
+        "point"
     ],
     "tags": {
         "leisure": "pitch"

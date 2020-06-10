@@ -12,6 +12,7 @@ import {
 } from '../utils/traces'
 import cache from '../utils/data-cache'
 import { filterTags } from '../utils/filter-tags'
+import _find from 'lodash.find'
 
 export const getVisibleBounds = state => state.map.visibleBounds
 export const getZoom = state => state.map.zoom
@@ -236,4 +237,48 @@ export const getPhotosGeojson = state => {
   }
 
   return photosGeojson
+}
+
+export const getVisibleTiles = state => {
+  if (state.map.visibleBounds) {
+    return bboxToTiles(state.map.visibleBounds)
+  } else {
+    return []
+  }
+}
+
+export const getNearestGeojson = state => {
+  let fc = featureCollection([])
+  if (state.wayEditing.nearestFeatures) {
+    const { nearestEdge, nearestNode } = state.wayEditing.nearestFeatures
+    if (nearestEdge) fc.features.push(nearestEdge)
+    if (nearestNode) fc.features.push(nearestNode)
+  }
+  return fc
+}
+
+export const getFeaturesFromState = (state, featureIds) => {
+  const features = []
+  const geojson = getVisibleFeatures(state)
+  const editsGeojson = state.edit.editsGeojson
+  featureIds.forEach(fId => {
+    const id = fId.startsWith('way') ? fId : `way/${fId}`
+    let feature
+
+    // see if the feature is already modified
+    feature = _find(state.wayEditingHistory.present.modifiedSharedWays, ['properties.id', id])
+
+    if (!feature) {
+      // if it's a feature that's pending upload
+      // then fetch it from the editsGeojson
+      if (id.split('/')[1].startsWith('observe')) {
+        feature = _find(editsGeojson.features, ['properties.id', id])
+      }
+    }
+
+    if (!feature) feature = _find(geojson.features, ['properties.id', id])
+
+    if (feature) features.push(feature)
+  })
+  return features
 }

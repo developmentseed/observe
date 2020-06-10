@@ -1,6 +1,7 @@
 import * as types from '../actions/actionTypes'
 import editsToGeojson from '../utils/edits-to-geojson'
 import { EDIT_PENDING_STATUS, EDIT_SUCCEEDED_STATUS, EDIT_UPLOADING_STATUS } from '../constants'
+import _cloneDeep from 'lodash.clonedeep'
 
 const initialState = {
   edits: [], // array of edit actions
@@ -95,6 +96,7 @@ export default function (state = initialState, action) {
           timestamp: action.timestamp
         })
       }
+
       let editsGeojson = editsToGeojson(edits)
       return {
         ...state,
@@ -259,6 +261,106 @@ export default function (state = initialState, action) {
       return {
         ...state,
         addPointGeometry: action.geometry
+      }
+    }
+
+    case types.NEW_NODE_MAPPING: {
+      let edits = [...state.edits]
+
+      // go through each edit
+      // replace the observeid with new id
+      if (edits.length) {
+        edits.forEach(edit => {
+          const feature = _cloneDeep(edit.newFeature)
+          if (feature) {
+            const newNdrefs = []
+            const addedNodes = []
+            const deletedNodes = []
+            const mergedNodes = []
+            const movedNodes = []
+            const nodes = []
+
+            const newNodeIdMap = action.newNodeIdMap
+            const newNodeIdMapKeys = Object.keys(newNodeIdMap)
+
+            // replace it in ndrefs of the way
+            feature.properties.ndrefs.map(oldRef => {
+              let newRef = oldRef
+              if (newNodeIdMapKeys.includes(oldRef)) {
+                newRef = action.newNodeIdMap[oldRef]
+              }
+              newNdrefs.push(newRef)
+            }, newNdrefs)
+
+            feature.properties.ndrefs = newNdrefs
+
+            // replace it in addedNodes, deletedNodes, movedNodes, mergedNodes
+            if (feature.wayEditingHistory.addedNodes.length) {
+              feature.wayEditingHistory.addedNodes.map(oldRef => {
+                let newRef = oldRef
+                if (newNodeIdMapKeys.includes(oldRef)) {
+                  newRef = action.newNodeIdMap[oldRef]
+                }
+                addedNodes.push(newRef)
+              }, addedNodes)
+            }
+            feature.wayEditingHistory.addedNodes = addedNodes
+
+            if (feature.wayEditingHistory.movedNodes.length) {
+              feature.wayEditingHistory.movedNodes.map(oldRef => {
+                let newRef = oldRef
+                if (newNodeIdMapKeys.includes(oldRef)) {
+                  newRef = action.newNodeIdMap[oldRef]
+                }
+                movedNodes.push(newRef)
+              }, movedNodes)
+            }
+            feature.wayEditingHistory.movedNodes = movedNodes
+
+            if (feature.wayEditingHistory.deletedNodes.length) {
+              feature.wayEditingHistory.deletedNodes.map(oldRef => {
+                let newRef = oldRef
+                if (newNodeIdMapKeys.includes(oldRef)) {
+                  newRef = action.newNodeIdMap[oldRef]
+                }
+                deletedNodes.push(newRef)
+              }, deletedNodes)
+            }
+            feature.wayEditingHistory.deletedNodes = deletedNodes
+
+            if (feature.wayEditingHistory.mergedNodes.length) {
+              feature.wayEditingHistory.mergedNodes.map(oldRef => {
+                const thisMerge = oldRef
+                if (newNodeIdMapKeys.includes(oldRef.sourceNode)) {
+                  thisMerge.sourceNode = action.newNodeIdMap[oldRef]
+                }
+
+                if (newNodeIdMapKeys.includes(oldRef.destinationNode)) {
+                  thisMerge.destinationNode = action.newNodeIdMap[oldRef]
+                }
+                mergedNodes.push(thisMerge)
+              }, mergedNodes)
+            }
+            feature.wayEditingHistory.mergedNodes = mergedNodes
+
+            // replace it in wayEditHistory.way.nodes
+            feature.wayEditingHistory.way.nodes.forEach(oldNode => {
+              const thisNode = _cloneDeep(oldNode)
+              if (newNodeIdMapKeys.includes(oldNode.properties.id)) {
+                thisNode.id = action.newNodeIdMap[oldNode.properties.id]
+                thisNode.properties.id = action.newNodeIdMap[oldNode.properties.id]
+                thisNode.properties.version = 1
+              }
+              nodes.push(thisNode)
+            })
+            feature.wayEditingHistory.way.nodes = nodes
+          }
+          edit.newFeature = feature
+        })
+      }
+      return {
+        ...state,
+        edits
       }
     }
   }

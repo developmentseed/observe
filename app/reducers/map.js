@@ -5,12 +5,14 @@ import * as types from '../actions/actionTypes'
 import _uniqBy from 'lodash.uniqby'
 import style from '../style/map'
 import _cloneDeep from 'lodash.clonedeep'
+import { modes } from '../utils/map-modes'
 
 export const initialState = {
   activeTileRequests: [], // quadkeys of all pending tile requests
   fetchedTiles: {}, // Object with mapping of tiles to their respective GeoJSON FeatureCollections
   selectedFeature: false, // GeoJSON feature that is currently selected, or false
-  mode: 'explore', // mode can be 'explore', 'add' or 'edit'
+  selectedFeaturesMemberNodes: false,
+  mode: modes.EXPLORE, // see app/utils/map-modes.js for all modes
   baseLayer: null,
   overlays: {
     osm: true,
@@ -24,7 +26,8 @@ export const initialState = {
   pendingEviction: [],
   serialNumber: 0,
   style: style,
-  selectedPhotos: false
+  selectedPhotos: false,
+  nodes: {} // collection of member nodes
 }
 
 const TILE_CACHE_SIZE = Config.TILE_CACHE_SIZE || 10000
@@ -246,7 +249,7 @@ export default function (state = initialState, action) {
     case types.START_ADD_POINT:
       return {
         ...state,
-        mode: 'add'
+        mode: modes.ADD_POINT
       }
 
     // Currently, back on map is only triggered when the user is not in Explore mode.
@@ -255,14 +258,24 @@ export default function (state = initialState, action) {
     case types.MAP_BACK_PRESS:
       return {
         ...state,
-        mode: 'explore'
+        mode: modes.EXPLORE
       }
 
-    case types.SET_MAP_MODE:
+    case types.SET_MAP_MODE: {
+      let updatedStyle = _cloneDeep(state.style)
+      if (action.mode === modes.ADD_WAY || action.mode === modes.EDIT_WAY) {
+        updatedStyle.osm.polygons.visibility = 'visible'
+        updatedStyle.osm.lines.visibility = 'visible'
+      } else {
+        updatedStyle.osm.polygons.visibility = 'none'
+        updatedStyle.osm.lines.visibility = 'none'
+      }
       return {
         ...state,
-        mode: action.mode
+        mode: action.mode,
+        style: updatedStyle
       }
+    }
 
     case types.UPDATE_VISIBLE_BOUNDS: {
       const { visibleBounds, zoom } = action
@@ -512,10 +525,11 @@ export default function (state = initialState, action) {
 
     case types.NEW_DATA_AVAILABLE: {
       const { serialNumber } = state
-
+      const { featuresInRelation } = action
       return {
         ...state,
-        serialNumber: serialNumber + 1
+        serialNumber: serialNumber + 1,
+        featuresInRelation
       }
     }
 

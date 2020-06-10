@@ -3,22 +3,25 @@
     "fields": [
         "name",
         "operator",
+        "operator/type",
         "address"
     ],
     "moreFields": [
-        "website",
-        "phone",
         "email",
         "fax",
+        "gnis/feature_id",
+        "phone",
+        "website",
         "wheelchair"
     ],
     "geometry": [
-        "point",
-        "area"
+        "area",
+        "point"
     ],
     "terms": [
         "cell",
-        "jail"
+        "jail",
+        "correction"
     ],
     "tags": {
         "amenity": "prison"

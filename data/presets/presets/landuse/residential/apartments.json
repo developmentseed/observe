@@ -1,5 +1,5 @@
 {
-    "icon": "maki-building",
+    "icon": "maki-residential-community",
     "fields": [
         "name",
         "operator",
@@ -13,10 +13,6 @@
         "residential": "apartments"
     },
     "addTags": {
-        "landuse": "residential",
-        "residential": "apartments"
-    },
-    "removeTags": {
         "landuse": "residential",
         "residential": "apartments"
     },

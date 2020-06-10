@@ -11,7 +11,11 @@ import PageWrapper from '../../components/PageWrapper'
 import ObserveIcon from '../../components/ObserveIcon'
 
 import { colors } from '../../style/variables'
-import { presets as starterPresets } from '../../presets/starter-presets.json'
+import { modeFeatureType } from '../../utils/map-modes'
+import _intersection from 'lodash.intersection'
+import { presets } from '../../presets/starter-presets.json'
+
+const starterPresets = objToArray(presets)
 
 const win = Dimensions.get('window')
 
@@ -104,12 +108,31 @@ class SelectFeatureType extends React.Component {
     )
   }
 
+  // From an array of presets, filter which are applicable to the current
+  // feature mode and sort by name
+  getApplicablePresets (presets) {
+    return presets
+      .filter(
+        (p) =>
+          _intersection(p.geometry, modeFeatureType[this.props.mode]).length
+      )
+      .sort((a, b) => {
+        var nameA = a.name.toLowerCase()
+        var nameB = b.name.toLowerCase()
+        if (nameA < nameB) return -1
+        if (nameA > nameB) return 1
+        return 0
+      })
+  }
+
   getFilteredPresets (presets, text) {
+    // If there is no passed text or presets to filter, apply starterPresets
     if (!text || !presets || !presets.length || text.length < 3) {
-      return objToArray(starterPresets)
+      return this.getApplicablePresets(starterPresets)
     }
 
-    return presets.filter((preset) => {
+    // Or apply text filter to passed presets
+    return this.getApplicablePresets(presets).filter((preset) => {
       return preset.name.toLowerCase().includes(text.toLowerCase())
     })
   }
@@ -129,16 +152,7 @@ class SelectFeatureType extends React.Component {
   static getDerivedStateFromProps (props, state) {
     if (state.presets.length !== props.presets.length) {
       state.presets = objToArray(props.presets)
-        .filter((preset) => preset.geometry.includes('point'))
-        .sort((a, b) => {
-          var nameA = a.name.toLowerCase()
-          var nameB = b.name.toLowerCase()
-          if (nameA < nameB) return -1
-          if (nameA > nameB) return 1
-          return 0
-        })
     }
-
     return state
   }
 
@@ -182,7 +196,8 @@ class SelectFeatureType extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    presets: state.presets.presets
+    presets: state.presets.presets,
+    mode: state.map.mode
   }
 }
 

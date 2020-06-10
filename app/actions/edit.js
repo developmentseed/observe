@@ -8,6 +8,9 @@ import { getPhotosForFeature } from '../utils/photos'
 import { getFeatureInChangeset } from '../services/osm-api'
 import { editPhoto } from '../actions/camera'
 import { EDIT_UPLOADING_STATUS } from '../constants'
+import { clearNodeCacheForTile } from '../services/nodecache'
+import { resetWayEditing } from '../actions/wayEditing'
+import { isInvalidFeature } from '../utils/utils'
 /**
  * Retries all retriable edits in the current state
  */
@@ -42,12 +45,30 @@ export function uploadEdits (editIds) {
       }
       dispatch(startEditUpload(edit))
       try {
-        const changesetId = await uploadEdit(edit)
+        const { changesetId, newNodeIdMap } = await uploadEdit(edit)
         dispatch(editUploaded(edit, changesetId))
-        const feature = edit.type === 'delete' ? edit.oldFeature : edit.newFeature
+
+        let feature
+        if (edit.type === 'delete') {
+          // if it's a delete operation, then use oldFeature
+          feature = edit.oldFeature
+        } else if (isInvalidFeature(edit.newFeature)) {
+          // this is a special case when one of two nodes of a way is deleted, then the way itself is deleted.
+          // in the edits this is considered as a modify operation because it may involve other sharedways. Read for more https://github.com/developmentseed/observe/issues/296
+          feature = edit.oldFeature
+        } else {
+          feature = edit.newFeature
+        }
 
         // update the list of modified tiles with ones that touch the feature being uploaded
         featureToTiles(feature).forEach(modifiedTiles.add, modifiedTiles)
+
+        if (newNodeIdMap) {
+          dispatch({
+            'type': types.NEW_NODE_MAPPING,
+            newNodeIdMap
+          })
+        }
       } catch (e) {
         console.warn('Upload failed', e, edit)
         dispatch(setNotification({ level: 'error', message: 'Upload failed' }))
@@ -55,12 +76,16 @@ export function uploadEdits (editIds) {
       }
     }
 
-    // refresh data
-    await Promise.all(
-      Array.from(modifiedTiles).map(tile =>
-        dispatch(fetchDataForTile(tile, false, true))
-      )
-    )
+    // clear modified tiles from the nodecache and refresh data
+    const promises = []
+    const modifiedTilesList = Array.from(modifiedTiles)
+    for (let index = 0; index < modifiedTilesList.length; index++) {
+      const tile = modifiedTilesList[index]
+      promises.push(await clearNodeCacheForTile(tile))
+      promises.push(dispatch(fetchDataForTile(tile, false, true)))
+    }
+
+    await Promise.all(promises)
   }
 
   // skip when offline
@@ -126,12 +151,21 @@ export function editUploaded (edit, changesetId) {
 }
 
 export function addFeature (feature, comment = '') {
-  return {
-    type: types.ADD_FEATURE,
-    feature,
-    id: feature.id,
-    comment,
-    timestamp: Number(new Date())
+  return (dispatch, getState) => {
+    const state = getState()
+    if (state.wayEditingHistory.present.addedNodes.length > 0) { // is a way edit, copy over wayEditingHistory
+      feature.wayEditingHistory = { ...state.wayEditingHistory.present }
+    }
+
+    dispatch(resetWayEditing())
+
+    dispatch({
+      type: types.ADD_FEATURE,
+      feature,
+      id: feature.id,
+      comment,
+      timestamp: Number(new Date())
+    })
   }
 }
 
@@ -149,7 +183,14 @@ export function deleteFeature (feature, comment = '') {
 }
 
 export function editFeature (oldFeature, newFeature, comment = '') {
-  return async dispatch => {
+  return async (dispatch, getState) => {
+    const state = getState()
+    if (state.wayEditingHistory.present.modifiedSharedWays.length > 0) { // is a way edit
+      newFeature.wayEditingHistory = { ...state.wayEditingHistory.present }
+    }
+
+    dispatch(resetWayEditing())
+
     dispatch({
       type: types.EDIT_FEATURE,
       oldFeature,

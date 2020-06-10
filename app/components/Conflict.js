@@ -100,6 +100,17 @@ export default class Conflict extends React.Component {
       </PageWrapper>
     )
   }
+
+  featureIsAWay () {
+    return (
+      <PageWrapper>
+        <Text>
+          Overwriting a conflicting line or area is not currently supported. Discard this edit and fetch latest data.
+        </Text>
+      </PageWrapper>
+    )
+  }
+
   renderDiff (prop) {
     let Fields
     if (prop.newValue) {
@@ -216,6 +227,9 @@ export default class Conflict extends React.Component {
     }
     if (updatedFeature.isDeleted) {
       return this.upstreamDeleted()
+    }
+    if (originalEdit.newFeature.wayEditingHistory) {
+      return this.featureIsAWay()
     }
     if (originalEdit.type === 'delete') {
       return this.featureDeleted()

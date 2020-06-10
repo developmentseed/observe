@@ -8,7 +8,7 @@ import { colors } from '../style/variables'
 const HeaderWrapper = styled.View`
   height: 144;
   background-color: ${colors.primary};
-  padding-top: ${Platform.OS === 'ios' ? 50 : 30}
+  padding-top: ${Platform.OS === 'ios' ? 50 : 30};
   flex: 1;
   flex-direction: row;
   align-items: center;
@@ -20,8 +20,8 @@ const Logo = styled.Image`
 `
 
 const LogoName = styled.Text`
-  font-weight: 900;
-  letter-spacing: 0.15;
+  font-weight: 700;
+  letter-spacing: 1;
   font-size: 24;
   color: white;
 `

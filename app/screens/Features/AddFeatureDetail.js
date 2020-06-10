@@ -25,13 +25,14 @@ import TagEditor from '../../components/TagEditor'
 import { getParentPreset } from '../../utils/get-parent-preset'
 import { colors } from '../../style/variables'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { modes } from '../../utils/map-modes'
+import { osmTagSuggestingArea } from '../../utils/osm-tag-suggesting-area'
 
 const FieldsList = styled.FlatList`
 `
 const ScrollView = styled.ScrollView`
   background-color: white
 `
-
 class EditFeatureDetail extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
@@ -68,6 +69,7 @@ class EditFeatureDetail extends React.Component {
     const parentPreset = preset ? getParentPreset(preset) : undefined
     let fields = []
 
+    console.log('feature', feature)
     // if no preset
     if (!preset) {
       fields = []
@@ -150,11 +152,11 @@ class EditFeatureDetail extends React.Component {
     feature.properties = this.getFeatureProperties()
 
     // call addFeature action with feature
-    this.props.addFeature(feature, comment)
+    this.props.addFeature(this.setGeometryFromTags(feature), comment)
 
     // call action to attempt to upload the edit
     this.props.uploadEdits([feature.id])
-    navigation.navigate('Explore', { message: 'Your edit is being processed.', mode: 'explore' })
+    navigation.navigate('Explore', { message: 'Your edit is being processed.', mode: modes.EXPLORE })
   }
 
   isFeatureEmpty () {
@@ -167,6 +169,41 @@ class EditFeatureDetail extends React.Component {
     const { state: { params: { feature } } } = this.props.navigation
     const props = Object.assign({}, feature.properties, this.state.properties)
     return _omitBy(props, prop => !prop)
+  }
+
+  setGeometryFromTags (feature) {
+    const { geometry } = feature
+    // Do not update feature of type 'Point'
+    if (geometry.type === 'Point') return feature
+
+    // Check for area tags
+    const tags = _omit(feature.properties, ['id', 'version', 'ndrefs'])
+    const areaTags = osmTagSuggestingArea(tags)
+
+    // Area tags were found and feature is LineString, change to Polygon
+    if (areaTags && geometry.type === 'LineString') {
+      return {
+        ...feature,
+        geometry: {
+          type: 'Polygon',
+          coordinates: [geometry.coordinates]
+        }
+      }
+    }
+
+    // Area tags were NOT found and feature is Polygon, change to LineString
+    if (!areaTags && feature.type === 'Polygon') {
+      return {
+        ...feature,
+        geometry: {
+          type: 'LineString',
+          coordinates: geometry.coordinates[0]
+        }
+      }
+    }
+
+    // Feature type should consistent with tags, return unchanged
+    return feature
   }
 
   willBlur () {

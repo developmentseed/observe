@@ -49,6 +49,17 @@ const FieldDeleteWrapper = styled.TouchableHighlight`
   background-color: white;
 `
 
+const FieldGroup = styled.View`
+  padding-left: 10;
+  padding-right: 10;
+  padding-top: 10;
+  padding-bottom: 10;
+  border-width: 1;
+  border-color: ${colors.baseMuted};
+  border-radius: 4;
+  margin-top: 16;
+`
+
 class Field extends Component {
   state = { color: colors.baseMuted }
 
@@ -137,6 +148,7 @@ export class PickerField extends Field {
     const { property, field: { key, label }, field } = this.props
     const { color } = this.state
     const options = field.options || (field.strings && field.strings.options)
+
     let pickerOptions
     if (Array.isArray(options)) {
       pickerOptions = options.map((option) => {
@@ -147,15 +159,18 @@ export class PickerField extends Field {
         return { label: options[k], value: k, key: k }
       })
     }
-    const value = this.state.value || property.value || (options && options[0])
+
+    const value = this.state.value || property.value
+
     if (!options) {
-      return (null)
+      return null
     }
+
     return (
       <View ref={x => (this._root = x)} style={{ flex: 1, height: 64 }}>
         <FieldWrapper style={{ borderColor: color, height: 64 }}>
           <LabelWrapper style={{ borderColor: color }}>
-            <Label style={{ color }}>{key}</Label>
+            <Label style={{ color }}>{label || key}</Label>
           </LabelWrapper>
 
           <InputWrapper style={{ flex: 1 }}>
@@ -215,7 +230,7 @@ export class ComboField extends Field {
 
 export class NumberField extends Field {
   render () {
-    const { property, field: { key, placeholder } } = this.props
+    const { property, field: { key, label, placeholder } } = this.props
     const { color } = this.state
     const value = this.state.value || property.value
 
@@ -223,7 +238,7 @@ export class NumberField extends Field {
       <View ref={x => (this._root = x)}>
         <FieldWrapper style={{ borderColor: color }}>
           <LabelWrapper>
-            <Label style={{ color }}>{key}</Label>
+            <Label style={{ color }}>{label || key}</Label>
           </LabelWrapper>
 
           <InputWrapper>
@@ -423,10 +438,101 @@ export class DescriptionInputField extends Component {
   }
 }
 
+export class AccessField extends Field {
+  componentWillMount () {
+    this.setState({ value: {} })
+    this.onValueChange(this.state.value)
+  }
+
+  render () {
+    const { field, feature, onUpdate, onRemoveField } = this.props
+    const { keys, strings: { types, options } } = field
+
+    const optionsArray = Object.keys(options).map((key) => {
+      const option = options[key]
+      return `${option.title} - ${option.description}`
+    })
+
+    return (
+      <FieldGroup ref={x => (this._root = x)}>
+        <LabelWrapper>
+          <Label>
+            Access
+          </Label>
+        </LabelWrapper>
+        {_uniq(keys).map((key) => {
+          const label = types[key]
+          const field = { key, label, options: optionsArray }
+
+          return (
+            <View key={key}>
+              <PickerField
+                field={field}
+                property={{ key }}
+                feature={feature}
+                onRemoveField={() => {
+                  onRemoveField(key)
+                }}
+                onUpdate={({ properties }) => {
+                  onUpdate({ properties })
+                  const value = Object.assign(this.state.value || {}, properties)
+                  this.setState({ value })
+                }}
+              />
+            </View>
+          )
+        })}
+      </FieldGroup>
+    )
+  }
+}
+
+export class CyclewayField extends Field {
+  componentWillMount () {
+    this.setState({ value: {} })
+    this.onValueChange(this.state.value)
+  }
+
+  render () {
+    const { field, feature, onUpdate, onRemoveField } = this.props
+    const { keys, strings: { types, options } } = field
+
+    return (
+      <View ref={x => (this._root = x)}>
+        {_uniq(keys).map((key) => {
+          const label = types[key]
+          const field = { key, label, options }
+
+          return (
+            <View key={key}>
+              <PickerField
+                field={field}
+                property={{ key }}
+                feature={feature}
+                onRemoveField={() => {
+                  onRemoveField(key)
+                }}
+                onUpdate={({ properties }) => {
+                  onUpdate({ properties })
+                  const value = Object.assign(this.state.value || {}, properties)
+                  this.setState({ value })
+                }}
+              />
+            </View>
+          )
+        })}
+      </View>
+    )
+  }
+}
+
 export const getFieldInput = type => {
   if (!type) return TextField
 
   switch (type) {
+    case 'access':
+      return AccessField
+
     case 'check':
       return CheckField
 
@@ -442,6 +548,21 @@ export const getFieldInput = type => {
     case 'multiCombo':
       return ComboField
 
+    case 'networkCombo':
+      return ComboField
+
+    case 'cycleway':
+      return CyclewayField
+
+    case 'radio':
+      return ComboField
+
+    case 'structureRadio':
+      return ComboField
+
+    case 'onewayCheck':
+      return ComboField
+
     case 'address':
       return AddressField
 
@@ -449,6 +570,9 @@ export const getFieldInput = type => {
       return TextField
 
     case 'number':
+      return NumberField
+
+    case 'maxspeed':
       return NumberField
 
     case 'text':

@@ -9,11 +9,15 @@
         "incline"
     ],
     "moreFields": [
-        "wheelchair",
-        "lit",
-        "smoothness",
         "covered",
-        "dog"
+        "dog",
+        "lit",
+        "maxweight_bridge",
+        "not/name",
+        "smoothness",
+        "stroller",
+        "tactile_paving",
+        "wheelchair"
     ],
     "geometry": [
         "line"
@@ -21,6 +25,7 @@
     "terms": [
         "hike",
         "hiking",
+        "promenade",
         "trackway",
         "trail",
         "walk"

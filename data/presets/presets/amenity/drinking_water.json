@@ -4,11 +4,16 @@
         "operator",
         "access_simple",
         "fee",
-        "wheelchair"
+        "payment_multi_fee",
+        "charge_fee",
+        "wheelchair",
+        "bottle"
     ],
     "moreFields": [
-        "lit",
-        "covered"
+        "covered",
+        "indoor",
+        "level",
+        "lit"
     ],
     "geometry": [
         "point"

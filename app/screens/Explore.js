@@ -32,6 +32,12 @@ import {
 } from '../actions/edit'
 
 import {
+  setSelectedNode,
+  findNearestFeatures,
+  resetWayEditing
+} from '../actions/wayEditing'
+
+import {
   setNotification
 } from '../actions/notification'
 
@@ -45,12 +51,16 @@ import {
 import { bboxToTiles } from '../utils/bbox'
 import Header from '../components/Header'
 import MapOverlay from '../components/MapOverlay'
+import MegaMenu from '../components/MegaMenu'
 import AddPointOverlay from '../components/AddPointOverlay'
 import LoadingOverlay from '../components/LoadingOverlay'
 import ZoomToEdit from '../components/ZoomToEdit'
 import getRandomId from '../utils/get-random-id'
 import LocateUserButton from '../components/LocateUserButton'
 import AuthMessage from '../components/AuthMessage'
+import WayEditingOverlay from '../components/WayEditingOverlay'
+import FeatureRelationWarning from '../components/FeatureRelationWarning'
+
 import getUserLocation from '../utils/get-user-location'
 import {
   getVisibleBounds,
@@ -62,17 +72,20 @@ import {
   getCurrentTraceLength,
   getCurrentTraceStatus,
   getTracesGeojson,
-  getPhotosGeojson
+  getPhotosGeojson,
+  getVisibleTiles,
+  getNearestGeojson
 } from '../selectors'
 import BasemapModal from '../components/BasemapModal'
-import ActionButton from '../components/ActionButton'
 import Icon from '../components/Collecticons'
 import { colors } from '../style/variables'
-import { CameraButton } from '../components/CameraButton'
-import { RecordButton } from '../components/RecordButton'
 
 import icons from '../assets/icons'
 import { authorize } from '../services/auth'
+
+import { modes, modeTitles } from '../utils/map-modes'
+
+import { point as turfPoint, featureCollection } from '@turf/helpers'
 
 let osmStyleURL = Config.MAPBOX_STYLE_URL || MapboxGL.StyleURL.Street
 let satelliteStyleURL = Config.MAPBOX_SATELLITE_STYLE_URL || MapboxGL.StyleURL.Satellite
@@ -145,9 +158,9 @@ class Explore extends React.Component {
   onDidFinishRenderingMapFully = async () => {
     this.setState({
       isMapLoaded: true,
-      clickableLayers: ['editedPois', 'pois', 'editedPolygons',
-        'buildings', 'roads', 'roadsLower',
-        'railwayLine', 'waterLine', 'leisure', 'photos'],
+      clickableLayers: ['editedPois', 'pois', 'editedPolygons', 'editedLines',
+        'buildings', 'roads', 'roadsLower', 'amenities',
+        'railwayLine', 'waterLine', 'waterFill', 'leisure', 'landuse', 'photos', 'natural', 'allPolygons', 'allLines'],
       userTrackingMode: MapboxGL.UserTrackingModes.None
     })
 
@@ -169,6 +182,11 @@ class Explore extends React.Component {
 
     if (!requiresPreauth) {
       this.forceUpdate()
+    }
+
+    // When camera is undefined, this is the first time this screen is shown and
+    // the camera should be set to the user location.
+    if (!this.state.camera) {
       this.locateUser()
     }
   }
@@ -198,9 +216,17 @@ class Explore extends React.Component {
     }
   }
 
-  onRegionDidChange = evt => {
+  onRegionDidChange = async (evt) => {
     const { properties: { visibleBounds, zoomLevel } } = evt
     const oldBounds = this.props.visibleBounds
+    const { mode } = this.props
+    // if in way editing mode, find nearest
+    if (mode === modes.ADD_WAY || mode === modes.EDIT_WAY) {
+      const center = await this.mapRef.getCenter()
+      const node = turfPoint(center)
+      this.props.findNearestFeatures(node)
+    }
+
     if (oldBounds && oldBounds.length) {
       const oldTiles = bboxToTiles(oldBounds)
       const currentTiles = bboxToTiles(visibleBounds)
@@ -209,27 +235,32 @@ class Explore extends React.Component {
     this.props.updateVisibleBounds(visibleBounds, zoomLevel)
   }
 
-  onPress = e => {
-    const screenBbox = this.getBoundingBox([e.properties.screenPointX, e.properties.screenPointY])
-    this.loadFeaturesAtPoint(screenBbox)
-  }
+  onPress = async (e) => {
+    const { mode } = this.props
 
-  onUserLocationUpdate = location => {
-    // console.log('user location updated', location)
+    const screenBbox = this.getBoundingBox([e.properties.screenPointX, e.properties.screenPointY])
+
+    if (mode === modes.ADD_WAY || mode === modes.EDIT_WAY) {
+      const { features } = await this.mapRef.queryRenderedFeaturesInRect(screenBbox, null, ['editingWayMemberNodes'])
+      this.props.setSelectedNode(features[0])
+    } else {
+      this.loadFeaturesAtPoint(screenBbox)
+    }
   }
 
   async locateUser () {
     try {
       const userLocation = await getUserLocation()
       if (userLocation.hasOwnProperty('coords')) {
-        const centerCoordinate = [userLocation.coords.longitude, userLocation.coords.latitude]
-
-        this.cameraRef && this.cameraRef.setCamera({
-          centerCoordinate,
+        // Create camera object from user location
+        const camera = {
+          centerCoordinate: [userLocation.coords.longitude, userLocation.coords.latitude],
           zoomLevel: 18
-        })
+        }
 
-        this.setState({ centerCoordinate })
+        // Set map and component state
+        this.cameraRef && this.cameraRef.setCamera(camera)
+        this.setState({ camera })
       }
     } catch (error) {
       console.log('error fetching user location', error)
@@ -294,10 +325,22 @@ class Explore extends React.Component {
   }
 
   onBackButtonPress = () => {
-    const { mode } = this.props
-    if (mode === 'explore') { // let default back handling happen when in Explore mode
+    const { mode, navigation } = this.props
+
+    if (mode === modes.EXPLORE) { // let default back handling happen when in Explore mode
       return false
     }
+
+    if (mode === modes.ADD_WAY || mode === modes.EDIT_WAY) {
+      this.props.resetWayEditing()
+      this.props.setMapMode(modes.EXPLORE)
+
+      // remove the feature from the navigation
+      navigation.setParams({
+        feature: null
+      })
+    }
+
     this.props.mapBackPress()
     return true
   }
@@ -316,12 +359,19 @@ class Explore extends React.Component {
 
   getBackButton = () => {
     const { navigation, mode } = this.props
+    const useBackButtonPress = (
+      mode === modes.ADD_POINT ||
+      mode === modes.EDIT_POINT ||
+      mode === modes.ADD_WAY ||
+      mode === modes.EDIT_WAY
+    )
+
     switch (true) {
       case navigation.getParam('back'):
         return navigation.getParam('back')
-      case mode === 'add' || mode === 'edit':
+      case useBackButtonPress:
         return this.onBackButtonPress
-      case mode === 'bbox':
+      case mode === modes.OFFLINE_TILES:
         return 'OfflineMaps'
       default:
         return false
@@ -330,18 +380,9 @@ class Explore extends React.Component {
 
   getTitle = () => {
     const { navigation, mode } = this.props
-    switch (true) {
-      case navigation.getParam('title'):
-        return navigation.getParam('title')
-      case mode === 'add':
-        return 'Add Point'
-      case mode === 'edit':
-        return 'Edit Point'
-      case mode === 'bbox':
-        return 'Select Bounds'
-      default:
-        return 'Observe'
-    }
+    const title = navigation.getParam('title') || modeTitles[mode]
+    if (!title) return 'Observe'
+    return title
   }
 
   onRecordPress = () => {
@@ -371,6 +412,76 @@ class Explore extends React.Component {
     )
   }
 
+  async getMapCenter () {
+    return this.mapRef.getCenter()
+  }
+
+  renderOverlay () {
+    const { navigation, geojson, mode, currentTraceStatus } = this.props
+
+    if (mode === modes.OFFLINE_TILES) {
+      return null
+    }
+
+    if (mode === modes.ADD_POINT) {
+      return <AddPointOverlay
+        onAddConfirmPress={this.onAddConfirmPress}
+      />
+    }
+
+    if (mode === modes.EDIT_POINT) {
+      return <AddPointOverlay
+        onAddConfirmPress={this.onEditConfirmPress}
+      />
+    }
+
+    if (mode === modes.ADD_WAY || mode === modes.EDIT_WAY) {
+      return <WayEditingOverlay
+        mode={mode}
+        navigation={navigation}
+        getMapCenter={async () => {
+          return this.getMapCenter()
+        }}
+      />
+    }
+
+    // if not in explicit mode, render default MapOverlay
+
+    return (
+      <>
+        <MapOverlay
+          features={geojson.features}
+          onAddButtonPress={this.onAddButtonPress}
+          navigation={navigation}
+        />
+        <MegaMenu
+          onCameraPress={() => navigation.navigate('CameraScreen', { previousScreen: 'Explore', feature: null })}
+          onRecordPress={() => this.onRecordPress()}
+          onWayPress={() => { this.props.setMapMode(modes.ADD_WAY) }}
+          onPointPress={() => { this.onAddButtonPress() }}
+          recordStatus={currentTraceStatus}
+        />
+      </>
+    )
+  }
+
+  renderRelationWarning () {
+    const { featuresInRelation, selectedFeatures } = this.props
+    if (!featuresInRelation || !featuresInRelation.length) return null
+    if (!selectedFeatures || !selectedFeatures.length) return null
+
+    // TODO: consider only showing this on ADD_WAY or EDIT_WAY modes
+    const feature = selectedFeatures.find((feature) => {
+      return featuresInRelation.includes(feature.id)
+    })
+
+    if (!feature) return null
+
+    return (
+      <FeatureRelationWarning id={feature.id} />
+    )
+  }
+
   render () {
     const {
       navigation,
@@ -378,14 +489,19 @@ class Explore extends React.Component {
       selectedFeatures,
       editsGeojson,
       mode,
-      currentTraceStatus,
       currentTrace,
       isConnected,
       requiresPreauth,
       tracesGeojson,
       style,
       photosGeojson,
-      selectedPhotos
+      selectedPhotos,
+      editingWayMemberNodes,
+      currentWayEdit,
+      selectedNode,
+      nearestFeatures,
+      modifiedSharedWays,
+      deletedNodes
     } = this.props
     let selectedFeatureIds = null
     let selectedPhotoIds = null
@@ -422,34 +538,9 @@ class Explore extends React.Component {
       }, filteredFeatureIds)
     }
 
-    let overlay
-    switch (mode) {
-      case 'add':
-        overlay = (<AddPointOverlay
-          onAddConfirmPress={this.onAddConfirmPress}
-        />)
-        break
-
-      case 'edit':
-        overlay = (<AddPointOverlay
-          onAddConfirmPress={this.onEditConfirmPress}
-        />)
-        break
-
-      case 'bbox':
-        break
-
-      default:
-        overlay = (
-          <>
-            <MapOverlay
-              features={geojson.features}
-              onAddButtonPress={this.onAddButtonPress}
-              navigation={navigation}
-            />
-            <ActionButton icon='plus' onPress={() => this.onAddButtonPress()} />
-          </>
-        )
+    let editingWayDeletedMemberNodes = ['match', ['get', 'id'], [], false, true]
+    if (deletedNodes && deletedNodes.length) {
+      editingWayDeletedMemberNodes[2] = deletedNodes
     }
 
     let styleURL
@@ -470,6 +561,23 @@ class Explore extends React.Component {
     }
 
     const filters = {
+      allPolygons: [
+        'all',
+        ['!', ['has', 'building']],
+        ['!', ['has', 'amenity']],
+        [
+          'any',
+          ['==', ['geometry-type'], 'Polygon'],
+          ['==', ['geometry-type'], 'MultiPolygon']
+        ]
+      ],
+      allLines: [
+        'all',
+        ['==', ['geometry-type'], 'LineString'],
+        ['!', ['has', 'waterway']],
+        ['!', ['has', 'railway']],
+        ['!', ['has', 'highway']]
+      ],
       allRoads: [
         'all',
         ['==', ['geometry-type'], 'LineString']
@@ -484,30 +592,67 @@ class Explore extends React.Component {
         ['has', 'waterway'],
         ['==', ['geometry-type'], 'LineString']
       ],
+      waterFill: [
+        'all',
+        ['has', 'waterway'],
+        ['!', ['has', 'building']],
+        ['!', ['has', 'amenity']],
+        [
+          'any',
+          ['==', ['geometry-type'], 'Polygon'],
+          ['==', ['geometry-type'], 'MultiPolygon']
+        ]
+      ],
+      coastlines: [
+        'match',
+        ['get', 'natural'],
+        'coastline',
+        true, false
+      ],
+      amenities: [
+        'all',
+        ['has', 'amenity'],
+        ['!', ['has', 'building']],
+        [
+          'any',
+          ['==', ['geometry-type'], 'Polygon'],
+          ['==', ['geometry-type'], 'MultiPolygon']
+        ]
+      ],
       buildings: [
         'all',
         ['has', 'building'],
         filteredFeatureIds && filteredFeatureIds.ways[2].length ? filteredFeatureIds.ways : ['match', ['get', 'id'], [''], false, true]
       ],
       leisure: [
-        'any',
+        'all',
+        ['has', 'leisure'],
         [
-          'match',
-          ['get', 'leisure'],
-          ['pitch', 'track', 'garden'],
-          true, false
-        ],
+          'any',
+          ['==', ['geometry-type'], 'Polygon'],
+          ['==', ['geometry-type'], 'MultiPolygon']
+        ]
+      ],
+      landuse: [
+        'all',
+        ['has', 'landuse'],
         [
-          'match',
-          ['get', 'natural'],
-          'wood',
-          true, false
-        ],
+          'any',
+          ['==', ['geometry-type'], 'Polygon'],
+          ['==', ['geometry-type'], 'MultiPolygon']
+        ]
+      ],
+      boundaries: [
+        'all',
+        ['has', 'boundary']
+      ],
+      natural: [
+        'all',
+        ['has', 'natural'],
         [
-          'match',
-          ['get', 'landuse'],
-          ['grass', 'forest'],
-          true, false
+          'any',
+          ['==', ['geometry-type'], 'Polygon'],
+          ['==', ['geometry-type'], 'MultiPolygon']
         ]
       ],
       iconHalo: [
@@ -535,7 +680,7 @@ class Explore extends React.Component {
         ['==', ['geometry-type'], 'Point'],
         filteredFeatureIds && filteredFeatureIds.nodes[2].length ? filteredFeatureIds.nodes : ['match', ['get', 'id'], [''], false, true]
       ],
-      featureSelect: [
+      selectedFeatures: [
         'all',
         selectedFeatureIds && selectedFeatureIds.ways[2].length ? selectedFeatureIds.ways : ['==', ['get', 'id'], ''],
         filteredFeatureIds && filteredFeatureIds.ways[2].length ? filteredFeatureIds.ways : ['match', ['get', 'id'], [''], false, true]
@@ -555,7 +700,24 @@ class Explore extends React.Component {
         ],
         selectedFeatureIds && selectedFeatureIds.nodes[2].length ? selectedFeatureIds.nodes : ['==', ['get', 'id'], '']
       ],
-      photosHaloSelected: selectedPhotoIds && selectedPhotoIds.length ? selectedPhotoIds : ['==', ['get', 'id'], '']
+      photosHaloSelected: selectedPhotoIds && selectedPhotoIds.length ? selectedPhotoIds : ['==', ['get', 'id'], ''],
+      nodeHalo: [
+        'all',
+        [
+          '==',
+          ['geometry-type'], 'Point'
+        ]
+      ],
+      nodeHaloSelected: [
+        'all',
+        [
+          '==',
+          ['geometry-type'], 'Point'
+        ],
+        selectedNode && selectedNode.properties.id ? ['match', ['get', 'id'], [selectedNode.properties.id], true, false] : ['==', ['get', 'id'], ''],
+        deletedNodes && deletedNodes.length ? editingWayDeletedMemberNodes : ['match', ['get', 'id'], [''], false, true]
+      ],
+      editingWayMemberNodes: deletedNodes && deletedNodes.length ? editingWayDeletedMemberNodes : ['match', ['get', 'id'], [''], false, true]
     }
 
     return (
@@ -564,17 +726,17 @@ class Explore extends React.Component {
           onWillFocus={this.onWillFocus}
           onDidFocus={this.onDidFocus}
           onWillBlur={payload => {
-            if (payload.state.params && payload.state.params.mode === 'bbox') {
+            if (payload.state.params && payload.state.params.mode === modes.OFFLINE_TILES) {
               // reset params once this screen has been used in bbox mode
               navigation.setParams({
                 back: null,
-                mode: 'explore',
+                mode: modes.EXPLORE,
                 title: null,
                 actions: null
               })
 
               // reset map mode
-              this.props.setMapMode('explore')
+              this.props.setMapMode(modes.EXPLORE)
             }
           }}
         />
@@ -599,6 +761,8 @@ class Explore extends React.Component {
                     onRegionDidChange={this.onRegionDidChange}
                     regionDidChangeDebounceTime={10}
                     onPress={this.onPress}
+                    // compassViewPosition={0} requires latest version of react-native-mapbox-gl
+                    compassViewMargins={{ x: 20, y: 148 }}
                   >
                     <MapboxGL.Camera
                       zoomLevel={12}
@@ -618,11 +782,19 @@ class Explore extends React.Component {
                     <MapboxGL.ShapeSource id='geojsonSource' shape={geojson}>
                       <MapboxGL.LineLayer id='roadsHighlight' filter={filters.allRoads} style={style.osm.lineHighlight} minZoomLevel={16} />
                       <MapboxGL.LineLayer id='roads' filter={filters.allRoads} style={style.osm.highways} minZoomLevel={16} />
-                      <MapboxGL.LineLayer id='railwayLine' filter={filters.railwayLine} minZoomLevel={16} />
+                      {/* <MapboxGL.LineLayer id='boundaries' filter={filters.boundaries} style={style.osm.boundaries} minZoomLevel={16} /> */}
+                      <MapboxGL.LineLayer id='railwayLine' filter={filters.railwayLine} style={style.osm.railwayLine} minZoomLevel={16} />
+                      {/* <MapboxGL.LineLayer id='coastlines' filter={filters.coastlines} style={style.osm.coastline} minZoomLevel={16} /> */}
                       <MapboxGL.LineLayer id='waterLine' filter={filters.waterLine} style={style.osm.waterLine} minZoomLevel={16} />
-                      <MapboxGL.FillLayer id='buildings' filter={filters.buildings} style={style.osm.buildings} minZoomLevel={16} />
+                      <MapboxGL.FillLayer id='waterFill' filter={filters.waterFill} style={style.osm.waterFill} minZoomLevel={16} />
+                      <MapboxGL.FillLayer id='natural' filter={filters.natural} style={style.osm.natural} minZoomLevel={16} />
+                      <MapboxGL.FillLayer id='landuse' filter={filters.landuse} style={style.osm.landuse} minZoomLevel={12} />
                       <MapboxGL.FillLayer id='leisure' filter={filters.leisure} style={style.osm.leisure} minZoomLevel={16} />
-                      <MapboxGL.LineLayer id='featureSelect' filter={filters.featureSelect} style={style.osm.lineSelect} minZoomLevel={16} />
+                      <MapboxGL.FillLayer id='allPolygons' filter={filters.allPolygons} style={style.osm.polygons} minZoomLevel={16} />
+                      <MapboxGL.FillLayer id='amenities' filter={filters.amenities} style={style.osm.amenities} minZoomLevel={16} />
+                      <MapboxGL.FillLayer id='buildings' filter={filters.buildings} style={style.osm.buildings} minZoomLevel={16} />
+                      <MapboxGL.LineLayer id='allLines' filter={filters.allLines} style={style.osm.lines} minZoomLevel={16} />
+                      <MapboxGL.LineLayer id='selectedFeatures' filter={filters.selectedFeatures} style={style.osm.selectedFeatures.lines} minZoomLevel={16} />
                       <MapboxGL.CircleLayer id='iconHalo' style={style.osm.iconHalo} minZoomLevel={16} filter={filters.iconHalo} />
                       <MapboxGL.CircleLayer id='iconHaloSelected' style={style.osm.iconHaloSelected} minZoomLevel={16} filter={filters.iconHaloSelected} />
                       <MapboxGL.SymbolLayer id='pois' style={style.osm.icons} filter={filters.pois} />
@@ -645,6 +817,21 @@ class Explore extends React.Component {
                       <MapboxGL.CircleLayer id='photosHalo' style={style.photos.photoIconHalo} minZoomLevel={16} />
                       <MapboxGL.SymbolLayer id='photos' style={style.photos.photoIcon} minZoomLevel={16} />
                     </MapboxGL.ShapeSource>
+                    <MapboxGL.ShapeSource id='currentWayEdit' shape={currentWayEdit}>
+                      <MapboxGL.LineLayer id='currentWayLine' style={style.osm.editingWay.lines} minZoomLevel={16} />
+                    </MapboxGL.ShapeSource>
+                    <MapboxGL.ShapeSource id='nearestFeatures' shape={nearestFeatures}>
+                      <MapboxGL.LineLayer id='nearestEdges' style={style.osm.editingWay.nearestFeatures.lines} minZoomLevel={16} />
+                      <MapboxGL.CircleLayer id='nearestNodes' minZoomLevel={16} style={style.osm.editingWay.nearestFeatures.nodes} />
+                    </MapboxGL.ShapeSource>
+                    <MapboxGL.ShapeSource id='editingWayMemberNodesSource' shape={editingWayMemberNodes}>
+                      <MapboxGL.CircleLayer id='editingWayMemberNodes' style={style.osm.editingWay.nodes} minZoomLevel={16} filter={filters.editingWayMemberNodes} />
+                      <MapboxGL.CircleLayer id='editingWayMemberNodesHalo' style={style.osm.iconHaloSelected} minZoomLevel={16} filter={filters.nodeHaloSelected} />
+                    </MapboxGL.ShapeSource>
+                    <MapboxGL.ShapeSource id='modifiedSharedWays' shape={modifiedSharedWays}>
+                      <MapboxGL.LineLayer id='modifiedLines' style={style.osm.editedLines} minZoomLevel={16} />
+                      <MapboxGL.FillLayer id='modifiedPolygons' style={style.osm.editedPolygons} minZoomLevel={16} />
+                    </MapboxGL.ShapeSource>
                   </StyledMap>
                 )
             }
@@ -652,11 +839,10 @@ class Explore extends React.Component {
             { showLoadingIndicator }
             <LocateUserButton onPress={() => this.locateUser()} />
             <BasemapModal onChange={this.props.setBasemap} />
-            <CameraButton onPress={() => navigation.navigate('CameraScreen', { previousScreen: 'Explore', feature: null })} />
-            <RecordButton status={currentTraceStatus} onPress={() => this.onRecordPress()} />
-            {mode !== 'bbox' && this.renderZoomToEdit()}
+            {mode !== modes.OFFLINE_TILES && this.renderZoomToEdit()}
+            { this.renderRelationWarning() }
           </MainBody>
-          { overlay }
+          { this.renderOverlay() }
         </Container>
       </AndroidBackHandler>
     )
@@ -665,6 +851,42 @@ class Explore extends React.Component {
 
 const mapStateToProps = (state) => {
   const { userDetails } = state.account
+  const { mode } = state.map
+
+  const currentWayEdit = {
+    type: 'FeatureCollection',
+    features: []
+  }
+
+  let editingWayMemberNodes = featureCollection([])
+
+  // Don't use currentWayEdit for displaying edits to existing ways
+  // That happens in modifiedSharedWays
+  if (
+    mode === modes.ADD_WAY &&
+    state.wayEditingHistory.present.way &&
+    state.wayEditingHistory.present.way.nodes &&
+    state.wayEditingHistory.present.way.nodes.length
+  ) {
+    const coordinates = state.wayEditingHistory.present.way.nodes.map((point) => {
+      return point.geometry.coordinates
+    })
+    currentWayEdit.features.push({
+      type: 'Feature',
+      geometry: {
+        type: 'LineString',
+        coordinates: coordinates
+      },
+      properties: state.wayEditingHistory.present.way.properties
+    })
+  }
+
+  if (state.wayEditingHistory.present.way &&
+    state.wayEditingHistory.present.way.nodes &&
+    state.wayEditingHistory.present.way.nodes.length
+  ) {
+    editingWayMemberNodes = featureCollection(state.wayEditingHistory.present.way.nodes)
+  }
 
   return {
     geojson: getVisibleFeatures(state),
@@ -674,6 +896,7 @@ const mapStateToProps = (state) => {
     currentTraceStatus: getCurrentTraceStatus(state),
     isConnected: state.network.isConnected,
     selectedFeatures: state.map.selectedFeatures || false,
+    editingWayMemberNodes,
     mode: state.map.mode,
     edits: state.edit.edits,
     editsGeojson: state.edit.editsGeojson,
@@ -688,7 +911,14 @@ const mapStateToProps = (state) => {
     overlays: state.map.overlays,
     style: state.map.style,
     photosGeojson: getPhotosGeojson(state),
-    selectedPhotos: state.map.selectedPhotos
+    selectedPhotos: state.map.selectedPhotos,
+    visibleTiles: getVisibleTiles(state),
+    currentWayEdit,
+    selectedNode: state.wayEditing.selectedNode,
+    nearestFeatures: getNearestGeojson(state),
+    modifiedSharedWays: featureCollection(state.wayEditingHistory.present.modifiedSharedWays),
+    featuresInRelation: state.map.featuresInRelation,
+    deletedNodes: state.wayEditingHistory.present.deletedNodes
   }
 }
 
@@ -709,7 +939,10 @@ const mapDispatchToProps = {
   pauseTrace,
   unpauseTrace,
   loadUserDetails,
-  setSelectedPhotos
+  setSelectedPhotos,
+  setSelectedNode,
+  findNearestFeatures,
+  resetWayEditing
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Explore)

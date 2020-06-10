@@ -1,4 +1,5 @@
 {
+    "icon": "temaki-power",
     "geometry": [
         "point",
         "vertex",
@@ -15,5 +16,5 @@
         "material"
     ],
     "searchable": false,
-    "name": "Power"
+    "name": "Power Feature"
 }

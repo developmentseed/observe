@@ -201,6 +201,15 @@ class UserContributionsItemScreen extends React.Component {
     ]
   }
 
+  getWayConflictActions () {
+    return [
+      {
+        name: 'trash-bin',
+        onPress: this.discardEdit
+      }
+    ]
+  }
+
   getHeaderActions (edit) {
     if (edit.status === EDIT_SUCCEEDED_STATUS) {
       return this.getUploadedActions()
