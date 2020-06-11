@@ -11,6 +11,7 @@ import { deleteOfflineResource, fetchOfflineResources } from '../../actions/map'
 import { setNotification } from '../../actions/notification'
 import { getOfflineResourceStatus, getVisibleBounds } from '../../selectors'
 import { getPlaceName } from '../../utils/get-place-name'
+import { modes } from '../../utils/map-modes'
 
 class OfflineAreaList extends React.Component {
   createOfflineResource = async () => {
@@ -55,7 +56,7 @@ class OfflineAreaList extends React.Component {
       // specify the screen to go back to when the back button is tapped
       back: 'OfflineAreaList',
       // tell the Explore screen what mode we're in
-      mode: 'bbox',
+      mode: modes.OFFLINE_TILES,
       // provide a custom title for the Explore screen
       title: 'Download area',
       // provide some header actions for our use

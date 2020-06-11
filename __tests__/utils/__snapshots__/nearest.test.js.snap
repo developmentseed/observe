@@ -1,0 +1,269 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`find nearest features for a node 1`] = `
+Object {
+  "nearestEdge": Object {
+    "geometry": Object {
+      "coordinates": Array [
+        Array [
+          -77.0243788,
+          38.902298,
+        ],
+        Array [
+          -77.025819,
+          38.9022963,
+        ],
+      ],
+      "type": "LineString",
+    },
+    "properties": Object {
+      "distance": 0.000225172520188007,
+      "parent_feature": Object {
+        "geometry": Object {
+          "coordinates": Array [
+            Array [
+              Array [
+                -77.025819,
+                38.9022963,
+              ],
+              Array [
+                -77.0258367,
+                38.901784,
+              ],
+              Array [
+                -77.0257263,
+                38.9017169,
+              ],
+              Array [
+                -77.0243478,
+                38.902212,
+              ],
+              Array [
+                -77.0243788,
+                38.902298,
+              ],
+              Array [
+                -77.025819,
+                38.9022963,
+              ],
+            ],
+          ],
+          "type": "Polygon",
+        },
+        "id": "way/4294967474",
+        "properties": Object {
+          "building": "yes",
+          "changeset": "17237",
+          "id": "way/4294967474",
+          "ndrefs": Array [
+            "4294969101",
+            "4294969102",
+            "4294969103",
+            "4294969104",
+            "4294969105",
+            "4294969101",
+          ],
+          "timestamp": "2013-01-16T15:30:19Z",
+          "uid": "181",
+          "user": "samlarsen1",
+          "version": "1",
+        },
+        "type": "Feature",
+      },
+    },
+    "type": "Feature",
+  },
+  "nearestNode": Object {
+    "geometry": Object {
+      "coordinates": Array [
+        -77.02439999610696,
+        38.90229797498029,
+      ],
+      "type": "Point",
+    },
+    "properties": Object {
+      "dist": 0.00022517248045479096,
+      "edge": Object {
+        "geometry": Object {
+          "coordinates": Array [
+            Array [
+              -77.0243788,
+              38.902298,
+            ],
+            Array [
+              -77.025819,
+              38.9022963,
+            ],
+          ],
+          "type": "LineString",
+        },
+        "properties": Object {
+          "distance": 0.000225172520188007,
+          "parent_feature": Object {
+            "geometry": Object {
+              "coordinates": Array [
+                Array [
+                  Array [
+                    -77.025819,
+                    38.9022963,
+                  ],
+                  Array [
+                    -77.0258367,
+                    38.901784,
+                  ],
+                  Array [
+                    -77.0257263,
+                    38.9017169,
+                  ],
+                  Array [
+                    -77.0243478,
+                    38.902212,
+                  ],
+                  Array [
+                    -77.0243788,
+                    38.902298,
+                  ],
+                  Array [
+                    -77.025819,
+                    38.9022963,
+                  ],
+                ],
+              ],
+              "type": "Polygon",
+            },
+            "id": "way/4294967474",
+            "properties": Object {
+              "building": "yes",
+              "changeset": "17237",
+              "id": "way/4294967474",
+              "ndrefs": Array [
+                "4294969101",
+                "4294969102",
+                "4294969103",
+                "4294969104",
+                "4294969105",
+                "4294969101",
+              ],
+              "timestamp": "2013-01-16T15:30:19Z",
+              "uid": "181",
+              "user": "samlarsen1",
+              "version": "1",
+            },
+            "type": "Feature",
+          },
+        },
+        "type": "Feature",
+      },
+      "id": "observe-hauptbanhof",
+      "index": 0,
+      "location": 0.0018341862152104543,
+      "membership": "no",
+      "ways": Object {
+        "4294967474": null,
+      },
+    },
+    "type": "Feature",
+  },
+}
+`;
+
+exports[`find nearest features for a node 2`] = `
+Object {
+  "nearestEdge": null,
+  "nearestNode": null,
+}
+`;
+
+exports[`find nearest features for a node 3`] = `
+Object {
+  "geometry": Object {
+    "coordinates": Array [
+      -77.02439999610696,
+      38.90229797498029,
+    ],
+    "type": "Point",
+  },
+  "properties": Object {
+    "dist": 0.00022517248045479096,
+    "edge": Object {
+      "geometry": Object {
+        "coordinates": Array [
+          Array [
+            -77.0243788,
+            38.902298,
+          ],
+          Array [
+            -77.025819,
+            38.9022963,
+          ],
+        ],
+        "type": "LineString",
+      },
+      "properties": Object {
+        "distance": 0.000225172520188007,
+        "parent_feature": Object {
+          "geometry": Object {
+            "coordinates": Array [
+              Array [
+                Array [
+                  -77.025819,
+                  38.9022963,
+                ],
+                Array [
+                  -77.0258367,
+                  38.901784,
+                ],
+                Array [
+                  -77.0257263,
+                  38.9017169,
+                ],
+                Array [
+                  -77.0243478,
+                  38.902212,
+                ],
+                Array [
+                  -77.0243788,
+                  38.902298,
+                ],
+                Array [
+                  -77.025819,
+                  38.9022963,
+                ],
+              ],
+            ],
+            "type": "Polygon",
+          },
+          "id": "way/4294967474",
+          "properties": Object {
+            "building": "yes",
+            "changeset": "17237",
+            "id": "way/4294967474",
+            "ndrefs": Array [
+              "4294969101",
+              "4294969102",
+              "4294969103",
+              "4294969104",
+              "4294969105",
+              "4294969101",
+            ],
+            "timestamp": "2013-01-16T15:30:19Z",
+            "uid": "181",
+            "user": "samlarsen1",
+            "version": "1",
+          },
+          "type": "Feature",
+        },
+      },
+      "type": "Feature",
+    },
+    "id": "observe-hauptbanhof",
+    "index": 0,
+    "location": 0.0018341862152104543,
+    "membership": "no",
+    "ways": Object {
+      "4294967474": null,
+    },
+  },
+  "type": "Feature",
+}
+`;

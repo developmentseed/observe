@@ -11,10 +11,11 @@
     "fields": [
         "name",
         "operator",
-        "building_area"
+        "building_area",
+        "wheelchair",
+        "baby_feeding"
     ],
     "moreFields": [
-        "wheelchair",
         "smoking"
     ],
     "tags": {

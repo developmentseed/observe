@@ -3,20 +3,23 @@
     "fields": [
         "name",
         "building",
-        "levels",
+        "building/levels",
         "height",
         "address"
     ],
     "moreFields": [
         "architect",
+        "building/levels/underground",
         "building/material",
+        "gnis/feature_id",
         "layer",
+        "not/name",
+        "operator",
         "roof/colour",
         "smoking",
         "wheelchair"
     ],
     "geometry": [
-        "point",
         "area"
     ],
     "tags": {

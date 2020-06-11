@@ -9,13 +9,18 @@
         "service_times"
     ],
     "moreFields": [
-        "opening_hours",
-        "internet_access",
-        "internet_access/ssid",
-        "website",
-        "phone",
+        "air_conditioning",
+        "baby_feeding",
         "email",
         "fax",
+        "gnis/feature_id",
+        "internet_access",
+        "internet_access/ssid",
+        "level",
+        "opening_hours",
+        "phone",
+        "polling_station",
+        "website",
         "wheelchair"
     ],
     "geometry": [

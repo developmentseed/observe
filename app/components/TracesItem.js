@@ -6,6 +6,7 @@ import Icon from './Collecticons'
 import { colors } from '../style/variables'
 import formatDate from '../utils/format-date'
 import { getTraceLength } from '../utils/traces'
+import { TRACE_PENDING_STATUS, TRACE_UPLOADED_STATUS, TRACE_UPLOADING_STATUS, TRACE_PENDING_EDIT_STATUS } from '../constants'
 
 const ItemContainer = styled.TouchableOpacity`
   border-bottom-width: 0.2;
@@ -54,7 +55,7 @@ class TracesItem extends React.PureComponent {
     const { item } = this.props
     let iconName
     let color = colors.primary
-    if (item.status === 'pending') {
+    if (item.status === TRACE_PENDING_STATUS) {
       iconName = 'clock'
     } else {
       iconName = 'circle-tick'
@@ -65,11 +66,11 @@ class TracesItem extends React.PureComponent {
   getStatusText () {
     const { item } = this.props
     switch (item.status) {
-      case 'uploading':
+      case TRACE_UPLOADING_STATUS:
         return 'Uploading...'
-      case 'uploaded':
+      case TRACE_UPLOADED_STATUS:
         return `Uploaded at ${formatDate(item.uploadedAt)}`
-      case 'pending':
+      case TRACE_PENDING_STATUS:
         if (item.errors.length === 0) {
           return 'Waiting for network...'
         }
@@ -79,7 +80,7 @@ class TracesItem extends React.PureComponent {
           return error.message
         }
         break
-      case 'pending edit':
+      case TRACE_PENDING_EDIT_STATUS:
         return 'Waiting to upload changes...'
       default:
         return 'An unknown error has occured'

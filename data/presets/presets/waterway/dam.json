@@ -6,11 +6,16 @@
         "line",
         "area"
     ],
-    "moreFields": [
-        "website"
-    ],
     "fields": [
-        "name"
+        "name",
+        "operator",
+        "gnis/feature_id",
+        "height",
+        "material"
+    ],
+    "moreFields": [
+        "seamark/type",
+        "website"
     ],
     "tags": {
         "waterway": "dam"

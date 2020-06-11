@@ -1,5 +1,7 @@
 import * as types from '../actions/actionTypes'
 import editsToGeojson from '../utils/edits-to-geojson'
+import { EDIT_PENDING_STATUS, EDIT_SUCCEEDED_STATUS, EDIT_UPLOADING_STATUS } from '../constants'
+import _cloneDeep from 'lodash.clonedeep'
 
 const initialState = {
   edits: [], // array of edit actions
@@ -20,7 +22,7 @@ export default function (state = initialState, action) {
         oldFeature: null,
         comment: action.comment,
         id: action.id,
-        status: 'pending',
+        status: EDIT_PENDING_STATUS,
         errors: [],
         timestamp: action.timestamp
       })
@@ -48,7 +50,7 @@ export default function (state = initialState, action) {
           newFeature: action.newFeature,
           comment: action.comment,
           id: action.id,
-          status: 'pending',
+          status: EDIT_PENDING_STATUS,
           errors: [],
           timestamp: action.timestamp
         })
@@ -69,7 +71,7 @@ export default function (state = initialState, action) {
       const existingEditForId = edits.findIndex(e => e.newFeature && e.newFeature.id === action.id)
 
       // pending action exists for this feature id
-      if (existingEditForId !== -1 && edits[existingEditForId].status === 'pending') {
+      if (existingEditForId !== -1 && edits[existingEditForId].status === EDIT_PENDING_STATUS) {
         const currentEdit = edits[existingEditForId]
         if (currentEdit.type === 'create') { // created feature not been uploaded, just remove from queue
           edits = edits.filter(e => e.id !== action.id)
@@ -89,11 +91,12 @@ export default function (state = initialState, action) {
           newFeature: null,
           id: action.id,
           comment: action.comment,
-          status: 'pending',
+          status: EDIT_PENDING_STATUS,
           errors: [],
           timestamp: action.timestamp
         })
       }
+
       let editsGeojson = editsToGeojson(edits)
       return {
         ...state,
@@ -113,7 +116,7 @@ export default function (state = initialState, action) {
 
       // add changesetId to the edit
       uploadedEdit.changesetId = action.changesetId
-      uploadedEdit.status = 'success'
+      uploadedEdit.status = EDIT_SUCCEEDED_STATUS
       uploadedEdit.uploadTimestamp = action.timestamp
 
       // add uploaded edit to uploadedEdits
@@ -131,7 +134,7 @@ export default function (state = initialState, action) {
       const startedIndex = edits.findIndex(edit => edit.id === action.edit.id)
       edits[startedIndex] = {
         ...edits[startedIndex],
-        status: 'uploading'
+        status: EDIT_UPLOADING_STATUS
       }
       return {
         ...state,
@@ -144,7 +147,7 @@ export default function (state = initialState, action) {
       const failedIndex = edits.findIndex(edit => edit.id === action.edit.id)
       edits[failedIndex] = {
         ...edits[failedIndex],
-        status: 'pending',
+        status: EDIT_PENDING_STATUS,
         errors: [...edits[failedIndex].errors]
       }
       edits[failedIndex].errors.push(action.error)
@@ -258,6 +261,106 @@ export default function (state = initialState, action) {
       return {
         ...state,
         addPointGeometry: action.geometry
+      }
+    }
+
+    case types.NEW_NODE_MAPPING: {
+      let edits = [...state.edits]
+
+      // go through each edit
+      // replace the observeid with new id
+      if (edits.length) {
+        edits.forEach(edit => {
+          const feature = _cloneDeep(edit.newFeature)
+          if (feature) {
+            const newNdrefs = []
+            const addedNodes = []
+            const deletedNodes = []
+            const mergedNodes = []
+            const movedNodes = []
+            const nodes = []
+
+            const newNodeIdMap = action.newNodeIdMap
+            const newNodeIdMapKeys = Object.keys(newNodeIdMap)
+
+            // replace it in ndrefs of the way
+            feature.properties.ndrefs.map(oldRef => {
+              let newRef = oldRef
+              if (newNodeIdMapKeys.includes(oldRef)) {
+                newRef = action.newNodeIdMap[oldRef]
+              }
+              newNdrefs.push(newRef)
+            }, newNdrefs)
+
+            feature.properties.ndrefs = newNdrefs
+
+            // replace it in addedNodes, deletedNodes, movedNodes, mergedNodes
+            if (feature.wayEditingHistory.addedNodes.length) {
+              feature.wayEditingHistory.addedNodes.map(oldRef => {
+                let newRef = oldRef
+                if (newNodeIdMapKeys.includes(oldRef)) {
+                  newRef = action.newNodeIdMap[oldRef]
+                }
+                addedNodes.push(newRef)
+              }, addedNodes)
+            }
+            feature.wayEditingHistory.addedNodes = addedNodes
+
+            if (feature.wayEditingHistory.movedNodes.length) {
+              feature.wayEditingHistory.movedNodes.map(oldRef => {
+                let newRef = oldRef
+                if (newNodeIdMapKeys.includes(oldRef)) {
+                  newRef = action.newNodeIdMap[oldRef]
+                }
+                movedNodes.push(newRef)
+              }, movedNodes)
+            }
+            feature.wayEditingHistory.movedNodes = movedNodes
+
+            if (feature.wayEditingHistory.deletedNodes.length) {
+              feature.wayEditingHistory.deletedNodes.map(oldRef => {
+                let newRef = oldRef
+                if (newNodeIdMapKeys.includes(oldRef)) {
+                  newRef = action.newNodeIdMap[oldRef]
+                }
+                deletedNodes.push(newRef)
+              }, deletedNodes)
+            }
+            feature.wayEditingHistory.deletedNodes = deletedNodes
+
+            if (feature.wayEditingHistory.mergedNodes.length) {
+              feature.wayEditingHistory.mergedNodes.map(oldRef => {
+                const thisMerge = oldRef
+                if (newNodeIdMapKeys.includes(oldRef.sourceNode)) {
+                  thisMerge.sourceNode = action.newNodeIdMap[oldRef]
+                }
+
+                if (newNodeIdMapKeys.includes(oldRef.destinationNode)) {
+                  thisMerge.destinationNode = action.newNodeIdMap[oldRef]
+                }
+                mergedNodes.push(thisMerge)
+              }, mergedNodes)
+            }
+            feature.wayEditingHistory.mergedNodes = mergedNodes
+
+            // replace it in wayEditHistory.way.nodes
+            feature.wayEditingHistory.way.nodes.forEach(oldNode => {
+              const thisNode = _cloneDeep(oldNode)
+              if (newNodeIdMapKeys.includes(oldNode.properties.id)) {
+                thisNode.id = action.newNodeIdMap[oldNode.properties.id]
+                thisNode.properties.id = action.newNodeIdMap[oldNode.properties.id]
+                thisNode.properties.version = 1
+              }
+              nodes.push(thisNode)
+            })
+            feature.wayEditingHistory.way.nodes = nodes
+          }
+          edit.newFeature = feature
+        })
+      }
+      return {
+        ...state,
+        edits
       }
     }
   }

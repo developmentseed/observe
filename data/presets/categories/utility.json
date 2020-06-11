@@ -1,10 +1,10 @@
 {
-    "icon": "iD-category-utility",
-    "geometry": "line",
+    "icon": "iD-power-line",
     "name": "Utility Features",
     "members": [
         "power/line",
         "power/minor_line",
+        "man_made/pipeline",
         "power/cable/underground"
     ]
 }

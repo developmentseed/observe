@@ -7,10 +7,10 @@
     ],
     "moreFields": [
         "address",
-        "website",
-        "phone",
         "email",
-        "fax"
+        "fax",
+        "phone",
+        "website"
     ],
     "geometry": [
         "area"
@@ -18,6 +18,16 @@
     "tags": {
         "landuse": "cemetery"
     },
-    "terms": [],
+    "terms": [
+        "burial ground",
+        "cemetary",
+        "cemetery",
+        "churchyard",
+        "columbarium",
+        "grave yard",
+        "graveyard",
+        "mausoleum",
+        "tomb"
+    ],
     "name": "Cemetery"
 }

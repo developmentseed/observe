@@ -96448,7 +96448,7 @@
         "oldFeature": null,
         "comment": "Test",
         "id": "node/observe-vfxnxtmo20j",
-        "status": "pending",
+        "status": "EDIT_PENDING_STATUS",
         "errors": [],
         "timestamp": 1562325975841
       }

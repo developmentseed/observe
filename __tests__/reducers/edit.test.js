@@ -4,6 +4,7 @@
 
 import reducer from '../../app/reducers/edit'
 import { getFeature } from '../test-utils'
+import { EDIT_UPLOADING_STATUS, EDIT_PENDING_STATUS, EDIT_SUCCEEDED_STATUS } from '../../app/constants'
 
 function getInitialState () {
   return {
@@ -31,7 +32,7 @@ describe('reducer for edit related actions', () => {
         newFeature: mockFeature1,
         oldFeature: null,
         id: mockFeature1.id,
-        status: 'pending',
+        status: EDIT_PENDING_STATUS,
         errors: [],
         comment: 'test',
         timestamp: 1000
@@ -59,7 +60,7 @@ describe('reducer for edit related actions', () => {
         oldFeature,
         newFeature,
         id: newFeature.id,
-        status: 'pending',
+        status: EDIT_PENDING_STATUS,
         errors: [],
         comment: 'test',
         timestamp: 1000
@@ -80,7 +81,7 @@ describe('reducer for edit related actions', () => {
         oldFeature: oldFeature1,
         newFeature: newFeature1,
         id: newFeature1.id,
-        status: 'pending',
+        status: EDIT_PENDING_STATUS,
         errors: [],
         timestamp: 500,
         comment: 'test1'
@@ -101,7 +102,7 @@ describe('reducer for edit related actions', () => {
       newFeature: newFeature1,
       id: newFeature1.id,
       errors: [],
-      status: 'pending',
+      status: EDIT_PENDING_STATUS,
       comment: 'test1',
       timestamp: 500
     },
@@ -111,7 +112,7 @@ describe('reducer for edit related actions', () => {
       newFeature: newFeature2,
       id: newFeature2.id,
       errors: [],
-      status: 'pending',
+      status: EDIT_PENDING_STATUS,
       comment: 'test',
       timestamp: 1000
     }]
@@ -129,7 +130,7 @@ describe('reducer for edit related actions', () => {
         oldFeature: oldFeature1,
         newFeature: newFeature1,
         id: newFeature1.id,
-        status: 'pending',
+        status: EDIT_PENDING_STATUS,
         errors: [],
         comment: 'test',
         timestamp: 500
@@ -149,7 +150,7 @@ describe('reducer for edit related actions', () => {
       oldFeature: oldFeature1, // old feature should remain unchanged
       newFeature: newFeature2,
       id: newFeature2.id,
-      status: 'pending',
+      status: EDIT_PENDING_STATUS,
       errors: [],
       comment: 'updated',
       timestamp: 1000
@@ -173,7 +174,7 @@ describe('reducer for edit related actions', () => {
       oldFeature: feature,
       newFeature: null,
       id: feature.id,
-      status: 'pending',
+      status: EDIT_PENDING_STATUS,
       errors: [],
       comment: 'test',
       timestamp: 1000
@@ -190,7 +191,7 @@ describe('reducer for edit related actions', () => {
         oldFeature: null,
         newFeature: feature,
         id: feature.id,
-        status: 'pending',
+        status: EDIT_PENDING_STATUS,
         errors: [],
         comment: 'test',
         timestamp: 500
@@ -217,7 +218,7 @@ describe('reducer for edit related actions', () => {
         oldFeature: oldFeature,
         newFeature: newFeature,
         id: newFeature.id,
-        status: 'pending',
+        status: EDIT_PENDING_STATUS,
         errors: [],
         comment: 'test',
         timestamp: 500
@@ -236,7 +237,7 @@ describe('reducer for edit related actions', () => {
       oldFeature: oldFeature,
       newFeature: null,
       id: oldFeature.id,
-      status: 'pending',
+      status: EDIT_PENDING_STATUS,
       errors: [],
       comment: 'updated',
       timestamp: 1000
@@ -259,7 +260,7 @@ describe('reducer for edit related actions', () => {
       oldFeature: getFeature('node/1'),
       newFeature: getFeature('node/1'),
       id: 'node/1',
-      status: 'pending',
+      status: EDIT_PENDING_STATUS,
       errors: []
     }
     const mockState = {
@@ -271,7 +272,7 @@ describe('reducer for edit related actions', () => {
       edit: mockEdit
     }
     const newState = reducer(mockState, action)
-    expect(newState.edits[0].status).toEqual('uploading')
+    expect(newState.edits[0].status).toEqual(EDIT_UPLOADING_STATUS)
   })
 
   it('should handle EDIT_UPLOAD_FAILED correctly', () => {
@@ -280,7 +281,7 @@ describe('reducer for edit related actions', () => {
       oldFeature: getFeature('node/1'),
       newFeature: getFeature('node/1'),
       id: 'node/1',
-      status: 'uploading',
+      status: EDIT_UPLOADING_STATUS,
       errors: []
     }
     const mockState = {
@@ -294,7 +295,7 @@ describe('reducer for edit related actions', () => {
     }
     const newState = reducer(mockState, action)
     const newEdit = newState.edits[0]
-    expect(newEdit.status).toEqual('pending')
+    expect(newEdit.status).toEqual(EDIT_PENDING_STATUS)
     expect(newEdit.errors).toEqual([
       new Error('test')
     ])
@@ -306,7 +307,7 @@ describe('reducer for edit related actions', () => {
       oldFeature: getFeature('node/1'),
       newFeature: getFeature('node/1'),
       id: 'node/1',
-      status: 'uploading',
+      status: EDIT_UPLOADING_STATUS,
       errors: [],
       timestamp: 500
     }
@@ -328,7 +329,7 @@ describe('reducer for edit related actions', () => {
       {
         ...mockEdit,
         changesetId: '123',
-        status: 'success',
+        status: EDIT_SUCCEEDED_STATUS,
         timestamp: 500,
         uploadTimestamp: 1000
       }

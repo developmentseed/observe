@@ -5,6 +5,7 @@
 
 import { getAllRetriable } from '../../app/utils/edit-utils'
 import { getFeature } from '../test-utils'
+import { EDIT_PENDING_STATUS } from '../../app/constants'
 
 const mockFeature1 = getFeature('node/1')
 
@@ -16,7 +17,7 @@ test('get all retryable edits', () => {
       'oldFeature': null,
       'comment': 'Test',
       'id': 'node/observe-vfxnxtmo20j',
-      'status': 'pending',
+      'status': EDIT_PENDING_STATUS,
       'errors': [],
       'timestamp': 1562325975841
     },
@@ -26,7 +27,7 @@ test('get all retryable edits', () => {
       'oldFeature': mockFeature1,
       'comment': 'Test',
       'id': 'node/observe-vfxnxtmo20j',
-      'status': 'pending',
+      'status': EDIT_PENDING_STATUS,
       'errors': [{
         'code': 'VersionMismatchError',
         'extra': 'Version mismatch: Provided 1, server had: 2 of Node 1',
@@ -41,7 +42,7 @@ test('get all retryable edits', () => {
       'oldFeature': mockFeature1,
       'comment': 'Test',
       'id': 'node/observe-vfxnxtmo20j',
-      'status': 'pending',
+      'status': EDIT_PENDING_STATUS,
       'errors': [{
         'code': 'UploadNetworkError',
         'extra': '',

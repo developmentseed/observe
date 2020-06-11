@@ -1,5 +1,5 @@
 {
-    "icon": "maki-shop",
+    "icon": "temaki-perfume",
     "geometry": [
         "point",
         "area"
@@ -7,5 +7,10 @@
     "tags": {
         "shop": "perfumery"
     },
+    "terms": [
+        "cologne",
+        "fragrance",
+        "purfume"
+    ],
     "name": "Perfume Store"
 }

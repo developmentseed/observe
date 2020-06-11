@@ -8,6 +8,11 @@ import formatDate from '../utils/format-date'
 import { isRetryable, isConflict } from '../utils/edit-utils'
 import Icon from './Collecticons'
 import { colors } from '../style/variables'
+import {
+  EDIT_SUCCEEDED_STATUS,
+  EDIT_PENDING_STATUS,
+  EDIT_UPLOADING_STATUS
+} from '../constants'
 
 const ItemContainer = styled.TouchableOpacity`
   border-bottom-width: 1;
@@ -68,11 +73,11 @@ class UserContributionsItem extends React.PureComponent {
     const { isAuthorized, isConnected, item } = this.props
 
     switch (item.status) {
-      case 'success':
+      case EDIT_SUCCEEDED_STATUS:
         return `Uploaded on ${formatDate(item.uploadTimestamp)}`
-      case 'uploading':
+      case EDIT_UPLOADING_STATUS:
         return 'Uploading...'
-      case 'pending':
+      case EDIT_PENDING_STATUS:
         if (item.errors.length === 0 && !isConnected) {
           return 'Waiting for network'
         }
@@ -82,7 +87,7 @@ class UserContributionsItem extends React.PureComponent {
         }
 
         if (item.errors.length === 0) {
-          return 'Pending'
+          return EDIT_PENDING_STATUS
         }
 
         if (isConflict(item)) {
@@ -98,15 +103,15 @@ class UserContributionsItem extends React.PureComponent {
     const { item } = this.props
     let iconName, color
     switch (item.status) {
-      case 'success':
+      case EDIT_SUCCEEDED_STATUS:
         iconName = 'circle-tick'
         color = colors.primary
         break
-      case 'uploading':
+      case EDIT_UPLOADING_STATUS:
         iconName = 'upload-2'
         color = colors.primary
         break
-      case 'pending':
+      case EDIT_PENDING_STATUS:
         if (isRetryable(item)) {
           iconName = 'clock'
           color = colors.primary

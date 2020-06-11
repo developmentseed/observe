@@ -11,9 +11,9 @@ import * as types from './actionTypes'
 import { setNotification } from './notification'
 import { getOfflineResources, getOfflineResourceStatus, getPendingEviction } from '../selectors'
 import { saveDataForTile } from '../services/osm-api'
+import { addNodes, clearNodeCacheForTile, purgeNodeCache } from '../services/nodecache'
 import { bboxToTiles } from '../utils/bbox'
 import cache from '../utils/data-cache'
-import { filterRelations } from '../utils/filter-xml'
 
 const queue = new PQueue({
   concurrency: 4
@@ -32,7 +32,10 @@ export function purgeCache () {
       dispatch(deletePacks()),
 
       // delete cached OSM data
-      dispatch(clearData(true))
+      dispatch(clearData(true)),
+
+      // delete the nodecache
+      await purgeNodeCache()
     ])
 
     dispatch({
@@ -691,9 +694,11 @@ export function setSelectedFeature (feature) {
  * @param {Array<GeoJSON Features>} features
  */
 export function setSelectedFeatures (features) {
-  return {
-    type: types.SET_SELECTED_FEATURES,
-    features: features
+  return (dispatch) => {
+    dispatch({
+      type: types.SET_SELECTED_FEATURES,
+      features: features
+    })
   }
 }
 
@@ -751,13 +756,17 @@ export function updateVisibleBounds (visibleBounds, zoom) {
             if (await RNFetchBlob.fs.exists(filename)) {
               const data = await RNFetchBlob.fs.readFile(filename, 'utf8')
               const xmlData = XML_PARSER.parseFromString(data, 'text/xml')
-              const geoJSON = osmtogeojson(filterRelations(xmlData), {
+              const jsonData = osmtogeojson((xmlData), {
                 flatProperties: true,
-                wayRefs: true
+                wayRefs: true,
+                allNodes: false,
+                mapRelations: true
               })
-              cache.set(tile, geoJSON)
+              cache.set(tile, jsonData.geojson)
+              await addNodes(tile, jsonData.nodes)
               dispatch({
-                type: types.NEW_DATA_AVAILABLE
+                type: types.NEW_DATA_AVAILABLE,
+                featuresInRelation: jsonData.featuresInRelation
               })
             } else {
               // OSM XML for this tile doesn't exist (yet)
@@ -787,8 +796,12 @@ export function toggleOverlay (layer) {
 }
 
 export function evictedTile (tile) {
-  return {
-    type: types.EVICTED_TILE,
-    tile
+  return async (dispatch) => {
+    // clear the nodecache for this tile
+    await clearNodeCacheForTile(tile)
+    dispatch({
+      type: types.EVICTED_TILE,
+      tile
+    })
   }
 }

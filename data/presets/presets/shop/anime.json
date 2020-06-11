@@ -1,5 +1,5 @@
 {
-    "icon": "maki-shop",
+    "icon": "fas-dragon",
     "geometry": [
         "point",
         "area"
@@ -14,5 +14,5 @@
         "figurine",
         "dakimakura"
     ],
-    "name": "Anime Shop"
+    "name": "Anime / Manga Shop"
 }

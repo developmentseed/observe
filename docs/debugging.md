@@ -2,7 +2,7 @@
 
 ### React Debugging
 
-To debug React components, the redux store, actions, and network requests fired from within the native app, install [React Native Debugger](https://github.com/jhen0409/react-native-debugger). I was able to install it simply by downloading the Zip file in [Releases](https://github.com/jhen0409/react-native-debugger/releases)
+To debug React components, the redux store, actions, and network requests fired from within the native app, install [React Native Debugger](https://github.com/jhen0409/react-native-debugger). It is possible to install by downloading a zip file in the [releases page](https://github.com/jhen0409/react-native-debugger/releases)
 
 You need to ensure you don't have other instances of the JS debugger running, for eg. in the browser, and then when you fire up your app in the emulator, it should automatically connect to React Native Debugger.
 

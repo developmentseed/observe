@@ -238,7 +238,7 @@ class Header extends React.Component {
           { showRecordingHeader }
         </HeaderWrapper>
         <ConfirmDialog title='Stop recording and save?' description='Stop GPS logging and save the current track' visible={this.state.dialogVisible} cancel={this.cancelDialog} continue={this.saveTrace} />
-        <ConfirmDialog title='Invalid trace' description='The current trace cannot be saved. Do you want to discard it?' visible={this.state.discardDialogVisible} continueLabel='Discard' cancel={this.cancelDiscardDialog} continue={this.continueDiscardTrace} />
+        <ConfirmDialog title='Invalid trace' description='The current trace is under 50m and cannot be saved. Do you want to discard it?' visible={this.state.discardDialogVisible} continueLabel='Discard' cancel={this.cancelDiscardDialog} continue={this.continueDiscardTrace} />
 
       </Container>
     )

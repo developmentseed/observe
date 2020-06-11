@@ -3,6 +3,7 @@ import RNFetchBlob from 'rn-fetch-blob'
 import getRandomId from '../utils/get-random-id'
 import * as ImageManipulator from 'expo-image-manipulator'
 import * as api from '../services/observe-api'
+import { PHOTO_PENDING_STATUS } from '../constants'
 
 export function savePhoto (uri, location, description, featureId) {
   return async dispatch => {
@@ -33,7 +34,7 @@ export function savePhoto (uri, location, description, featureId) {
         'path': path,
         'location': location,
         'description': description || null,
-        'status': 'pending',
+        'status': PHOTO_PENDING_STATUS,
         'featureId': featureId || null,
         'errors': [],
         'base64': manipulatedImage.base64
@@ -98,7 +99,7 @@ export function uploadPendingPhotos () {
     const { photos } = getState().photos
     const pendingPhotos = photos.filter(photo => {
       // filter pending and photos that are associated with uploaded features
-      return (photo.status === 'pending' && (photo.featureId === null || photo.featureId.search('observe-') === -1))
+      return (photo.status === PHOTO_PENDING_STATUS && (photo.featureId === null || photo.featureId.search('observe-') === -1))
     })
     for (let photo of pendingPhotos) {
       dispatch(uploadingPhoto(photo))

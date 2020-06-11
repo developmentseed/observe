@@ -7,6 +7,7 @@ import {
 import getRandomId from '../utils/get-random-id'
 import _cloneDeep from 'lodash.clonedeep'
 import _findIndex from 'lodash.findindex'
+import { TRACE_PENDING_EDIT_STATUS, TRACE_PENDING_STATUS, TRACE_UPLOADING_STATUS, TRACE_UPLOADED_STATUS } from '../constants'
 
 const initialState = {
   currentTrace: null,
@@ -58,7 +59,7 @@ export default function (state = initialState, action) {
       const newTrace = {
         id: traceId,
         apiId: null,
-        status: 'pending',
+        status: TRACE_PENDING_STATUS,
         errors: [],
         geojson: {
           ...state.currentTrace,
@@ -114,7 +115,7 @@ export default function (state = initialState, action) {
     case types.TRACE_UPLOAD_STARTED: {
       const traces = _cloneDeep(state.traces)
       const index = _findIndex(state.traces, t => t.id === action.id)
-      traces[index].status = 'uploading'
+      traces[index].status = TRACE_UPLOADING_STATUS
       return {
         ...state,
         traces
@@ -124,7 +125,7 @@ export default function (state = initialState, action) {
     case types.TRACE_UPLOADED: {
       const traces = _cloneDeep(state.traces)
       const index = _findIndex(state.traces, t => t.id === action.oldId)
-      traces[index].status = 'uploaded'
+      traces[index].status = TRACE_UPLOADED_STATUS
       traces[index].apiId = action.newId
       traces[index].geojson.properties.id = action.newId
       traces[index].uploadedAt = action.uploadedAt
@@ -137,7 +138,7 @@ export default function (state = initialState, action) {
     case types.TRACE_UPLOAD_FAILED: {
       const traces = _cloneDeep(state.traces)
       const index = _findIndex(state.traces, t => t.id === action.id)
-      traces[index].status = 'pending'
+      traces[index].status = TRACE_PENDING_STATUS
       traces[index].errors.push(action.error)
       return {
         ...state,
@@ -151,7 +152,7 @@ export default function (state = initialState, action) {
       let editedTraces = _cloneDeep(state.editedTraces)
       traces = traces.filter(trace => trace.id !== action.trace.id)
       if (editedTrace.apiId && editedTrace.geojson.properties.description !== action.description) {
-        editedTrace.status = 'pending edit'
+        editedTrace.status = TRACE_PENDING_EDIT_STATUS
         const index = _findIndex(editedTraces, t => t.id === editedTraces.id)
         if (index > -1) {
           editedTraces[index] = editedTrace
@@ -198,7 +199,7 @@ export default function (state = initialState, action) {
 
     case types.CLEAR_UPLOADED_TRACES: {
       let traces = _cloneDeep(state.traces)
-      traces = traces.filter(trace => trace.status !== 'uploaded')
+      traces = traces.filter(trace => trace.status !== TRACE_UPLOADED_STATUS)
       return {
         ...state,
         traces
@@ -222,7 +223,7 @@ export default function (state = initialState, action) {
     case types.UPLOADED_PENDING_TRACE_EDIT: {
       const traces = _cloneDeep(state.traces)
       const index = _findIndex(state.traces, t => t.id === action.trace.id)
-      traces[index].status = 'uploaded'
+      traces[index].status = TRACE_UPLOADED_STATUS
       let editedTraces = _cloneDeep(state.editedTraces)
       editedTraces = editedTraces.filter(t => t.id === action.trace.id)
       return {

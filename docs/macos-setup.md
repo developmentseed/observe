@@ -71,13 +71,20 @@ yarn run build-styles
 
 ## iOS
 
-### Follow the manual install instructions for iOS
+### Environment setup
 
-Follow the instructions under the tab "Building Projects with Native Code" for iOS: https://facebook.github.io/react-native/docs/getting-started
+Read carefully the instructions [in this page](https://reactnative.dev/docs/environment-setup) under the tab "React Native CLI Quickstart" for **iOS**.
+
+### Install pods
+
+    cd ios && pod install
+
+If you had to (re-)install CocoaPods gem, open a new terminal window to make sure `pod` command uses the latest installed version.
 
 ### Run the project in a simulator
 
 ```
+react-native start
 react-native run-ios
 ```
 
@@ -89,34 +96,16 @@ react-native log-ios
 
 ## Android
 
-### Follow the manual install instructions for android
+### Environment setup
 
-Follow the instructions under the tab "Building Projects with Native Code" for android: https://facebook.github.io/react-native/docs/getting-started
-
-Install [Android Studio](https://developer.android.com/studio/index.html).
-
-Set `ANDROID_HOME` and update your `PATH` (this can/should be done in appropriate .dotfiles):
-
-```bash
-export ANDROID_HOME=$HOME/Library/Android/sdk
-export PATH=$PATH:$ANDROID_HOME/tools/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
-```
-
-Install additional packages (this can also be done from the SDK Manager GUI):
-
-```bash
-sdkmanager "platforms;android-28"
-sdkmanager "build-tools;28.0.2"
-```
+Read carefully the instructions [in this page](https://reactnative.dev/docs/environment-setup) under the tab "React Native CLI Quickstart" for **Android**.
 
 ### Run the project in a simulator
 
 Create and run a virtual device in Android Studio:
-https://developer.android.com/studio/run/managing-avds.html If you don't already have an Android
-project, you'll need to create one in order to access the AVD Manager GUI.
+https://developer.android.com/studio/run/managing-avds.html If you don't already have an Android project, you'll need to create one in order to access the AVD Manager GUI.
 
-If the emulator starts and quits before showing a phone and you're running Docker, quit Docker (it's
-hogging the CPU virtualization feature that allows AVDs to be speedy).
+If the emulator starts and quits before showing a phone and you're running Docker, quit Docker (it's hogging the CPU virtualization feature that allows AVDs to be speedy).
 
 You may also be able to create appropriate AVDs from the command line using something similar to:
 

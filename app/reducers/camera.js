@@ -1,6 +1,7 @@
 import * as types from '../actions/actionTypes'
 import _findIndex from 'lodash.findindex'
 import _cloneDeep from 'lodash.clonedeep'
+import { PHOTO_PENDING_EDIT_STATUS, PHOTO_UPLOADING_STATUS, PHOTO_PENDING_STATUS, PHOTO_UPLOADED_STATUS } from '../constants'
 
 export const initialState = {
   photos: [],
@@ -31,7 +32,7 @@ export default function (state = initialState, action) {
       photos = photos.filter(photo => photo.id !== action.photo.id)
       // if photo has apiId, add it to editedPhotos to submit to the API
       if (editedPhoto.apiId && (editedPhoto.description !== action.description)) {
-        editedPhoto.status = 'pending edit'
+        editedPhoto.status = PHOTO_PENDING_EDIT_STATUS
         // check if there's an edit that's pending
         const index = _findIndex(editedPhotos, p => p.id === editedPhoto.id)
         if (index > -1) {
@@ -67,7 +68,7 @@ export default function (state = initialState, action) {
     case types.UPLOADING_PHOTO: {
       const photos = _cloneDeep(state.photos)
       const index = _findIndex(state.photos, p => p.id === action.photo.id)
-      photos[index].status = 'uploading'
+      photos[index].status = PHOTO_UPLOADING_STATUS
       photos[index].errors.push(action.error)
       return {
         ...state,
@@ -78,7 +79,7 @@ export default function (state = initialState, action) {
     case types.UPLOAD_PHOTO_FAILED: {
       const photos = _cloneDeep(state.photos)
       const index = _findIndex(state.photos, p => p.id === action.photo.id)
-      photos[index].status = 'pending'
+      photos[index].status = PHOTO_PENDING_STATUS
       photos[index].errors.push(action.error)
       return {
         ...state,
@@ -89,7 +90,7 @@ export default function (state = initialState, action) {
     case types.UPLOADED_PHOTO: {
       const photos = _cloneDeep(state.photos)
       const index = _findIndex(state.photos, p => p.id === action.oldId)
-      photos[index].status = 'uploaded'
+      photos[index].status = PHOTO_UPLOADED_STATUS
       photos[index].apiId = action.newId
       photos[index].uploadedAt = action.uploadedAt
       return {
@@ -122,7 +123,7 @@ export default function (state = initialState, action) {
 
     case types.CLEAR_UPLOADED_PHOTOS: {
       let photos = _cloneDeep(state.photos)
-      photos = photos.filter(photo => photo.status !== 'uploaded')
+      photos = photos.filter(photo => photo.status !== PHOTO_UPLOADED_STATUS)
       return {
         ...state,
         photos
@@ -133,7 +134,7 @@ export default function (state = initialState, action) {
       const photos = _cloneDeep(state.photos)
       const index = _findIndex(state.photos, p => p.apiId === action.photo.apiId)
       let editedPhotos = _cloneDeep(state.editedPhotos)
-      photos[index].status = 'uploaded'
+      photos[index].status = PHOTO_UPLOADED_STATUS
       editedPhotos = editedPhotos.filter(p => p.apiId === action.photo.apiId)
       return {
         ...state,

@@ -1,3 +1,5 @@
+import { PHOTO_PENDING_STATUS, TRACE_PENDING_STATUS } from '../app/constants'
+
 export function getFeature (
   id,
   properties = {},
@@ -24,7 +26,7 @@ export function getFeature (
 export function getMockTrace (m) {
   return {
     id: `id-${m}`,
-    status: 'pending',
+    status: TRACE_PENDING_STATUS,
     errors: [],
     geojson: {
       type: 'Feature',
@@ -66,7 +68,7 @@ export function getMockPhoto (data) {
     description: 'test photo',
     path: '/photos/observe-hauptbanhof.jpg',
     location: mockLocation,
-    status: data.status || 'pending',
+    status: data.status || PHOTO_PENDING_STATUS,
     errors: [],
     featureId: data.featureId || null,
     apiId: data.apiId || null,

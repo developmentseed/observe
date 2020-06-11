@@ -1,11 +1,10 @@
 {
-    "icon": "iD-highway-footway",
+    "icon": "temaki-sign_and_pedestrian",
     "fields": [
-        "name",
-        "ref_platform",
-        "surface",
-        "lit",
-        "shelter"
+        "{public_transport/platform}"
+    ],
+    "moreFields": [
+        "{public_transport/platform}"
     ],
     "geometry": [
         "line",
@@ -14,6 +13,6 @@
     "tags": {
         "railway": "platform"
     },
-    "name": "Train Stop / Platform",
+    "name": "Train Platform",
     "searchable": false
 }

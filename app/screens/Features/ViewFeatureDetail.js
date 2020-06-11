@@ -17,7 +17,10 @@ import SaveEditDialog from '../../components/SaveEditDialog'
 import { deleteFeature, uploadEdits } from '../../actions/edit'
 import { colors } from '../../style/variables'
 import PhotoGrid from '../../components/PhotoGrid'
+import FeatureRelationErrorDialog from '../../components/FeatureRelationErrorDialog'
+
 import { getPhotosForFeature } from '../../utils/photos'
+import { modes } from '../../utils/map-modes'
 
 const FieldsList = styled.SectionList`
 `
@@ -61,7 +64,8 @@ class ViewFeatureDetail extends React.Component {
   }
 
   state = {
-    dialogVisible: false
+    dialogVisible: false,
+    featureInRelationDialogVisible: false
   }
 
   renderField (field) {
@@ -95,12 +99,22 @@ class ViewFeatureDetail extends React.Component {
     )
   }
 
+  isFeatureInRelation () {
+    const { featuresInRelation, navigation } = this.props
+    const { state: { params: { feature } } } = navigation
+    if (featuresInRelation) {
+      return featuresInRelation.includes(feature.id)
+    } else {
+      return false
+    }
+  }
+
   render () {
     const { navigation, photos } = this.props
     const { state: { params: { feature } } } = navigation
     const { preset } = this.state
     const featurePhotos = getPhotosForFeature(photos, feature.id)
-    const title = feature.properties.name || feature.id
+    const title = feature.geometry.type === 'Point' ? 'View Node Details' : 'View Way Details'
     const fields = getFeatureFields(feature)
     const [ meta, presets ] = _partition(fields, field => {
       return metaKeys.indexOf(field.key) > -1
@@ -121,23 +135,42 @@ class ViewFeatureDetail extends React.Component {
 
       this.props.deleteFeature(feature, comment)
       this.props.uploadEdits([feature.id])
-      navigation.navigate('Explore', { message: 'Your edit is being processed.', mode: 'explore' })
+      navigation.navigate('Explore', { message: 'Your edit is being processed.', mode: modes.EXPLORE })
     }
 
-    const headerActions = [
-      {
-        name: 'pencil',
-        onPress: () => {
-          navigation.navigate('EditFeatureDetail', { feature })
+    const toggleFeatureRelationDialog = () => {
+      const visible = this.state.featureInRelationDialogVisible
+      this.setState({
+        featureInRelationDialogVisible: !visible
+      })
+    }
+
+    /**
+     * Check if feature was deleted and is pending upload. If that
+     * is the case, disable editing actions.
+     */
+    const headerActions = []
+    if (!feature.properties.pendingDeleteUpload) {
+      headerActions.push(
+        {
+          name: 'pencil',
+          onPress: () => {
+            navigation.navigate('EditFeatureDetail', { feature })
+          }
+        },
+        {
+          name: 'trash-bin',
+          onPress: () => {
+            if (this.isFeatureInRelation()) {
+              console.warn('delete not allowed')
+              return
+            }
+
+            this.setState({ dialogVisible: true })
+          }
         }
-      },
-      {
-        name: 'trash-bin',
-        onPress: () => {
-          this.setState({ dialogVisible: true })
-        }
-      }
-    ]
+      )
+    }
 
     return (
       <Container>
@@ -146,6 +179,7 @@ class ViewFeatureDetail extends React.Component {
           preset={preset}
           feature={feature}
           navigation={navigation}
+          featureInRelation={this.isFeatureInRelation()}
         />
         <PageWrapper>
           {this.renderFields([presetSection, metaSection])}
@@ -157,6 +191,12 @@ class ViewFeatureDetail extends React.Component {
           navigation={navigation}
         />
         <SaveEditDialog visible={this.state.dialogVisible} cancel={cancelEditDialog} save={saveEditDialog} action='delete' />
+        <FeatureRelationErrorDialog
+          visible={this.state.featureInRelationDialogVisible}
+          confirm={() => {
+            toggleFeatureRelationDialog()
+          }}
+        />
       </Container>
     )
   }
@@ -165,7 +205,8 @@ class ViewFeatureDetail extends React.Component {
 const mapStateToProps = (state) => {
   return {
     edits: state.edit.edits,
-    photos: state.photos.photos
+    photos: state.photos.photos,
+    featuresInRelation: state.map.featuresInRelation
   }
 }
 

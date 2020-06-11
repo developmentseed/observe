@@ -11,8 +11,8 @@ const win = Dimensions.get('window')
 const Button = styled.TouchableHighlight`
   position: absolute;
   border-radius: ${Math.round(win.width + win.height) / 2};
-  width: 48;
-  height: 48;
+  width: 56;
+  height: 56;
   background-color: ${colors.primary};
   right: 16;
   bottom: 16;

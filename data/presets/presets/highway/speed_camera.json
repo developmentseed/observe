@@ -1,5 +1,5 @@
 {
-    "icon": "maki-attraction",
+    "icon": "temaki-security_camera",
     "geometry": [
         "point",
         "vertex"
@@ -8,11 +8,10 @@
         "direction",
         "ref",
         "maxspeed"
-     ],
+    ],
     "tags": {
         "highway": "speed_camera"
     },
-    "terms": [
-    ],
+    "terms": [],
     "name": "Speed Camera"
 }

@@ -31,6 +31,8 @@ import { colors } from '../../style/variables'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { getPhotosForFeature } from '../../utils/photos'
 import PhotoGrid from '../../components/PhotoGrid'
+import { modes } from '../../utils/map-modes'
+import { inheritsFields, getInheritedFields, getInheritedMoreFields } from '../../utils/get-inherited-fields'
 
 const FieldsList = styled.FlatList`
 `
@@ -174,6 +176,7 @@ class EditFeatureDetail extends React.Component {
   saveEditDialog = async (comment) => {
     const { navigation } = this.props
     const { state: { params: { feature } } } = navigation
+    const { state: { params: { oldFeature } } } = navigation
 
     this.cancelEditDialog()
     const changesetComment = comment
@@ -184,10 +187,14 @@ class EditFeatureDetail extends React.Component {
 
     const newFeature = this.getNewFeature()
 
-    this.props.editFeature(feature, newFeature, changesetComment)
+    // for EDIT_WAY mode, the oldFeature is passed down through the navigation
+    // this is because during edit way, we need to update things like ndrefs and that happens in the actions
+    const originalFeature = oldFeature || feature
+
+    this.props.editFeature(originalFeature, newFeature, changesetComment)
     this.props.uploadEdits([feature.id])
 
-    navigation.navigate('Explore', { message: 'Your edit is being processed.', mode: 'explore' })
+    navigation.navigate('Explore', { message: 'Your edit is being processed.', mode: modes.EXPLORE, feature: null })
   }
 
   getNewFeature () {
@@ -208,8 +215,8 @@ class EditFeatureDetail extends React.Component {
       newFeature.geometry.coordinates = newCoords
     }
 
-    const { version, ndrefs } = newFeature.properties
-    newFeature.properties = Object.assign({ version, ndrefs }, this.state.properties)
+    const { version, ndrefs, movedNodes, addedNodes, deletedNodes, mergedNodes } = newFeature.properties
+    newFeature.properties = Object.assign({ version, ndrefs, movedNodes, addedNodes, deletedNodes, mergedNodes }, this.state.properties)
 
     // remove undefined props
     newFeature.properties = _omitBy(newFeature.properties, prop => !prop)
@@ -219,6 +226,13 @@ class EditFeatureDetail extends React.Component {
   hasFeatureChanged () {
     const { state: { params: { feature } } } = this.props.navigation
     const newFeature = this.getNewFeature()
+
+    // if this way has any changes to nodes, return true. this is because way editing
+    // doesn't follow same pattern as node edting to update geometry
+    if (Object.keys(newFeature.properties).some(k => ['addedNodes', 'movedNodes', 'mergedNodes', 'deletedNodes'].includes(k))) {
+      return true
+    }
+
     const newOsmTags = _omit(newFeature.properties, nonpropKeys)
     const oldOsmTags = _omit(feature.properties, nonpropKeys)
     return !_isEqual(newOsmTags, oldOsmTags) || !_isEqual(feature.geometry, newFeature.geometry)
@@ -232,6 +246,40 @@ class EditFeatureDetail extends React.Component {
 
   getMoreFields () {
     const { fields, preset } = this.state
+
+    let inheritedFields = []
+    let inheritedMoreFields = []
+    if (preset && preset.fields) {
+      preset.fields = preset.fields.filter((field, i) => {
+        if (inheritsFields(field)) {
+          const newFields = getInheritedFields(field)
+          inheritedFields = inheritedFields.concat(newFields)
+          return false
+        } else {
+          return true
+        }
+      })
+
+      if (inheritedFields.length) {
+        preset.fields = _uniq([].concat(preset.fields, inheritedFields))
+      }
+
+      if (preset.moreFields) {
+        preset.moreFields = preset.moreFields.filter((field, i) => {
+          if (inheritsFields(field)) {
+            const newMoreFields = getInheritedMoreFields(field)
+            inheritedMoreFields = inheritedMoreFields.concat(newMoreFields)
+            return false
+          } else {
+            return true
+          }
+        })
+
+        if (inheritedMoreFields.length) {
+          preset.moreFields = _uniq([].concat(preset.moreFields, inheritedMoreFields))
+        }
+      }
+    }
 
     const parentPreset = preset ? getParentPreset(preset) : undefined
 
@@ -276,7 +324,7 @@ class EditFeatureDetail extends React.Component {
   renderAddField () {
     const fields = this.getMoreFields()
     if (!fields || !fields.length > 0) return
-
+    console.log('fields', fields)
     return (
       <Picker
         placeholder={{
@@ -451,7 +499,7 @@ class EditFeatureDetail extends React.Component {
     const { preset } = this.state
     const { navigation, photos } = this.props
     const { state: { params: { feature } } } = navigation
-    const title = feature.properties.name || feature.id
+    const title = feature.geometry.type === 'Point' ? 'Edit Node' : 'Edit Way'
     const featurePhotos = getPhotosForFeature(photos, feature.id)
 
     let headerActions = []
