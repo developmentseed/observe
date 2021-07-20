@@ -72,7 +72,7 @@
     "pretty-bytes": "^5.1.0",
     "qs": "^6.9.0",
     "react": "16.9.0",
-    "react-native": "0.61.1",
+    "react-native": "0.62.3",
     "react-native-config": "^0.11.7",
     "react-native-cookies": "developmentseed/react-native-cookies#f394a7a",
     "react-native-datepicker": "^1.7.2",
