@@ -127,7 +127,7 @@
     "js-yaml": "^3.13.1",
     "json-stringify-pretty-compact": "^2.0.0",
     "jsonschema": "^1.2.4",
-    "lodash-es": "^4.17.11",
+    "lodash-es": "^4.17.21",
     "metro-react-native-babel-preset": "0.51.1",
     "name-suggestion-index": "^1.0.6",
     "react-test-renderer": "16.8.1",
